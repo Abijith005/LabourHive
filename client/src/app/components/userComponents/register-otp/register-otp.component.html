@@ -1,0 +1,30 @@
+
+                  <form #form="ngForm" class="mt-5" (ngSubmit)="onSubmit(form)">
+                    
+                            <div class="row">
+                                <div class="col md-3 text-center">
+                                    <input type="text" #txt1 maxlength="1" name="text1" [(ngModel)]="text1" (keyup)="move($event,'',txt1,txt2)">
+                                </div>
+
+                                <div class="col md-3 text-center">
+                                    <input type="text" #txt2 maxlength="1" name="text2" [(ngModel)]="text2" (keyup)="move($event,txt1,txt2,txt3)">
+                                </div>
+
+                                <div class="col md-3 text-center">
+                                    <input type="text" #txt3 maxlength="1" name="text3" [(ngModel)]="text3" (keyup)="move($event,txt2,txt3,txt4)">
+                                </div>
+
+                                <div class="col md-3 text-center">
+                                    <input type="text" #txt4 maxlength="1" name="text4" [(ngModel)]="text4" (keyup)="move($event,txt3,txt4,'')">
+                                </div>
+                            </div>
+                       
+                    <div class="pt-1 mb-4 mt-4">
+                      <button class="btn btn-dark btn-lg btn-block w-100 mt-3" type="submit">SUBMIT</button>
+                    </div>
+                
+                    <p class="mb-2 pb-lg-2 text-center" style="color: #393f81;">Resend OTP  <a 
+                        style="color: #393f81;">Login</a></p>
+                  </form>
+  
+         

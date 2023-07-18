@@ -1,0 +1,136 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(233, 233, 233); box-shadow:  0 0px 0px rgba(0, 0, 0, 0.5)!important;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Navbar brand -->
+        <a class="navbar-brand ms-5 mt-2 mt-lg-0" href="#">
+          <img
+            src="../../../../assets/userAssets/images/134654181_padded_logo.png"
+            height="80"
+            alt="MDB Logo"
+            loading="lazy"
+          />
+        </a>
+        <!-- Left links -->
+            <ul class="navbar-nav ms-auto me-5 mb-2 mb-lg-0 headings">
+             
+                <li class="nav-item ms-5 me-5">
+                <a class="nav-link" href="#">Home</a>
+              </li>
+             
+              <li class="nav-item ms-5 me-5">
+                <a class="nav-link" href="#">Jobs</a>
+              </li>
+             
+              <li class="nav-item ms-5 me-5">
+                <a class="nav-link" href="#">Post Jobs</a>
+              </li>
+              
+              <li class="nav-item ms-5 me-5">
+                <a class="nav-link" href="#">Job Profile</a>
+              </li>
+            </ul>
+
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+  
+      <!-- Right elements -->
+      <div class="d-flex align-items-center">
+        <!-- Notifications -->
+        <div *ngIf="userLoggedIn" class="dropdown me-3">
+          <a
+            class="text-reset me-3 dropdown-toggle hidden-arrow"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-bell fa-custom-size"></i>
+            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            <li>
+              <a class="dropdown-item" href="#">Some news</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Another news</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Avatar -->
+
+          <div class="d-flex flex-column justify-content-around">
+            
+        <div *ngIf="userLoggedIn" class="dropdown ">
+            <a
+              class="dropdown-toggle d-flex align-items-center hidden-arrow"
+              href="#"
+              id="navbarDropdownMenuAvatar"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                class="rounded-circle"
+                height="40"
+                alt="Black and White Portrait of a Man"
+                loading="lazy"
+              />
+            </a>
+            <p>{{userInformations?.name}}</p>
+            
+            <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuAvatar"
+          >
+            <li>
+              <a class="dropdown-item" href="#">My profile</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Settings</a>
+            </li>
+            <li>
+              <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- <div *ngIf="userLoggedIn">
+          <p>{{userInformations?.name}}</p>
+        </div> -->
+      </div>
+      
+      </div>
+        
+        <div *ngIf="!userLoggedIn" style="margin-right: 3rem;">
+          <button mat-raised-button color="primary" [routerLink]="['login']">Login/Signup</button>
+        </div>
+      <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->

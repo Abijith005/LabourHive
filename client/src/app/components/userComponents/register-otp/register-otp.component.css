@@ -1,0 +1,9 @@
+input{
+    width:50px;
+    height: 50px;
+    text-align: center;
+    font-size: larger;
+    box-shadow: 6px 8px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.623);
+}

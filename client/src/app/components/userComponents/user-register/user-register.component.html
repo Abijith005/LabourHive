@@ -1,0 +1,73 @@
+<section class="vh-100" style="background-color: #ffffff;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card"
+          style="border-radius: 1rem;background-color:rgba(13, 196, 168, 0.582);  overflow: hidden; box-shadow: 0px 0px 10px 1px rgba(128, 128, 128, 0.377);">
+          <div class="row g-0">
+            <div class="col-md-7 d-none d-md-block">
+              <img src="../../../../assets/userAssets/images/2822506.jpg" style="min-height:100%; object-fit: cover;"
+                alt="login form" class="img-fluid" />
+            </div>
+            <div class="col-md-5 d-flex align-items-center">
+              <div class="card-body p-3 p-lg-5 text-black">
+
+                <div class="d-flex align-items-center justify-content-center mb-3 pb-1">
+                  <span class="h3 font-semibold mb-0  text-center"
+                    style="text-shadow: 1.5px 4px 3px black;color:#ffffff;">{{formHeading}}</span>
+                </div>
+                <form *ngIf="!otp" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+
+                  <div class="mb-2">
+                    <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['name'].errors?'rgb(240, 0, 0)':''" class="form-label">{{ isSubmitted&&formControls['name'].errors?.hasOwnProperty('required') ? 'Name required':'Name'}}</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="name" [ngClass]="{'is-invalid':isSubmitted&&formControls['email'].errors}">
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="exampleInputEmail1" class="form-label" [style.color]="isSubmitted&&formControls['email'].errors?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['email'].errors?.hasOwnProperty('required')?'Email requied':(isSubmitted&&formControls['email'].errors?.hasOwnProperty('email')?'Invalid email':'Email')}}</label>
+                    <input type="email" class="form-control" formControlName="email" aria-describedby="emailHelp" [ngClass]="{'is-invalid':isSubmitted&&formControls['email'].errors}">
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="" class="form-label" [style.color]="isSubmitted&&formControls['mobileNumber'].errors?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['mobileNumber'].errors?.hasOwnProperty('required')?'Mobile number required':(isSubmitted&&formControls['mobileNumber'].errors?.hasOwnProperty('pattern')?'Invalid mobile number':'Mobile number')}}</label>
+                    <input type="text" class="form-control" formControlName="mobileNumber" [ngClass]="{'is-invalid':isSubmitted&&formControls['mobileNumber'].errors}">
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="" class="form-label" [style.color]="isSubmitted&&formControls['password'].errors?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['password'].errors?.hasOwnProperty('required')?'Password required':(isSubmitted&&formControls['password'].errors?.hasOwnProperty('pattern')?'Password should have atleast 3 characters':' Password')}}</label>
+                    <input type="text" class="form-control" formControlName="password" [ngClass]="{'is-invalid':isSubmitted&&formControls['password'].errors}">
+                  </div>
+
+                  <div class="mb-2">
+                    <label for="" class="form-label" [style.color]="isSubmitted&&formControls['confirmPassword'].errors||isSubmitted&&(formControls['password'].value!=formControls['confirmPassword'].value)?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['confirmPassword'].errors?.hasOwnProperty('required')?'Confirm password required':(isSubmitted&&(formControls['confirmPassword'].value!=formControls['password'].value)?'Password not matching':'Confirm password')}}</label>
+                    <input type="text" class="form-control" formControlName="confirmPassword" [ngClass]="{'is-invalid':isSubmitted&&formControls['confirmPassword'].errors}">
+                  </div>
+
+                  <div class="pt-1 mb-3">
+                    <button class="btn btn-dark btn-lg btn-block w-100 mt-3" type="submit">REGISTER</button>
+                  </div>
+
+                  
+                  <!-- google signup -->
+                  <div id="g_id_onload"
+                  data-client_id="70565871187-hmggem9d1jkvpb0ok8faiivi9cflq9rp.apps.googleusercontent.com"
+                  data-context="use" data-ux_mode="popup" data-login_uri="http://localhost:5000/googleLogin"
+                  data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin text-dark w-100 d-flex justify-content-center flex-row align-items-center"
+                  data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signup_with"
+                  data-size="medium" data-logo_alignment="left">
+                </div>
+                  <p class="mb-2 mt-4 pb-lg-2 text-center" style="color: #393f81;">Already have an account? <a [routerLink]="['/login']" style="color: #393f81;">Login</a></p>
+                </form>
+                <app-register-otp *ngIf="otp" [userData]="registerData"></app-register-otp>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
