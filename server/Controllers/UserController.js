@@ -4,9 +4,6 @@ import { sentOtp } from "../Helpers/nodeMailer.js";
 import bcrypt from 'bcrypt'
 let otpp,eml
 import { generateOtp} from '../Helpers/generateOtp.js';
-import { env } from 'process';
-
-
 
 
 
@@ -58,7 +55,8 @@ export async function userSubmitOtp(req, res) {
         const otp=await jwt.verify(req.cookies.registerOtpToken,process.env.JWT_SIGNATURE)?.otp
         
         if (otp== parseInt(req.body.otp)) {
-            let { name, email, mobileNumber, password } = { ...req.body }
+            const { name, email, mobileNumber } = { ...req.body }
+            let {password}=req.body
             password = await bcrypt.hash(password, 10)
 
             //checking that the user is google signed in before if yes updating data else adding to db
@@ -101,7 +99,7 @@ export async function userLogin(req, res) {
         else {
             const compare =await bcrypt.compare(password, userData.password)
             if (compare) {
-                let userToken =await jwt.sign({ _id: userData._id }, process.env.JWT_SIGNATURE)
+                const userToken =await jwt.sign({ _id: userData._id }, process.env.JWT_SIGNATURE)
                 res.cookie('userToken',userToken,{
                     httpOnly:true,
                     secure:true,
@@ -137,7 +135,7 @@ export async function userGoogleLogin(req, res) {
 
             if (decodedToken.email_verified) {
                 const { email, name, picture } = decodedToken;
-                let userToken = jwt.sign({ _id: email }, process.env.JWT_SIGNATURE)
+                const userToken = jwt.sign({ _id: email }, process.env.JWT_SIGNATURE)
 
                 //if user not added to data base then user added to db
 

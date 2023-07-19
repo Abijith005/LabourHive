@@ -27,6 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { AdminNavBarComponent } from './components/adminComponents/admin-nav-bar/admin-nav-bar.component';
+import { UserMangementComponent } from './components/adminComponents/user-mangement/user-mangement.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AdminNavBarComponent } from './components/adminComponents/admin-nav-bar
     NavBarComponent,
     FooterComponent,
     AdminNavBarComponent,
+    UserMangementComponent,
   ],
   imports: [
     BrowserModule,

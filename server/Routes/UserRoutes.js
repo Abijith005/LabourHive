@@ -26,5 +26,4 @@ router.get('/logout',userLogout)
 
 
 
-
 export default router

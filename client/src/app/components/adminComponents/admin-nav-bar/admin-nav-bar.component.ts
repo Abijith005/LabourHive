@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AdminNavBarComponent {
 
+  boolean=false
+
+  click(){
+    this.boolean=!this.boolean
+  }
+
 }
