@@ -15,5 +15,9 @@ export class AdminService {
    return this.http.post<any>(`/admin/login`,data)
   }
 
+  getAllUsers(){
+    return this.http.get<any>('/getAllUsers')
+  }
+
 
 }

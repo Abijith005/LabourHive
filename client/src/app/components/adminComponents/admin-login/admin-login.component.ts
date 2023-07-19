@@ -38,7 +38,7 @@ export class AdminLoginComponent implements OnInit {
       this.service.adminLogin(this.loginForm.value).subscribe((res)=>{
         if (res.success) {
           
-          this.router.navigate(['admin/dashboard'])
+          this.router.navigate(['/admin/dashboard'])
           const newToastNotification = new ToastNotificationInitializer();
 
         newToastNotification.setTitle(res.message);

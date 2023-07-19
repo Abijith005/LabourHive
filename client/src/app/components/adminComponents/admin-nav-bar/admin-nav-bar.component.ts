@@ -7,10 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AdminNavBarComponent {
 
-  boolean=false
+  sideBar=false
+  activeItem:string='home'
 
-  click(){
-    this.boolean=!this.boolean
+  changeActive(item:string){
+    this.activeItem=item
+  }
+  
+
+  openSideBar(){
+    this.sideBar=!this.sideBar
   }
 
 }

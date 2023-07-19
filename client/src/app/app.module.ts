@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import{HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './state/user.reducer';
+import { authReducer } from './store/user.reducer';
 import { RegisterOtpComponent } from './components/userComponents/register-otp/register-otp.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxAwesomePopupModule, ToastNotificationConfigModule } from '@costlydeveloper/ngx-awesome-popup';
@@ -28,6 +28,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { AdminNavBarComponent } from './components/adminComponents/admin-nav-bar/admin-nav-bar.component';
 import { UserMangementComponent } from './components/adminComponents/user-mangement/user-mangement.component';
+import {MatCardModule} from '@angular/material/card';
+import { CategoryMangementComponent } from './components/adminComponents/category-mangement/category-mangement.component';
+import { WorkMangementComponent } from './components/adminComponents/work-mangement/work-mangement.component';
+import { WalletMangementComponent } from './components/adminComponents/wallet-mangement/wallet-mangement.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,9 @@ import { UserMangementComponent } from './components/adminComponents/user-mangem
     FooterComponent,
     AdminNavBarComponent,
     UserMangementComponent,
+    CategoryMangementComponent,
+    WorkMangementComponent,
+    WalletMangementComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +63,8 @@ import { UserMangementComponent } from './components/adminComponents/user-mangem
     NgxAwesomePopupModule.forRoot(),
     ToastNotificationConfigModule.forRoot(),
     MatButtonModule,
-    MatIconModule,MatInputModule,MatFormFieldModule
+    MatIconModule,MatInputModule,MatFormFieldModule,
+    MatCardModule
 
   
   ],

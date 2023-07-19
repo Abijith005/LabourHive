@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from './state/user.state';
-import { login } from './state/user.actions';
+import { AppState } from './store/user.state';
+import { login } from './store/user.actions';
 import { UserService } from './services/user.service';
 
 

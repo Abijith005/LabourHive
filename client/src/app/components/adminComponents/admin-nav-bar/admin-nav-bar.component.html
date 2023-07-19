@@ -1,93 +1,73 @@
 <!-- Navbar -->
 <nav class="admin-nav bg-dark">
-    <!-- Container wrapper -->
-    <div class="container-fluid ps-5 pe-5 d-flex w-100 justify-content-between">
-      <!-- Toggle button -->
-      <button
-      (click)="click()"
-        class="navbar-toggler  text-white"
-        type="button"
-        data-mdb-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars sidebar-btn" ></i>
-      </button>
-  
-      <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
-        <!-- Navbar brand -->
-        <a class="navbar-brand mt-0 mt-lg-0" href="#">
-          <img
-            src="../../../../assets/userAssets/images/134654181_padded_logo.png"
-            height="40"
-            alt="MDB Logo"
-            loading="lazy"
-          />
-        </a>
-      </div>
-      <!-- Collapsible wrapper -->
-  
-      <!-- Right elements -->
-      <div class="d-flex align-items-center">
+  <!-- Container wrapper -->
+  <div class="container-fluid ps-5 pe-5 d-flex w-100 justify-content-between">
+    <!-- Toggle button -->
+    <button (click)="openSideBar()" class="navbar-toggler  text-white" type="button" data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars sidebar-btn"></i>
+    </button>
 
-        <!-- Avatar -->
-        <div class="dropdown ">
-          <a
-            class="d-flex align-items-center hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuAvatar"
-            role="button"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="../../../../assets/userAssets/images/60111.jpg"
-              class="rounded-circle"
-              height="30"
-              alt="Black and White Portrait of a Man"
-              loading="lazy"
-            />
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuAvatar"
-          >
-            <li>
-              <a class="dropdown-item" href="#">My profile</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Settings</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Right elements -->
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-0 mt-lg-0" href="#">
+        <img src="../../../../assets/userAssets/images/134654181_padded_logo.png" height="40" alt="MDB Logo"
+          loading="lazy" />
+      </a>
     </div>
-    <!-- Container wrapper -->
-  </nav>
-  <div class='side-bar' [ngClass]="{'open': boolean}">
-    <div class="side-bar-container ">
-      <div class="side-item active">
-        <i class="ri-home-line"></i>
-        <b>Home</b>
+    <!-- Collapsible wrapper -->
+
+    <!-- Right elements -->
+    <div class="d-flex align-items-center">
+
+      <!-- Avatar -->
+      <div class="dropdown ">
+        <a class="d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button"
+          data-mdb-toggle="dropdown" aria-expanded="false">
+          <img src="../../../../assets/userAssets/images/60111.jpg" class="rounded-circle" height="30"
+            alt="Black and White Portrait of a Man" loading="lazy" />
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+          <li>
+            <a class="dropdown-item" href="#">My profile</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Settings</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Logout</a>
+          </li>
+        </ul>
       </div>
-      <div class="side-item">
-        <i class="ri-home-line"></i>
-        <b>Home</b>
-      </div>
-      <div class="side-item">
-        <i class="ri-home-line"></i>
-        <b>Home</b>
-      </div>
-      <div class="side-item">
-        <i class="ri-home-line"></i>
-        <b>Home</b>
-      </div>
+    </div>
+    <!-- Right elements -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<div class='side-bar' [ngClass]="{'open': sideBar}">
+  <div class="side-bar-container ">
+    <div class="side-item " [class.active]="activeItem==='home'" (click)="changeActive('home')" [routerLink]="['dashboard']">
+      <i class="ri-home-line"></i>
+      <b>Home</b>
+    </div>
+    <div class="side-item" [class.active]="activeItem==='user'" (click)="changeActive('user')" [routerLink]="['userManagement']">
+      <i class="ri-user-settings-line"></i>
+       <b>USER MANAGEMENT</b>
+    </div>
+    <div class="side-item" [class.active]="activeItem==='category'" (click)="changeActive('category')" [routerLink]="['categoryManagement']">
+      <i class="ri-grid-fill"></i>
+      <b>CATEGORY MANAGEMENT</b>
+    </div>
+    <div class="side-item" [class.active]="activeItem==='work'" (click)="changeActive('work')" [routerLink]="['workManagement']">
+      <i class="ri-briefcase-line"></i>
+      <b>WORK MANAGEMENT</b>
+    </div>
+    <div class="side-item" [class.active]="activeItem==='wallet'" (click)="changeActive('wallet')" [routerLink]="['walletManagement']">
+      <i class="ri-wallet-line"></i>
+      <b>WALLET MANAGEMENT</b>
     </div>
   </div>
-  <!-- Navbar -->
+</div>
+<!-- Navbar -->
+<router-outlet></router-outlet>

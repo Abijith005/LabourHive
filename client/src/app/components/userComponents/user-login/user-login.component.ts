@@ -5,8 +5,8 @@ import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
-import { login } from 'src/app/state/user.actions';
-import { AppState } from 'src/app/state/user.state';
+import { login } from 'src/app/store/user.actions';
+import { AppState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-user-login',

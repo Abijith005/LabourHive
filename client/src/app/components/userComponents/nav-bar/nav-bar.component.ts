@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { HelperService } from 'src/app/services/helper.service';
 import { userDetails } from 'src/app/interfaces/user-interfaces';
 import { UserService } from 'src/app/services/user.service';
-import { AppState } from 'src/app/state/user.state';
+import { AppState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-nav-bar',
