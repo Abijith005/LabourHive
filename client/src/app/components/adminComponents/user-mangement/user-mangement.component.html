@@ -1,32 +1,34 @@
-<table class="table table-striped">
-    <thead class="tableHeadings">
-      <tr>
-        <th scope="col">Sl No.</th>
-        <th scope="col">Name</th>
-        <th scope="col">Category</th>
-        <th scope="col">Wallet Balence</th>
-        <th scope="col">Total Works</th>
-        <th scope="col">Totol Hire</th>
-        <th scope="col">Options</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="header d-flex justify-content-between ms-3 me-3 pt-4">
+  <h3><b>USER MANAGEMENT</b></h3>
+  <div class="search ">
+    <input type="text" placeholder="Search" name="keyWord" [(ngModel)]="keyWord" (keyup)="searchUser()" style="width: 200px;">
+    <!-- <button class="btn btn-success ms-2">Search</button> -->
+  </div>
+</div>
+<div class="m-2">
+
+  <table class="table table-striped mt-3">
+      <thead class="tableHeadings">
+        <tr>
+          <th scope="col" class="text-center">Sl No.</th>
+          <th scope="col">Name</th>
+          <th scope="col" class="text-center">Category</th>
+          <th scope="col">Wallet Balence</th>
+          <th scope="col">Total Works</th>
+          <th scope="col">Total Hire</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of userDatas,let i='index'">
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.name}}</td>
+          <td class="">{{item.email}}</td>
+          <td>{{item.blockStatus}}</td>
+          <td>{{item.blockStatus}}</td>
+          <td>{{item.blockStatus}}</td>
+          <td><button class="btn btn-dark text-white blockBtn" (click)="blockStatus(item._id,!item.blockStatus)">{{item.blockStatus?'Unblock':'Block'}}</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

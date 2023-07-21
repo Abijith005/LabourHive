@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { userDetails } from "../interfaces/user-interfaces";
+import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
 
-export const login=createAction('[Auth]login',props<{userDatas:userDetails|null}>())
+export const login=createAction('[Auth]login',props<{userDatas:i_UserDetails|null}>())
+export const sample=createAction('[Auth]login',props<{userDatas:i_UserDetails[]|null}>())

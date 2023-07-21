@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppearanceAnimation, DialogLayoutDisplay, DisappearanceAnimation, ToastNotificationInitializer, ToastPositionEnum, ToastProgressBarEnum, ToastUserViewTypeEnum } from '@costlydeveloper/ngx-awesome-popup';
+import { DialogLayoutDisplay} from '@costlydeveloper/ngx-awesome-popup';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,7 +20,7 @@ export class RegisterOtpComponent {
 
   constructor(private service:UserService,
     private router:Router,
-    private helper:HelperService
+    private helper:HelperService,
     ){}
 
   onSubmit(form:NgForm){

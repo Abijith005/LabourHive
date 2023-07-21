@@ -1,0 +1,30 @@
+
+<button  mat-icon-button style="float: right;" class="m-2 custom-icon-button text-center">
+<mat-icon class="custom-icon" >close</mat-icon>
+</button>
+<mat-dialog-content>
+    <header class="text-center mb-5">
+        <h2>Add Category</h2>
+    </header>
+    <form [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">        
+        <div class="mb-4">
+            <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['category'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['category'].errors?.hasOwnProperty('required')?'Category name required':'Category Name'}}</label>
+            <input type="email" class="form-control" id="exampleInputEmail1"  formControlName="category" [ngClass]="{'is-invalid':isSubmitted&&formControls['category'].invalid}">
+        </div>
+        
+        <div class="mb-4">
+            <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['basicWage'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['basicWage'].errors?.hasOwnProperty('required')?'Basic wage required':(isSubmitted&&formControls['basicWage'].errors?.hasOwnProperty('pattern')?'Invalid type':'Basic Wage')}}</label>
+            <input type="email" class="form-control" id="exampleInputEmail1"  formControlName="basicWage" [ngClass]="{'is-invalid':isSubmitted&&formControls['basicWage'].errors}">
+          </div>
+        
+          <div class="mb-4">
+            <label for="exampleInputEmail1" class="form-label">Basic Wage</label>
+            <input type="file" class="form-control" id="exampleInputEmail1"  formControlName="vectorImage" (change)="onFileSelected($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['vectorImage'].errors}">
+          </div>
+          <div class="buttons mt-5">
+              <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
+              <button type="button" style="float: right;" class="me-2 btn btn-danger ">Cancel</button>
+
+          </div>
+    </form>
+</mat-dialog-content>

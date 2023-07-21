@@ -100,13 +100,14 @@ export async function userLogin(req, res) {
             const compare =await bcrypt.compare(password, userData.password)
             if (compare) {
                 const userToken =await jwt.sign({ _id: userData._id }, process.env.JWT_SIGNATURE)
+                const {_id,name,email,password,profilePicture,googleLogin,blockStatus,mobileNumber}=userData
                 res.cookie('userToken',userToken,{
                     httpOnly:true,
                     secure:true,
                     maxAge:7*24*60*60*1000,
                     sameSite:'none',
                     withCredentials:true
-                }).json({ success: true, message: 'Explore Labour Hive',token:userToken,userData})
+                }).json({ success: true, message: 'Explore Labour Hive',token:userToken,_id,name,password,email,blockStatus,profilePicture,googleLogin,mobileNumber})
             }
 
             else {
@@ -243,7 +244,7 @@ try {
         const user=await userModel.findOne({_id:decode._id})
         console.log(user);
     
-        res.json({success:true,userDatas:user})
+        res.json(user)
         
     }
     else{

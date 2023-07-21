@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { userDetails } from 'src/app/interfaces/user-interfaces';
-import { AppState } from 'src/app/store/user.state';
+import { AuthState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-user-home',
@@ -11,7 +10,7 @@ import { AppState } from 'src/app/store/user.state';
 export class UserHomeComponent implements OnInit {
 
 
-  constructor(private store:Store<AppState>){
+  constructor(private store:Store<AuthState>){
 
   }
 

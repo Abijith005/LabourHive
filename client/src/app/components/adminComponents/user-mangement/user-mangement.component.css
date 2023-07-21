@@ -7,3 +7,25 @@
     border-right: 0.005rem solid rgba(180, 180, 180, 0.5);
     
 }
+
+.search{
+    display: flex;
+    align-items: center;
+}
+
+.search input{
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    
+}
+
+tr{
+    text-align: center;
+}
+
+.blockBtn{
+
+    height: 35px;
+    border-radius: 5px;
+    width: 100px;
+}
+

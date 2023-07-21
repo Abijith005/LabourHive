@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCategoryComponent } from '../add-category/add-category.component';
 
 @Component({
   selector: 'app-wallet-mangement',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./wallet-mangement.component.css']
 })
 export class WalletMangementComponent {
+
+  constructor(private matDialog:MatDialog){}
+
+
+
+  openDialog(){
+    this.matDialog.open(AddCategoryComponent,{width:'300px'})
+  }
 
 }

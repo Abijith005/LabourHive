@@ -1,12 +1,12 @@
-import { registerDatas, userDetails } from "../interfaces/user-interfaces";
+import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
 
 
 
 export interface userState{
-    userDatas:userDetails|null,
+    userDatas:i_UserDetails|null,
 }
 
-export interface AppState {
+export interface AuthState {
     auth: userState;
   }
-  
+

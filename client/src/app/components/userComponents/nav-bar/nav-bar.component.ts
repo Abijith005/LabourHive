@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
+import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/helper.service';
-import { userDetails } from 'src/app/interfaces/user-interfaces';
 import { UserService } from 'src/app/services/user.service';
-import { AppState } from 'src/app/store/user.state';
+import { AuthState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,11 +14,11 @@ import { AppState } from 'src/app/store/user.state';
 export class NavBarComponent implements OnInit {
 
   userLoggedIn: boolean = false
-  userInformations:userDetails|null=null;
+  userInformations:i_UserDetails|null=null;
 
   constructor(private service: UserService,
     private helper: HelperService,
-    private store:Store<AppState>
+    private store:Store<AuthState>
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +33,8 @@ export class NavBarComponent implements OnInit {
       this.userLoggedIn = false
     }
 
-    this.store.select('auth').subscribe(state=>{
+    this.store.select('auth').subscribe(state=>{      
+      
       this.userInformations=state?.userDatas
       
     })

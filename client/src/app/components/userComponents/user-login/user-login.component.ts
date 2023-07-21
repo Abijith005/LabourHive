@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 import { login } from 'src/app/store/user.actions';
-import { AppState } from 'src/app/store/user.state';
+import { AuthState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-user-login',
@@ -19,13 +19,13 @@ export class UserLoginComponent implements OnInit {
   isSubmitted: boolean = false
   forgotPassword: boolean = false
   heading: string = 'USER LOGIN'
-  hide:boolean=true
+  hide: boolean = true
 
   constructor(private service: UserService,
     private router: Router,
     private fb: FormBuilder,
     private helper: HelperService,
-    private store: Store<AppState>
+    private store: Store<AuthState>
   ) { }
 
   ngOnInit(): void {
@@ -44,10 +44,23 @@ export class UserLoginComponent implements OnInit {
     this.isSubmitted = true
     if (this.loginForm.valid) {
       const formData = this.loginForm.value
-      this.service.userLogin(formData).subscribe((res: any) => {
-        if (res.success) {          
-          this.store.dispatch(login({ userDatas: res.userData }))
-          localStorage.setItem('userLoggedIn', res.token)
+      this.service.userLogin(formData).subscribe((res) => {
+
+        if (res.success) {
+          const userData = {
+            _id: res._id,
+            name: res.name,
+            email: res.email,
+            password: res.password ? res.password : '',
+            profilePicture: res.profilePicture ? res.profilePicture : '',
+            blockStatus: res.blockStatus,
+            googleLogin: res.googleLogin,
+            mobileNumber: res.mobileNumber ? res.mobileNumber : ''
+
+          }
+
+          this.store.dispatch(login({ userDatas: userData }))
+          localStorage.setItem('userLoggedIn', res.token!)
           const title = 'Login Success!!'
           const message = res.message
           const layout = DialogLayoutDisplay.SUCCESS
@@ -76,8 +89,8 @@ export class UserLoginComponent implements OnInit {
     this.forgotPassword = true
   }
 
-  togglePasswordVisibility(){
-   this.hide=this.hide?false:true
+  togglePasswordVisibility() {
+    this.hide = this.hide ? false : true
   }
 
 

@@ -1,1 +1,37 @@
-<p>category-mangement works!</p>
+<div class="header d-flex justify-content-between ms-3 me-3 pt-4">
+    <h3><b>USER MANAGEMENT</b></h3>
+    <!-- <div class="search ">
+      <button class="btn btn-success ms-2">Add Category</button>
+    </div> -->
+
+    <mat-dialog-actions>
+        <button class="ms-2" mat-raised-button color="primary" (click)="openDialog()">Add Category</button>
+    </mat-dialog-actions>
+
+  </div>
+  <div class="m-2">
+  
+    <table class="table table-striped mt-3">
+        <thead class="tableHeadings">
+          <tr>
+            <th scope="col" >Sl No.</th>
+            <th scope="col">Category</th>
+            <th scope="col">Total Labours</th>
+            <th scope="col">Total Jobs</th>
+            <th scope="col">Active Jobs</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of userDatas,let i='index'">
+            <th scope="row">{{i+1}}</th>
+            <td>{{item.name}}</td>
+            <td class="">{{item.email}}</td>
+            <td>{{item.blockStatus}}</td>
+            <td>{{item.blockStatus}}</td>
+            <td><button class="btn btn-dark text-white blockBtn" >{{item.blockStatus?'Unblock':'Block'}}</button></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  
