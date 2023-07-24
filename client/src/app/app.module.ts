@@ -35,7 +35,8 @@ import { WalletMangementComponent } from './components/adminComponents/wallet-ma
 import { adminDataReducer } from './store/admin.reducer';
 import { authReducer } from './store/user.reducer';
 import { AddCategoryComponent } from './components/adminComponents/add-category/add-category.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { EditCategoryComponent } from './components/adminComponents/edit-category/edit-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { AddCategoryComponent } from './components/adminComponents/add-category/
     WorkMangementComponent,
     WalletMangementComponent,
     AddCategoryComponent,
+    EditCategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +75,7 @@ import { AddCategoryComponent } from './components/adminComponents/add-category/
     MatFormFieldModule,
     MatDialogModule,
     MatCardModule,
+    MatProgressSpinnerModule
 
   
   ],

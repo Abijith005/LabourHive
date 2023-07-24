@@ -29,3 +29,14 @@ tr{
     width: 100px;
 }
 
+
+.table-image {
+    max-width: 100%;
+    max-height: 50px; 
+    width: auto;
+    height: auto;
+  }
+
+  
+  
+  

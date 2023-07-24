@@ -55,7 +55,7 @@ export class UserLoginComponent implements OnInit {
             profilePicture: res.profilePicture ? res.profilePicture : '',
             blockStatus: res.blockStatus,
             googleLogin: res.googleLogin,
-            mobileNumber: res.mobileNumber ? res.mobileNumber : ''
+            mobileNumber: res.mobileNumber ? res.mobileNumber : '',
 
           }
 
@@ -64,7 +64,7 @@ export class UserLoginComponent implements OnInit {
           const title = 'Login Success!!'
           const message = res.message
           const layout = DialogLayoutDisplay.SUCCESS
-          this.router.navigate([''])
+          this.router.navigate(['/'])
 
           this.helper.showToaster(title, message, layout)
 

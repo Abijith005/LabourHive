@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of userDatas,let i='index'">
+        <tr *ngFor="let item of (userDatas$ |async),let i='index'">
           <th scope="row">{{i+1}}</th>
           <td>{{item.name}}</td>
           <td class="">{{item.email}}</td>

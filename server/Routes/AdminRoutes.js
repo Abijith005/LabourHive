@@ -1,5 +1,6 @@
 import express from 'express'
-import { addCategory, adminLogin, blockOrUnblockUser, getAllUsers } from '../Controllers/AdminController.js'
+import { adminLogin, blockOrUnblockUser, getAllUsers } from '../Controllers/AdminController.js'
+import { addCategory, getAllCategories, updateCategory } from '../Controllers/CategoryController.js'
 const router=express.Router()
 
 
@@ -11,6 +12,11 @@ router.patch('/blockStatus',blockOrUnblockUser)
 
 router.post('/addCategory',addCategory)
 
+router.get('/getAllCategories',getAllCategories)
+
+router.put('/updateCategory',updateCategory)
 
 
-export default router
+
+
+export default router             

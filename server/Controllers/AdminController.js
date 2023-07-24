@@ -25,7 +25,7 @@ export async function adminLogin(req, res) {
         }
         else {
             res.json({ success: false, message: 'Invalid email or password' })
-        }
+        }                
 
 
     } catch (error) {
@@ -34,36 +34,32 @@ export async function adminLogin(req, res) {
 }
 
 
-export async function getAllUsers(req,res){
+export async function getAllUsers(req, res) {
     try {
 
-       const users=await userModel.find().lean()
+        const users = await userModel.find().lean()
 
-       res.json(users)
-        
+        res.json(users)
+
     } catch (error) {
-        console.log('Error',error);
+        console.log('Error', error);
     }
 }
 
-export async function blockOrUnblockUser(req,res){
+export async function blockOrUnblockUser(req, res) {
     try {
-   
-        const{_id,blockStatus}=req.body
-       const user=await userModel.updateOne({_id:_id},{$set:{blockStatus:blockStatus}})
-       if (user) {
-           res.json({success:true,message:'Action success'})
-            }
-            else{
-                res.json({success:false,message:'Action failed unknown error'})
-            }
-        
-    } catch (error) {
-        console.log('Error',error);
-    }
-}                    
 
-export async function addCategory(req,res){
-    console.log(req.body,'body');
-    
+        const { _id, blockStatus } = req.body
+        const user = await userModel.updateOne({ _id: _id }, { $set: { blockStatus: blockStatus } })
+        if (user) {
+            res.json({ success: true, message: 'Action success' })
+        }
+        else {
+            res.json({ success: false, message: 'Action failed unknown error' })
+        }
+
+    } catch (error) {
+        console.log('Error', error);
+    }
 }
+

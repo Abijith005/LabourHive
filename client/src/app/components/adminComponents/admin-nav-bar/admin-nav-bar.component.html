@@ -45,7 +45,7 @@
   </div>
   <!-- Container wrapper -->
 </nav>
-<div class='side-bar' [ngClass]="{'open': sideBar}">
+<div class='side-bar' [ngClass]="{'open': showSideBar}">
   <div class="side-bar-container ">
     <div class="side-item " [class.active]="activeItem==='home'" (click)="changeActive('home')" [routerLink]="['dashboard']">
       <i class="ri-home-line"></i>

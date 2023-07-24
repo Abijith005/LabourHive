@@ -1,6 +1,8 @@
+import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
+import { Observable, map } from 'rxjs';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
@@ -14,7 +16,7 @@ import { AuthState } from 'src/app/store/user.state';
 export class NavBarComponent implements OnInit {
 
   userLoggedIn: boolean = false
-  userInformations:i_UserDetails|null=null;
+  userInformations$:Observable<i_UserDetails>|null=null;
 
   constructor(private service: UserService,
     private helper: HelperService,
@@ -22,7 +24,6 @@ export class NavBarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userInformations=null
    
     const token = localStorage.getItem('userLoggedIn')
     if (token) {
@@ -33,11 +34,17 @@ export class NavBarComponent implements OnInit {
       this.userLoggedIn = false
     }
 
-    this.store.select('auth').subscribe(state=>{      
+    // this.store.select('auth').subscribe(state=>{      
       
-      this.userInformations=state?.userDatas
+    //   this.userInformations=state?.userDatas
       
-    })
+    // })
+
+    this.userInformations$=this.store.select('auth').pipe(
+      map((state)=>{
+        return state.userDatas!
+      })
+    )
 
   
 

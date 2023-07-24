@@ -101,7 +101,7 @@
                 loading="lazy"
               />
             </a>
-            <p>{{userInformations?.name}}</p>
+            <p>{{(userInformations$ |async)?.name}}</p>
             
             <ul
             class="dropdown-menu dropdown-menu-end"

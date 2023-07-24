@@ -8,27 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AdminNavBarComponent {
 
-  constructor(){}
+  constructor() { }
 
-  sideBar=false
-  activeItem:string='home'
+  showSideBar = false
+  activeItem: string = 'home'
 
-
-
-
-  changeActive(item:string){
-    if (item==='user') {
-     
-    }
-    else if (item==='category') {
-      
-    }
-    this.activeItem=item
+  changeActive(item: string) {
+    this.activeItem = item
   }
-  
 
-  openSideBar(){
-    this.sideBar=!this.sideBar
+  openSideBar() {
+    this.showSideBar = !this.showSideBar
   }
 
 }

@@ -1,9 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
 import { adminState } from "./admin.state";
-import {blockUser, getAllusers, userSearch } from "./admin.actions";
+import {blockUser, getAllCategory, getAllusers, userSearch } from "./admin.actions";
 
 const initialState: adminState = {
-    datas: null
+    datas: null,
+    category:null
 }
 
 
@@ -22,6 +23,10 @@ export const adminDataReducer = createReducer(
     on(userSearch,(state,{keyWord})=>({
       ...state,
       datas:state.datas?.filter(user=>user.name.includes(keyWord))||null
+    })),
+    on(getAllCategory,(state,{categories})=>({
+      ...state,
+      category:categories
     }))
   );
 
