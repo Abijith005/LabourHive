@@ -11,10 +11,16 @@ import { AdminDashboardComponent } from './components/adminComponents/admin-dash
 import { CategoryMangementComponent } from './components/adminComponents/category-mangement/category-mangement.component';
 import { WorkMangementComponent } from './components/adminComponents/work-mangement/work-mangement.component';
 import { WalletMangementComponent } from './components/adminComponents/wallet-mangement/wallet-mangement.component';
+import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
+import { NavBarComponent } from './components/userComponents/nav-bar/nav-bar.component';
 
-const routes: Routes = [{ path: '', component: UserHomeComponent },
+const routes: Routes = [{ path: '', component: NavBarComponent ,
+children:[{path:'',component:UserHomeComponent},
+{path:'jobProfile',component:JobProfileComponent},
+] },
 { path: 'login', component: UserLoginComponent, canActivate: [authLogin] },
 { path: 'register', component: UserRegisterComponent, canActivate: [authLogin] },
+
 
 
 { path: 'adminLogin', component: AdminLoginComponent },

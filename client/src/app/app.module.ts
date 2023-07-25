@@ -37,6 +37,7 @@ import { authReducer } from './store/user.reducer';
 import { AddCategoryComponent } from './components/adminComponents/add-category/add-category.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EditCategoryComponent } from './components/adminComponents/edit-category/edit-category.component';
+import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { EditCategoryComponent } from './components/adminComponents/edit-categor
     WalletMangementComponent,
     AddCategoryComponent,
     EditCategoryComponent,
+    JobProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -42,7 +42,7 @@
               </li>
               
               <li class="nav-item ms-5 me-5">
-                <a class="nav-link" href="#">Job Profile</a>
+                <a class="nav-link" [routerLink]="['/jobProfile']">Job Profile</a>
               </li>
             </ul>
 
@@ -108,7 +108,7 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a class="dropdown-item" href="#">My profile</a>
+              <a class="dropdown-item" >My profile</a>
             </li>
             <li>
               <a class="dropdown-item" href="#">Settings</a>
@@ -133,4 +133,5 @@
     </div>
     <!-- Container wrapper -->
   </nav>
-  <!-- Navbar -->
+  
+  <router-outlet></router-outlet>
