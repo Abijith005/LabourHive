@@ -13,10 +13,12 @@ import { WorkMangementComponent } from './components/adminComponents/work-mangem
 import { WalletMangementComponent } from './components/adminComponents/wallet-mangement/wallet-mangement.component';
 import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
 import { NavBarComponent } from './components/userComponents/nav-bar/nav-bar.component';
+import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
 
 const routes: Routes = [{ path: '', component: NavBarComponent ,
 children:[{path:'',component:UserHomeComponent},
 {path:'jobProfile',component:JobProfileComponent},
+{path:'cjp',component:CreatejobProfileComponent}
 ] },
 { path: 'login', component: UserLoginComponent, canActivate: [authLogin] },
 { path: 'register', component: UserRegisterComponent, canActivate: [authLogin] },

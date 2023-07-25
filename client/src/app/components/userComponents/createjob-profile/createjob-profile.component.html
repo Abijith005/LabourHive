@@ -1,0 +1,39 @@
+<p style="margin-top: 80px;">createjob-profile works!</p>
+
+<mat-dialog-content>
+    <div class="form-content" *ngIf="!isLoading">
+        <header class="text-center mb-5">
+            <h2>Edit Category</h2>
+        </header>
+        <form [formGroup]="jobProfileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">        
+            <div class="mb-4">
+                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['name'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['name'].errors?.hasOwnProperty('required')?'Category name required':'Category Name'}}</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" formControlName="name" [ngClass]="{'is-invalid':isSubmitted&&formControls['name'].invalid}">
+            </div>
+            
+            <div class="mb-4">
+                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['basicWage'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['basicWage'].errors?.hasOwnProperty('required')?'Basic wage required':(isSubmitted&&formControls['basicWage'].errors?.hasOwnProperty('pattern')?'Invalid type':'Basic Wage')}}</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" formControlName="basicWage" [ngClass]="{'is-invalid':isSubmitted&&formControls['basicWage'].errors}">
+              </div>
+
+            <div class="mb-4">
+                <img class="image" [src]="" alt="">
+              </div>
+            
+              <div class="mb-4">
+                <label for="exampleInputEmail1" class="form-label">VectorImage</label>
+                <input type="file" class="form-control" id="exampleInputEmail1"  formControlName="vectorImage" (change)="onFileSelected($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['vectorImage'].errors}">
+            </div>
+              <div class="buttons mt-5">
+                  <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
+                  <button matDialogClose="" type="button" style="float: right;" class="me-2 btn btn-danger ">Cancel</button>
+              </div>
+        </form>
+    </div>
+   <mat-dialog-content> 
+    <div class="load-container d-flex justify-content-center "*ngIf="isLoading">
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+</mat-dialog-content>
+
+</mat-dialog-content>
