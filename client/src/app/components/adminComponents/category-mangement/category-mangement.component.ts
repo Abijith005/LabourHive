@@ -9,6 +9,7 @@ import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categor
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
 import { Observable, map } from 'rxjs';
 import { adminDataState } from 'src/app/store/admin.state';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-category-mangement',
@@ -22,7 +23,8 @@ export class CategoryMangementComponent implements OnInit{
 
   constructor(private matDialog: MatDialog,
     private service:AdminService,
-    private store:Store<adminDataState>) { }
+    private store:Store<adminDataState>,
+    private helper:HelperService) { }
 
   ngOnInit(): void {
     this.service.getAllCategories().subscribe(res=>{
@@ -30,7 +32,6 @@ export class CategoryMangementComponent implements OnInit{
       this.categoryDatas$=this.store.select('adminData').pipe(map(state=>{
         return state.category!
       }))
-      console.log(res);
       
     })    
     
@@ -57,8 +58,29 @@ export class CategoryMangementComponent implements OnInit{
 
 
 
-  blockStatus() { }
+  blockCategory(_id:string,status:boolean) { 
 
-  searchUser() { }
+    this.service.blockCategory(_id,status).subscribe(res=>{
+      if (res.success) {
+        this.store.dispatch(getAllCategory({categories:res.categories!}))
+        
+      }
+      this.helper.showToaster(res.message,res.success)
+
+    })
+
+    
+
+  }
+
+  deleteCategory(_id:string) {
+
+    this.service.deleteCategory(_id).subscribe(res=>{
+      if(res.success){
+        this.store.dispatch(getAllCategory({categories:res.categories!}))
+        this.helper.showToaster(res.message,res.success)
+      }
+    })
+   }
 
 }

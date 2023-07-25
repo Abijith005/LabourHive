@@ -4,6 +4,7 @@ import { sentOtp } from "../Helpers/nodeMailer.js";
 import bcrypt from 'bcrypt'
 let otpp, eml
 import { generateOtp } from '../Helpers/generateOtp.js';
+import categoryModel from '../Models/categoryModel.js';
 
 
 
@@ -256,6 +257,18 @@ export async function getUserDatas(req, res) {
         console.log('Error', error);
     }
 
+}
+
+export async function getCategoryDetails(req,res){
+    try {
+
+        const categories=await categoryModel.find().lean()
+        res.json({categories})
+        
+    } catch (error) {
+        
+        console.log('Error',error);
+    }
 }
 
 

@@ -107,9 +107,8 @@ export class EditCategoryComponent implements OnInit {
         } 
         this.isLoading = false
         this.dialogRef.close();
-        const title = res.success ? 'Success!!' : 'Failed!!'
         const message = res.message
-        res.success ? this.helper.showToaster(title, message, DialogLayoutDisplay.SUCCESS) : this.helper.showToaster(title, message, DialogLayoutDisplay.DANGER)
+         this.helper.showToaster(message,res.success)
         
       })
 

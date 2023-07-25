@@ -24,7 +24,7 @@ export class AddCategoryComponent implements OnInit {
     private service: AdminService,
     private helper: HelperService,
     private dialogRef: MatDialogRef<AddCategoryComponent>,
-    private store:Store<adminDataState> ) {
+    private store: Store<adminDataState>) {
 
   }
 
@@ -36,20 +36,17 @@ export class AddCategoryComponent implements OnInit {
     })
   }
 
-  
+
 
   get formControls() {
     return this.addCategoryForm.controls
   }
 
   ImageTOBase(file: File) {
-    console.log('iam here');
-
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       this.finalImage = reader.result as string
-      console.log('iam done');
     }
   }
 
@@ -73,15 +70,14 @@ export class AddCategoryComponent implements OnInit {
       }
       this.isLoading = true
       this.service.addCategory(formData).subscribe((res) => {
-        this.isLoading=false
+        this.isLoading = false
         if (res.success) {
-          this.store.dispatch(getAllCategory({categories:res.categories!}))
+          this.store.dispatch(getAllCategory({ categories: res.categories! }))
         }
         this.dialogRef.close();
-        const title = res.success ? 'Success!!' : 'Failed!!'
         const message = res.message
-        res.success ? this.helper.showToaster(title, message, DialogLayoutDisplay.SUCCESS) : this.helper.showToaster(title, message, DialogLayoutDisplay.DANGER)
-      
+        this.helper.showToaster(message, res.success)
+
 
       })
     }

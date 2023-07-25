@@ -37,6 +37,10 @@ tr{
     height: auto;
   }
 
+  a{
+    cursor: pointer;
+  }
+
   
   
   

@@ -61,20 +61,16 @@ export class UserLoginComponent implements OnInit {
 
           this.store.dispatch(login({ userDatas: userData }))
           localStorage.setItem('userLoggedIn', res.token!)
-          const title = 'Login Success!!'
           const message = res.message
-          const layout = DialogLayoutDisplay.SUCCESS
           this.router.navigate(['/'])
 
-          this.helper.showToaster(title, message, layout)
+          this.helper.showToaster(message, res.success)
 
         }
         else {
 
-          const title = 'Failed!!'
           const message = res.message
-          const layout = DialogLayoutDisplay.DANGER
-          this.helper.showToaster(title, message, layout)
+          this.helper.showToaster(message,res.success)
 
         }
 

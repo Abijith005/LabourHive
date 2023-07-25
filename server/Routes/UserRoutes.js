@@ -1,5 +1,5 @@
 import express from 'express'
-import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserController.js'
+import { UserForgotPassword, getCategoryDetails, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserController.js'
 
 const router=express.Router()  
 
@@ -19,7 +19,12 @@ router.put('/changePassword',userChangePassword)
 
 router.get('/getUserDatas',getUserDatas)
 
+router.get('/getCategoryDetails',getCategoryDetails)
+
 router.get('/logout',userLogout)
+
+    
+
             
 
 

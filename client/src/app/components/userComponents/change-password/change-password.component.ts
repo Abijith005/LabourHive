@@ -43,20 +43,16 @@ onsubmit(){
         this.router.navigateByUrl('',{skipLocationChange:true}).then(()=>{
           this.router.navigate(['login'])
 
-          const title='Success!!'
           const message=res.message
-          const layout= DialogLayoutDisplay.SUCCESS
-          this.helper.showToaster(title,message,layout)
+          this.helper.showToaster(message,res.success)
 
         })
 
       }
       else{
 
-        const title='Failed'
         const message=res.message
-        const layout= DialogLayoutDisplay.DANGER
-        this.helper.showToaster(title,message,layout)
+        this.helper.showToaster(message,res.success)
 
       }
     })

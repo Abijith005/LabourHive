@@ -13,16 +13,17 @@ export async function addCategory(req, res) {
     const image = await cloudinary.uploader.upload(req.body.vectorImage, {
       folder: 'LabourHive'
     })
-    const update = await categoryModel.create({ name: name, basicWage: basicWage, vectorImage: image })
+    const category = await categoryModel.findOne({ name: name })
 
-    if (update) {
-      const categories=await categoryModel.find().lean()
+    if (!category) {
+      await categoryModel.create({ name: name, basicWage: basicWage, vectorImage: image })
+      const categories = await categoryModel.find().lean()
 
-      res.json({ success: true, message: 'Category added successfully',categories })
+      res.json({ success: true, message: 'Category added successfully', categories })
     }
     else {
 
-      res.json({ success: false, message: 'Unknown error occured' })
+      res.json({ success: false, message: 'Category already exists' })
     }
 
 
@@ -39,7 +40,7 @@ export async function getAllCategories(req, res) {
   try {
 
     const categories = await categoryModel.find().lean()
-    res.json({categories})
+    res.json({ categories })
 
   } catch (error) {
     console.log('Error', error);
@@ -76,4 +77,34 @@ export async function updateCategory(req, res) {
 
     console.log('Error', error);
   }
-}   
+}
+
+export async function blockCategory(req, res) {
+  try {
+
+    const { _id, status } = req.body
+    const message=status?'Category unblocked successfully':'Category blocked successfully'
+    await categoryModel.updateOne({ _id: _id }, { $set: { blockStatus: !status } })
+    const categories = await categoryModel.find().lean()
+
+    res.json({ success: true, message, categories })
+
+  } catch (error) {
+
+    console.log('Error', error);
+  }
+}
+
+export async function deleteCategory(req, res) {
+  try {
+
+    const _id = req.params._id
+    console.log(_id);
+    await categoryModel.deleteOne({ _id: _id })
+    const categories = await categoryModel.find().lean()
+    res.json({ success: true, message: 'Category deleted successfully', categories })
+
+  } catch (error) {
+    console.log('Error', error);
+  }
+}

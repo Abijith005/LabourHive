@@ -27,21 +27,27 @@
             <td>{{item.name}}</td>
             <td class="">{{item.basicWage}}</td>
             <td>{{item.basicWage}}</td>
-            <td>8856</td>
+            <td>{{item.blockStatus}}</td>
             <td>8856</td>
             <td><img src="{{item.vectorImage.url}}" alt="" class="table-image"></td>
-            <td><button class="btn btn-dark text-white blockBtn" (click)="openDialogEditCategory(item._id)" >Edit</button></td>
-            <td><div class="dropdown">
-              <a class="btn btn-secondary dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-              </a>
-            
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </div></td>
+            <td>
+              <div class="dropdown">
+                <button
+                  class="btn btn-dark text-white dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Options
+                </button>
+                <ul class="dropdown-menu" style="box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item" (click)="openDialogEditCategory(item._id)">Edit</a></li>
+                  <li><a class="dropdown-item" (click)="blockCategory(item._id,item.blockStatus)" >{{item.blockStatus?'Unblock':'Block'}}</a></li>
+                  <li><a class="dropdown-item" (click)="deleteCategory(item._id)">Delete</a></li>
+                </ul>
+              </div>
+            </td>
 
           </tr>
         </tbody>

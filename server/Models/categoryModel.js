@@ -1,19 +1,23 @@
 import mongoose from "mongoose";
 
-const categorySchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,['Name is required']]
+const categorySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, ['Name is required']]
     },
-    basicWage:{
-        type:Number,
-        required:[true,['Number is required']]
+    basicWage: {
+        type: Number,
+        required: [true, ['Number is required']]
     },
-    vectorImage:{
-        type:Object,
-        required:[true,'Image is required']
+    vectorImage: {
+        type: Object,
+        required: [true, 'Image is required']
+    },
+    blockStatus: {
+        type: Boolean,
+        default: false
     }
 })
 
-const categoryModel=mongoose.model('category',categorySchema)
+const categoryModel = mongoose.model('category', categorySchema)
 export default categoryModel

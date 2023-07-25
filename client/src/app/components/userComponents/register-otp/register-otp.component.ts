@@ -34,7 +34,7 @@ export class RegisterOtpComponent {
         const title='Success!!'
         const message=res.message
         const layout= DialogLayoutDisplay.SUCCESS
-        this.helper.showToaster(title,message,layout)
+        this.helper.showToaster(message,res.success)
 
    
 
@@ -42,10 +42,8 @@ export class RegisterOtpComponent {
 
       else{
 
-        const title=res.message
         const message='Please re-enter OTP'
-        const layout= DialogLayoutDisplay.DANGER
-        this.helper.showToaster(title,message,layout)
+        this.helper.showToaster(message,res.success)
     
       }
       

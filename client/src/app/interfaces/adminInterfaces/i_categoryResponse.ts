@@ -4,6 +4,7 @@ export interface i_categoryResponse {
     _id:string
     name:string,
     basicWage:string,
-    vectorImage:i_image
+    vectorImage:i_image,
+    blockStatus:boolean
    
 }

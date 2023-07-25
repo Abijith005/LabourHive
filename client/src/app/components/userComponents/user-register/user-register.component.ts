@@ -52,10 +52,8 @@ export class UserRegisterComponent implements OnInit {
         }
         else{
 
-          const title='Failed!!'
           const message=res.message
-          const layout=DialogLayoutDisplay.DANGER
-          this.helper.showToaster(title,message,layout)
+          this.helper.showToaster(message,res.success)
 
         }
       })

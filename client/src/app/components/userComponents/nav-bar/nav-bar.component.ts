@@ -58,9 +58,8 @@ export class NavBarComponent implements OnInit {
         localStorage.removeItem('userLoggedIn')
         this.userLoggedIn = false
         // toaster message
-        const title = 'Success'
         const message = res.message
-        this.helper.showToaster(title, message, DialogLayoutDisplay.SUCCESS)
+        this.helper.showToaster(message,res.success)
       }
     })
 

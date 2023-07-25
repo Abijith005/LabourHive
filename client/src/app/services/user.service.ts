@@ -5,6 +5,7 @@ import { i_RegisterDatas } from '../interfaces/userInterfaces/i_register-datas';
 import { i_Password } from '../interfaces/userInterfaces/i_password';
 import { i_authRes } from '../interfaces/userInterfaces/i_authRes';
 import { i_UserDetails } from '../interfaces/userInterfaces/i_user-details';
+import { i_customCategory } from '../interfaces/adminInterfaces/i_customCategory';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,10 @@ return this.http.post<i_authRes>(`/register`,datas)
 
   getUserDatas(){
     return this.http.get<i_UserDetails>('/getUserDatas')
+  }
+
+  getCategoryDetails(){
+    return this.http.get<i_customCategory>(`/getCategoryDetails`)
   }
 
   userLogout(){

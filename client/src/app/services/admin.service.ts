@@ -41,6 +41,13 @@ export class AdminService {
     return this.http.put<i_customCategory>(`/admin/updateCategory`,data)
   }
 
+  blockCategory(_id:string,status:boolean){
+    return this.http.patch<i_customCategory>(`/admin/blockCategory`,{_id,status})
+  }
+
+  deleteCategory(_id:string){
+    return this.http.delete<i_customCategory>(`/admin/deleteCategory/${_id}`)
+  }
 
 
 

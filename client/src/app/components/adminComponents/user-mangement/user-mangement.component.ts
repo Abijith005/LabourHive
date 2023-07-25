@@ -36,38 +36,29 @@ export class UserMangementComponent implements OnInit {
     this.service.blockStatus(id, status).subscribe(res => {
       if (res.success) {
         this.store.dispatch(blockUser({ _id: id }))
-        this.userDatas$ = this.store.select('adminData').pipe(map((state)=>{
+        this.userDatas$ = this.store.select('adminData').pipe(map((state) => {
           return state.datas!
         }))
-
-        const title = 'Success!!'
-        const message = res.message
-        const layoutType = DialogLayoutDisplay.SUCCESS
-        this.helper.showToaster(title, message, layoutType)
-
-
       }
 
-      else {
-        const title = 'Faiiled!!'
-        const message = res.message
-        const layoutType = DialogLayoutDisplay.DANGER
-        this.helper.showToaster(title, message, layoutType)
-      }
-    }) 
+      const message = res.message
+      this.helper.showToaster(message, res.success)
+
+
+    })
 
   }
 
   searchUser() {
     console.log(this.keyWord);
-    
-    this.userDatas$=this.store.select('adminData').pipe(
-      map((state)=>{
-      return state.datas?.filter((user)=>
-        user.name.includes(this.keyWord)||user.email.includes(this.keyWord)
-      )||[]
-    }))
-   
+
+    this.userDatas$ = this.store.select('adminData').pipe(
+      map((state) => {
+        return state.datas?.filter((user) =>
+          user.name.includes(this.keyWord) || user.email.includes(this.keyWord)
+        ) || []
+      }))
+
   }
 }
 
