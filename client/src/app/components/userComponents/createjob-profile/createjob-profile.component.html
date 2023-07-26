@@ -1,45 +1,68 @@
-<p style="margin-top: 80px;">createjob-profile works!</p>
-
-<mat-dialog-content >
-    <div class="form-content" *ngIf="!isLoading">
-        <header class="text-center mb-5">
-            <h2>Edit Category</h2>
+<mat-dialog-content  >
+    <div class="form-content " *ngIf="!isLoading">
+        <header class="text-center mb-3">
+            <h2><b>Create Job Profile</b></h2>
         </header>
         <form [formGroup]="jobProfileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">        
-            <div class="mb-4">
+            <div class="mb-2">
                 <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['name'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['name'].errors?.hasOwnProperty('required')?'Name is required':'Name'}}</label>
                 <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid':isSubmitted&&formControls['name'].invalid}">
             </div>
             
-            <div class="mb-4">
+            <div class="mb-2">
                 <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['category'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['category'].errors?.hasOwnProperty('required')?'Category is required':'Category '}}</label>
-                <input type="text" class="form-control" formControlName="category" [ngClass]="{'is-invalid':isSubmitted&&formControls['category'].invalid}">
+                <select name="form-select" class="form-control form-select" formControlName="category" aria-label="Default select example" [ngClass]="{'isInvalid':isSubmitted&&formControls['category'].invalid}">
+                    <option selected >Select Category</option>
+                    <option  *ngFor="let item of categories" >{{item.name}}</option>
+                </select>
             </div>
             
-            <div class="mb-4">
-                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['experience'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['experience'].errors?.hasOwnProperty('required')?'Experience is required':'Experience '}}</label>
-                <input type="text" class="form-control"  formControlName="experience" [ngClass]="{'is-invalid':isSubmitted&&formControls['experience'].invalid}">
+            <div class="mb-2">
+                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['experience'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['experience'].errors?.hasOwnProperty('required')?'Experience is required':(isSubmitted&&formControls['experience'].errors?.hasOwnProperty('pattern')?'Invalid type':'Experience')}}</label>             
+                   <input type="text" class="form-control"  formControlName="experience" [ngClass]="{'is-invalid':isSubmitted&&formControls['experience'].invalid}">
             </div>
 
-            <div class="mb-4">
-                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['basicWage'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['basicWage'].errors?.hasOwnProperty('required')?'Basic wage required':(isSubmitted&&formControls['basicWage'].errors?.hasOwnProperty('pattern')?'Invalid type':'Basic Wage')}}</label>
-                <input type="text" class="form-control"  formControlName="basicWage" [ngClass]="{'is-invalid':isSubmitted&&formControls['basicWage'].errors}">
+            <div class="mb-2">
+                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['wage'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['wage'].errors?.hasOwnProperty('required')?'Wage is required':(isSubmitted&&formControls['wage'].errors?.hasOwnProperty('pattern')?'Invalid type':'Wage')}}</label>
+                <input type="text" class="form-control"  formControlName="wage" [ngClass]="{'is-invalid':isSubmitted&&formControls['wage'].errors}">
               </div>
 
-              <div class="mb-4">
-                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['experience'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['experience'].errors?.hasOwnProperty('required')?'Experience is required':'Experience '}}</label>
-                <input type="text" class="form-control"  formControlName="self" [ngClass]="{'is-invalid':isSubmitted&&formControls['experience'].invalid}">
+              <div class="mb-2">
+                <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['selfDescription'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['selfDescription'].errors?.hasOwnProperty('required')?'Self description is required':'Self Description'}}</label>
+                <textarea name="" id="" cols="30" rows="3" class="form-control"  formControlName="selfDescription" [ngClass]="{'is-invalid':isSubmitted&&formControls['selfDescription'].invalid}"></textarea>
             </div>
 
-            <div class="mb-4">
-                <img class="image" [src]="" alt="">
+            
+            
+            <div class="mb-2">
+              <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['location'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['location'].errors?.hasOwnProperty('required')?'Location is required':'Location'}}</label>
+              <input type="text" class="form-control"  formControlName="location" [ngClass]="{'is-invalid':isSubmitted&&formControls['location'].invalid}">
+          </div>
+
+            <div class="mb-2">
+                <img class="image" [src]="finalProfilePic" alt="">
               </div>
             
-              <div class="mb-4">
-                <label for="exampleInputEmail1" class="form-label">VectorImage</label>
-                <input type="file" class="form-control" formControlName="vectorImage" (change)="onProfilePicSelect($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['vectorImage'].errors}">
+              <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Profile Picture</label>
+                <input type="file" class="form-control" formControlName="profilePic" (change)="onProfilePicSelect($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['profilePic'].errors}">
             </div>
-              <div class="buttons mt-5">
+
+            <div class="mb-2 row">
+                <div class="col-md-3 col-4 d-flex flex-column text-center"*ngFor="let item of workImages,let i=index">
+                    <img class="image me-1" [src]="item" alt="">
+                    <i class="ri-delete-bin-line" (click)="deleteImage(i)" style="cursor: pointer;"></i>
+
+                </div>
+
+              </div>
+            
+              <div class="mb-2">
+                <label for="exampleInputEmail1" class="form-label">Work Images</label>
+                <input type="file" class="form-control" formControlName="workImages" (change)="onWorkImageSelect($event)">
+            </div>
+
+              <div class="buttons mt-3" >
                   <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
                   <button matDialogClose="" type="button" style="float: right;" class="me-2 btn btn-danger ">Cancel</button>
               </div>

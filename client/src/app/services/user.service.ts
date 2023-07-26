@@ -50,6 +50,7 @@ return this.http.post<i_authRes>(`/register`,datas)
     return this.http.get<i_customCategory>(`/getCategoryDetails`)
   }
 
+
   userLogout(){
     return this.http.get<i_authRes>(`/logout`)
   }

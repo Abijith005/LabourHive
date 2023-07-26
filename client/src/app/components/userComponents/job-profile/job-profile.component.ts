@@ -16,6 +16,7 @@ export class JobProfileComponent {
         
     this.matDialog.open(CreatejobProfileComponent,{
       width:'450px',
+      height:'900px',
       disableClose:true
     })
   }

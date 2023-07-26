@@ -1,0 +1,20 @@
+mat-dialog-content{
+    max-height: 95vh;
+    
+}
+
+.isInvalid{
+    border-color: red;
+}
+
+.image {
+    max-width: 100%;
+    max-height: 80px; 
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+
+
+
