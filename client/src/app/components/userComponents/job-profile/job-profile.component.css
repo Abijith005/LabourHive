@@ -1,9 +1,17 @@
 .workImage{
-    width: 300px;object-fit: contain;
-    margin-bottom: 20px;
+    width: 300px;
+    object-fit: contain;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     margin-bottom: 1.8rem;
+}
+
+@media (max-width:768px){
+    .workImage{
+        width: 200px;
+        object-fit: contain;
+
+    }
 }
 
 

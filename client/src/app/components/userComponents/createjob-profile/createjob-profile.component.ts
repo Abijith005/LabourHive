@@ -11,6 +11,8 @@ export class CreatejobProfileComponent implements OnInit {
   jobProfileForm:FormGroup=new FormGroup({})
   isLoading:boolean=false
   isSubmitted=false
+  profilePic!:File
+  finalProfilePic:string=''
 
   constructor(private fb:FormBuilder,
     
@@ -40,8 +42,23 @@ export class CreatejobProfileComponent implements OnInit {
    return this.jobProfileForm.controls
   }
 
-  onFileSelect(event:Event){
-    const input=event.target 
+  ImageTOBase(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      this.finalProfilePic = reader.result as string
+    }
+  }
+
+  onProfilePicSelect(event:Event){
+    const input=event.target as HTMLInputElement
+    if (input.files?.length!>0) {
+      this.profilePic=input.files![0]
+      this.ImageTOBase(this.profilePic)
+
+    }
+    
+
   }
 
 
