@@ -6,15 +6,6 @@
     margin-bottom: 1.8rem;
 }
 
-@media (max-width:768px){
-    .workImage{
-        width: 200px;
-        object-fit: contain;
-
-    }
-}
-
-
 
 .profile-pic{
     height: 200px;
@@ -22,12 +13,6 @@
      border: thin solid rgba(0, 0, 0, 0.35);
 }
 
-@media (max-width:768px) {
-    .profile-pic{
-
-        height: 100px;
-    }
-}
 
 .statement{
     text-align: justify;
@@ -41,4 +26,50 @@
 .container-fluid{
     border-radius: 20px;
 
+}
+
+
+
+
+
+@media (max-width:768px){
+    .workImage{
+        width: 200px;
+        object-fit: contain;
+
+    }
+
+    .profile-pic{
+
+        height: 100px;
+    }
+
+    .name{
+        font-size: 20px;
+    }
+    
+    .details{
+        font-size: 14px;
+        margin: 5px;
+    }
+
+    .container{
+    margin-top: 75px;
+    }
+
+    .description{
+        font-size: 12px;
+        margin-bottom: 20px;
+        line-height: 18px;
+    }
+    
+    .btn{
+        font-size: 12px;
+        padding: 5px 10px;
+
+    }
+
+    .workImage{
+        width: 180px;
+    }
 }

@@ -1,3 +1,53 @@
-.key{
-    margin-right: 8rem;
+.search-box{
+    background-color: rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    border: thin solid rgba(0, 0, 0, 0.3);
+    padding-top: 2em;
+}
+
+.search{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2em;
+    padding-top: 1em;
+}
+
+.suggestion{
+    opacity: 0.6;
+}
+
+@media (max-width:768px){
+   .search-box{
+    padding-top: .5em;
+   }
+   .search{
+    padding-bottom: 1em;
+    padding-top: .5em;
+
+   }
+   .slogan{
+    font-size: 17px;
+   }
+
+
+   .suggestion{
+    font-size: 10px;
+    margin-left: 7px;
+   }
+  .form-control{
+   
+        width: 130px;
+        height: 25px; 
+
+        font-size: 12px; 
+    }
+
+    .btn {
+        font-size: 10px;
+        padding: 5px 10px; 
+    }
+  
 }
