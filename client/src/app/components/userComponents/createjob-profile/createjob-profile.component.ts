@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
+import { i_registerJobProfile } from 'src/app/interfaces/userInterfaces/i_registerJobProfile';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,10 +14,9 @@ export class CreatejobProfileComponent implements OnInit {
   jobProfileForm: FormGroup = new FormGroup({})
   isLoading: boolean = false
   isSubmitted = false
-  profilePic!: File
-  finalProfilePic: string = ''
+  profilePic: string = ''
   categories: i_categoryResponse[] | null = null
-  workImages:string[]=[]
+  workImages: string[] = []
 
   constructor(private fb: FormBuilder,
     private service: UserService
@@ -41,8 +41,8 @@ export class CreatejobProfileComponent implements OnInit {
 
     })
 
-    this.service.getCategoryDetails().subscribe(res=>{
-      this.categories=res.categories||[]
+    this.service.getCategoryDetails().subscribe(res => {
+      this.categories = res.categories || []
     })
 
 
@@ -54,49 +54,68 @@ export class CreatejobProfileComponent implements OnInit {
     return this.jobProfileForm.controls
   }
 
-  ImageTOBase(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      this.finalProfilePic = reader.result as string      
-    }
-  }
+  // ImageTOBase(file: File) {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onloadend = () => {
+  //     this.finalProfilePic = reader.result as string
+  //   }
+  // }
 
   onProfilePicSelect(event: Event) {
     const input = event.target as HTMLInputElement
     if (input.files?.length! > 0) {
-      this.profilePic = input.files![0]
-      this.ImageTOBase(this.profilePic)
-    }
-  }
 
-  onWorkImageSelect(event:Event){    
-    const input=event.target as HTMLInputElement
-    if(input.files?.length!>0){
       const reader=new FileReader()
       reader.readAsDataURL(input.files![0])
       reader.onloadend=()=>{
+        this.profilePic=reader.result as string
+      }
+
+    }
+  }
+
+  onWorkImageSelect(event: Event) {
+    const input = event.target as HTMLInputElement
+    if (input.files?.length! > 0) {
+      const reader = new FileReader()
+      reader.readAsDataURL(input.files![0])
+      reader.onloadend = () => {
         this.workImages?.push(reader.result as string)
       }
     }
 
-    
+
   }
 
-  deleteImage(index:number){
+  deleteImage(index: number) {
     console.log(index);
-    this.workImages.splice(index,1)
-    
+    this.workImages.splice(index, 1)
+
   }
 
 
 
   onSubmit() {
     this.isSubmitted = true
-    if (this.formControls['category'].value==='Select Category') {
-      this.formControls['category'].setErrors({required:true})
-     this.isSubmitted=false
-     return
+    if (this.formControls['category'].value === 'Select Category') {
+      this.formControls['category'].setErrors({ required: true })
+      this.isSubmitted = false
+      return
+    }
+
+    const formData: i_registerJobProfile = {
+
+      name: this.formControls['name'].value,
+      category: this.formControls['category'].value,
+      wage: this.formControls['wage'].value,
+      experience: this.formControls['experience'].value,
+      profilePic: this.profilePic,
+      selfDescription: this.formControls['selfDescription'].value,
+      location: this.formControls['location'].value,
+      workImages: this.workImages
+
+
     }
 
 

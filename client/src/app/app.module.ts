@@ -39,6 +39,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EditCategoryComponent } from './components/adminComponents/edit-category/edit-category.component';
 import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
+import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import { CreatejobProfileComponent } from './components/userComponents/createjob
     EditCategoryComponent,
     JobProfileComponent,
     CreatejobProfileComponent,
+    ViewJobsComponent,
   ],
   imports: [
     BrowserModule,

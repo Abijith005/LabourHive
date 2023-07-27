@@ -14,16 +14,25 @@ import { WalletMangementComponent } from './components/adminComponents/wallet-ma
 import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
 import { NavBarComponent } from './components/userComponents/nav-bar/nav-bar.component';
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
+import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
 
-const routes: Routes = [{ path: '', component: NavBarComponent ,
+const routes: Routes =
+
+//user paths
+
+[{ path: '', component: NavBarComponent ,
 children:[{path:'',component:UserHomeComponent},
 {path:'jobProfile',component:JobProfileComponent},
-{path:'cjp',component:CreatejobProfileComponent}
+{path:'createJobProfile',component:CreatejobProfileComponent},
+{path:'viewJobs',component:ViewJobsComponent}
 ] },
+
+
 { path: 'login', component: UserLoginComponent, canActivate: [authLogin] },
 { path: 'register', component: UserRegisterComponent, canActivate: [authLogin] },
 
 
+//admin paths
 
 { path: 'adminLogin', component: AdminLoginComponent },
 {
