@@ -34,19 +34,12 @@ export class NavBarComponent implements OnInit {
       this.userLoggedIn = false
     }
 
-    // this.store.select('auth').subscribe(state=>{      
-      
-    //   this.userInformations=state?.userDatas
-      
-    // })
 
     this.userInformations$=this.store.select('auth').pipe(
       map((state)=>{
         return state.userDatas!
       })
     )
-
-  
 
   }
 

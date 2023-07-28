@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { i_registerJobProfile } from 'src/app/interfaces/userInterfaces/i_registerJobProfile';
 import { UserService } from 'src/app/services/user.service';
@@ -54,18 +54,11 @@ export class CreatejobProfileComponent implements OnInit {
     return this.jobProfileForm.controls
   }
 
-  // ImageTOBase(file: File) {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onloadend = () => {
-  //     this.finalProfilePic = reader.result as string
-  //   }
-  // }
+
 
   onProfilePicSelect(event: Event) {
     const input = event.target as HTMLInputElement
     if (input.files?.length! > 0) {
-
       const reader=new FileReader()
       reader.readAsDataURL(input.files![0])
       reader.onloadend=()=>{
@@ -84,7 +77,6 @@ export class CreatejobProfileComponent implements OnInit {
         this.workImages?.push(reader.result as string)
       }
     }
-
 
   }
 

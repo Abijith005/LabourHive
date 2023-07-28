@@ -5,37 +5,48 @@
     align-items: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     border: thin solid rgba(0, 0, 0, 0.3);
-    padding-top: 2em;
+    padding-top: 1em;
 }
 
 .search{
     display: flex;
     justify-content: center;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
     padding-top: 1em;
+    gap: 10px;
 }
 
 .suggestion{
     opacity: 0.6;
 }
 
+.slogan{
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.jobs{
+    width: 300px;
+    gap: 20px;
+    background-color: rgba(244, 244, 244, 1);
+}
+
+
 @media (max-width:768px){
    .search-box{
     padding-top: .5em;
    }
-   .search{
-    padding-bottom: 1em;
-    padding-top: .5em;
 
-   }
-   .slogan{
-    font-size: 17px;
+   .search{
+    padding-bottom: 4px;
+    padding-top: .2em;
    }
 
 
    .suggestion{
     font-size: 10px;
-    margin-left: 7px;
+    padding-left: 25px;
+    margin-bottom: 2px;
    }
   .form-control{
    

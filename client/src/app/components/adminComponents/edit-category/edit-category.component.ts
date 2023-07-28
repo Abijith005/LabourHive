@@ -68,6 +68,43 @@ export class EditCategoryComponent implements OnInit {
     return this.editCategoryForm.controls
   }
 
+
+
+
+  async ImageOBase(file: File) {
+
+    try {
+
+      const base64Data=await new Promise<string>((resolve,reject)=>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          return reader.result as string
+        }
+      })
+
+      this.finalImage=base64Data
+    
+    } catch (error) {
+      
+      console.log("Error",error);
+      
+    }
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
   ImageTOBase(file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);

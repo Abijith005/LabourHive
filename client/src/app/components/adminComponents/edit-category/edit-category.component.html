@@ -16,7 +16,7 @@
               </div>
 
             <div class="mb-4">
-                <img class="image" [src]="(categoryData$|async)?.vectorImage?.url" alt="">
+                <img class="image"  [src]="finalImage?finalImage:(categoryData$|async)?.vectorImage?.url" alt="">
               </div>
             
               <div class="mb-4">

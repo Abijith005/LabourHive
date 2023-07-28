@@ -17,7 +17,7 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
         'Authorization': 'Bearer ${token}'
       },
       withCredentials:true,
-      url: environment.apiUrl + request.url
+      url: environment.API_URL + request.url
     })
     return next.handle(modifiedRequest);
   }
