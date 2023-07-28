@@ -40,6 +40,7 @@ import { EditCategoryComponent } from './components/adminComponents/edit-categor
 import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
 import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
+import { MapboxService } from './services/mapbox.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,7 +88,8 @@ import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jo
   ],
   providers: [
     CookieService,
-    {provide:HTTP_INTERCEPTORS,useClass:UserInterceptorInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:UserInterceptorInterceptor,multi:true},
+    MapboxService
   ],
   bootstrap: [AppComponent]
 })

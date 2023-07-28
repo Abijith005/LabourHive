@@ -33,11 +33,21 @@
             </div>
 
             
+
+            <!-- createjob-profile.component.html -->
+
+<input type="text" (input)="fetchSuggestions($event.target?.value)">
+<ul>
+  <li *ngFor="let suggestion of suggestions">
+    {{ suggestion.location }}
+  </li>
+</ul>
+
             
-            <div class="mb-2">
+            <!-- <div class="mb-2">
               <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['location'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['location'].errors?.hasOwnProperty('required')?'Location is required':'Location'}}</label>
               <input type="text" class="form-control"  formControlName="location" [ngClass]="{'is-invalid':isSubmitted&&formControls['location'].invalid}">
-          </div>
+          </div> -->
 
             <div class="mb-2">
                 <img class="image" *ngIf="profilePic" [src]="profilePic" alt="">
