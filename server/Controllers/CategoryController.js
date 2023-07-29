@@ -35,6 +35,7 @@ export async function addCategory(req, res) {
 
 
 
+
 export async function getAllCategories(req, res) {
 
   try {
@@ -79,11 +80,13 @@ export async function updateCategory(req, res) {
   }
 }
 
+
+
 export async function blockCategory(req, res) {
   try {
 
     const { _id, status } = req.body
-    const message=status?'Category unblocked successfully':'Category blocked successfully'
+    const message = status ? 'Category unblocked successfully' : 'Category blocked successfully'
     await categoryModel.updateOne({ _id: _id }, { $set: { blockStatus: !status } })
     const categories = await categoryModel.find().lean()
 
@@ -94,6 +97,8 @@ export async function blockCategory(req, res) {
     console.log('Error', error);
   }
 }
+
+
 
 export async function deleteCategory(req, res) {
   try {

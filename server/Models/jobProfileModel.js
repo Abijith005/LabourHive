@@ -7,7 +7,7 @@ const jobProfileSchema = mongoose.Schema({
         required: [true, 'userId is required']
     },
     profilePic: {
-        type: Object,
+        type: String,
         required: [true, 'Image is required']
     },
     name: {
@@ -45,15 +45,17 @@ const jobProfileSchema = mongoose.Schema({
         required:[false,'Location is required']
     },
 
-    rating:{
-        type:Number,
-        required:[true,'Rating is required']
+    coordiantes:{
+        type:Array,
+        required:[true,'Coordinate is required']
     },
 
-    blockStatus:{
-        type:Boolean,
-        default:false
-    }
+    rating:{
+        type:Number,
+        default:0
+    },
+
+   
 })
 
 const jobProfileModel=mongoose.model('jobProfile',jobProfileSchema)

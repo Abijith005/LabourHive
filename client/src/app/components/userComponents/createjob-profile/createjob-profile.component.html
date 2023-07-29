@@ -62,7 +62,7 @@
             
               <div class="mb-2">
                 <label for="exampleInputEmail1" class="form-label">Work Images</label>
-                <input type="file" class="form-control" formControlName="workImages" (change)="onWorkImageSelect($event)">
+                <input type="file" class="form-control" formControlName="workImages" (change)="onWorkImageSelect($event)" multiple>
             </div>
 
               <div class="buttons mt-3" >
@@ -72,7 +72,7 @@
         </form>
     </div>
    <mat-dialog-content> 
-    <div class="load-container d-flex justify-content-center "*ngIf="isLoading">
+    <div class="load-container d-flex justify-content-center " *ngIf="isLoading" >
         <mat-spinner *ngIf="isLoading"></mat-spinner>
     </div>
 </mat-dialog-content>

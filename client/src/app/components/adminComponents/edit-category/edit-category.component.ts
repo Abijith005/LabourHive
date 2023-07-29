@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable, map, of, switchMap } from 'rxjs';
 import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
@@ -34,7 +33,6 @@ export class EditCategoryComponent implements OnInit {
     private dialogRef: MatDialogRef<EditCategoryComponent>,
     private helper: HelperService,
     private store: Store<adminDataState>,
-    private router:Router
 
 
   ) {
@@ -42,11 +40,16 @@ export class EditCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    //adding validations ad setting reactive form
+
     this.editCategoryForm = this.fb.group({
       name: ['', [Validators.required]],
       basicWage: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       vectorImage: ['', [Validators.required]]
     })
+
+    //Fetching category data from store
 
     this.categoryData$ = this.store.select('adminData').pipe(
       switchMap((state) => {
@@ -55,14 +58,15 @@ export class EditCategoryComponent implements OnInit {
       })
     );
 
+    //Setting initial values to the form
+
     this.categoryData$.subscribe(state => {
       this.editCategoryForm.patchValue(state)
-
     }).unsubscribe()
 
   }
 
-
+  //getting form controls
 
   get formControls() {
     return this.editCategoryForm.controls
@@ -70,39 +74,7 @@ export class EditCategoryComponent implements OnInit {
 
 
 
-
-  async ImageOBase(file: File) {
-
-    try {
-
-      const base64Data=await new Promise<string>((resolve,reject)=>{
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          return reader.result as string
-        }
-      })
-
-      this.finalImage=base64Data
-    
-    } catch (error) {
-      
-      console.log("Error",error);
-      
-    }
-
-
-
-
-  }
-
-
-
-
-
-
-
-
+  //convering image To Base64
 
 
   ImageTOBase(file: File) {
@@ -137,16 +109,16 @@ export class EditCategoryComponent implements OnInit {
       }
       this.isLoading = true
 
-     
+
       this.service.updateCategory(formData).subscribe((res) => {
         if (res.success) {
-          this.store.dispatch(getAllCategory({categories:res.categories!}))
-        } 
+          this.store.dispatch(getAllCategory({ categories: res.categories! }))
+        }
         this.isLoading = false
         this.dialogRef.close();
         const message = res.message
-         this.helper.showToaster(message,res.success)
-        
+        this.helper.showToaster(message, res.success)
+
       })
 
 

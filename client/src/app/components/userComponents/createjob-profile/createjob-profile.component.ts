@@ -22,7 +22,7 @@ export class CreatejobProfileComponent implements OnInit {
   //variable declarations
 
   jobProfileForm: FormGroup = new FormGroup({})
-  isLoading: boolean = false
+  isLoading: boolean = false  
   isSubmitted = false
   profilePic: string = ''
   categories: i_categoryResponse[] | null = null
@@ -84,19 +84,39 @@ export class CreatejobProfileComponent implements OnInit {
     }
   }
 
-  //event for getting image and converting it into base64 for workImage
+  //event hab=ndling funtion for getting image and converting it into base64 for workImage
+
 
   onWorkImageSelect(event: Event) {
-    const input = event.target as HTMLInputElement
-    if (input.files?.length! > 0) {
-      const reader = new FileReader()
-      reader.readAsDataURL(input.files![0])
-      reader.onloadend = () => {
-        this.workImages?.push(reader.result as string)
-      }
-    }
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      // Convert the FileList to an Array
+      const filesArray = Array.from(input.files);
+  
+      const fileReadPromises = filesArray.map((file) => this.readFileAsBase64(file));
+  
+      // Use Promise.all to handle all the asynchronous file reading operations
+      Promise.all(fileReadPromises).then((base64Strings) => {
 
+        this.workImages?.push(...base64Strings);
+      });
+    }
   }
+  
+  private readFileAsBase64(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        resolve(base64String);
+      };
+      reader.onerror = () => {
+        reject(new Error('Failed to read the file.'));
+      };
+    });
+  }
+
 
   //delete images from the array
 
@@ -156,23 +176,30 @@ export class CreatejobProfileComponent implements OnInit {
       return
     }
 
-    //form data to send to backend
-    const formData: i_registerJobProfile = {
-      name: this.formControls['name'].value,
-      category: this.formControls['category'].value,
-      wage: this.formControls['wage'].value,
-      experience: this.formControls['experience'].value,
-      profilePic: this.profilePic,
-      selfDescription: this.formControls['selfDescription'].value,
-      location: this.formControls['location'].value,
-      coordinates: this.coordinates!,
-      workImages: this.workImages
+    if (this.jobProfileForm.valid) {
+      
+      //form data to send to backend
+      const formData: i_registerJobProfile = {
+        name: this.formControls['name'].value,
+        category: this.formControls['category'].value,
+        wage: this.formControls['wage'].value,
+        experience: this.formControls['experience'].value,
+        profilePic: this.profilePic,
+        selfDescription: this.formControls['selfDescription'].value,
+        location: this.formControls['location'].value,
+        coordinates: this.coordinates!,
+        workImages: this.workImages
+      }
+  
+      // this.isLoading=true
+  
+      this.service.uploadJobProfile(formData).subscribe(res => {
+        this.isLoading=false
+        console.log(res, 'hjkhjhkj');
+  
+      })
     }
 
-    this.service.uploadJobProfile(formData).subscribe(res => {
-      console.log(res, 'hjkhjhkj');
-
-    })
 
   }
 }

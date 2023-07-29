@@ -259,17 +259,7 @@ export async function getUserDatas(req, res) {
 
 }
 
-export async function getCategoryDetails(req,res){
-    try {
 
-        const categories=await categoryModel.find().lean()
-        res.json({categories})
-        
-    } catch (error) {
-        
-        console.log('Error',error);
-    }
-}
 
 
 export async function userLogout(req, res) {
