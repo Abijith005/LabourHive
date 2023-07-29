@@ -10,7 +10,17 @@ import { environment } from '../environments/environment';
 export class UserInterceptorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
+
+    //Excluding Mapbox requests being interrupted
+
+    const isMapboxRequest=request.url.includes('api.mapbox.com')
+    if (isMapboxRequest) {
+      return next.handle(request)
+    }
     
+
+    //Modifying requests
+
     let modifiedRequest = request.clone({
       setHeaders:{
         'Content-Type': 'application/json',
@@ -19,6 +29,7 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
       withCredentials:true,
       url: environment.API_URL + request.url
     })
+    
     return next.handle(modifiedRequest);
   }
 }

@@ -7,5 +7,6 @@ export interface i_registerJobProfile {
     profilePic: string,
     selfDescription: string,
     location: string,
+    coordinates:number[]
     workImages: string[]
 }

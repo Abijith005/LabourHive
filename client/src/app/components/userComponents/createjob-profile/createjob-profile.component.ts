@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
+import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_registerJobProfile } from 'src/app/interfaces/userInterfaces/i_registerJobProfile';
 import { MapboxService } from 'src/app/services/mapbox.service';
 import { UserService } from 'src/app/services/user.service';
+
+interface i_suggessions {
+  location: string,
+  coordinates: number[]
+}
 
 @Component({
   selector: 'app-createjob-profile',
@@ -21,13 +27,13 @@ export class CreatejobProfileComponent implements OnInit {
   profilePic: string = ''
   categories: i_categoryResponse[] | null = null
   workImages: string[] = []
-  suggestions: any[] = [];
-  coordinates: number[] = [];
+  suggestions: i_suggessions[] = [];
+  coordinates: number[] | null = null
 
 
   constructor(private fb: FormBuilder,
     private service: UserService,
-    private mapboxService:MapboxService
+    private mapboxService: MapboxService
 
   ) { }
 
@@ -54,11 +60,10 @@ export class CreatejobProfileComponent implements OnInit {
       this.categories = res.categories || []
     })
 
-
   }
 
 
-  //get form controls
+  //getting form controls
 
   get formControls() {
     return this.jobProfileForm.controls
@@ -96,33 +101,44 @@ export class CreatejobProfileComponent implements OnInit {
   //delete images from the array
 
   deleteImage(index: number) {
-    console.log(index);
     this.workImages.splice(index, 1)
 
   }
 
 
-//fetch suggessions for locations
+  // getting suggessions for location using mapbox
 
-fetchSuggestions(value: string) {
-  this.mapboxService.getSuggestions(value).subscribe(
-    (response) => {
-      this.suggestions = response.features.map((feature) => ({
-        location: feature.place_name,
-        coordinates: feature.center,
-      }));
-      this.setCoordinates(response.features[0].center);
-    },
-    (error) => {
-      console.error('Error fetching suggestions:', error);
+  fetchSuggestions(event: Event) {
+    const inputElement = event.target as HTMLInputElement
+    const value = inputElement.value
+
+    if (!value) {
+      this.suggestions = [];
+      return;
     }
-  );
-}
+    this.mapboxService.getSuggestions(value).subscribe(
+      (response: i_mapboxResp) => {
+        this.suggestions = response.features.map((feature) => ({
+          location: feature.place_name,
+          coordinates: feature.center,
+        }));
 
-setCoordinates(center: number[]) {
-  this.coordinates = center;
-}
+      },
+      (error) => {
+        console.error('Error fetching suggestions:', error);
+      }
+    );
+  }
 
+
+  //setting suggested value to location
+
+  onSuggestionClick(suggestion: i_suggessions) {
+    this.formControls['location'].setValue(suggestion.location)
+    this.coordinates = suggestion.coordinates
+    this.suggestions = []
+
+  }
 
 
 
@@ -149,11 +165,14 @@ setCoordinates(center: number[]) {
       profilePic: this.profilePic,
       selfDescription: this.formControls['selfDescription'].value,
       location: this.formControls['location'].value,
+      coordinates: this.coordinates!,
       workImages: this.workImages
-
-
     }
 
+    this.service.uploadJobProfile(formData).subscribe(res => {
+      console.log(res, 'hjkhjhkj');
+
+    })
 
   }
 }

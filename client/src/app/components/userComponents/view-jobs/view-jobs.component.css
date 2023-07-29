@@ -26,8 +26,8 @@
 }
 
 .jobs{
-    width: 300px;
-    gap: 20px;
+    width: 250px;
+    /* gap: 20px; */
     background-color: rgba(244, 244, 244, 1);
 }
 

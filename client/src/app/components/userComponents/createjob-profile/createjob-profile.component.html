@@ -32,22 +32,15 @@
                 <textarea name="" id="" cols="30" rows="3" class="form-control"  formControlName="selfDescription" [ngClass]="{'is-invalid':isSubmitted&&formControls['selfDescription'].invalid}"></textarea>
             </div>
 
-            
-
-            <!-- createjob-profile.component.html -->
-
-<input type="text" (input)="fetchSuggestions($event.target?.value)">
-<ul>
-  <li *ngFor="let suggestion of suggestions">
-    {{ suggestion.location }}
-  </li>
-</ul>
-
-            
-            <!-- <div class="mb-2">
+            <div class="mb-2">
               <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['location'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['location'].errors?.hasOwnProperty('required')?'Location is required':'Location'}}</label>
-              <input type="text" class="form-control"  formControlName="location" [ngClass]="{'is-invalid':isSubmitted&&formControls['location'].invalid}">
-          </div> -->
+              <input type="text" class="form-control" (input)="fetchSuggestions($event)"  formControlName="location" [ngClass]="{'is-invalid':isSubmitted&&formControls['location'].invalid}">
+              <ul class="suggestions-list">
+                <li *ngFor="let suggestion of suggestions" (click)="onSuggestionClick(suggestion)">
+                  {{ suggestion.location }}
+                </li>
+              </ul>
+          </div>
 
             <div class="mb-2">
                 <img class="image" *ngIf="profilePic" [src]="profilePic" alt="">

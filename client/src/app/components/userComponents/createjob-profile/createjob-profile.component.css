@@ -13,6 +13,16 @@ mat-dialog-content{
     object-fit: contain;
   }
 
+  .suggestions-list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .suggestions-list li{
+    padding: 5px 10px;
+    cursor: pointer;
+  }
 
 
 

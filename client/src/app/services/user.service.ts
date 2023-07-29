@@ -6,6 +6,7 @@ import { i_Password } from '../interfaces/userInterfaces/i_password';
 import { i_authRes } from '../interfaces/userInterfaces/i_authRes';
 import { i_UserDetails } from '../interfaces/userInterfaces/i_user-details';
 import { i_customCategory } from '../interfaces/adminInterfaces/i_customCategory';
+import { i_registerJobProfile } from '../interfaces/userInterfaces/i_registerJobProfile';
 
 @Injectable({
   providedIn: 'root'
@@ -13,47 +14,52 @@ import { i_customCategory } from '../interfaces/adminInterfaces/i_customCategory
 export class UserService {
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
 
-  userRegister(datas:i_RegisterDatas){
-return this.http.post<i_authRes>(`/register`,datas)
+  userRegister(datas: i_RegisterDatas) {
+    return this.http.post<i_authRes>(`/register`, datas)
   }
 
-  postRegisterOtp(otp:string,userData:i_RegisterDatas){
-    const datas={...userData,otp}
-    return this.http.post<i_authRes>(`/submitOtp`,datas)
+  postRegisterOtp(otp: string, userData: i_RegisterDatas) {
+    const datas = { ...userData, otp }
+    return this.http.post<i_authRes>(`/submitOtp`, datas)
   }
 
-  userLogin(datas:i_LoginDatas){
-   return this.http.post<i_authRes&i_UserDetails>(`/login`,datas)
+  userLogin(datas: i_LoginDatas) {
+    return this.http.post<i_authRes & i_UserDetails>(`/login`, datas)
   }
 
-  forgotPassoword(email:string){
-    return this.http.post<i_authRes>(`/forgotPassword`,{email})
+  forgotPassoword(email: string) {
+    return this.http.post<i_authRes>(`/forgotPassword`, { email })
   }
 
-  submitForgotPasswordOtp(otp:string){
-    return this.http.post<i_authRes>(`/submitForgotOtp`,{otp})
+  submitForgotPasswordOtp(otp: string) {
+    return this.http.post<i_authRes>(`/submitForgotOtp`, { otp })
   }
 
-  changePassword(data:i_Password){
-    return this.http.put<i_authRes>(`/changePassword`,data)
+  changePassword(data: i_Password) {
+    return this.http.put<i_authRes>(`/changePassword`, data)
 
   }
 
-  getUserDatas(){
+  getUserDatas() {
     return this.http.get<i_UserDetails>('/getUserDatas')
   }
 
-  getCategoryDetails(){
+  getCategoryDetails() {
     return this.http.get<i_customCategory>(`/getCategoryDetails`)
   }
 
+  uploadJobProfile(data: i_registerJobProfile) {
+    return this.http.post<i_authRes>(`/uploadJobProfile`, data)
+  }
 
-  userLogout(){
+  userLogout() {
     return this.http.get<i_authRes>(`/logout`)
   }
+
+
 
 
 }
