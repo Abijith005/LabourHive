@@ -191,7 +191,7 @@ export class CreatejobProfileComponent implements OnInit {
         workImages: this.workImages
       }
   
-      // this.isLoading=true
+      this.isLoading=false
   
       this.service.uploadJobProfile(formData).subscribe(res => {
         this.isLoading=false

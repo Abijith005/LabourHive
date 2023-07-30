@@ -4,7 +4,6 @@ import { sentOtp } from "../Helpers/nodeMailer.js";
 import bcrypt from 'bcrypt'
 let otpp, eml
 import { generateOtp } from '../Helpers/generateOtp.js';
-import categoryModel from '../Models/categoryModel.js';
 
 
 

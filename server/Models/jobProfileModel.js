@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const jobProfileSchema = mongoose.Schema({
 
-    userId: {
+    user_id: {
         type: String,
         required: [true, 'userId is required']
     },
@@ -20,8 +20,8 @@ const jobProfileSchema = mongoose.Schema({
         required: [true, 'Category required']
     },
 
-    expereince:{
-        type:Number,
+    experience:{
+        type:String,
         required:[true,'Experience is required']
     },
 
@@ -37,7 +37,7 @@ const jobProfileSchema = mongoose.Schema({
 
     workImages:{
         type:Array,
-        default:[]
+        default:[]     
     },
 
     location:{
@@ -45,7 +45,7 @@ const jobProfileSchema = mongoose.Schema({
         required:[false,'Location is required']
     },
 
-    coordiantes:{
+    coordinates:{
         type:Array,
         required:[true,'Coordinate is required']
     },
@@ -59,4 +59,4 @@ const jobProfileSchema = mongoose.Schema({
 })
 
 const jobProfileModel=mongoose.model('jobProfile',jobProfileSchema)
-export default jobProfileModel
+export default jobProfileModel 

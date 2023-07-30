@@ -22,7 +22,6 @@ export class UserHomeComponent implements OnInit {
 ngOnInit(): void {
   this.service.getCategoryDetails().subscribe(res=>{
 this.categories=res.categories!
-console.log(this.categories,'catdjkddkjhjskhk');
 
   })
 }
