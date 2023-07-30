@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_registerJobProfile } from 'src/app/interfaces/userInterfaces/i_registerJobProfile';
@@ -22,7 +23,7 @@ export class CreatejobProfileComponent implements OnInit {
   //variable declarations
 
   jobProfileForm: FormGroup = new FormGroup({})
-  isLoading: boolean = false  
+  isLoading: boolean = false
   isSubmitted = false
   profilePic: string = ''
   categories: i_categoryResponse[] | null = null
@@ -33,7 +34,8 @@ export class CreatejobProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private service: UserService,
-    private mapboxService: MapboxService
+    private mapboxService: MapboxService,
+    private dialogRef: MatDialogRef<CreatejobProfileComponent>
 
   ) { }
 
@@ -59,6 +61,8 @@ export class CreatejobProfileComponent implements OnInit {
     this.service.getCategoryDetails().subscribe(res => {
       this.categories = res.categories || []
     })
+
+
 
   }
 
@@ -92,9 +96,9 @@ export class CreatejobProfileComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       // Convert the FileList to an Array
       const filesArray = Array.from(input.files);
-  
+
       const fileReadPromises = filesArray.map((file) => this.readFileAsBase64(file));
-  
+
       // Use Promise.all to handle all the asynchronous file reading operations
       Promise.all(fileReadPromises).then((base64Strings) => {
 
@@ -102,7 +106,7 @@ export class CreatejobProfileComponent implements OnInit {
       });
     }
   }
-  
+
   private readFileAsBase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -177,7 +181,7 @@ export class CreatejobProfileComponent implements OnInit {
     }
 
     if (this.jobProfileForm.valid) {
-      
+
       //form data to send to backend
       const formData: i_registerJobProfile = {
         name: this.formControls['name'].value,
@@ -190,13 +194,18 @@ export class CreatejobProfileComponent implements OnInit {
         coordinates: this.coordinates!,
         workImages: this.workImages
       }
-  
-      this.isLoading=false
-  
+
+      this.isLoading = true
+
+      //reducing size if the modal
+      this.dialogRef.updateSize('450px','190px')
+
+
       this.service.uploadJobProfile(formData).subscribe(res => {
-        this.isLoading=false
+        this.isLoading = false
+        this.dialogRef.close()
         console.log(res, 'hjkhjhkj');
-  
+
       })
     }
 

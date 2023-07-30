@@ -1,4 +1,4 @@
-<mat-dialog-content  >
+<mat-dialog-content >
     <div class="form-content " *ngIf="!isLoading">
         <header class="text-center mb-3">
             <h2><b>Create Job Profile</b></h2>
@@ -71,10 +71,5 @@
               </div>
         </form>
     </div>
-   <mat-dialog-content> 
-    <div class="load-container d-flex justify-content-center " *ngIf="isLoading" >
-        <mat-spinner *ngIf="isLoading"></mat-spinner>
-    </div>
-</mat-dialog-content>
-
+    <app-loading *ngIf="isLoading"></app-loading>
 </mat-dialog-content>

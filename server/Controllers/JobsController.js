@@ -25,7 +25,6 @@ export async function createJobProfile(req, res) {
     res.json({ success: true, message: 'Job profile created successfully' })
 
 
-    console.log(modell);
   } catch (error) {
     console.log('Error', error);
   }

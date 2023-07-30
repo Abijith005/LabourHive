@@ -41,6 +41,7 @@ import { JobProfileComponent } from './components/userComponents/job-profile/job
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
 import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
 import { MapboxService } from './services/mapbox.service';
+import { LoadingComponent } from './components/commonComponents/loading/loading.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +66,7 @@ import { MapboxService } from './services/mapbox.service';
     JobProfileComponent,
     CreatejobProfileComponent,
     ViewJobsComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
