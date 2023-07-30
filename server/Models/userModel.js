@@ -36,6 +36,8 @@ const userSchema = new mongoose.Schema({
         required:[true,'google login status is required']
     },
 
+   
+
  
 })
 

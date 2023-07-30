@@ -1,4 +1,4 @@
-export interface i_registerJobProfile {
+export interface i_jobProfile {
 
     name: string,
     category: string,
@@ -8,5 +8,6 @@ export interface i_registerJobProfile {
     selfDescription: string,
     location: string,
     coordinates:number[]
-    workImages: string[]
+    workImages: string[],
+    rating?:number
 }

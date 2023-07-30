@@ -1,36 +1,44 @@
-<div class="container p-0">
+<div class="container p-0" *ngIf="!createJobProfile">
     <div class="container-fluid shadow">
         <div class=" row header d-flex flex-row mb-2">
             <div class="col-md-3 mt-3 d-none d-md-block">
-                <img src="../../../../assets/userAssets/images/1408.jpg" alt="" class="profile-pic">
+                <img src="{{jobProfileDetails?.profilePic}}" alt="" class="profile-pic">
             </div>
             <div class="details col md-6 mt-3">
                 <div class="name d-flex justify-content-between">
                     <div class="col-md-3  d-block d-md-none">
-                        <img src="../../../../assets/userAssets/images/1408.jpg" alt="" class="profile-pic">
-                    </div>
-                    <div  >
-                        <h1 class="name"><b>Abijith Surendran</b></h1>
-                        <h2 class="name" style="color: blue;">Welder</h2>
+                        <img src="{{jobProfileDetails?.profilePic}}" alt="" class="profile-pic">
                     </div>
                     <div>
-                        <button class="btn btn-success me-2" (click)="openDialogEditCategory()"><i class="ri-edit-box-line"></i> &nbsp; Edit</button>
+                        <h1 class="name"><b>{{jobProfileDetails?.name}}</b></h1>
+                        <h2 class="name" style="color: blue;">{{jobProfileDetails?.category}}</h2>
+                    </div>
+                    <div>
+                        <button class="btn btn-success me-2" (click)="oppenDialogEditJobProfile()"><i
+                                class="ri-edit-box-line"></i> &nbsp; Edit</button>
                     </div>
 
                 </div>
                 <div class="row mt-2">
                     <div class="col-4">
                         <h3 class="details">Rating</h3>
-                        <h3 class="details"><b> 4.5 <i class="ri-star-fill" style="color: gold;width: 20px;"></i><i class="ri-star-fill"style="color: gold;width: 20px;"></i><i class="ri-star-fill"style="color: gold;width: 20px;"></i><i class="ri-star-fill" style="color: gold;width: 20px;"></i><i class="ri-star-half-line" style="color: gold;"></i></b></h3>
+                        <h3 class="details"><b> {{jobProfileDetails?.rating}} 
+                            <ng-container *ngFor="let item of stars">
+                                <i *ngIf="item==1" class="ri-star-fill" style="color: gold; width: 20px;"></i>
+                                <i *ngIf="item==.5" class="ri-star-half-line"style="color: gold;"></i>
+                                <i *ngIf="item==0" class="ri-star-fill" style="color: rgb(0, 0, 0);width: 20px;"></i>
+
+                              </ng-container>
+                        </b></h3>
 
                     </div>
                     <div class="col-4">
                         <h2 class="details">Experience</h2>
-                        <h2 class="details">6 Years</h2>
+                        <h2 class="details">{{jobProfileDetails?.experience}} Years</h2>
                     </div>
                     <div class="col-4">
                         <h2 class="details">Wage</h2>
-                        <h2 class="details">1200/ Day</h2>
+                        <h2 class="details">{{jobProfileDetails?.wage}}/ Day</h2>
 
                     </div>
 
@@ -40,57 +48,19 @@
         </div>
 
         <div class="statement md-my-5 ">
-            <h3 class="mx-2 description ">As a plumber, I specialize in delivering reliable plumbing solutions to residential and commercial clients. With my extensive knowledge and experience, I am skilled in installing, repairing, and maintaining plumbing systems to </h3>
+            <h3 class="mx-2 description ">{{jobProfileDetails?.selfDescription}}</h3>
         </div>
-        
+
         <h2 class="md-mb-5 mt-2 ms-4"><b>Previous Works</b></h2>
-            <div class=" row">
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage " >
+        <div class=" row ">
+            <div class="col-md-3 col-6  " *ngFor="let item of jobProfileDetails?.workImages">
+                <div class="image-container ">
+                    <img src="{{item}}" alt="" class="workImage ">
+
                 </div>
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
-                <div class="col-md-3 col-6 text-center imageRow">
-                    <img src="../../../../assets/userAssets/images/2822506.jpg" alt="" class="workImage" >
-                </div>        
             </div>
+        </div>
 
     </div>
 </div>
+<p *ngIf="createJobProfile"></p>

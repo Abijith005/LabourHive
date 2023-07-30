@@ -3,7 +3,7 @@ import jobProfileModel from "../Models/jobProfileModel.js"
 import jwt from 'jsonwebtoken'
 
 
-export async function createJobProfile(req, res) {
+export const createJobProfile=async(req, res)=>{
 
   try {
     // getting user id from jwt token
@@ -17,7 +17,6 @@ export async function createJobProfile(req, res) {
       return (await cloudinary.uploader.upload(image)).secure_url
     }
 
-
     delete req.body.profilePic, delete req.body.workImages
 
     await jobProfileModel.create({ user_id: user_id, ...req.body, profilePic: profilePic, workImages: workImages })
@@ -30,3 +29,30 @@ export async function createJobProfile(req, res) {
   }
 
 }
+
+
+export const getJobProfile=async (req,res)=>{
+
+  try {
+
+    //getting user_id
+    const user_id=await jwt.verify(req.cookies.userAuthToken,process.env.JWT_SIGNATURE)?._id
+    
+    let data=await jobProfileModel.findOne({user_id:user_id})
+
+    //converting mongoose obj to plain js obj
+    data=data.toObject()  
+    
+    if (data) {
+      res.json({success:true,...data})
+    }
+    else{
+      res.json({success:false})
+    }
+
+    
+  } catch (error) {
+    
+    console.log('Error',error);
+  }
+} 

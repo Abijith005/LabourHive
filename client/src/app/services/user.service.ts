@@ -6,7 +6,7 @@ import { i_Password } from '../interfaces/userInterfaces/i_password';
 import { i_authRes } from '../interfaces/userInterfaces/i_authRes';
 import { i_UserDetails } from '../interfaces/userInterfaces/i_user-details';
 import { i_customCategory } from '../interfaces/adminInterfaces/i_customCategory';
-import { i_registerJobProfile } from '../interfaces/userInterfaces/i_registerJobProfile';
+import { i_jobProfile} from '../interfaces/userInterfaces/i_jobProfile';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +51,12 @@ export class UserService {
     return this.http.get<i_customCategory>(`/getCategoryDetails`)
   }
 
-  uploadJobProfile(data: i_registerJobProfile) {
+  uploadJobProfile(data: i_jobProfile) {
     return this.http.post<i_authRes>(`/uploadJobProfile`, data)
+  }
+
+  getJobProfileDetails(){
+    return this.http.get<i_jobProfile&i_authRes>(`/getJobProfileDetails`)
   }
 
   userLogout() {

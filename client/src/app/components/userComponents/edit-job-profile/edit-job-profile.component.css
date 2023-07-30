@@ -1,0 +1,25 @@
+mat-dialog-content{
+    max-height: 95vh;
+    
+}
+
+.isInvalid{
+    border-color: red;
+}
+
+.image {
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
+  }
+
+  .suggestions-list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .suggestions-list li{
+    padding: 5px 10px;
+    cursor: pointer;
+  }

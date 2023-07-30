@@ -3,14 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
-import { i_registerJobProfile } from 'src/app/interfaces/userInterfaces/i_registerJobProfile';
+import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { MapboxService } from 'src/app/services/mapbox.service';
 import { UserService } from 'src/app/services/user.service';
+import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 
-interface i_suggessions {
-  location: string,
-  coordinates: number[]
-}
+// interface i_suggessions {
+//   location: string,
+//   coordinates: number[]
+// }
 
 @Component({
   selector: 'app-createjob-profile',
@@ -28,7 +29,7 @@ export class CreatejobProfileComponent implements OnInit {
   profilePic: string = ''
   categories: i_categoryResponse[] | null = null
   workImages: string[] = []
-  suggestions: i_suggessions[] = [];
+  suggestions: i_suggestions[] = [];
   coordinates: number[] | null = null
 
 
@@ -157,7 +158,7 @@ export class CreatejobProfileComponent implements OnInit {
 
   //setting suggested value to location
 
-  onSuggestionClick(suggestion: i_suggessions) {
+  onSuggestionClick(suggestion: i_suggestions) {
     this.formControls['location'].setValue(suggestion.location)
     this.coordinates = suggestion.coordinates
     this.suggestions = []
@@ -183,7 +184,7 @@ export class CreatejobProfileComponent implements OnInit {
     if (this.jobProfileForm.valid) {
 
       //form data to send to backend
-      const formData: i_registerJobProfile = {
+      const formData: i_jobProfile = {
         name: this.formControls['name'].value,
         category: this.formControls['category'].value,
         wage: this.formControls['wage'].value,
@@ -197,7 +198,7 @@ export class CreatejobProfileComponent implements OnInit {
 
       this.isLoading = true
 
-      //reducing size if the modal
+      //reducing size of the modal
       this.dialogRef.updateSize('450px','190px')
 
 

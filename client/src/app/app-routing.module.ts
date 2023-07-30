@@ -24,7 +24,7 @@ const routes: Routes =
 children:[{path:'',component:UserHomeComponent},
 {path:'jobProfile',component:JobProfileComponent},
 {path:'createJobProfile',component:CreatejobProfileComponent},
-{path:'viewJobs',component:ViewJobsComponent}
+{path:'viewJobs',component:ViewJobsComponent},
 ] },
 
 
