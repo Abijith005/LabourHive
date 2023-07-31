@@ -1,91 +1,121 @@
-.workImage{
+.workImage {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    
+
 }
 
-.image-container{
-    width: 300px; 
-    height: 200px; 
+.image-container {
+    width: 300px;
+    height: 200px;
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 1.8rem;
 }
 
-.profile-pic{
+.profile-pic {
     height: 200px;
-     border-radius: 30px; 
-     border: thin solid rgba(0, 0, 0, 0.35);
+    border-radius: 30px;
+    border: thin solid rgba(0, 0, 0, 0.35);
 }
 
 
-.statement{
+.statement {
     text-align: justify;
 }
 
-.container{
-    margin-top: 110px; 
-    background-color: rgba(222, 236, 247, 0.35);   
+.profile-container {
+    margin-top: 110px;
+    background-color: rgba(222, 236, 247, 0.35);
     border-radius: 20px;
 }
-.container-fluid{
+
+.container-fluid {
     border-radius: 20px;
 
+}
+
+.no-data {
+    height: 87vh;
+    margin-top: 70px;
+}
+
+.no-data img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.image-div {
+    width: 100%;
+    height: 100%;
+
+}
+
+.text {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(70, 45, 214, 0.808);
+    font-size: 20px;
+    font-weight:400;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 
 
 
 
-@media (max-width:768px){
-    .workImage{
+@media (max-width:768px) {
+    .workImage {
         width: 100%;
         height: 100%;
         object-fit: cover;
 
     }
 
-    .image-container{
-        width: 200px; 
-        height: 180px; 
+    .image-container {
+        width: 200px;
+        height: 180px;
         border-radius: 5px;
         /* overflow: hidden; */
     }
 
-    .profile-pic{
+    .profile-pic {
 
         height: 100px;
     }
 
-    .name{
+    .name {
         font-size: 20px;
     }
-    
-    .details{
+
+    .details {
         font-size: 14px;
         margin: 5px;
     }
 
-    .container{
-    margin-top: 75px;
+    .container {
+        margin-top: 75px;
     }
 
-    .description{
+    .description {
         font-size: 12px;
         margin-bottom: 20px;
         line-height: 18px;
     }
-    
-    .btn{
+
+    .btn {
         font-size: 12px;
         padding: 5px 10px;
 
     }
 
-    .workImage{
+    .workImage {
         width: 180px;
     }
 }

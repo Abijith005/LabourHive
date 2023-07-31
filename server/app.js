@@ -23,10 +23,9 @@ app.use(
 
     })
 )
-     
 app.use(morgan('dev'))
-app.use(express.json({ limit: '150mb' }))
-app.use(express.urlencoded({ extended: true,limit:'150mb' }))
+app.use(express.json({ limit: '250mb' }));
+app.use(express.urlencoded({ extended: true, limit: '250mb' }));
 app.use(express.static(path.resolve() + '/public'))
 app.use(cookieParser())
  
@@ -42,7 +41,7 @@ app.use(mogoSanitize())
 
 // setting router
 app.use('/admin', adminRouter)
-app.use('/', userRouter)
+app.use('/', userRouter)    
 
 app.listen(port, () => {
     console.log('app running in port http://localhost:' + port);

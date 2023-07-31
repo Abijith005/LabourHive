@@ -43,6 +43,7 @@ import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jo
 import { MapboxService } from './services/mapbox.service';
 import { LoadingComponent } from './components/commonComponents/loading/loading.component';
 import { EditJobProfileComponent } from './components/userComponents/edit-job-profile/edit-job-profile.component';
+import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { EditJobProfileComponent } from './components/userComponents/edit-job-pr
     ViewJobsComponent,
     LoadingComponent,
     EditJobProfileComponent,
+    ViewLaboursComponent,
   ],
   imports: [
     BrowserModule,

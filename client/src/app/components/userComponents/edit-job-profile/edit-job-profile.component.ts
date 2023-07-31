@@ -1,15 +1,19 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Subject, map, take, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
+import { HelperService } from 'src/app/services/helper.service';
 import { MapboxService } from 'src/app/services/mapbox.service';
 import { UserService } from 'src/app/services/user.service';
+import { jobProfile } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
+
+
 
 @Component({
   selector: 'app-edit-job-profile',
@@ -36,6 +40,8 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
     private store:Store<userDataState>,
     private service: UserService,
     private mapboxService: MapboxService,
+    private helper:HelperService,
+    private matDialogRef:MatDialogRef<EditJobProfileComponent>
     ) {
     // this.jobProfileData = JSON.parse(JSON.stringify(data))
     // this.workImages = JSON.parse(JSON.stringify(data.workImages))
@@ -110,7 +116,7 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  //file to base 64
+  //file to base64String
 
   readFielTobase64(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -122,14 +128,13 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
       }
       reader.onerror = () => {
         reject(new Error('Failed to read file'))
-
       }
     })
   }
 
+  //delete Image
   deleteImage(index: number) {
     this.workImages.splice(index, 1)
-
   }
 
   onWorkImageSelect(event: Event) {
@@ -141,18 +146,16 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
         this.workImages.push(...base64Strings)
       })
     }
-
-
-
   }
 
-  onSubmit() {
 
+  onSubmit() {
     this.isSubmitted = true
     if (!this.jobProfileForm.valid) {
       return
     }
-
+    this.matDialogRef.updateSize('450px','190px')
+    this.isLoading=true
     const formData: i_jobProfile = {
       name: this.formControls['name'].value,
       category: this.formControls['category'].value,
@@ -165,9 +168,15 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
       workImages: this.workImages
     }
 
-  // this.service.updateJobProfile(this.data).pipe(takeUntil(this.ngUnsubscribe)).subscribe(res=>{
-
-  // })
+  this.service.updateJobProfile(formData).pipe(takeUntil(this.ngUnsubscribe)).subscribe(res=>{    
+    this.isLoading=false
+    this.helper.showToaster(res.message,res.success)
+    if (res.success) {
+      this.store.dispatch(jobProfile({profileDatas:formData}))
+      this.matDialogRef.close()
+    }
+    
+  })
 
 
 

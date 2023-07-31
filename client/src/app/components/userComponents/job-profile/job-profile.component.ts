@@ -79,24 +79,14 @@ export class JobProfileComponent implements OnInit {
     })
   }
 
-  oppenDialogEditJobProfile(){
+  openDialogEditJobProfile(){
     this.matDialog.open(EditJobProfileComponent,{
       width: '450px',
       height: '900px',
       disableClose: true,
-      // data:this.jobProfileDetails
     })
 
     
   }
-
-
-
-
-
-
-
-
-
 
 }

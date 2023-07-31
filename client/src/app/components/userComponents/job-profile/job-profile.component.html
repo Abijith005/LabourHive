@@ -1,4 +1,4 @@
-<div class="container p-0" *ngIf="!createJobProfile">
+<div class="container profile-container p-0" *ngIf="!createJobProfile">
     <div class="container-fluid shadow">
         <div class=" row header d-flex flex-row mb-2">
             <div class="col-md-3 mt-3 d-none d-md-block">
@@ -14,7 +14,7 @@
                         <h2 class="name" style="color: blue;">{{(jobProfileDetails$|async)?.category}}</h2>
                     </div>
                     <div>
-                        <button class="btn btn-success me-2" (click)="oppenDialogEditJobProfile()"><i
+                        <button class="btn btn-success me-2" (click)="openDialogEditJobProfile()"><i
                                 class="ri-edit-box-line"></i> &nbsp; Edit</button>
                     </div>
 
@@ -51,7 +51,7 @@
             <h3 class="mx-2 description ">{{(jobProfileDetails$|async)?.selfDescription}}</h3>
         </div>
 
-        <h2 class="md-mb-5 mt-2 ms-4"><b>Previous Works</b></h2>
+        <h2 class="md-mb-5 mt-2 ms-4"><b style="text-decoration: underline;">Previous Works</b></h2>
         <div class=" row ">
             <div class="col-md-3 col-6  " *ngFor="let item of (jobProfileDetails$|async)?.workImages">
                 <div class="image-container ">
@@ -63,4 +63,13 @@
 
     </div>
 </div>
-<p *ngIf="createJobProfile"></p>
+
+
+<div class="continer-fluid no-data" *ngIf="createJobProfile">
+    <div class="image-div" style="position: relative;">
+      <img src="../../../../assets/userAssets/images/3009287.jpg" alt="">
+      <div class="text" (click)="openDialogCreateJobProfile()">
+       Click Here To Create Job Profile
+      </div>
+    </div>
+  </div>

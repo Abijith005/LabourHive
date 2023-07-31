@@ -204,7 +204,6 @@ export class CreatejobProfileComponent implements OnInit {
       this.service.uploadJobProfile(formData).subscribe(res => {
         this.isLoading = false
         this.dialogRef.close()
-        console.log(res, 'hjkhjhkj');
 
       })
     }

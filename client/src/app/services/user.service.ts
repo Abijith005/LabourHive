@@ -67,7 +67,4 @@ export class UserService {
     return this.http.get<i_authRes>(`/logout`)
   }
 
-
-
-
 }
