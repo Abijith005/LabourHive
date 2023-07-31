@@ -44,6 +44,7 @@ import { MapboxService } from './services/mapbox.service';
 import { LoadingComponent } from './components/commonComponents/loading/loading.component';
 import { EditJobProfileComponent } from './components/userComponents/edit-job-profile/edit-job-profile.component';
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
+import { StarRatingPipe } from './pipes/userPipes/star-rating.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +72,7 @@ import { ViewLaboursComponent } from './components/userComponents/view-labours/v
     LoadingComponent,
     EditJobProfileComponent,
     ViewLaboursComponent,
+    StarRatingPipe,
   ],
   imports: [
     BrowserModule,

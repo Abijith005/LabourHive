@@ -1,3 +1,4 @@
+import { log } from "console";
 import cloudinary from "../Config/cloudinary.js";
 import jobProfileModel from "../Models/jobProfileModel.js"
 import jwt from 'jsonwebtoken'
@@ -93,10 +94,24 @@ export const updateJobProfile = async (req, res) => {
     delete req.body.workImages, delete req.body.profilePic
 
     await jobProfileModel.updateOne({ user_id: user_id }, { $set: { ...req.body, workImages: workImages, profilePic: profilePic } })
-    res.json({success:true,message:'Job profile updated successfully'})
+    res.json({ success: true, message: 'Job profile updated successfully' })
 
   } catch (error) {
     console.log('Error', error);
   }
 
+}
+
+export const getLabours = async (req, res) => {
+
+  try {
+
+    console.log(req.params.category, 'hjkhkhkjhk');
+    const labours = await jobProfileModel.find({ category: req.params.category }).lean()
+    res.json(  labours )
+
+  } catch (error) {
+
+    console.log('Error', error);
+  }
 }

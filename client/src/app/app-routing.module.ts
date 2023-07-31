@@ -26,7 +26,7 @@ children:[{path:'',component:UserHomeComponent},
 {path:'jobProfile',component:JobProfileComponent},
 {path:'createJobProfile',component:CreatejobProfileComponent},
 {path:'viewJobs',component:ViewJobsComponent},
-{path:'viewLabours',component:ViewLaboursComponent}
+{path:'viewLabours/:category',component:ViewLaboursComponent}
 ] },
 
 

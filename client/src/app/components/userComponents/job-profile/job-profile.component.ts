@@ -19,14 +19,14 @@ export class JobProfileComponent implements OnInit {
 
   //variable declarations
 
-  jobProfileresponse:i_authRes | null = null
+  jobProfileresponse: i_authRes | null = null
   createJobProfile: boolean = false
   stars: number[] = []
-  jobProfileDetails$:Observable<i_jobProfile>|null=null
+  jobProfileDetails$: Observable<i_jobProfile> | null = null
 
   constructor(private matDialog: MatDialog,
     private service: UserService,
-    private store:Store<userDataState>) { }
+    private store: Store<userDataState>) { }
 
   ngOnInit(): void {
     this.service.getJobProfileDetails().subscribe(res => {
@@ -34,29 +34,10 @@ export class JobProfileComponent implements OnInit {
         this.jobProfileresponse = res
 
         //setting job profile data to store
-        this.store.dispatch(jobProfile({profileDatas:res}))
-        this.jobProfileDetails$=this.store.select('user').pipe(map(state=>{
+        this.store.dispatch(jobProfile({ profileDatas: res }))
+        this.jobProfileDetails$ = this.store.select('user').pipe(map(state => {
           return state.jobProfileDatas!
         }))
-
-
-        //getting an array for printing stars
-
-        let rating = res.rating!
-        for (let i = 0; i < 5; i++) {
-          if (rating >= 1) {
-            this.stars.push(1)
-            rating--
-          }
-          else if (rating < 1 && rating > 0) {
-            this.stars.push(0.5)
-            rating--
-          }
-          else {
-            this.stars.push(0)
-            rating--
-          }
-        }
 
       }
       else {
@@ -79,14 +60,14 @@ export class JobProfileComponent implements OnInit {
     })
   }
 
-  openDialogEditJobProfile(){
-    this.matDialog.open(EditJobProfileComponent,{
+  openDialogEditJobProfile() {
+    this.matDialog.open(EditJobProfileComponent, {
       width: '450px',
       height: '900px',
       disableClose: true,
     })
 
-    
+
   }
 
 }

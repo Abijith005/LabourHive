@@ -1,7 +1,7 @@
 import express from 'express'
 import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserAuthController.js'
 import { getAllCategories } from '../Controllers/CategoryController.js'
-import { createJobProfile, getJobProfile, updateJobProfile } from '../Controllers/JobsController.js'
+import { createJobProfile, getJobProfile, getLabours, updateJobProfile } from '../Controllers/JobsController.js'
 
 const router=express.Router()  
 
@@ -28,6 +28,8 @@ router.post('/uploadJobProfile',createJobProfile)
 router.get('/getJobProfileDetails',getJobProfile)
 
 router.put('/updateJobProfile',updateJobProfile)
+
+router.get('/getLabours/:category',getLabours)
 
 router.get('/logout',userLogout)
 

@@ -9,6 +9,6 @@ export class LoadingComponent {
 
   //variable declarations
 
-  isLoading:boolean=false
+
 
 }

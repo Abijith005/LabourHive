@@ -28,8 +28,6 @@ this.categories=res.categories!
   })
 }
 
-passDataToViewLabour(category:string){
-this.router.navigate(['/viewLabours'],{state:{data:category}})
-}
+
 
 }   

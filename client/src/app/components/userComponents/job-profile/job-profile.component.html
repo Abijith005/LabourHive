@@ -23,7 +23,7 @@
                     <div class="col-4">
                         <h3 class="details">Rating</h3>
                         <h3 class="details"><b> {{(jobProfileDetails$|async)?.rating}} 
-                            <ng-container *ngFor="let item of stars">
+                            <ng-container *ngFor="let item of (jobProfileDetails$|async)?.rating!|starRating">
                                 <i *ngIf="item==1" class="ri-star-fill" style="color: gold; width: 20px;"></i>
                                 <i *ngIf="item==.5" class="ri-star-half-line"style="color: gold;"></i>
                                 <i *ngIf="item==0" class="ri-star-fill" style="color: rgb(0, 0, 0);width: 20px;"></i>

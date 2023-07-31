@@ -63,6 +63,10 @@ export class UserService {
     return this.http.put<i_jobProfile&i_authRes>(`/updateJobProfile`,data)
   }
 
+  getLabours(category:string){
+    return this.http.get<i_jobProfile[]>(`/getLabours/${category}`)
+  }
+
   userLogout() {
     return this.http.get<i_authRes>(`/logout`)
   }

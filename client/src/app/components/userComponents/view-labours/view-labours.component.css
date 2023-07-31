@@ -56,3 +56,11 @@
   .buttons button:hover{
     transform: scale(1.1);
   }
+
+  .spinner {
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh; /* Ensures the component covers the entire viewport */
+  }
