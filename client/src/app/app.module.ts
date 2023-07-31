@@ -77,7 +77,7 @@ import { EditJobProfileComponent } from './components/userComponents/edit-job-pr
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({auth:authReducer,adminData: adminDataReducer}),
+    StoreModule.forRoot({user:authReducer,adminData: adminDataReducer}),
     NgxAwesomePopupModule.forRoot(),
     ToastNotificationConfigModule.forRoot(),
     MatButtonModule,

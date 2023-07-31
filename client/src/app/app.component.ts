@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AuthState } from './store/user.state';
+import { userDataState } from './store/user.state';
 import { login } from './store/user.actions';
 import { UserService } from './services/user.service';
 
@@ -13,7 +13,7 @@ import { UserService } from './services/user.service';
 export class AppComponent implements OnInit {
   title = 'LabourHiveFrontEnd';
 
-  constructor(private store:Store<AuthState>,
+  constructor(private store:Store<userDataState>,
     private service:UserService){
 
   }

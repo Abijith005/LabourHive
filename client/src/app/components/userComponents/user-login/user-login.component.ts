@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 import { login } from 'src/app/store/user.actions';
-import { AuthState } from 'src/app/store/user.state';
+import { userDataState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-user-login',
@@ -25,7 +25,7 @@ export class UserLoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private helper: HelperService,
-    private store: Store<AuthState>
+    private store: Store<userDataState>
   ) { }
 
   ngOnInit(): void {

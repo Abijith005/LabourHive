@@ -95,14 +95,13 @@ export class CreatejobProfileComponent implements OnInit {
   onWorkImageSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
+      
       // Convert the FileList to an Array
       const filesArray = Array.from(input.files);
-
       const fileReadPromises = filesArray.map((file) => this.readFileAsBase64(file));
 
       // Use Promise.all to handle all the asynchronous file reading operations
       Promise.all(fileReadPromises).then((base64Strings) => {
-
         this.workImages?.push(...base64Strings);
       });
     }

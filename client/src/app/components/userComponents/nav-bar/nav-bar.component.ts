@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
-import { AuthState } from 'src/app/store/user.state';
+import { userDataState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'app-nav-bar',
@@ -20,7 +20,7 @@ export class NavBarComponent implements OnInit {
 
   constructor(private service: UserService,
     private helper: HelperService,
-    private store:Store<AuthState>
+    private store:Store<userDataState>
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class NavBarComponent implements OnInit {
     }
 
 
-    this.userInformations$=this.store.select('auth').pipe(
+    this.userInformations$=this.store.select('user').pipe(
       map((state)=>{
         return state.userDatas!
       })

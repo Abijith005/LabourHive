@@ -2,16 +2,16 @@
     <div class="container-fluid shadow">
         <div class=" row header d-flex flex-row mb-2">
             <div class="col-md-3 mt-3 d-none d-md-block">
-                <img src="{{jobProfileDetails?.profilePic}}" alt="" class="profile-pic">
+                <img src="{{(jobProfileDetails$|async)?.profilePic}}" alt="" class="profile-pic">
             </div>
             <div class="details col md-6 mt-3">
                 <div class="name d-flex justify-content-between">
                     <div class="col-md-3  d-block d-md-none">
-                        <img src="{{jobProfileDetails?.profilePic}}" alt="" class="profile-pic">
+                        <img src="{{(jobProfileDetails$|async)?.profilePic}}" alt="" class="profile-pic">
                     </div>
                     <div>
-                        <h1 class="name"><b>{{jobProfileDetails?.name}}</b></h1>
-                        <h2 class="name" style="color: blue;">{{jobProfileDetails?.category}}</h2>
+                        <h1 class="name"><b>{{(jobProfileDetails$|async)?.name}}</b></h1>
+                        <h2 class="name" style="color: blue;">{{(jobProfileDetails$|async)?.category}}</h2>
                     </div>
                     <div>
                         <button class="btn btn-success me-2" (click)="oppenDialogEditJobProfile()"><i
@@ -22,7 +22,7 @@
                 <div class="row mt-2">
                     <div class="col-4">
                         <h3 class="details">Rating</h3>
-                        <h3 class="details"><b> {{jobProfileDetails?.rating}} 
+                        <h3 class="details"><b> {{(jobProfileDetails$|async)?.rating}} 
                             <ng-container *ngFor="let item of stars">
                                 <i *ngIf="item==1" class="ri-star-fill" style="color: gold; width: 20px;"></i>
                                 <i *ngIf="item==.5" class="ri-star-half-line"style="color: gold;"></i>
@@ -34,11 +34,11 @@
                     </div>
                     <div class="col-4">
                         <h2 class="details">Experience</h2>
-                        <h2 class="details">{{jobProfileDetails?.experience}} Years</h2>
+                        <h2 class="details">{{(jobProfileDetails$|async)?.experience}} Years</h2>
                     </div>
                     <div class="col-4">
                         <h2 class="details">Wage</h2>
-                        <h2 class="details">{{jobProfileDetails?.wage}}/ Day</h2>
+                        <h2 class="details">{{(jobProfileDetails$|async)?.wage}}/ Day</h2>
 
                     </div>
 
@@ -48,12 +48,12 @@
         </div>
 
         <div class="statement md-my-5 ">
-            <h3 class="mx-2 description ">{{jobProfileDetails?.selfDescription}}</h3>
+            <h3 class="mx-2 description ">{{(jobProfileDetails$|async)?.selfDescription}}</h3>
         </div>
 
         <h2 class="md-mb-5 mt-2 ms-4"><b>Previous Works</b></h2>
         <div class=" row ">
-            <div class="col-md-3 col-6  " *ngFor="let item of jobProfileDetails?.workImages">
+            <div class="col-md-3 col-6  " *ngFor="let item of (jobProfileDetails$|async)?.workImages">
                 <div class="image-container ">
                     <img src="{{item}}" alt="" class="workImage ">
 

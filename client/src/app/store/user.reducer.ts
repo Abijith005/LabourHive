@@ -1,10 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import { userState } from "./user.state";
-import { login } from "./user.actions";
+import { jobProfile, login } from "./user.actions";
 
 
 const initialState:userState={
-    userDatas:null
+    userDatas:null,
+    jobProfileDatas:null
 }
  
 export const authReducer = createReducer(initialState,
@@ -13,5 +14,9 @@ export const authReducer = createReducer(initialState,
         userDatas:userDatas,
       })
     ),
+    on(jobProfile,(state,{profileDatas})=>({
+      ...state,
+      jobProfileDatas:profileDatas
+    }))
     )
   

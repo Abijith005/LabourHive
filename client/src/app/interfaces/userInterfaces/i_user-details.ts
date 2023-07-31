@@ -8,7 +8,6 @@ export interface i_UserDetails {
         profilePicture?:string,
         blockStatus:boolean,
         googleLogin:boolean,
-        // __v?:number
     
     }
 

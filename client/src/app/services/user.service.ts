@@ -59,6 +59,10 @@ export class UserService {
     return this.http.get<i_jobProfile&i_authRes>(`/getJobProfileDetails`)
   }
 
+  updateJobProfile(data:i_jobProfile){
+    return this.http.put<i_jobProfile&i_authRes>(`/updateJobProfile`,data)
+  }
+
   userLogout() {
     return this.http.get<i_authRes>(`/logout`)
   }
