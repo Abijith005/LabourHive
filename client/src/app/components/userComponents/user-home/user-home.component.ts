@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { UserService } from 'src/app/services/user.service';
@@ -15,7 +16,8 @@ export class UserHomeComponent implements OnInit {
 
 
   constructor(private store:Store<userDataState>,
-    private service:UserService){
+    private service:UserService,
+    private router:Router){
 
   }
 
@@ -24,6 +26,10 @@ ngOnInit(): void {
 this.categories=res.categories!
 
   })
+}
+
+passDataToViewLabour(category:string){
+this.router.navigate(['/viewLabours'],{state:{data:category}})
 }
 
 }   

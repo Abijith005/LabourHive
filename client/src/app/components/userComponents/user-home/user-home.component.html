@@ -21,10 +21,6 @@
   </div>
   
   
-  
-  
-  
-  
   <!-- Category Listing -->
   
   <div class="category mb-4  ">
@@ -37,14 +33,11 @@
           <p class="card-text">Basic Wage:₹ {{item.basicWage}} /day</p>
           <p class="">Available Labours :200</p>
           <div class="text-center">
-            <button class="btn btn-primary">View</button>
+            <button class="btn btn-primary" [routerLink]="['/viewLabours']" (click)="passDataToViewLabour(item.name)">View</button>
           </div>
         </div>
       </div>
-      
-  
-  
-     
+   
     </div>
   </div>
 

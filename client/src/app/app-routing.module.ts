@@ -15,6 +15,7 @@ import { JobProfileComponent } from './components/userComponents/job-profile/job
 import { NavBarComponent } from './components/userComponents/nav-bar/nav-bar.component';
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
 import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
+import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
 
 const routes: Routes =
 
@@ -25,6 +26,7 @@ children:[{path:'',component:UserHomeComponent},
 {path:'jobProfile',component:JobProfileComponent},
 {path:'createJobProfile',component:CreatejobProfileComponent},
 {path:'viewJobs',component:ViewJobsComponent},
+{path:'viewLabours',component:ViewLaboursComponent}
 ] },
 
 

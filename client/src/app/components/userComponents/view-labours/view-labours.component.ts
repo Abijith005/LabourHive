@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-view-labours',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./view-labours.component.css']
 })
 export class ViewLaboursComponent {
+  @Input() category!:string;
 
 }

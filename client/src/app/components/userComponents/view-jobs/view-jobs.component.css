@@ -26,8 +26,8 @@
 }
 
 .jobs{
-    width: 380px;
-    height: 200px;
+    width: 400px;
+    height: 220px;
     gap: 20px;
     background-color: rgba(244, 244, 244, 1);
     overflow: hidden;
