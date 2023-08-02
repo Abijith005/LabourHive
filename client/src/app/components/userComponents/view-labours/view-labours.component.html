@@ -17,10 +17,12 @@
                     <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
                     <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
                     <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating">
-                             <i *ngIf="star==1" class="ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="ri-star-fill" style="color: rgb(0, 0, 0);width: 20px;"></i></span></b> </p>
+                        <span *ngFor="let star of item.rating!|starRating" >
+                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
+                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
+                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
+                        </span>
+                    </b> </p>
 
                 </div>
                 <div class="buttons d-flex justify-content-around  mt-3">
@@ -37,7 +39,7 @@
                         <img src="../../../../assets/userAssets/images/3009287.jpg" alt="">
                     </div>
                     <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">Abijith Surendran</h2>
+                        <h2 class="name">Anandhu</h2>
                         <h3 class="category">Plumber</h3>
                     </div>
                 </div>
@@ -62,8 +64,8 @@
                         <img src="../../../../assets/userAssets/images/3009287.jpg" alt="">
                     </div>
                     <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">Abijith Surendran</h2>
-                        <h3 class="category">Plumber</h3>
+                        <h2 class="name">Jamshad</h2>
+                        <h3 class="category">Electrician</h3>
                     </div>
                 </div>
                 <div class='details mt-2'>
@@ -159,6 +161,6 @@
     </div>
 </div>
 <div class="spinner">
-    <app-loading *ngIf="isLoading"></app-loading>
+    <labourHive-loading *ngIf="isLoading"></labourHive-loading>
 
 </div>

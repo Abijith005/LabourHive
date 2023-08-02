@@ -5,7 +5,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'labourHive-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })

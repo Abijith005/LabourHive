@@ -5,7 +5,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-user-register',
+  selector: 'labourHive-user-register',
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.css']
 })

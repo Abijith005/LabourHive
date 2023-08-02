@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
-import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
-import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
-import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
-import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
+import { i_categoryResponse } from 'interfaces/adminInterfaces/i_categoryResponse';
+import { i_jobProfile } from 'interfaces/userInterfaces/i_jobProfile';
+import { i_mapboxResp } from 'interfaces/userInterfaces/i_mapboxResp';
+import { i_suggestions } from 'interfaces/userInterfaces/i_suggestions';
 import { HelperService } from 'src/app/services/helper.service';
 import { MapboxService } from 'src/app/services/mapbox.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,7 +16,7 @@ import { userDataState } from 'src/app/store/user.state';
 
 
 @Component({
-  selector: 'app-edit-job-profile',
+  selector: 'labourHive-edit-job-profile',
   templateUrl: './edit-job-profile.component.html',
   styleUrls: ['./edit-job-profile.component.css']
 })
@@ -43,9 +43,6 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
     private helper:HelperService,
     private matDialogRef:MatDialogRef<EditJobProfileComponent>
     ) {
-    // this.jobProfileData = JSON.parse(JSON.stringify(data))
-    // this.workImages = JSON.parse(JSON.stringify(data.workImages))
-    // this.profilePic = data.profilePic
   }
 
   ngOnInit(): void {
@@ -64,13 +61,13 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
 
     })
 
-    //fetching categories from store
-    this.service.getCategoryDetails().pipe(takeUntil(this.ngUnsubscribe)).subscribe(res => {
-      this.categories = res.categories!
-    })
+    //fetching categories from localStorage
+    
+    this.categories=JSON.parse(localStorage.getItem('categories')!)
 
     this.store.select('user').pipe(take(1)).subscribe((state) => {
       this.jobProfileData = state.jobProfileDatas as i_jobProfile;
+
       // Setting values to the form
       this.jobProfileForm.patchValue(this.jobProfileData);
       this.workImages = JSON.parse(JSON.stringify(this.jobProfileData.workImages))
@@ -96,10 +93,7 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
         location: feature.place_name,
         coordinates: feature.center
       })))
-
     })
-
-
   }
 
   onSuggestionClick(suggestion: i_suggestions) {
@@ -172,6 +166,7 @@ export class EditJobProfileComponent implements OnInit, OnDestroy {
     this.isLoading=false
     this.helper.showToaster(res.message,res.success)
     if (res.success) {
+      formData.rating=this.jobProfileData.rating
       this.store.dispatch(jobProfile({profileDatas:formData}))
       this.matDialogRef.close()
     }

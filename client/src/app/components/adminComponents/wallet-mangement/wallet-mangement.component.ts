@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 
 @Component({
-  selector: 'app-wallet-mangement',
+  selector: 'labourHive-wallet-mangement',
   templateUrl: './wallet-mangement.component.html',
   styleUrls: ['./wallet-mangement.component.css']
 })

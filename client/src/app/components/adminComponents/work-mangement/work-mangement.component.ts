@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-work-mangement',
+  selector: 'labourHive-work-mangement',
   templateUrl: './work-mangement.component.html',
   styleUrls: ['./work-mangement.component.css']
 })

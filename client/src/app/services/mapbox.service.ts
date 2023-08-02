@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-import { i_mapboxResp } from '../interfaces/userInterfaces/i_mapboxResp';
+import { i_mapboxResp } from '../../../interfaces/userInterfaces/i_mapboxResp';
 @Injectable({
   providedIn: 'root'
 })

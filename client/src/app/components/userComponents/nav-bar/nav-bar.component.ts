@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
-import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
+import { i_UserDetails } from 'interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 import { userDataState } from 'src/app/store/user.state';
 
 @Component({
-  selector: 'app-nav-bar',
+  selector: 'labourHive-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
@@ -49,6 +49,7 @@ export class NavBarComponent implements OnInit {
     this.service.userLogout().subscribe(res => {
       if (res.success) {
         localStorage.removeItem('userLoggedIn')
+        localStorage.removeItem('categories')
         this.userLoggedIn = false
         // toaster message
         const message = res.message

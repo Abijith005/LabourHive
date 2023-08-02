@@ -5,7 +5,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-forgot-password-otp',
+  selector: 'labourHive-forgot-password-otp',
   templateUrl: './forgot-password-otp.component.html',
   styleUrls: ['./forgot-password-otp.component.css']
 })

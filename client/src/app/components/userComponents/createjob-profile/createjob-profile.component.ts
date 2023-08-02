@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
-import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
-import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
+import { i_categoryResponse } from 'interfaces/adminInterfaces/i_categoryResponse';
+import { i_mapboxResp } from 'interfaces/userInterfaces/i_mapboxResp';
+import { i_jobProfile } from 'interfaces/userInterfaces/i_jobProfile';
 import { MapboxService } from 'src/app/services/mapbox.service';
 import { UserService } from 'src/app/services/user.service';
-import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
+import { i_suggestions } from 'interfaces/userInterfaces/i_suggestions';
+import { Router } from '@angular/router';
 
-// interface i_suggessions {
-//   location: string,
-//   coordinates: number[]
-// }
 
 @Component({
-  selector: 'app-createjob-profile',
+  selector: 'labourHive-createjob-profile',
   templateUrl: './createjob-profile.component.html',
   styleUrls: ['./createjob-profile.component.css']
 })
@@ -34,16 +31,15 @@ export class CreatejobProfileComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,
-    private service: UserService,
-    private mapboxService: MapboxService,
-    private dialogRef: MatDialogRef<CreatejobProfileComponent>
-
+    private _service: UserService,
+    private _mapboxService: MapboxService,
+    private _dialogRef: MatDialogRef<CreatejobProfileComponent>,
+    private _route:Router
   ) { }
 
 
 
   ngOnInit(): void {
-
 
     //Reactive form validations
 
@@ -56,15 +52,16 @@ export class CreatejobProfileComponent implements OnInit {
       selfDescription: ['', [Validators.required]],
       location: ['', [Validators.required]],
       workImages: ['']
-
     })
 
-    this.service.getCategoryDetails().subscribe(res => {
-      this.categories = res.categories || []
+    this._service.getCategoryDetails().subscribe(res => {
+      this.categories = res.categories !
     })
 
+    //getting categories from local storage
 
-
+    this.categories=JSON.parse(localStorage.getItem('categories')!)
+    
   }
 
 
@@ -89,7 +86,7 @@ export class CreatejobProfileComponent implements OnInit {
     }
   }
 
-  //event hab=ndling funtion for getting image and converting it into base64 for workImage
+  //event handling funtion for getting image and converting it into base64 for workImage
 
 
   onWorkImageSelect(event: Event) {
@@ -140,7 +137,7 @@ export class CreatejobProfileComponent implements OnInit {
       this.suggestions = [];
       return;
     }
-    this.mapboxService.getSuggestions(value).subscribe(
+    this._mapboxService.getSuggestions(value).subscribe(
       (response: i_mapboxResp) => {
         this.suggestions = response.features.map((feature) => ({
           location: feature.place_name,
@@ -198,12 +195,13 @@ export class CreatejobProfileComponent implements OnInit {
       this.isLoading = true
 
       //reducing size of the modal
-      this.dialogRef.updateSize('450px','190px')
+      this._dialogRef.updateSize('450px','190px')
 
 
-      this.service.uploadJobProfile(formData).subscribe(res => {
+      this._service.uploadJobProfile(formData).subscribe(res => {
         this.isLoading = false
-        this.dialogRef.close()
+        this._dialogRef.close()
+        this._route.navigate(['/jobProfile'])
 
       })
     }

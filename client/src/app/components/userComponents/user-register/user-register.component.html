@@ -1,4 +1,4 @@
-<section class="vh-100" style="background-color: #ffffff;">
+<section class=" body" style="background-color: #ffffff;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
@@ -62,7 +62,7 @@
                 </div>
                   <p class="mb-2 mt-4 pb-lg-2 text-center" style="color: #393f81;">Already have an account? <a [routerLink]="['/login']" style="color: #393f81;">Login</a></p>
                 </form>
-                <app-register-otp *ngIf="otp" [userData]="registerData"></app-register-otp>
+                <labourHive-register-otp *ngIf="otp" [userData]="registerData"></labourHive-register-otp>
               </div>
             </div>
           </div>

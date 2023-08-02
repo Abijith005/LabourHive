@@ -1,0 +1,33 @@
+.over-view{
+    width: 306px;
+    height: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img img{
+    height: 70px;
+    width: 80px;
+    object-fit: contain;
+}
+
+.img{
+    
+    display: flex;
+    align-items: center;
+}
+
+.heading{
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.data{
+    font-size: xx-large;
+    font-weight: 700;
+    margin: 0;
+}

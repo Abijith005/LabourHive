@@ -4,15 +4,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable, map, of, switchMap } from 'rxjs';
-import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
-import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
+import { i_category } from 'interfaces/adminInterfaces/i_category';
+import { i_categoryResponse } from 'interfaces/adminInterfaces/i_categoryResponse';
 import { AdminService } from 'src/app/services/admin.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { getAllCategory } from 'src/app/store/admin.actions';
 import { adminDataState } from 'src/app/store/admin.state';
 
 @Component({
-  selector: 'app-edit-category',
+  selector: 'labourHive-edit-category',
   templateUrl: './edit-category.component.html',
   styleUrls: ['./edit-category.component.css']
 })
@@ -28,11 +28,11 @@ export class EditCategoryComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
-    private service: AdminService,
-    private dialogRef: MatDialogRef<EditCategoryComponent>,
-    private helper: HelperService,
-    private store: Store<adminDataState>,
+    private _fb: FormBuilder,
+    private _service: AdminService,
+    private _dialogRef: MatDialogRef<EditCategoryComponent>,
+    private _helper: HelperService,
+    private _store: Store<adminDataState>,
 
 
   ) {
@@ -43,7 +43,7 @@ export class EditCategoryComponent implements OnInit {
 
     //adding validations ad setting reactive form
 
-    this.editCategoryForm = this.fb.group({
+    this.editCategoryForm = this._fb.group({
       name: ['', [Validators.required]],
       basicWage: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       vectorImage: ['', [Validators.required]]
@@ -51,7 +51,7 @@ export class EditCategoryComponent implements OnInit {
 
     //Fetching category data from store
 
-    this.categoryData$ = this.store.select('adminData').pipe(
+    this.categoryData$ = this._store.select('adminData').pipe(
       switchMap((state) => {
         const category = state.category?.find((category) => category._id === this.category_id);
         return category ? of(category) : EMPTY;
@@ -75,7 +75,6 @@ export class EditCategoryComponent implements OnInit {
 
 
   //convering image To Base64
-
 
   ImageTOBase(file: File) {
     const reader = new FileReader();
@@ -110,14 +109,16 @@ export class EditCategoryComponent implements OnInit {
       this.isLoading = true
 
 
-      this.service.updateCategory(formData).subscribe((res) => {
+      this._service.updateCategory(formData).subscribe((res) => {
         if (res.success) {
-          this.store.dispatch(getAllCategory({ categories: res.categories! }))
+          //setting datas to store
+
+          this._store.dispatch(getAllCategory({ categories: res.categories! }))
         }
         this.isLoading = false
-        this.dialogRef.close();
+        this._dialogRef.close();
         const message = res.message
-        this.helper.showToaster(message, res.success)
+        this._helper.showToaster(message, res.success)
 
       })
 

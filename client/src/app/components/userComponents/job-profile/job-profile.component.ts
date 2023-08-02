@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CreatejobProfileComponent } from '../createjob-profile/createjob-profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
-import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
-import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
+import { i_jobProfile } from 'interfaces/userInterfaces/i_jobProfile';
+import { i_authRes } from 'interfaces/userInterfaces/i_authRes';
 import { EditJobProfileComponent } from '../edit-job-profile/edit-job-profile.component';
 import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
@@ -22,7 +22,7 @@ export class JobProfileComponent implements OnInit {
   jobProfileresponse: i_authRes | null = null
   createJobProfile: boolean = false
   stars: number[] = []
-  jobProfileDetails$: Observable<i_jobProfile> | null = null
+  jobProfileDetails$!: Observable<i_jobProfile>
 
   constructor(private matDialog: MatDialog,
     private service: UserService,
@@ -35,16 +35,14 @@ export class JobProfileComponent implements OnInit {
 
         //setting job profile data to store
         this.store.dispatch(jobProfile({ profileDatas: res }))
-        this.jobProfileDetails$ = this.store.select('user').pipe(map(state => {
+        this.jobProfileDetails$ = this.store.select('user').pipe(map(state => {          
           return state.jobProfileDatas!
+          
         }))
-
       }
       else {
         this.createJobProfile = true
-
       }
-
     })
 
   }

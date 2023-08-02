@@ -1,3 +1,5 @@
+import { i_jobProfile } from "./i_jobProfile";
+
 export interface i_UserDetails {
     
         _id:string,
@@ -8,6 +10,7 @@ export interface i_UserDetails {
         profilePicture?:string,
         blockStatus:boolean,
         googleLogin:boolean,
+        jobProfileDatas?:i_jobProfile
     
     }
 

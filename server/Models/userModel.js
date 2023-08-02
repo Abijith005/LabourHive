@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema({
         required:[true,'google login status is required']
     },
 
+    jobProfileDatas:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'jobProfile',
+    }
+
    
 
  

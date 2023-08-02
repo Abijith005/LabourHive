@@ -1,5 +1,5 @@
 <div class="header d-flex justify-content-between ms-3 me-3 pt-4">
-    <h3><b>USER MANAGEMENT</b></h3>
+    <h3><b>CATEGORY MANAGEMENT</b></h3>
 
     <mat-dialog-actions>
         <button class="ms-2" mat-raised-button color="primary" (click)="openDialogAddCategory()">Add Category</button>
@@ -26,7 +26,7 @@
             <th scope="row">{{i+1}}</th>
             <td>{{item.name}}</td>
             <td class="">{{item.basicWage}}</td>
-            <td>{{item.basicWage}}</td>
+            <td>1</td>
             <td>{{item.blockStatus}}</td>
             <td>8856</td>
             <td><img src="{{item.vectorImage.url}}" alt="" class="table-image"></td>
@@ -43,8 +43,8 @@
                 </button>
                 <ul class="dropdown-menu" style="box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);" aria-labelledby="dropdownMenuButton">
                   <li><a class="dropdown-item" (click)="openDialogEditCategory(item._id)">Edit</a></li>
-                  <li><a class="dropdown-item" (click)="blockCategory(item._id,item.blockStatus)" >{{item.blockStatus?'Unblock':'Block'}}</a></li>
-                  <li><a class="dropdown-item" (click)="deleteCategory(item._id)">Delete</a></li>
+                  <li><a class="dropdown-item" (click)="blockCategory(item._id,item.blockStatus,item.name)" >{{item.blockStatus?'Unblock':'Block'}}</a></li>
+                  <li><a class="dropdown-item" (click)="deleteCategory(item._id,item.name)">Delete</a></li>
                 </ul>
               </div>
             </td>

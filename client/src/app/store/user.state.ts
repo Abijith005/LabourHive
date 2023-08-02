@@ -1,5 +1,5 @@
-import { i_jobProfile } from "../interfaces/userInterfaces/i_jobProfile";
-import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
+import { i_jobProfile } from "../../../interfaces/userInterfaces/i_jobProfile";
+import { i_UserDetails } from "../../../interfaces/userInterfaces/i_user-details";
 
 
 

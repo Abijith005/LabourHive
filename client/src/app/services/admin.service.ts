@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { i_LoginDatas } from '../interfaces/userInterfaces/i_login';
-import { i_UserDetails } from '../interfaces/userInterfaces/i_user-details';
-import { i_authRes } from '../interfaces/userInterfaces/i_authRes';
-import { i_category } from '../interfaces/adminInterfaces/i_category';
-import { i_categoryResponse } from '../interfaces/adminInterfaces/i_categoryResponse';
-import { i_customCategory } from '../interfaces/adminInterfaces/i_customCategory';
+import { i_LoginDatas } from '../../../interfaces/userInterfaces/i_login';
+import { i_UserDetails } from '../../../interfaces/userInterfaces/i_user-details';
+import { i_authRes } from '../../../interfaces/userInterfaces/i_authRes';
+import { i_category } from '../../../interfaces/adminInterfaces/i_category';
+import { i_categoryResponse } from '../../../interfaces/adminInterfaces/i_categoryResponse';
+import { i_customCategory } from '../../../interfaces/adminInterfaces/i_customCategory';
 
 
 @Injectable({

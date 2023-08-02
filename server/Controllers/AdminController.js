@@ -37,8 +37,7 @@ export async function adminLogin(req, res) {
 export async function getAllUsers(req, res) {
     try {
 
-        const users = await userModel.find().lean()
-
+        const users = await userModel.find().populate('jobProfileDatas').lean()
         res.json(users)
 
     } catch (error) {

@@ -6,7 +6,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-register-otp',
+  selector: 'labourHive-register-otp',
   templateUrl: './register-otp.component.html',
   styleUrls: ['./register-otp.component.css']
 })

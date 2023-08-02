@@ -9,7 +9,7 @@ import { login } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
 
 @Component({
-  selector: 'app-user-login',
+  selector: 'labourHive-user-login',
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.css']
 })

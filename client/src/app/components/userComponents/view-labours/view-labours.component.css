@@ -62,5 +62,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 75vh; /* Ensures the component covers the entire viewport */
+    min-height: 75vh; 
+  }
+
+    .star-icon {
+        font-size: 18px; 
+        width: 18px; 
+        height: 18px; 
   }

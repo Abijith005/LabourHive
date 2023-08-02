@@ -1,30 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
-import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
+import { i_category } from 'interfaces/adminInterfaces/i_category';
 import { AdminService } from 'src/app/services/admin.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { getAllCategory } from 'src/app/store/admin.actions';
 import { adminDataState } from 'src/app/store/admin.state';
 
 @Component({
-  selector: 'app-add-category',
+  selector: 'labourHive-add-category',
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.css']
 })
 export class AddCategoryComponent implements OnInit {
+  //variable declaration
+
   isLoading: boolean = false
   isSubmitted = false
   selectedFiles!: File | null
   finalImage: string = ''
   addCategoryForm: FormGroup = new FormGroup({})
+
   constructor(private fb: FormBuilder,
-    private service: AdminService,
-    private helper: HelperService,
-    private dialogRef: MatDialogRef<AddCategoryComponent>,
-    private store: Store<adminDataState>) {
+    private _service: AdminService,
+    private _helper: HelperService,
+    private _dialogRef: MatDialogRef<AddCategoryComponent>,
+    private _store: Store<adminDataState>) {
 
   }
 
@@ -41,7 +43,7 @@ export class AddCategoryComponent implements OnInit {
   get formControls() {
     return this.addCategoryForm.controls
   }
-
+//converting image to base64 string
   ImageTOBase(file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -50,6 +52,7 @@ export class AddCategoryComponent implements OnInit {
     }
   }
 
+  //getting each image when selected
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement
     if (inputElement.files?.length! > 0) {
@@ -69,14 +72,16 @@ export class AddCategoryComponent implements OnInit {
         vectorImage: this.finalImage!
       }
       this.isLoading = true
-      this.service.addCategory(formData).subscribe((res) => {
+      this._service.addCategory(formData).subscribe((res) => {
         this.isLoading = false
         if (res.success) {
-          this.store.dispatch(getAllCategory({ categories: res.categories! }))
+          
+          //setting datas to store
+          this._store.dispatch(getAllCategory({ categories: res.categories! }))
         }
-        this.dialogRef.close();
+        this._dialogRef.close();
         const message = res.message
-        this.helper.showToaster(message, res.success)
+        this._helper.showToaster(message, res.success)
 
 
       })

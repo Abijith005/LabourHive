@@ -2,6 +2,7 @@ import { log } from "console";
 import cloudinary from "../Config/cloudinary.js";
 import jobProfileModel from "../Models/jobProfileModel.js"
 import jwt from 'jsonwebtoken'
+import userModel from "../Models/userModel.js";
 
 
 export const createJobProfile = async (req, res) => {
@@ -23,7 +24,9 @@ export const createJobProfile = async (req, res) => {
 
     delete req.body.profilePic, delete req.body.workImages
 
-    await jobProfileModel.create({ user_id: user_id, ...req.body, profilePic: profilePic, workImages: workImages })
+    const jobProfile = await jobProfileModel.create({ user_id: user_id, ...req.body, profilePic: profilePic, workImages: workImages })
+    await userModel.updateOne({ _id: user_id }, { $set: { jobProfileDatas: jobProfile._id } })
+
 
     res.json({ success: true, message: 'Job profile created successfully' })
 
@@ -44,10 +47,10 @@ export const getJobProfile = async (req, res) => {
 
     let data = await jobProfileModel.findOne({ user_id: user_id })
 
-    //converting mongoose obj to plain js obj
-    data = data.toObject()
 
     if (data) {
+      //converting mongoose obj to plain js obj
+      data = data.toObject()
       res.json({ success: true, ...data })
     }
     else {
@@ -99,7 +102,7 @@ export const updateJobProfile = async (req, res) => {
   } catch (error) {
     console.log('Error', error);
   }
-
+ 
 }
 
 export const getLabours = async (req, res) => {
@@ -108,7 +111,7 @@ export const getLabours = async (req, res) => {
 
     console.log(req.params.category, 'hjkhkhkjhk');
     const labours = await jobProfileModel.find({ category: req.params.category }).lean()
-    res.json(  labours )
+    res.json(labours)
 
   } catch (error) {
 

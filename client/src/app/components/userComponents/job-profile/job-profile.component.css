@@ -70,6 +70,7 @@
 
 
 
+
 @media (max-width:768px) {
     .workImage {
         width: 100%;
@@ -117,5 +118,25 @@
 
     .workImage {
         width: 180px;
+    }
+}
+.location{
+    font-size: 13px;
+    margin: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.star{
+    font-size: 20px;
+}
+
+@media (max-width:768px){
+    .star{
+        font-size:8px;
+    }
+    h2{
+        font-size: 15px;
     }
 }

@@ -16,13 +16,14 @@ export class StarRatingPipe implements PipeTransform {
       }
       else if (rating>0&&rating<1) {
         stars.push(.5)
+        rating--
       }
       else{
         stars.push(0)
       }
       
     }
-
+    
     return stars;
   }
 
