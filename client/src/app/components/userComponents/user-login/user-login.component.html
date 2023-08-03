@@ -24,34 +24,12 @@
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email" [ngClass]="{'is-invalid':isSubmitted&&formControls['email'].errors}">
                   </div>
 
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['password'].errors?'red':''" class="form-label">{{isSubmitted&&formControls['password'].errors?'Password required':'Password'}}</label>
-                    <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="password" [ngClass]="{'is-invalid':isSubmitted&&formControls['password'].errors}">
                   
-
-                    
-                    <!-- <div class="input-group">
-                      <input
-                        type="{{ hide ? 'password' : 'text' }}"
-                        class="form-control"
-                        id="password"
-                        formControlName="password"
-                        [ngClass]="{ 'is-invalid': isSubmitted && formControls['password'].errors }"
-                      />
-                      <div class="input-group-append">
-                        <span class="input-group-text" (click)="togglePasswordVisibility()">
-                          <i class="fa fa-eye{{ hide ? '-slash' : '' }}"></i>
-                        </span>
-                      </div>
-                    </div> -->
-                   
-                    <!-- <mat-form-field>
-                      <mat-label>Enter your password</mat-label>
-                      <input matInput [type]="hide ? 'password' : 'text'">
-                      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                      </button>
-                    </mat-form-field> -->
+                  <div class="mb-3 input-with-icon">
+                    <label [style.color]="isSubmitted&&formControls['password'].errors?'red':''" class="form-label">{{isSubmitted&&formControls['password'].errors?'Password required':'Password'}}</label>
+                    <input [type]="isPasswordVisible?'text':'password'" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="password" [ngClass]="{'is-invalid':isSubmitted&&formControls['password'].errors}">
+                    <i class=" eye-icon"  [ngClass]="isPasswordVisible?'ri-eye-off-fill':'ri-eye-fill'" (click)="passwordVisibility()"></i>
+                     
                   </div>
 
                   <div class="d-flex justify-content-end mb-2">

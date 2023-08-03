@@ -19,7 +19,8 @@ export class UserLoginComponent implements OnInit {
   isSubmitted: boolean = false
   forgotPassword: boolean = false
   heading: string = 'USER LOGIN'
-  hide: boolean = true
+  isPasswordVisible:boolean=false
+  
 
   constructor(private service: UserService,
     private router: Router,
@@ -85,8 +86,8 @@ export class UserLoginComponent implements OnInit {
     this.forgotPassword = true
   }
 
-  togglePasswordVisibility() {
-    this.hide = this.hide ? false : true
+  passwordVisibility() {
+    this.isPasswordVisible = this.isPasswordVisible ? false : true
   }
 
 

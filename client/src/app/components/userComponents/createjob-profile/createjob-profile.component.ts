@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { i_categoryResponse } from 'interfaces/adminInterfaces/i_categoryResponse';
-import { i_mapboxResp } from 'interfaces/userInterfaces/i_mapboxResp';
-import { i_jobProfile } from 'interfaces/userInterfaces/i_jobProfile';
+import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
+import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
+import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { MapboxService } from 'src/app/services/mapbox.service';
 import { UserService } from 'src/app/services/user.service';
-import { i_suggestions } from 'interfaces/userInterfaces/i_suggestions';
+import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { Router } from '@angular/router';
 
 

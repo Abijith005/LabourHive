@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { i_category } from 'interfaces/adminInterfaces/i_category';
+import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
 import { AdminService } from 'src/app/services/admin.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { getAllCategory } from 'src/app/store/admin.actions';

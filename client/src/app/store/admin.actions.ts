@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
-import { i_UserDetails } from "../../../interfaces/userInterfaces/i_user-details";
-import { i_categoryResponse } from "../../../interfaces/adminInterfaces/i_categoryResponse";
+import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
+import { i_categoryResponse } from "../interfaces/adminInterfaces/i_categoryResponse";
 
 export const getAllusers=createAction('[GetData]getAllUsers',props<{userDatas:i_UserDetails[]|null}>())
 

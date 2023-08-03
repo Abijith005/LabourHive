@@ -34,14 +34,16 @@
                     <input type="text" class="form-control" formControlName="mobileNumber" [ngClass]="{'is-invalid':isSubmitted&&formControls['mobileNumber'].errors}">
                   </div>
 
-                  <div class="mb-2">
+                  <div class="mb-2 password-icon">
                     <label for="" class="form-label" [style.color]="isSubmitted&&formControls['password'].errors?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['password'].errors?.hasOwnProperty('required')?'Password required':(isSubmitted&&formControls['password'].errors?.hasOwnProperty('pattern')?'Password should have atleast 3 characters':' Password')}}</label>
-                    <input type="text" class="form-control" formControlName="password" [ngClass]="{'is-invalid':isSubmitted&&formControls['password'].errors}">
+                    <input [type]="isPasswordVisible?'text':'password'" class="form-control" formControlName="password" [ngClass]="{'is-invalid':isSubmitted&&formControls['password'].errors}">
+                    <i class=" eye-icon"  [ngClass]="isPasswordVisible?'ri-eye-off-fill':'ri-eye-fill'" (click)="passwordVisibility('password')"></i>
                   </div>
 
-                  <div class="mb-2">
+                  <div class="mb-2 password-icon">
                     <label for="" class="form-label" [style.color]="isSubmitted&&formControls['confirmPassword'].errors||isSubmitted&&(formControls['password'].value!=formControls['confirmPassword'].value)?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['confirmPassword'].errors?.hasOwnProperty('required')?'Confirm password required':(isSubmitted&&(formControls['confirmPassword'].value!=formControls['password'].value)?'Password not matching':'Confirm password')}}</label>
-                    <input type="text" class="form-control" formControlName="confirmPassword" [ngClass]="{'is-invalid':isSubmitted&&formControls['confirmPassword'].errors}">
+                    <input [type]="isConfirmPasswordVisible?'text':'password'" class="form-control" formControlName="confirmPassword" [ngClass]="{'is-invalid':isSubmitted&&formControls['confirmPassword'].errors}">
+                    <i class=" eye-icon"  [ngClass]="isConfirmPasswordVisible?'ri-eye-off-fill':'ri-eye-fill'" (click)="passwordVisibility('confirmPassword')"></i>
                   </div>
 
                   <div class="pt-1 mb-3">

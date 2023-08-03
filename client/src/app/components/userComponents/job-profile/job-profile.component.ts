@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CreatejobProfileComponent } from '../createjob-profile/createjob-profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
-import { i_jobProfile } from 'interfaces/userInterfaces/i_jobProfile';
-import { i_authRes } from 'interfaces/userInterfaces/i_authRes';
+import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
+import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { EditJobProfileComponent } from '../edit-job-profile/edit-job-profile.component';
 import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
@@ -44,7 +44,6 @@ export class JobProfileComponent implements OnInit {
         this.createJobProfile = true
       }
     })
-
   }
 
 

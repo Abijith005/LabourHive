@@ -6,3 +6,17 @@
 .body{
     max-height: 94vh;
 }
+
+
+.input-with-icon {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 71%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+  }

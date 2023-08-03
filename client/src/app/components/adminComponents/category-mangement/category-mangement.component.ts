@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AdminService } from 'src/app/services/admin.service';
 import { Store } from '@ngrx/store';
 import { getAllCategory } from 'src/app/store/admin.actions';
-import { i_categoryResponse } from 'interfaces/adminInterfaces/i_categoryResponse';
+import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
 import { Observable, map } from 'rxjs';
 import { adminDataState } from 'src/app/store/admin.state';

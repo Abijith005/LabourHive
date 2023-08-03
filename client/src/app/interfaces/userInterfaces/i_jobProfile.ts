@@ -1,5 +1,5 @@
 export interface i_jobProfile {
-
+    
     name: string,
     category: string,
     wage: string,
@@ -9,5 +9,7 @@ export interface i_jobProfile {
     location: string,
     coordinates:number[]
     workImages: string[],
+    _id?:string,
+    user_id?:string
     rating?:number
 }

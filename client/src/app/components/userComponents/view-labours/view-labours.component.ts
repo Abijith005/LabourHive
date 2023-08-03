@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { i_jobProfile } from 'interfaces/userInterfaces/i_jobProfile';
+import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,15 +18,25 @@ export class ViewLaboursComponent implements OnInit,OnDestroy {
   private ngUnSubscribe = new Subject()
 
   constructor(private service: UserService,
-    private route: ActivatedRoute) { }
+    private _route: ActivatedRoute,
+    private _router:Router
+    ) { }
 
   ngOnInit(): void {
-    this.category = this.route.snapshot.paramMap.get('category')!
+    this.category = this._route.snapshot.paramMap.get('category')!
     this.isLoading = true
     this.service.getLabours(this.category).pipe(takeUntil(this.ngUnSubscribe)).subscribe(res => {
       this.labourDetails = res
       this.isLoading = false
     })
+  }
+
+
+  viewJobProfile(labour_id:string){
+    console.log(labour_id,'labodfjdshfkj');
+    
+    this._router.navigate([`/viewJobProfile/${labour_id}`])
+
   }
 
   ngOnDestroy(): void {

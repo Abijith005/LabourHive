@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserHomeComponent } from './components/userComponents/user-home/user-home.component';
 import { UserLoginComponent } from './components/userComponents/user-login/user-login.component';
@@ -16,6 +16,7 @@ import { NavBarComponent } from './components/userComponents/nav-bar/nav-bar.com
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
 import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
+import { ViewJobProfileComponent } from './components/userComponents/view-job-profile/view-job-profile.component';
 
 const routes: Routes =
 
@@ -26,7 +27,10 @@ children:[{path:'',component:UserHomeComponent},
 {path:'jobProfile',component:JobProfileComponent},
 {path:'createJobProfile/:categories',component:CreatejobProfileComponent},
 {path:'viewJobs',component:ViewJobsComponent},
-{path:'viewLabours/:category',component:ViewLaboursComponent}
+
+{path:'viewLabours/:category',component:ViewLaboursComponent},
+{path:'viewJobProfile/:labour_id',component:ViewJobProfileComponent}
+
 ] },
 
 

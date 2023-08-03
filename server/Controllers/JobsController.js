@@ -47,7 +47,6 @@ export const getJobProfile = async (req, res) => {
 
     let data = await jobProfileModel.findOne({ user_id: user_id })
 
-
     if (data) {
       //converting mongoose obj to plain js obj
       data = data.toObject()
@@ -109,12 +108,33 @@ export const getLabours = async (req, res) => {
 
   try {
 
-    console.log(req.params.category, 'hjkhkhkjhk');
     const labours = await jobProfileModel.find({ category: req.params.category }).lean()
     res.json(labours)
 
   } catch (error) {
 
     console.log('Error', error);
+  }
+}
+
+
+
+export const labourProfile=async(req,res)=>{
+
+  try {
+
+    console.log(req.params.user_id);
+    let labourProfile=await jobProfileModel.findOne({user_id:req.params.user_id})
+    //converting mongoose object to normal object
+    // labourProfile=labourProfile.
+
+    console.log(labourProfile);
+
+
+    // res.json({success:true,...labourProfile})
+    
+  } catch (error) {
+    
+    console.log('Error',error);
   }
 }

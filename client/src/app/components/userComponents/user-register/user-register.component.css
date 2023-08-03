@@ -2,3 +2,16 @@
 max-height: 94vh;
 
 }
+
+.password-icon{
+    position: relative;
+}
+
+.eye-icon{
+    position:absolute;
+    top: 71%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}

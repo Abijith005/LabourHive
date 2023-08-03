@@ -1,5 +1,5 @@
-import { i_categoryResponse } from "../../../interfaces/adminInterfaces/i_categoryResponse";
-import { i_UserDetails } from "../../../interfaces/userInterfaces/i_user-details";
+import { i_categoryResponse } from "../interfaces/adminInterfaces/i_categoryResponse";
+import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
 
 export interface adminState{
     datas:i_UserDetails[]|null,
