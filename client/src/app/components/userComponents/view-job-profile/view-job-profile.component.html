@@ -2,16 +2,16 @@
     <div class="container-fluid shadow">
         <div class=" row header d-flex flex-row mb-2">
             <div class="col-md-3 mt-3 d-none d-md-block">
-                <img src="{{jobProfileDetails.profilePic}}" alt="" class="profile-pic">
+                <img src="{{jobProfileDetails?.profilePic}}" alt="" class="profile-pic">
             </div>
             <div class="details col md-6 mt-3">
                 <div class="name d-flex justify-content-between">
                     <div class="col-md-3  d-block d-md-none">
-                        <img src="{{jobProfileDetails.profilePic}}" alt="" class="profile-pic">
+                        <img src="{{jobProfileDetails?.profilePic}}" alt="" class="profile-pic">
                     </div>
                     <div>
-                        <h1 class="name"><b>{{jobProfileDetails.name}}</b></h1>
-                        <h2 class="name" style="color: blue;">{{jobProfileDetails.category}}</h2>
+                        <h1 class="name"><b>{{jobProfileDetails?.name}}</b></h1>
+                        <h2 class="name" style="color: blue;">{{jobProfileDetails?.category}}</h2>
                     </div>
                     <div>
                         <button class="btn btn-success me-2" ><i
@@ -22,8 +22,8 @@
                 <div class="row mt-2">
                     <div class="col-3">
                         <h2 class="details">Rating</h2>
-                        <h3 class="details "><b> {{jobProfileDetails.rating}} 
-                            <ng-container *ngFor="let item of jobProfileDetails.rating!|starRating" >
+                        <h3 class="details "><b> {{jobProfileDetails?.rating}} 
+                            <ng-container *ngFor="let item of jobProfileDetails?.rating!|starRating" >
                                 <i *ngIf="item==1" class="star ri-star-fill" style="color: gold;"></i>
                                 <i *ngIf="item==.5" class="star ri-star-half-line"style="color: gold;"></i>
                                 <i *ngIf="item==0" class=" star ri-star-line" style="color: rgb(0, 0, 0);"></i>
@@ -33,16 +33,16 @@
                     </div>
                     <div class="col-3">
                         <h2 class="details">Experience</h2>
-                        <h2 class="details">{{jobProfileDetails.experience}} Years</h2>
+                        <h2 class="details">{{jobProfileDetails?.experience}} Years</h2>
                     </div>
                     <div class="col-3">
                         <h2 class="details">Wage</h2>
-                        <h2 class="details">{{jobProfileDetails.wage}}/ Day</h2>
+                        <h2 class="details">{{jobProfileDetails?.wage}}/ Day</h2>
                     </div>
                     
                     <div class="col-3">
                         <h2 class="details">Location</h2>
-                        <h2 class="location">{{jobProfileDetails.location}}</h2>
+                        <h2 class="location">{{jobProfileDetails?.location}}</h2>
                     </div>
                 </div>
             </div>
@@ -51,12 +51,12 @@
 
         <h2 class="ms-4 mt-4" style="text-decoration: underline;">Self Description :</h2>
         <div class="statement md-my-5 ">
-            <h3 class="mx-2 description ">{{jobProfileDetails.selfDescription}}</h3>
+            <h3 class="mx-2 description ">{{jobProfileDetails?.selfDescription}}</h3>
         </div>
 
         <h2 class="md-mb-5 mt-2 ms-4"><b style="text-decoration: underline;">Previous Works :</b></h2>
         <div class=" row ">
-            <div class="col-md-3 col-6  " *ngFor="let item of jobProfileDetails.workImages">
+            <div class="col-md-3 col-6  " *ngFor="let item of jobProfileDetails?.workImages">
                 <div class="image-container ">
                     <img src="{{item}}" alt="" class="workImage ">
 

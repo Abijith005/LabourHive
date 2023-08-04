@@ -1,8 +1,8 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component,  OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';

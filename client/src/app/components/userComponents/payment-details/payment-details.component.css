@@ -12,11 +12,31 @@
 }
 
 .warning{
-    top: 90%;
+    top: 110%;
     left: 37%;
     position: absolute;
     color: red;
     margin-left: auto;
+}
+
+.suggestion-list{
+    width: 70%;
+    left: 32%;
+    position: absolute;
+    top: 130%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 5px 0px 5px 30px;
+    border: thin solid rgba(0, 0, 0, .2);
+    overflow-y: scroll;
+    max-height: 250px;
+
+}li{
+    list-style: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    
+    
 }
 
 .details{
@@ -42,7 +62,7 @@ padding: 20px 5px 5px 5px;
 
 .button{
    display: flex;
-   justify-content: end;
+   justify-content:flex-end;
    margin-top: 40px;
 }
 
@@ -61,11 +81,12 @@ padding: 20px 5px 5px 5px;
 
  .payment-card{
 
-    margin-top: 30px;
+    margin-top: 20px;
  }
  .warning{
     font-size: 10px;
  }
+ 
 
  
 }

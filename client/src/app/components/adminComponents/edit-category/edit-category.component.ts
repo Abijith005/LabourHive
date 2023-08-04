@@ -27,7 +27,7 @@ export class EditCategoryComponent implements OnInit {
   categoryData$: Observable<i_categoryResponse> | null = null
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data:any,
     private _fb: FormBuilder,
     private _service: AdminService,
     private _dialogRef: MatDialogRef<EditCategoryComponent>,

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { userDataState } from 'src/app/store/user.state';
-import { Store } from '@ngrx/store';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
@@ -21,7 +19,7 @@ export class ViewJobProfileComponent {
   jobProfileresponse: i_authRes | null = null
   createJobProfile: boolean = false
   stars: number[] = []
-  jobProfileDetails!:i_jobProfile
+  jobProfileDetails:i_jobProfile|null=null
   labour_id!: string
 
   constructor(private matDialog: MatDialog,
