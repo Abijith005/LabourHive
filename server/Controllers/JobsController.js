@@ -122,16 +122,12 @@ export const getLabours = async (req, res) => {
 export const labourProfile=async(req,res)=>{
 
   try {
-
-    console.log(req.params.user_id);
     let labourProfile=await jobProfileModel.findOne({user_id:req.params.user_id})
-    //converting mongoose object to normal object
-    // labourProfile=labourProfile.
 
-    console.log(labourProfile);
+    // converting mongoose object to normal object
+    labourProfile=labourProfile.toObject()
 
-
-    // res.json({success:true,...labourProfile})
+    res.json({success:true,...labourProfile})
     
   } catch (error) {
     

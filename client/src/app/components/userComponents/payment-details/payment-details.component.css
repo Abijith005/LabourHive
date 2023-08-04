@@ -1,0 +1,71 @@
+.datas{
+    font-size:18px;
+    margin-bottom: 25px;
+} input{
+    border: none;
+    border-radius: 5px;
+    padding: 7px 3px 7px 3px;
+}
+
+.input-container{
+    position: relative;
+}
+
+.warning{
+    top: 90%;
+    left: 37%;
+    position: absolute;
+    color: red;
+    margin-left: auto;
+}
+
+.details{
+padding: 20px 5px 5px 5px;
+}
+
+.tag-name{
+    font-weight: 700;
+}
+
+.heading{
+    font-weight: 900;
+    margin-top: 1rem;
+}
+
+.payment-card{
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+    border-radius: 8px;
+    border: thin solid rgba(0, 0, 0, .2);
+    background-color: rgba(232, 232, 232, 1);
+    padding: 2rem .5rem 1rem 4rem;
+}
+
+.button{
+   display: flex;
+   justify-content: end;
+   margin-top: 40px;
+}
+
+
+@media (max-width:768px){
+ .datas{
+    font-size: small;
+    margin-bottom: 14px;
+ } input{
+    padding: 2px 1px 2px 1px;
+ }
+
+ p{
+    margin-bottom: 10px;
+ }
+
+ .payment-card{
+
+    margin-top: 30px;
+ }
+ .warning{
+    font-size: 10px;
+ }
+
+ 
+}

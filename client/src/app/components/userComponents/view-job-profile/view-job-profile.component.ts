@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { jobProfile } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
 import { Store } from '@ngrx/store';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
-import { Observable, map } from 'rxjs';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { ActivatedRoute } from '@angular/router';
+import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
 
 @Component({
   selector: 'app-view-job-profile',
@@ -27,42 +26,28 @@ export class ViewJobProfileComponent {
 
   constructor(private matDialog: MatDialog,
     private service: UserService,
-    private store: Store<userDataState>,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    //  this.service.getJobProfileDetails().subscribe(res => {
-    //    if (res.success) {
-    //      this.jobProfileresponse = res
-
-    //      //setting job profile data to store
-    //      this.store.dispatch(jobProfile({ profileDatas: res }))
-    //      this.jobProfileDetails$ = this.store.select('user').pipe(map(state => {          
-    //        return state.jobProfileDatas!
-
-    //      }))
-    //    }
-    //    else {
-    //      this.createJobProfile = true
-    //    }
-    //  })
 
     this.labour_id=this.route.snapshot.paramMap.get('labour_id')! 
 
     this.service.getLabourProfile(this.labour_id).subscribe(res=>{
-      console.log(res,'kjhkjhkjhkjkjhhkjhkhkj');
-      
       if (res.success) {
         this.jobProfileDetails=res
       }
     })
-
-
   }
 
 
 
-
+  openPayment(){
+    this.matDialog.open(PaymentDetailsComponent,{
+      data:this.jobProfileDetails,
+      disableClose:true
+    
+    })
+  }
 
 
 

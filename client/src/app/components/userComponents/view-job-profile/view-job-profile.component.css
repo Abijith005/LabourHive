@@ -67,6 +67,16 @@
 }
 
 
+.buttons{
+display: flex;
+justify-content: flex-end;
+
+}button{
+    margin: 0 20px 20px 20px;
+    border-radius: 8px;
+}
+
+
 
 
 
@@ -140,3 +150,4 @@
         font-size: 15px;
     }
 }
+

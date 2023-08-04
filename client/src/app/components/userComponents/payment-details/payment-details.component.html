@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="container">
+        <h1 class="text-center heading">HIRE &nbsp;DETAILS </h1>
+        <div class="content d-flex justify-content-center">
+            <div class="details">
+                <p class="datas"><span class="tag-name">Name</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;Abijith Surendran</p>
+                <p class="datas"><span class="tag-name">Category</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;Welder</p>
+                <p class="datas"><span class="tag-name">Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;1500 /Day</p>
+                <form [formGroup]="hireForm" (ngSubmit)="confirmPayment()">
+                    <div class="input-container">
+                        <p class="datas"><span class="tag-name">Start Date</span> &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span><input type="date" formControlName="startDate" [ngClass]="{'is-invalid':isSubmitted&&formControls['startDate'].errors}"></span></p>
+                        <p class="warning" *ngIf="isSubmitted&&formControls['startDate'].errors">Start date is required</p>
+                    </div>
+                    <div class="input-container">
+                        <p class="datas"><span class="tag-name">End Date</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span><input type="date" formControlName="endDate" ></span></p>
+                        <p class="warning" *ngIf="isSubmitted&&formControls['startDate'].errors">End date is required</p>
+                    </div>
+                    <div class="input-container">
+                        <p class="datas"><span class="tag-name">Location</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span> <input (keyup)="getSuggestion($event)"  formControlName="location" placeholder="Enter Work Location" type="text">
+                        <ul>
+                            <li *ngFor="let suggeston of suggestio"></li>
+                        </ul>
+                        </span> </p>
+                        <p class="warning" *ngIf="isSubmitted&&formControls['startDate'].errors">Location is required</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+            <div class="payment-card">
+                <p class="datas"><span class="tag-name">Total Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;₹ 1600</p>
+                <p class="datas"><span class="tag-name">Service Charge</span>&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;1% of Total Wage</p>
+                <p class="datas"><span class="tag-name">Total Payable</span>&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;₹ 1616</p>
+
+                <div class="button">
+                    <button class="btn btn-primary" (click)="confirmPayment()"> Pay & Proceed</button>
+                </div>
+
+
+        </div>
+        
+    </div>
+</div>

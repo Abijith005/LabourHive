@@ -33,8 +33,6 @@ export class ViewLaboursComponent implements OnInit,OnDestroy {
 
 
   viewJobProfile(labour_id:string){
-    console.log(labour_id,'labodfjdshfkj');
-    
     this._router.navigate([`/viewJobProfile/${labour_id}`])
 
   }

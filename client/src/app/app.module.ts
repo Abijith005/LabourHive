@@ -46,6 +46,7 @@ import { EditJobProfileComponent } from './components/userComponents/edit-job-pr
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
 import { StarRatingPipe } from './pipes/userPipes/star-rating.pipe';
 import { ViewJobProfileComponent } from './components/userComponents/view-job-profile/view-job-profile.component';
+import { PaymentDetailsComponent } from './components/userComponents/payment-details/payment-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +76,7 @@ import { ViewJobProfileComponent } from './components/userComponents/view-job-pr
     ViewLaboursComponent,
     StarRatingPipe,
     ViewJobProfileComponent,
+    PaymentDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -32,6 +32,12 @@ export class AdminService {
   }
 
   getAllCategories(){
+  //  fetch(`http://localhost:5000/admin/getAllCategories`).then(res=>{
+  //   res.json()    
+  //  }).then(data=>{
+  //   console.log(data,'gsjhdskjk');
+    
+  //  })
     return this.http.get<i_customCategory>(`/admin/getAllCategories`)
   }
 
