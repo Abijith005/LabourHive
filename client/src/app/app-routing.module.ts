@@ -17,6 +17,7 @@ import { CreatejobProfileComponent } from './components/userComponents/createjob
 import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
 import { ViewJobProfileComponent } from './components/userComponents/view-job-profile/view-job-profile.component';
+import { ChatComponent } from './components/userComponents/chat/chat.component';
 
 const routes: Routes =
 
@@ -29,7 +30,8 @@ children:[{path:'',component:UserHomeComponent},
 {path:'viewJobs',component:ViewJobsComponent},
 
 {path:'viewLabours/:category',component:ViewLaboursComponent},
-{path:'viewJobProfile/:labour_id',component:ViewJobProfileComponent}
+{path:'viewJobProfile/:labour_id',component:ViewJobProfileComponent},
+{path:'chat',component:ChatComponent}
 
 ] },
 
@@ -47,7 +49,7 @@ children:[{path:'',component:UserHomeComponent},
   { path: 'userManagement', component: UserMangementComponent },
   {path:'categoryManagement',component:CategoryMangementComponent},
   {path:'workManagement',component:WorkMangementComponent},
-  {path:'walletManagement',component:WalletMangementComponent}
+  {path:'walletManagement',component:WalletMangementComponent},
   ]
 }
 ];

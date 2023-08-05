@@ -14,9 +14,7 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
     //Excluding Mapbox requests being interrupted
 
     const isMapboxRequest=request.url.includes('api.mapbox.com')
-    const isRazorpayReuest=request.url.includes('api.razorpay.com')
-    if (isMapboxRequest||isRazorpayReuest) {
-      console.log('interceptor',isMapboxRequest,isRazorpayReuest);
+    if (isMapboxRequest) {
       
       return next.handle(request)
     }

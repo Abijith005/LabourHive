@@ -18,7 +18,6 @@ export class MapboxService {
 
     const trimmedQuery = query.trim();    
     const url =`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(trimmedQuery)}.json?access_token=${this.accessToken}`    
-
     return this.http.get<i_mapboxResp>(url);
   }
 

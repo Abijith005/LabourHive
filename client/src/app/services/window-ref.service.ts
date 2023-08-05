@@ -9,7 +9,7 @@ function _window(): any {
 @Injectable({
   providedIn: 'root'
 })
-export class WindoRefService {
+export class WindowRefService {
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) { }
