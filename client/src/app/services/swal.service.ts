@@ -8,12 +8,14 @@ export class SwalService {
 
   constructor() { }
 
-  async showConfirmation(title: string, text: string): Promise<boolean> {
+  async showAlert(title: string, text: string,icon:string): Promise<boolean> {
     try {
+      console.log('alerttttttttttt');
+      
       const result = await Swal.fire({
         title,
         text,
-        icon: 'warning',
+        icon:icon=='success'?'success':(icon=='warning'?'warning':'error'),
         showCancelButton: true,
         confirmButtonColor: '#d33',
         confirmButtonText: 'Yes',

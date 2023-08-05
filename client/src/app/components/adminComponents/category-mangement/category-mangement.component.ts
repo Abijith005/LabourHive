@@ -63,7 +63,7 @@ export class CategoryMangementComponent implements OnInit {
     
     //swal funcion called
 
-    const confirmation = await this._swalService.showConfirmation(`${status ? 'Block Category' : 'Unblock Category'}`, `Are you sure you want to ${status ? 'Block' : 'Unblock'} ${name} ?`)
+    const confirmation = await this._swalService.showAlert(`${status ? 'Block Category' : 'Unblock Category'}`, `Are you sure you want to ${status ? 'Block' : 'Unblock'} ${name} ?`,'warning')
 
     if (confirmation) {
       this._service.blockCategory(_id, status).subscribe(res => {
@@ -84,7 +84,7 @@ export class CategoryMangementComponent implements OnInit {
 
   //swal function called
 
-  const confirmation=await this._swalService.showConfirmation('Delete Category',`Are you sure you want to delete ${name} ?`)
+  const confirmation=await this._swalService.showAlert('Delete Category',`Are you sure you want to delete ${name} ?`,'warning')
 
   if (confirmation) {
     this._service.deleteCategory(_id).subscribe(res => {

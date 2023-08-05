@@ -2,6 +2,7 @@ import express from 'express'
 import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserAuthController.js'
 import { getAllCategories } from '../Controllers/CategoryController.js'
 import { createJobProfile, getJobProfile, getLabours, labourProfile, updateJobProfile } from '../Controllers/JobsController.js'
+import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
 
 const router=express.Router()  
 
@@ -32,6 +33,10 @@ router.put('/updateJobProfile',updateJobProfile)
 router.get('/getLabours/:category',getLabours)
 
 router.get('/getLabourProfile/:user_id',labourProfile)
+
+router.post('/hirePayment',hirePayment)
+
+router.post('/hirePayment/verifyPayment',verifyPayment)
 
 router.get('/logout',userLogout)
 

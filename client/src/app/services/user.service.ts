@@ -7,6 +7,7 @@ import { i_authRes } from '../interfaces/userInterfaces/i_authRes';
 import { i_UserDetails } from '../interfaces/userInterfaces/i_user-details';
 import { i_customCategory } from '../interfaces/adminInterfaces/i_customCategory';
 import { i_jobProfile} from '../interfaces/userInterfaces/i_jobProfile';
+import { i_paymentDetails } from '../interfaces/userInterfaces/i_paymentDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,16 @@ export class UserService {
 
   getLabourProfile(_id:string){
     return this.http.get<i_jobProfile&i_authRes>(`/getLabourProfile/${_id}`)
+  }
+
+  hirePayment(totalAmount:number){
+    console.log('hfjhkdsjhere');
+    
+    return this.http.post<i_authRes&any>(`/hirePayment`,{totalAmount})
+  }
+
+  verifyPayment(data:i_paymentDetails){
+    return this.http.post<any>(`/hirePayment/verifyPayment`,data)
   }
 
   userLogout() {

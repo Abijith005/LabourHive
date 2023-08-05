@@ -39,7 +39,7 @@ export class UserMangementComponent implements OnInit {
 
   async blockStatus(id: string, status: boolean, name: string) {
 
-    const confirmation = await this._swalService.showConfirmation(`${status ? 'Block User' : 'Unblock User'}`, `Are you sure you want to ${status ? 'Block' : 'Unblock'} ${name} ?`);
+    const confirmation = await this._swalService.showAlert(`${status ? 'Block User' : 'Unblock User'}`, `Are you sure you want to ${status ? 'Block' : 'Unblock'} ${name} ?`,'warning');
 
     if (confirmation) {
       this.service.blockStatus(id, status).subscribe(res => {
