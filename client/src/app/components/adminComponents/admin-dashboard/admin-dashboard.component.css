@@ -15,7 +15,6 @@
 }
 
 .img{
-    
     display: flex;
     align-items: center;
 }
@@ -30,4 +29,18 @@
     font-size: xx-large;
     font-weight: 700;
     margin: 0;
+}
+
+@media (max-width:768px){
+    .over-view{
+        width: 180px;
+        height: 100px;
+     
+    }
+    .img img{
+        height: 40px;
+        width: 60px;
+        object-fit: contain;
+    }
+
 }

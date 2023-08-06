@@ -45,7 +45,7 @@ children:[{path:'',component:UserHomeComponent},
 { path: 'adminLogin', component: AdminLoginComponent },
 {
   path: 'admin', component: AdminNavBarComponent,
-  children: [{ path: 'dashboard', component: AdminDashboardComponent },
+  children: [{ path: '', component: AdminDashboardComponent },
   { path: 'userManagement', component: UserMangementComponent },
   {path:'categoryManagement',component:CategoryMangementComponent},
   {path:'workManagement',component:WorkMangementComponent},

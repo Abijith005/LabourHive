@@ -47,7 +47,7 @@
 </nav>
 <div class='side-bar' [ngClass]="{'open': showSideBar}">
   <div class="side-bar-container ">
-    <div class="side-item " [class.active]="activeItem==='home'" (click)="changeActive('home')" [routerLink]="['dashboard']">
+    <div class="side-item " [class.active]="activeItem==='home'" (click)="changeActive('home')" [routerLink]="['/admin']">
       <i class="ri-home-line"></i>
       <b>Home</b>
     </div>
