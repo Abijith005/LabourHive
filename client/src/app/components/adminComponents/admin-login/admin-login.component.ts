@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AdminService } from 'src/app/services/admin.service';
-import { HelperService } from 'src/app/services/helper.service';
+import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { HelperService } from 'src/app/services/commonServices/helper.service';
+
 
 @Component({
   selector: 'labourHive-admin-login',
