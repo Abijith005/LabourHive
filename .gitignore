@@ -9,7 +9,6 @@ client/bazel-out
 # Node
 client/node_modules
 server/node_modules
-socket_io/node_modules
 client/npm-debug.log
 client/yarn-error.log
 

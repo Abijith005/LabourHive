@@ -3,6 +3,7 @@ import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePa
 import { getAllCategories } from '../Controllers/CategoryController.js'
 import { createJobProfile, getJobProfile, getLabours, labourProfile, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
+import { createNewChatRoom } from '../Controllers/chatControllers.js'
 
 const router=express.Router()  
 
@@ -37,6 +38,8 @@ router.get('/getLabourProfile/:user_id',labourProfile)
 router.post('/hirePayment',hirePayment)
 
 router.post('/hirePayment/verifyPayment',verifyPayment)
+
+router.post('/createNewChatRoom',createNewChatRoom)
 
 router.get('/logout',userLogout)
 

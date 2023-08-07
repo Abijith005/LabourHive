@@ -36,10 +36,12 @@ http_server.listen(port,()=>{
 io.on('connection',(socket)=>{
     console.log('new user connected ');
     socket.on('join',(data)=>{
-        socket.join(data.room);console.log(data.user+'joined'+data.room);
+        socket.join(data.room);
+        console.log(data.user+'joined'+data.room);
         socket.broadcast.to(data.room).emit('user joined')
     })
     socket.on('message',(data)=>{
+        console.log(data);
         io.in(data.room).emit('new message',{user:data.user,message:data.message})
     })
 })

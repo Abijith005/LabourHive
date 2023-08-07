@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
 import { UserService } from 'src/app/services/userServices/user.service';
+import { ChatService } from 'src/app/services/userServices/chat.service';
 
 @Component({
   selector: 'app-view-job-profile',
@@ -23,14 +24,16 @@ export class ViewJobProfileComponent {
   labour_id!: string
 
   constructor(private matDialog: MatDialog,
-    private service: UserService,
-    private route: ActivatedRoute) { }
+    private _service: UserService,
+    private _route: ActivatedRoute,
+    private _chatServices:ChatService,
+    private _router:Router) { }
 
   ngOnInit(): void {
 
-    this.labour_id=this.route.snapshot.paramMap.get('labour_id')! 
+    this.labour_id=this._route.snapshot.paramMap.get('labour_id')! 
 
-    this.service.getLabourProfile(this.labour_id).subscribe(res=>{
+    this._service.getLabourProfile(this.labour_id).subscribe(res=>{
       if (res.success) {
         this.jobProfileDetails=res
       }
@@ -47,6 +50,9 @@ export class ViewJobProfileComponent {
 
   createChatRoom(){
     
+    this._chatServices.createNewChatRoom(this.labour_id).subscribe()
+    this._router.navigate(['/chat'])
+
   }
 
 
