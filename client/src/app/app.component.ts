@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { userDataState } from './store/user.state';
 import { login } from './store/user.actions';
-import { UserService } from './services/userServices/user.service';
+import { UserService } from './services/user.service';
 
 
 @Component({

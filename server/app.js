@@ -17,7 +17,7 @@ const app = express()
 const port = process.env.PORT || 5000
 app.use(
     cors({
-        origin: [process.env.CORS_CLIENT_ORIGIN],
+        origin: ['http://localhost:4200'],
         methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH',],
         credentials: true
 

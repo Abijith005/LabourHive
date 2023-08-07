@@ -40,6 +40,7 @@ import { EditCategoryComponent } from './components/adminComponents/edit-categor
 import { JobProfileComponent } from './components/userComponents/job-profile/job-profile.component';
 import { CreatejobProfileComponent } from './components/userComponents/createjob-profile/createjob-profile.component';
 import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jobs.component';
+import { MapboxService } from './services/mapbox.service';
 import { LoadingComponent } from './components/commonComponents/loading/loading.component';
 import { EditJobProfileComponent } from './components/userComponents/edit-job-profile/edit-job-profile.component';
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
@@ -47,7 +48,6 @@ import { StarRatingPipe } from './pipes/userPipes/star-rating.pipe';
 import { ViewJobProfileComponent } from './components/userComponents/view-job-profile/view-job-profile.component';
 import { PaymentDetailsComponent } from './components/userComponents/payment-details/payment-details.component';
 import { ChatComponent } from './components/userComponents/chat/chat.component';
-import { MapboxService } from './services/commonServices/mapbox.service';
 @NgModule({
   declarations: [
     AppComponent,

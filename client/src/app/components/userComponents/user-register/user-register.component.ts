@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HelperService } from 'src/app/services/commonServices/helper.service';
-import { UserService } from 'src/app/services/userServices/user.service';
-
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
+import { HelperService } from 'src/app/services/helper.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'labourHive-user-register',

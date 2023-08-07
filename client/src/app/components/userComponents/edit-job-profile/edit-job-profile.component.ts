@@ -7,9 +7,9 @@ import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categor
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
-import { HelperService } from 'src/app/services/commonServices/helper.service';
-import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { MapboxService } from 'src/app/services/mapbox.service';
+import { UserService } from 'src/app/services/user.service';
 import { jobProfile } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
 

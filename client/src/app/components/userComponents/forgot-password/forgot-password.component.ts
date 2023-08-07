@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HelperService } from 'src/app/services/commonServices/helper.service';
-import { UserService } from 'src/app/services/userServices/user.service';
-
+import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
+import { HelperService } from 'src/app/services/helper.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'labourHive-forgot-password',
@@ -35,6 +35,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.forgotForm.valid) {
       const { email } = this.forgotForm.value
       this.service.forgotPassoword(email).subscribe((res) => {
+        console.log(res,'otppres');
         
         if (res.success) {
           this.generateOtp = true

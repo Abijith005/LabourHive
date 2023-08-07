@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
-import { UserService } from 'src/app/services/userServices/user.service';
-
+import { UserService } from 'src/app/services/user.service';
+import { userDataState } from 'src/app/store/user.state';
 
 @Component({
   selector: 'labourHive-user-home',

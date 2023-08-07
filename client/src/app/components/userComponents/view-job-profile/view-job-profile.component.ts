@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
-import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'app-view-job-profile',
