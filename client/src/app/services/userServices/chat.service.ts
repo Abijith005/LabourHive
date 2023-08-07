@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client'; 
-import { Observable } from 'rxjs'; 
 import { environment } from 'src/app/environments/environment';
 
 @Injectable({
@@ -8,7 +7,7 @@ import { environment } from 'src/app/environments/environment';
 })
 export class ChatService {
 
-  private _socket=io(environment.SOCKET_IO_URL)
+  private _socket=io(environment.API_URL)
 
   constructor() { }
 

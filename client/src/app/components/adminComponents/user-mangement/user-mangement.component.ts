@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
-import { AdminService } from 'src/app/services/admin.service';
-import { HelperService } from 'src/app/services/helper.service';
+import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { HelperService } from 'src/app/services/commonServices/helper.service';
+import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { blockUser, getAllusers } from 'src/app/store/admin.actions';
 import { adminDataState } from 'src/app/store/admin.state';
-import { SwalService } from 'src/app/services/swal.service';
 
 @Component({
   selector: 'labourHive-user-mangement',

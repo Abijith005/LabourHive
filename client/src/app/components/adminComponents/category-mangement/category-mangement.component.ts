@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AdminService } from 'src/app/services/admin.service';
 import { Store } from '@ngrx/store';
 import { getAllCategory } from 'src/app/store/admin.actions';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
 import { Observable, map } from 'rxjs';
 import { adminDataState } from 'src/app/store/admin.state';
-import { HelperService } from 'src/app/services/helper.service';
-import { SwalService } from 'src/app/services/swal.service';
+import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { HelperService } from 'src/app/services/commonServices/helper.service';
+import { SwalService } from 'src/app/services/commonServices/swal.service';
+
 
 @Component({
   selector: 'labourHive-category-mangement',

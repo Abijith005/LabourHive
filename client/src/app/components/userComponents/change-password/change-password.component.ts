@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
-import { HelperService } from 'src/app/services/helper.service';
-import { UserService } from 'src/app/services/user.service';
-
+import { HelperService } from 'src/app/services/commonServices/helper.service';
+import { UserService } from 'src/app/services/userServices/user.service';
 @Component({
   selector: 'labourHive-change-password',
   templateUrl: './change-password.component.html',

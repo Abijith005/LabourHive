@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CreatejobProfileComponent } from '../createjob-profile/createjob-profile.component';
 import { MatDialog } from '@angular/material/dialog';
-import { UserService } from 'src/app/services/user.service';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { EditJobProfileComponent } from '../edit-job-profile/edit-job-profile.component';
@@ -9,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
 import { jobProfile } from 'src/app/store/user.actions';
 import { Observable, map } from 'rxjs';
+import { UserService } from 'src/app/services/userServices/user.service';
 
 @Component({
   selector: 'labourHive-job-profile',

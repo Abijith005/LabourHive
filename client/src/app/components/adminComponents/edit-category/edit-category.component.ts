@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 import { EMPTY, Observable, of, switchMap } from 'rxjs';
 import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
-import { AdminService } from 'src/app/services/admin.service';
-import { HelperService } from 'src/app/services/helper.service';
+import { AdminService } from 'src/app/services/adminServices/admin.service';
+import { HelperService } from 'src/app/services/commonServices/helper.service';
 import { getAllCategory } from 'src/app/store/admin.actions';
 import { adminDataState } from 'src/app/store/admin.state';
 
