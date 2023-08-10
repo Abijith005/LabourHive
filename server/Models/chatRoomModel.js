@@ -13,5 +13,5 @@ const chatRoomSchema = new mongoose.Schema({
     timestamps:true
 })
 
-const chatRoomModel = new mongoose.model('chatRoom', chatRoomSchema)
+const chatRoomModel =  mongoose.model('chatRoom', chatRoomSchema)
 export default chatRoomModel

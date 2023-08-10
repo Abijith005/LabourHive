@@ -1,51 +1,47 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'user name is required']
-    },
+  name: {
+    type: String,
+    required: [true, "user name is required"],
+  },
 
-    email: {
-        type: String,
-        required: [true, 'email is required']
-    },
+  email: {
+    type: String,
+    required: [true, "email is required"],
+  },
 
-    mobileNumber: {
-        type: String,
-        required: false
-    },
+  mobileNumber: {
+    type: String,
+    required: false,
+  },
 
-    password: {
-        type: String,
-        required: false
-    },
+  password: {
+    type: String,
+    required: false,
+  },
 
-    profilePicture: {
-        type:String,
-        required:false
-    },
+  profilePicture: {
+    type: String,
+    required: false,
+  },
 
-    blockStatus:{
-        type:Boolean,
-        default:false
-    },
+  blockStatus: {
+    type: Boolean,
+    default: false,
+  },
 
-    googleLogin:{
-        type:Boolean,
-        required:[true,'google login status is required']
-    },
+  googleLogin: {
+    type: Boolean,
+    required: [true, "google login status is required"],
+  },
 
-    jobProfileDatas:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'jobProfile',
-    }
+  jobProfileDatas: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "jobProfile",
+  },
+});
 
-   
+const userModel = mongoose.model("user", userSchema);
 
- 
-})
-
-const userModel = mongoose.model('user', userSchema)
-
-export default userModel
+export default userModel;

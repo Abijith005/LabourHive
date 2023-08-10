@@ -1,9 +1,12 @@
 <div class="container-fluid" style="margin-top: 80px;">
     <div class="search-box ">
         <h1 class="text-center d-md-block d-none slogan">We offer thousands of works right now</h1>
-        <div class="search col-md-5 col-12">
-            <input type="text" placeholder="Search by key" class="form-control ">
-            <input type="text" placeholder="Search by location" (change)="fetchLocation($event)" class="form-control">
+        <div class="search col-md-5 col-12 search-location">
+            <input type="text" placeholder="Search by key" class="form-control" [(ngModel)]="searchKey">
+            <input type="text" placeholder="Search by location" [(ngModel)]="searchLocation" (input)="fetchLocation($event)" class="form-control ">
+            <ul class="list-unstyled suggestion-list">
+                <li *ngFor="let suggestion of suggessions" (click)="selectLocation(suggestion)">{{suggestion.location}}</li>
+            </ul>
             <button class="btn  btn-success" (click)="searchJobs()">search</button>
         </div>
         <div class="col-md-5 col-12">

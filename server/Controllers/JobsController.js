@@ -1,8 +1,8 @@
-import { log } from "console";
 import cloudinary from "../Config/cloudinary.js";
 import jobProfileModel from "../Models/jobProfileModel.js";
 import jwt from "jsonwebtoken";
 import userModel from "../Models/userModel.js";
+import jobsModel from "../Models/jobsModel.js";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -128,13 +128,21 @@ export const updateJobProfile = async (req, res) => {
 
 export const getLabours = async (req, res) => {
   try {
-    const user_id=await jwt.verify(req.cookies.userAuthToken,process.env.JWT_SIGNATURE)?._id
+    const user_id = await jwt.verify(
+      req.cookies.userAuthToken,
+      process.env.JWT_SIGNATURE
+    )?._id;
     const labours = await jobProfileModel
       .find({ category: req.params.category })
-      .find({ $and:[{category: req.params.category},{user_id:{$ne:user_id}}]})
+      .find({
+        $and: [
+          { category: req.params.category },
+          { user_id: { $ne: user_id } },
+        ],
+      })
       .lean();
     res.json(labours);
-    console.log(labours,'kkkk');
+    console.log(labours, "kkkk");
   } catch (error) {
     console.log("Error", error);
   }
@@ -150,6 +158,64 @@ export const labourProfile = async (req, res) => {
     labourProfile = labourProfile.toObject();
 
     res.json({ success: true, ...labourProfile });
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+export const searchJobs = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { coordinates, searchKey } = req.body;
+    console.log(searchKey, "ddd");
+    const searchLon = coordinates[0];
+    const searchLat = coordinates[1];
+    //limit is set to 10 km
+    const limitDistance = 10;
+
+    let jobs = await jobsModel
+      .find({ category: RegExp(searchKey, "i") })
+      .lean();
+
+    //if location is given then we need to filter jobs around 10 km radius of the given location
+
+    if (coordinates) {
+      // haversine formula to get distance from geocodes
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = degreesToRadians(lat2 - lat1);
+        const dLon = degreesToRadians(lon2 - lon1);
+
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(degreesToRadians(lat1)) *
+            Math.cos(degreesToRadians(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const distance = R * c;
+        return distance;
+      }
+      // function for converting degree to radian
+      function degreesToRadians(degrees) {
+        return degrees * (Math.PI / 180);
+      }
+
+      jobs = jobs.filter((job) => {
+        return (
+          haversineDistance(
+            searchLat,
+            searchLon,
+            job.coordinates[1],
+            job.coordinates[0]
+          ) <= limitDistance
+        );
+      });
+    }
+
+    res.json(jobs);
   } catch (error) {
     console.log("Error", error);
   }

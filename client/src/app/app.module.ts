@@ -48,6 +48,7 @@ import { ViewJobProfileComponent } from './components/userComponents/view-job-pr
 import { PaymentDetailsComponent } from './components/userComponents/payment-details/payment-details.component';
 import { ChatComponent } from './components/userComponents/chat/chat.component';
 import { MapboxService } from './services/commonServices/mapbox.service';
+import { PostJobComponent } from './components/userComponents/post-job/post-job.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,6 +80,7 @@ import { MapboxService } from './services/commonServices/mapbox.service';
     ViewJobProfileComponent,
     PaymentDetailsComponent,
     ChatComponent,
+    PostJobComponent,
   ],
   imports: [
     BrowserModule,

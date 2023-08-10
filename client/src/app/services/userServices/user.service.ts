@@ -9,83 +9,74 @@ import { i_customCategory } from 'src/app/interfaces/adminInterfaces/i_customCat
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_paymentDetails } from 'src/app/interfaces/userInterfaces/i_paymentDetails';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
-
-  constructor(private _http: HttpClient) { }
-
+  constructor(private _http: HttpClient) {}
 
   userRegister(datas: i_RegisterDatas) {
-    return this._http.post<i_authRes>(`/register`, datas)
+    return this._http.post<i_authRes>(`/register`, datas);
   }
 
   postRegisterOtp(otp: string, userData: i_RegisterDatas) {
-    const datas = { ...userData, otp }
-    return this._http.post<i_authRes>(`/submitOtp`, datas)
+    const datas = { ...userData, otp };
+    return this._http.post<i_authRes>(`/submitOtp`, datas);
   }
 
   userLogin(datas: i_LoginDatas) {
-    return this._http.post<i_authRes & i_UserDetails>(`/login`, datas)
+    return this._http.post<i_authRes & i_UserDetails>(`/login`, datas);
   }
 
   forgotPassoword(email: string) {
-    return this._http.post<i_authRes>(`/forgotPassword`, { email })
+    return this._http.post<i_authRes>(`/forgotPassword`, { email });
   }
 
   submitForgotPasswordOtp(otp: string) {
-    return this._http.post<i_authRes>(`/submitForgotOtp`, { otp })
+    return this._http.post<i_authRes>(`/submitForgotOtp`, { otp });
   }
 
   changePassword(data: i_Password) {
-    return this._http.put<i_authRes>(`/changePassword`, data)
-
+    return this._http.put<i_authRes>(`/changePassword`, data);
   }
 
   getUserDatas() {
-    return this._http.get<i_UserDetails>('/getUserDatas')
+    return this._http.get<i_UserDetails>('/getUserDatas');
   }
 
   getCategoryDetails() {
-    return this._http.get<i_customCategory>(`/getCategoryDetails`)
+    return this._http.get<i_customCategory>(`/getCategoryDetails`);
   }
 
   uploadJobProfile(data: i_jobProfile) {
-    return this._http.post<i_authRes>(`/uploadJobProfile`, data)
+    return this._http.post<i_authRes>(`/uploadJobProfile`, data);
   }
 
-  getJobProfileDetails(){
-    return this._http.get<i_jobProfile&i_authRes>(`/getJobProfileDetails`)
+  getJobProfileDetails() {
+    return this._http.get<i_jobProfile & i_authRes>(`/getJobProfileDetails`);
   }
 
-  updateJobProfile(data:i_jobProfile){
-    return this._http.put<i_jobProfile&i_authRes>(`/updateJobProfile`,data)
+  updateJobProfile(data: i_jobProfile) {
+    return this._http.put<i_jobProfile & i_authRes>(`/updateJobProfile`, data);
   }
 
-  getLabours(category:string){
-    return this._http.get<i_jobProfile[]>(`/getLabours/${category}`)
+  getLabours(category: string) {
+    return this._http.get<i_jobProfile[]>(`/getLabours/${category}`);
   }
 
-  getLabourProfile(_id:string){
-    return this._http.get<i_jobProfile&i_authRes>(`/getLabourProfile/${_id}`)
+  getLabourProfile(_id: string) {
+    return this._http.get<i_jobProfile & i_authRes>(`/getLabourProfile/${_id}`);
   }
 
-  hirePayment(totalAmount:number){
-    console.log('hfjhkdsjhere');
-    
-    return this._http.post<i_authRes&any>(`/hirePayment`,{totalAmount})
+  hirePayment(totalAmount: number) {
+    return this._http.post<i_authRes & any>(`/hirePayment`, { totalAmount });
   }
 
-  verifyPayment(data:i_paymentDetails){
-    return this._http.post<any>(`/hirePayment/verifyPayment`,data)
+  verifyPayment(data: i_paymentDetails) {
+    return this._http.post<any>(`/hirePayment/verifyPayment`, data);
   }
-  
 
   userLogout() {
-    return this._http.get<i_authRes>(`/logout`)
+    return this._http.get<i_authRes>(`/logout`);
   }
-
 }
