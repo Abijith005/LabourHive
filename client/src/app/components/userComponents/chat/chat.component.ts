@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //getting userdetails from store
+    //getting user details from store
     this.userDatas$ = this._store.select('user').pipe(
       map((state) => {
         return state.userDatas!;
@@ -57,6 +57,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       .getAllmessageReceivers(this.user_id)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
+        console.log(res,'receivers');
+        
         this.messageReceivers = res;
       });
   }

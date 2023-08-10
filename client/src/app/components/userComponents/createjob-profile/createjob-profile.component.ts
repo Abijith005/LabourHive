@@ -8,39 +8,36 @@ import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/userServices/user.service';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
-
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'labourHive-createjob-profile',
   templateUrl: './createjob-profile.component.html',
-  styleUrls: ['./createjob-profile.component.css']
+  styleUrls: ['./createjob-profile.component.css'],
 })
 export class CreatejobProfileComponent implements OnInit {
-
-
   //variable declarations
 
-  jobProfileForm: FormGroup = new FormGroup({})
-  isLoading: boolean = false
-  isSubmitted = false
-  profilePic: string = ''
-  categories: i_categoryResponse[] | null = null
-  workImages: string[] = []
+  jobProfileForm: FormGroup = new FormGroup({});
+  isLoading: boolean = false;
+  isSubmitted = false;
+  profilePic: string = '';
+  categories: i_categoryResponse[] | null = null;
+  workImages: string[] = [];
   suggestions: i_suggestions[] = [];
-  coordinates: number[] | null = null
+  coordinates: number[] | null = null;
 
+  private _unsubscribe$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private _service: UserService,
     private _mapboxService: MapboxService,
     private _dialogRef: MatDialogRef<CreatejobProfileComponent>,
-    private _route:Router
-  ) { }
-
-
+    private _route: Router
+  ) {}
 
   ngOnInit(): void {
-
     //Reactive form validations
 
     this.jobProfileForm = this.fb.group({
@@ -51,51 +48,47 @@ export class CreatejobProfileComponent implements OnInit {
       profilePic: ['', [Validators.required]],
       selfDescription: ['', [Validators.required]],
       location: ['', [Validators.required]],
-      workImages: ['']
-    })
+      workImages: [''],
+    });
 
-    this._service.getCategoryDetails().subscribe(res => {
-      this.categories = res.categories !
-    })
+    this._service.getCategoryDetails().pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
+      this.categories = res.categories!;
+    });
 
     //getting categories from local storage
 
-    this.categories=JSON.parse(localStorage.getItem('categories')!)
-    
+    this.categories = JSON.parse(localStorage.getItem('categories')!);
   }
-
 
   //getting form controls
 
   get formControls() {
-    return this.jobProfileForm.controls
+    return this.jobProfileForm.controls;
   }
-
 
   //event for getting image and converting it into base64 for profilePic
 
   onProfilePicSelect(event: Event) {
-    const input = event.target as HTMLInputElement
+    const input = event.target as HTMLInputElement;
     if (input.files?.length! > 0) {
-      const reader = new FileReader()
-      reader.readAsDataURL(input.files![0])
+      const reader = new FileReader();
+      reader.readAsDataURL(input.files![0]);
       reader.onloadend = () => {
-        this.profilePic = reader.result as string
-      }
-
+        this.profilePic = reader.result as string;
+      };
     }
   }
 
   //event handling funtion for getting image and converting it into base64 for workImage
 
-
   onWorkImageSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      
       // Convert the FileList to an Array
       const filesArray = Array.from(input.files);
-      const fileReadPromises = filesArray.map((file) => this.readFileAsBase64(file));
+      const fileReadPromises = filesArray.map((file) =>
+        this.readFileAsBase64(file)
+      );
 
       // Use Promise.all to handle all the asynchronous file reading operations
       Promise.all(fileReadPromises).then((base64Strings) => {
@@ -118,32 +111,28 @@ export class CreatejobProfileComponent implements OnInit {
     });
   }
 
-
   //delete images from the array
 
   deleteImage(index: number) {
-    this.workImages.splice(index, 1)
-
+    this.workImages.splice(index, 1);
   }
-
 
   // getting suggessions for location using mapbox
 
   fetchSuggestions(event: Event) {
-    const inputElement = event.target as HTMLInputElement
-    const value = inputElement.value
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
 
     if (!value) {
       this.suggestions = [];
       return;
     }
-    this._mapboxService.getSuggestions(value).subscribe(
+    this._mapboxService.getSuggestions(value).pipe(takeUntil(this._unsubscribe$)).subscribe(
       (response: i_mapboxResp) => {
         this.suggestions = response.features.map((feature) => ({
           location: feature.place_name,
           coordinates: feature.center,
         }));
-
       },
       (error) => {
         console.error('Error fetching suggestions:', error);
@@ -151,34 +140,28 @@ export class CreatejobProfileComponent implements OnInit {
     );
   }
 
-
   //setting suggested value to location
 
   onSuggestionClick(suggestion: i_suggestions) {
-    this.formControls['location'].setValue(suggestion.location)
-    this.coordinates = suggestion.coordinates
-    this.suggestions = []
-
+    this.formControls['location'].setValue(suggestion.location);
+    this.coordinates = suggestion.coordinates;
+    this.suggestions = [];
   }
-
-
-
 
   // Form submission
 
   onSubmit() {
-    this.isSubmitted = true
+    this.isSubmitted = true;
 
     //checking that the category selected is not 'Select Category'
 
     if (this.formControls['category'].value === 'Select Category') {
-      this.formControls['category'].setErrors({ required: true })
-      this.isSubmitted = false
-      return
+      this.formControls['category'].setErrors({ required: true });
+      this.isSubmitted = false;
+      return;
     }
 
     if (this.jobProfileForm.valid) {
-
       //form data to send to backend
       const formData: i_jobProfile = {
         name: this.formControls['name'].value,
@@ -189,23 +172,19 @@ export class CreatejobProfileComponent implements OnInit {
         selfDescription: this.formControls['selfDescription'].value,
         location: this.formControls['location'].value,
         coordinates: this.coordinates!,
-        workImages: this.workImages
-      }
+        workImages: this.workImages,
+      };
 
-      this.isLoading = true
+      this.isLoading = true;
 
       //reducing size of the modal
-      this._dialogRef.updateSize('450px','190px')
+      this._dialogRef.updateSize('450px', '190px');
 
-
-      this._service.uploadJobProfile(formData).subscribe(res => {
-        this.isLoading = false
-        this._dialogRef.close()
-        this._route.navigate(['/jobProfile'])
-
-      })
+      this._service.uploadJobProfile(formData).subscribe((res) => {
+        this.isLoading = false;
+        this._dialogRef.close();
+        this._route.navigate(['/jobProfile']);
+      });
     }
-
-
   }
 }

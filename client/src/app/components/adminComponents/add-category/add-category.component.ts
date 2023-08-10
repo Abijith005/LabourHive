@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
@@ -13,7 +14,7 @@ import { adminDataState } from 'src/app/store/admin.state';
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.css']
 })
-export class AddCategoryComponent implements OnInit {
+export class AddCategoryComponent implements OnInit,OnDestroy{
   //variable declaration
 
   isLoading: boolean = false
@@ -21,6 +22,8 @@ export class AddCategoryComponent implements OnInit {
   selectedFiles!: File | null
   finalImage: string = ''
   addCategoryForm: FormGroup = new FormGroup({})
+
+  private _unsubscribe$=new Subject<void>()
 
   constructor(private fb: FormBuilder,
     private _service: AdminService,
@@ -72,7 +75,7 @@ export class AddCategoryComponent implements OnInit {
         vectorImage: this.finalImage!
       }
       this.isLoading = true
-      this._service.addCategory(formData).subscribe((res) => {
+      this._service.addCategory(formData).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
         this.isLoading = false
         if (res.success) {
           
@@ -86,6 +89,11 @@ export class AddCategoryComponent implements OnInit {
 
       })
     }
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe$.next()
+    this._unsubscribe$.complete()
   }
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import io from 'socket.io-client';
 import { environment } from 'src/app/environments/environment';
+import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { i_chatReceiver } from 'src/app/interfaces/userInterfaces/i_chatReceivers';
 
 interface activeUsers {
@@ -55,9 +56,8 @@ disconnect(){
 
   //adding member_id to db
   createNewChatRoom(data: string) {
-    console.log('hloooo', data);
 
-    return this._http.post(`/chat/createNewChatRoom`, { receiver_id: data });
+    return this._http.post<i_authRes>(`/chat/createNewChatRoom`, { receiver_id: data });
   }
 
   //storeMessages in db

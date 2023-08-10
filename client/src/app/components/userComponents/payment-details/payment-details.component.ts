@@ -1,7 +1,13 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
+import {
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  takeUntil,
+} from 'rxjs';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_paymentDetails } from 'src/app/interfaces/userInterfaces/i_paymentDetails';
@@ -11,33 +17,28 @@ import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { RazorpayService } from 'src/app/services/userServices/razorpay.service';
 import { UserService } from 'src/app/services/userServices/user.service';
 
-
-
-
 @Component({
   selector: 'labourHive-payment-details',
   templateUrl: './payment-details.component.html',
-  styleUrls: ['./payment-details.component.css']
+  styleUrls: ['./payment-details.component.css'],
 })
 export class PaymentDetailsComponent implements OnInit, OnDestroy {
-
   //variable declarations
-  jobprofileDetails!: i_jobProfile
-  isSubmitted: boolean = false
-  hireForm: FormGroup = new FormGroup({})
-  suggestions: i_suggestions[] | [] = []
-  labourDetails: i_jobProfile | null = null
-  isDateSelected = false
-  totalWage: number | null = null
-  totalPayable: number|null=null
-  totalDays: number | null = null
+  jobprofileDetails!: i_jobProfile;
+  isSubmitted: boolean = false;
+  hireForm: FormGroup = new FormGroup({});
+  suggestions: i_suggestions[] | [] = [];
+  labourDetails: i_jobProfile | null = null;
+  isDateSelected = false;
+  totalWage: number | null = null;
+  totalPayable: number | null = null;
+  totalDays: number | null = null;
 
-  private _locationChanged$ = new Subject<string>()
-  private _unSubscribe$ = new Subject()
+  private _locationChanged$ = new Subject<string>();
+  private _unsubscribe$ = new Subject<void>();
 
   constructor(
-
-    // injecting data from parent to matdialog 
+    // injecting data from parent to matdialog
 
     @Inject(MAT_DIALOG_DATA) private _data: i_jobProfile,
     private matDialogRef: MatDialogRef<PaymentDetailsComponent>,
@@ -47,110 +48,104 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     private _swalService: SwalService,
     private _razorpayService: RazorpayService
   ) {
-
-
     //matDialog resizing
 
-    this.matDialogRef.updateSize('500px', '700px')
+    this.matDialogRef.updateSize('500px', '700px');
 
-    this.labourDetails = _data
-   
-
+    this.labourDetails = _data;
   }
 
-
   ngOnInit(): void {
-
     this.hireForm = this._fb.group({
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
-      location: ['', [Validators.required]]
-    })
+      location: ['', [Validators.required]],
+    });
 
-    //switching to new obervable 
-    this._locationChanged$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap((query: string) => this.getSuggestions(query)),
-      takeUntil(this._unSubscribe$)
-    ).subscribe((res: i_mapboxResp) => {
-      this.suggestions = res.features.map((feature) => ({
-        location: feature.place_name,
-        coordinates: feature.center
-      })
-
+    //switching to new obervable
+    this._locationChanged$
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap((query: string) => this.getSuggestions(query)),
+        takeUntil(this._unsubscribe$)
       )
-    })
+      .subscribe((res: i_mapboxResp) => {
+        this.suggestions = res.features.map((feature) => ({
+          location: feature.place_name,
+          coordinates: feature.center,
+        }));
+      });
   }
 
   //get form controls
   get formControls() {
-    return this.hireForm.controls
+    return this.hireForm.controls;
   }
 
   //get location suggestion from map box
 
   getSuggestions(query: string) {
-    return this._mapboxService.getSuggestions(query)
+    return this._mapboxService.getSuggestions(query);
   }
 
   //input event handling
 
   inputChange(event: Event) {
-    const input = event.target as HTMLInputElement
-    const quey = input.value.trim()
-    this._locationChanged$.next(quey)
-
+    const input = event.target as HTMLInputElement;
+    const quey = input.value.trim();
+    this._locationChanged$.next(quey);
   }
 
   //select location from suggestions
 
   selectLocation(suggestion: i_suggestions) {
-    this.formControls['location'].patchValue(suggestion.location)
-    this.suggestions = []
+    this.formControls['location'].patchValue(suggestion.location);
+    this.suggestions = [];
   }
 
   //event handling during date change and setting amount
 
   onDateChange() {
-
-    if (!this.formControls['startDate'].errors && !this.formControls['endDate'].errors) {
-
-      const startDate = new Date(this.formControls['startDate'].value).getTime()
-      const endDate = new Date(this.formControls['endDate'].value).getTime()
+    if (
+      !this.formControls['startDate'].errors &&
+      !this.formControls['endDate'].errors
+    ) {
+      const startDate = new Date(
+        this.formControls['startDate'].value
+      ).getTime();
+      const endDate = new Date(this.formControls['endDate'].value).getTime();
 
       if (startDate < new Date().getTime() || startDate > endDate) {
-
         //custom validation for date
 
         if (startDate < new Date().getTime()) {
-          this.formControls['startDate'].setErrors({ lesserStartDate: true })
+          this.formControls['startDate'].setErrors({ lesserStartDate: true });
         }
         if (startDate > endDate) {
-          this.formControls['endDate'].setErrors({ greaterEndDate: true })
+          this.formControls['endDate'].setErrors({ greaterEndDate: true });
         }
-        this.isDateSelected = true
-        this.totalWage = null
-        this.totalDays = null
-        this.totalPayable=null
-        return
+        this.isDateSelected = true;
+        this.totalWage = null;
+        this.totalDays = null;
+        this.totalPayable = null;
+        return;
       }
 
       //getting total days and amount
-      const difference = endDate - startDate
-      this.totalDays = difference / (1000 * 60 * 60 * 24) + 1
-      this.totalWage = this.totalDays * Number(this.labourDetails?.wage)
-      this.totalPayable = this.totalWage + (0.1 * this.totalWage)
-
+      const difference = endDate - startDate;
+      this.totalDays = difference / (1000 * 60 * 60 * 24) + 1;
+      this.totalWage = this.totalDays * Number(this.labourDetails?.wage);
+      this.totalPayable = this.totalWage + 0.1 * this.totalWage;
     }
   }
 
   //payment controll
   confirmPayment() {
-    this.isSubmitted = true
+    this.isSubmitted = true;
 
     if (!this.hireForm.valid) {
-      return
+      return;
     }
 
     //datas to send backend
@@ -164,33 +159,32 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       startDate: new Date(this.formControls['startDate'].value),
       endDate: new Date(this.formControls['endDate'].value),
       location: this.formControls['location'].value,
-      coordinates: this.labourDetails?.coordinates!
-    }
-    Object.freeze(data)
+      coordinates: this.labourDetails?.coordinates!,
+    };
+    Object.freeze(data);
 
     //getting order_id for razorpay
-    this._service.hirePayment(data.totalAmount).pipe(takeUntil(this._unSubscribe$)).subscribe(res => {
-      console.log(res);
+    this._service
+      .hirePayment(data.totalAmount)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((res) => {
+        console.log(res);
 
-      if (res.success) {
-        //confirming payment and verfying 
-        this._razorpayService.handleRazorPay(res.order, data)
-      }
-      else {
-        this._swalService.showAlert('Ooops!!', 'Unknown error ocuured please try agian later', 'error')
-      }
-    })
+        if (res.success) {
+          //confirming payment and verfying
+          this._razorpayService.handleRazorPay(res.order, data);
+        } else {
+          this._swalService.showAlert(
+            'Ooops!!',
+            'Unknown error ocuured please try agian later',
+            'error'
+          );
+        }
+      });
   }
-
 
   ngOnDestroy(): void {
-    this._unSubscribe$.unsubscribe()
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
-
-
-
-
-
-
-
 }

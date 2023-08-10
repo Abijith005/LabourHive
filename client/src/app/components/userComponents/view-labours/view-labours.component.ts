@@ -15,7 +15,7 @@ export class ViewLaboursComponent implements OnInit,OnDestroy {
   isLoading = false
 
 
-  private ngUnSubscribe = new Subject()
+  private _unSubscribe$= new Subject<void>()
 
   constructor(private service: UserService,
     private _route: ActivatedRoute,
@@ -25,7 +25,7 @@ export class ViewLaboursComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.category = this._route.snapshot.paramMap.get('category')!
     this.isLoading = true
-    this.service.getLabours(this.category).pipe(takeUntil(this.ngUnSubscribe)).subscribe(res => {
+    this.service.getLabours(this.category).pipe(takeUntil(this._unSubscribe$)).subscribe(res => {
       this.labourDetails = res
       this.isLoading = false
     })
@@ -38,7 +38,8 @@ export class ViewLaboursComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnSubscribe.unsubscribe()
+    this._unSubscribe$.next();
+    this._unSubscribe$.complete();
   }
 
 }

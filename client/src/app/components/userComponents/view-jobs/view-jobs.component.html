@@ -3,8 +3,8 @@
         <h1 class="text-center d-md-block d-none slogan">We offer thousands of works right now</h1>
         <div class="search col-md-5 col-12">
             <input type="text" placeholder="Search by key" class="form-control ">
-            <input type="text" placeholder="Search by location" class="form-control">
-            <button class="btn  btn-success">search</button>
+            <input type="text" placeholder="Search by location" (change)="fetchLocation($event)" class="form-control">
+            <button class="btn  btn-success" (click)="searchJobs()">search</button>
         </div>
         <div class="col-md-5 col-12">
             <h4 class="suggestion">Browse Works By Category And Location</h4>

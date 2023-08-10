@@ -28,7 +28,7 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
   user_id!: string
   chat: boolean = false
 
-  private _unsubscribe$ = new Subject()
+  private _unsubscribe$ = new Subject<void>()
 
   constructor(private matDialog: MatDialog,
     private _service: UserService,
@@ -68,14 +68,20 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
     // this._chatServices.joinChat(this.user_id)
 
     //sending to backend to store in db
-    this._chatServices.createNewChatRoom(this.jobProfileDetails?.user_id!).subscribe()
+    this._chatServices.createNewChatRoom(this.jobProfileDetails?.user_id!).pipe(takeUntil(this._unsubscribe$)).subscribe(res=>{
+      if (res.success) {
+        console.log(res);
+        
+        //activating chat-component
+        this.chat = true
+      }
+    })
 
-    //activating chat-component
-    this.chat = true
 
   }
 
   ngOnDestroy(): void {
+    this._unsubscribe$.next()
     this._unsubscribe$.complete()
 
   }

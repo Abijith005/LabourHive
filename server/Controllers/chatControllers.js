@@ -1,7 +1,6 @@
 import Jwt from "jsonwebtoken";
 import messageModel from "../Models/messageModel.js";
 import chatRoomModel from "../Models/chatRoomModel.js";
-import { timeStamp } from "console";
 
 export const createNewChatRoom = async (req, res) => {
   try {
@@ -25,8 +24,11 @@ export const createNewChatRoom = async (req, res) => {
         setDefaultsOnInsert: true,
       }
     );
+
+    res.json({ success: true });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false });
   }
 };
 
@@ -53,7 +55,6 @@ export const storeMessages = async (req, res) => {
 export const getAllMessageReceivers = async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    console.log(user_id, "userPid");
 
     const data = await chatRoomModel
       .find({ $or: [{ sender_id: user_id }, { receiver_id: user_id }] })
@@ -61,19 +62,12 @@ export const getAllMessageReceivers = async (req, res) => {
       .lean();
 
     const receiversData = await data.map((item) => {
-      console.log(
-        user_id,
-        item.sender_id._id,
-        "/n",
-        user_id,
-        item.receiver_id._id
-      );
       if (user_id === item.sender_id._id.toString()) {
         return {
           room_id: item._id,
           receiver: item.receiver_id.name,
         };
-      } else {   
+      } else {
         return {
           room_id: item._id,
           receiver: item.sender_id.name,
@@ -82,38 +76,36 @@ export const getAllMessageReceivers = async (req, res) => {
     });
     res.json(receiversData);
   } catch (error) {
-
     console.log("Error", error);
   }
 };
 
-export const getChatMessages=async (req,res)=>{
+export const getChatMessages = async (req, res) => {
   try {
-    
-    console.log('getmessages',req.params);
-    const user_id=await Jwt.verify(req.cookies.userAuthToken,process.env.JWT_SIGNATURE)?._id
-    const room_id=req.params.room_id
-   const data= await messageModel.find({chatRoom_id:room_id}).sort({timestamps:1 })
-  //  console.log(data,'messsssssssssssssssssssssssssssssssssss****************');
-   const messages=data.map(item=>{
-    if (item.user_id.toString()===user_id) {
-      return{
-        user:'sender',
-        message:item.message
+    const user_id = await Jwt.verify(
+      req.cookies.userAuthToken,
+      process.env.JWT_SIGNATURE
+    )?._id;
+    const room_id = req.params.room_id;
+    const data = await messageModel
+      .find({ chatRoom_id: room_id })
+      .sort({ timestamps: 1 });
+    const messages = data.map((item) => {
+      if (item.user_id.toString() === user_id) {
+        return {
+          user: "sender",
+          message: item.message,
+        };
+      } else {
+        return {
+          user: "receiver",
+          message: item.message,
+        };
       }
-    }
-    else{
-      return{
-        user:'receiver',
-        message:item.message
-      }
-    }
-   })
+    });
 
-res.json(messages)
-    
+    res.json(messages);
   } catch (error) {
-    
-    console.log('Eror',error);
+    console.log("Eror", error);
   }
-}
+};
