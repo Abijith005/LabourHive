@@ -1,20 +1,25 @@
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
-    sender_id: {
-        type: String,
-        required:[true,'sender_id is required']
+    chatRoom_id: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'chatRoom'
     },
 
-    receiver_id:{
+    user_id:{
         type:String,
         required:[true,'receiver _id is required']
     },
     message:{
         type:String,
         required:[true,'message is required']
-    }
-})
+    },
+    
+},
+{
+    timestamps:true
+}
+)
 
 const messageModel=new mongoose.model('message',messageSchema)
 export default messageModel

@@ -3,7 +3,7 @@ import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePa
 import { getAllCategories } from '../Controllers/CategoryController.js'
 import { createJobProfile, getJobProfile, getLabours, labourProfile, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
-import { createNewChatRoom } from '../Controllers/chatControllers.js'
+import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
 
 const router=express.Router()  
 
@@ -39,15 +39,19 @@ router.post('/hirePayment',hirePayment)
 
 router.post('/hirePayment/verifyPayment',verifyPayment)
 
-router.post('/createNewChatRoom',createNewChatRoom)
+router.post('/chat/createNewChatRoom',createNewChatRoom)
+
+router.post('/chat/storeMessages',storeMessages)
+
+router.get('/chat/getAllReceivers/:user_id',getAllMessageReceivers)
+
+router.get('/chat/getAllMessages/:room_id',getChatMessages)
 
 router.get('/logout',userLogout)
 
     
 
-            
-
-
+        
 
 
 

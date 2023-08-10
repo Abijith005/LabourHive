@@ -12,8 +12,7 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
 
     // console.log('iam intercetor',request);
-    
-
+  
     //Excluding Mapbox requests being interrupted
 
     const isMapboxRequest=request.url.includes('api.mapbox.com')
@@ -33,6 +32,8 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
       withCredentials:true,
       url: environment.API_URL + request.url
     })
+    // console.log(modifiedRequest,'modiiiiiiiiiiiiiiiii');
+    
     
     return next.handle(modifiedRequest);
   }

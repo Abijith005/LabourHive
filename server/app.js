@@ -10,6 +10,7 @@ import adminRouter from './Routes/AdminRoutes.js'
 import userRouter from './Routes/UserRoutes.js'
 import http from 'http'
 import { Server } from 'socket.io';
+import socketConnect from './Config/socketConnect.js';
 
 
 const app = express()
@@ -33,18 +34,9 @@ http_server.listen(port,()=>{
     console.log('App runnig in port http://localhost:'+port);
 })
 
-io.on('connection',(socket)=>{
-    console.log('new user connected ');
-    socket.on('join',(data)=>{
-        socket.join(data.room);
-        console.log(data.user+'joined'+data.room);
-        socket.broadcast.to(data.room).emit('user joined')
-    })
-    socket.on('message',(data)=>{
-        console.log(data);
-        io.in(data.room).emit('new message',{user:data.user,message:data.message})
-    })
-})
+
+let activeUsers={}
+socketConnect(io,activeUsers)
 
 
 

@@ -1,4 +1,4 @@
-<div class="container profile-container p-0" *ngIf="!createJobProfile">
+<div class="container profile-container p-0" *ngIf="!createJobProfile&&!chat">
     <div class="container-fluid shadow">
         <div class=" row header d-flex flex-row mb-2">
             <div class="col-md-3 mt-3 d-none d-md-block">
@@ -67,7 +67,7 @@
         <!-- <div class="options d-flex justify-content-end"> -->
 
             <div class="buttons  mt-3">
-                <button class="btn btn-dark" (click)="createChatRoom()" >Chat</button>
+                <button class="btn btn-dark" (click)="createChat()" >Chat</button>
                 <button class="btn btn-dark" (click)="openPayment()">Hire</button>
               </div>
         <!-- </div> -->
@@ -84,3 +84,5 @@
       </div>
     </div>
   </div>
+
+  <labourHive-chat [receiver_id]="jobProfileDetails?.user_id!" *ngIf="chat"></labourHive-chat>
