@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription, map, takeUntil } from 'rxjs';
 import {
@@ -13,11 +14,12 @@ import { userDataState } from 'src/app/store/user.state';
   selector: 'labourHive-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  providers:[ChatService]
+  providers: [ChatService],
 })
 export class ChatComponent implements OnInit, OnDestroy {
   @Input() receiver_id: string = '';
 
+  // receiver_id: string = '';
   userDatas$: Observable<i_UserDetails> | null = null;
   userName: string | null = null;
   user_id!: string;
@@ -30,7 +32,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   constructor(
     private _chatService: ChatService,
-    private _store: Store<userDataState>
+    private _store: Store<userDataState>,
+    private _route: ActivatedRoute
   ) {
     _chatService.newMessageReceived().subscribe((data) => {
       this.messageArray.push(data);
@@ -38,6 +41,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    //getting receiver id from activated route
+    // this.receiver_id = this._route.snapshot.paramMap.get('labour_id')!;
+    // console.log('receiverid',this.receiver_id);
+    
     //getting user details from store
     this.userDatas$ = this._store.select('user').pipe(
       map((state) => {
@@ -57,8 +64,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       .getAllmessageReceivers(this.user_id)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        console.log(res,'receivers');
-        
         this.messageReceivers = res;
       });
   }

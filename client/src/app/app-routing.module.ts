@@ -18,46 +18,61 @@ import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jo
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
 import { ViewJobProfileComponent } from './components/userComponents/view-job-profile/view-job-profile.component';
 import { ChatComponent } from './components/userComponents/chat/chat.component';
+import { PostJobComponent } from './components/userComponents/post-job/post-job.component';
 
 const routes: Routes =
+  //user paths
 
-//user paths
+  [
+    {
+      path: '',
+      component: NavBarComponent,
+      children: [
+        { path: '', component: UserHomeComponent },
+        { path: 'jobProfile', component: JobProfileComponent },
+        {
+          path: 'createJobProfile/:categories',
+          component: CreatejobProfileComponent,
+        },
+        { path: 'viewJobs', component: ViewJobsComponent },
+        { path: 'viewLabours/:category', component: ViewLaboursComponent },
+        {
+          path: 'viewJobProfile/:labour_id',
+          component: ViewJobProfileComponent,children:[
+            {path:'chat',component:ChatComponent}
+          ],
+        },
+        {path:'postJobs',component:PostJobComponent}
+        // { path: 'chat', component: ChatComponent },
+      ],
+    },
 
-[{ path: '', component: NavBarComponent ,
-children:[{path:'',component:UserHomeComponent},
-{path:'jobProfile',component:JobProfileComponent},
-{path:'createJobProfile/:categories',component:CreatejobProfileComponent},
-{path:'viewJobs',component:ViewJobsComponent},
+    { path: 'login', component: UserLoginComponent, canActivate: [authLogin] },
+    {
+      path: 'register',
+      component: UserRegisterComponent,
+      canActivate: [authLogin],
+    },
 
-{path:'viewLabours/:category',component:ViewLaboursComponent},
-{path:'viewJobProfile/:labour_id',component:ViewJobProfileComponent},
-{path:'chat',component:ChatComponent}
+    //admin paths
 
-] },
-
-
-{ path: 'login', component: UserLoginComponent, canActivate: [authLogin] },
-{ path: 'register', component: UserRegisterComponent, canActivate: [authLogin] },
-
-
-//admin paths
-
-{ path: 'adminLogin', component: AdminLoginComponent },
-{
-  path: 'admin', component: AdminNavBarComponent,
-  children: [{ path: '', component: AdminDashboardComponent },
-  { path: 'userManagement', component: UserMangementComponent },
-  {path:'categoryManagement',component:CategoryMangementComponent},
-  {path:'workManagement',component:WorkMangementComponent},
-  {path:'walletManagement',component:WalletMangementComponent},
-  ]
-}
-];
-
+    { path: 'adminLogin', component: AdminLoginComponent },
+    {
+      path: 'admin',
+      component: AdminNavBarComponent,
+      children: [
+        { path: '', component: AdminDashboardComponent },
+        { path: 'userManagement', component: UserMangementComponent },
+        { path: 'categoryManagement', component: CategoryMangementComponent },
+        { path: 'workManagement', component: WorkMangementComponent },
+        { path: 'walletManagement', component: WalletMangementComponent },
+      ],
+    },
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
 
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
