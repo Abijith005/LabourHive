@@ -1,0 +1,19 @@
+<section class="outer-container">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row headings">
+        <div class="col-6 text-end" (click)="changeActive('posted')">
+          <p class="active-page selector" [ngClass]="{'active-page': posted}" ><b>Posted Jobs</b></p>
+        </div>
+        <div class="col-6 row text-start">
+          <div class="col-7" (click)="changeActive('engaged')" >
+            <p class="selector" [ngClass]="{'active-page': engaged}"><b>Engaged Jobs</b></p>
+        </div>
+          <div class="col-5 text-end">
+            <button class="btn btn-primary button " (click)="openPostjob()">Post Job</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

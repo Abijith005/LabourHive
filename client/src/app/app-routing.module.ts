@@ -18,7 +18,7 @@ import { ViewJobsComponent } from './components/userComponents/view-jobs/view-jo
 import { ViewLaboursComponent } from './components/userComponents/view-labours/view-labours.component';
 import { ViewJobProfileComponent } from './components/userComponents/view-job-profile/view-job-profile.component';
 import { ChatComponent } from './components/userComponents/chat/chat.component';
-import { PostJobComponent } from './components/userComponents/post-job/post-job.component';
+import { MyJobsComponent } from './components/userComponents/my-jobs/my-jobs.component';
 
 const routes: Routes =
   //user paths
@@ -42,7 +42,7 @@ const routes: Routes =
             {path:'chat',component:ChatComponent}
           ],
         },
-        {path:'postJobs',component:PostJobComponent}
+        {path:'myJobs',component:MyJobsComponent}
         // { path: 'chat', component: ChatComponent },
       ],
     },

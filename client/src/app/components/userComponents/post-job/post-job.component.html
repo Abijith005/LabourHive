@@ -1,28 +1,88 @@
-<p>post-job works!</p>
-
-<section class="outer-container">
-  <div class="container-fluid">
+<div class="container-fluid">
     <div class="container">
       <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 card-box">
-          <h1 class="text-center">Post Job</h1>
-          <form action="">
-            <div class="row">
-              <div class="col-3">
-                <p><b>Name :</b></p>
+        <div class="card-box">
+          <h1 class="text-center mt-md-4 mt-3"><b>Post Job</b></h1>
+          <form action="" class="p-2 p-md-5" [formGroup]="postJobForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Category</b></p>
               </div>
-              <div class="col-9">
-                <select name="form-select" class="form-control form-select" formControlName="category" aria-label="Default select example">
-                    <option selected >jjj</option>
-                    <option >kkk</option>
+              <div class="col-8">
+                <select
+                  name="form-select"
+                  formControlName="category"
+                  class="form-control form-select"
+                  formControlName="category"
+                  aria-label="Default select example"
+                >
+                  <option selected>jjj</option>
+                  <option>kkk</option>
                 </select>
               </div>
             </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Experiences</b></p>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="experience" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Required Labour</b></p>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="requiredLabour" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Offered Wage</b></p>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="offeredWage" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Job Description</b></p>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="jobDescription" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Start Date</b></p>
+              </div>
+              <div class="col-8">
+                <input type="date" class="form-control" formControlName="startDate" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>End Date</b></p>
+              </div>
+              <div class="col-8">
+                <input type="date" class="form-control" formControlName="endDate" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Location</b></p>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="location" />
+              </div>
+            </div>
+            <div class="buttons text-end mb-2">
+                <button type="button" class="btn btn-danger me-3 button" (click)="close()">Cancel</button>
+                <button type="submit" class="btn btn-success button">Submit</button>
+            </div>
           </form>
         </div>
-        <div class="col-md-3"></div>
       </div>
     </div>
   </div>
-</section>

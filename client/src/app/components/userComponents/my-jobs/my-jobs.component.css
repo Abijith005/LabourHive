@@ -1,0 +1,34 @@
+.outer-container{
+    margin-top: 90px;
+}
+
+.card-box{
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+    height: 700px;
+}
+
+.headings{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.active-page{
+    display: inline-block;
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
+
+.selector{
+
+}
+
+@media (max-width:768px){
+    .button{
+        font-size: 8px;
+        padding: 3px 4px;
+    }
+    .selector{
+        font-size: 9px;
+    }
+}
