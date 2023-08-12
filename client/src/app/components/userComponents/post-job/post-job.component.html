@@ -1,92 +1,99 @@
 <div class="container-fluid">
-    <div class="container">
-      <div class="row">
-        <div class="card-box">
-          <h1 class="text-center mt-md-4 mt-3"><b>Post Job</b></h1>
-          <form action="" class="p-2 p-md-5" [formGroup]="postJobForm" (ngSubmit)="onSubmit()">
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Category</b></p>
-              </div>
-              <div class="col-8">
-                <select
-                  name="form-select"
-                  formControlName="category"
-                  class="form-control form-select"
-                  formControlName="category"
-                  aria-label="Default select example"
-                >
-                  <option selected>jj</option>
-                  <option *ngFor="let item of categories">{{item}}</option>
-                </select>
-              </div>
+  <div class="container">
+    <div class="row">
+      <div class="card-box">
+        <h1 class="text-center mt-md-4 mt-3"><b>Post Job</b></h1>
+        <form action="" class="p-2 p-md-5 pt-2" [formGroup]="postJobForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4" style="display: flex;align-items: center;">
+              <p class="field"><b>Category</b></p>
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Experiences</b></p>
-              </div>
-              <div class="col-8">
-                <input type="text" class="form-control" formControlName="experience"/>
-              </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['category'].errors?'red':''" class="form-label">Category is required</label>
+              <select name="form-select" formControlName="category" class="form-control form-select"
+                formControlName="category" aria-label="Default select example">
+                <option selected>Select Category</option>
+                <option *ngFor="let item of categories">{{ item.name }}</option>
+              </select>
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Location</b></p>
-              </div>
-              <div class="col-8 location-container">
-                <input type="text" class="form-control" (input)="getSuggestions()" value="{{location}}" formControlName="location"  />
-                <ul class="list-unstyled suggestions">
-                  <li class="mb-1" *ngFor="let suggestion of suggestions" (click)="slectSuggestion(suggestion)">{{suggestion.location}}</li>
-                </ul>
-              </div>
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>Experiences</b></p>
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Required Labour</b></p>
-              </div>
-              <div class="col-8">
-                <input type="text" class="form-control" formControlName="requiredLabour" />
-              </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['experience'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['experience'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="text" class="form-control" formControlName="experience" />
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Offered Wage</b></p>
-              </div>
-              <div class="col-8">
-                <input type="text" class="form-control" formControlName="offeredWage" />
-              </div>
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>Location</b></p>
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Job Description</b></p>
-              </div>
-              <div class="col-8">
-                <input type="text" class="form-control" formControlName="jobDescription" />
-              </div>
+            <div class="col-8 location-container">
+              <label  [style.color]="isSubmitted&&formControl['location'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['location'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="text" class="form-control" (input)="getSuggestions()" value="{{ location }}"
+                formControlName="location" />
+              <ul class="list-unstyled suggestions">
+                <li class="mb-1" *ngFor="let suggestion of suggestions" (click)="slectSuggestion(suggestion)">
+                  {{ suggestion.location }}
+                </li>
+              </ul>
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Start Date</b></p>
-              </div>
-              <div class="col-8">
-                <input type="date" class="form-control" formControlName="startDate" />
-              </div>
-         
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>Required Labour</b></p>
             </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>End Date</b></p>
-              </div>
-              <div class="col-8">
-                <input type="date" class="form-control" formControlName="endDate" />
-              </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['requiredLabour'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['requiredLabour'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="text" class="form-control" formControlName="requiredLabour" />
             </div>
-            <div class="buttons text-end mb-2">
-                <button type="button" class="btn btn-danger me-3 button" (click)="close()">Cancel</button>
-                <button type="submit" class="btn btn-success button">Submit</button>
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>Offered Wage</b></p>
             </div>
-          </form>
-        </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['offeredWage'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['offeredWage'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="text" class="form-control" formControlName="offeredWage" />
+            </div>
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>Job Description</b></p>
+            </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['jobDescription'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['jobDescription'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="text" class="form-control" formControlName="jobDescription" />
+            </div>
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>Start Date</b></p>
+            </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['startDate'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['startDate'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="date" class="form-control" formControlName="startDate" />
+            </div>
+          </div>
+          <div class="row mb-md-4 mb-3">
+            <div class="col-4">
+              <p class="field"><b>End Date</b></p>
+            </div>
+            <div class="col-8">
+              <label  [style.color]="isSubmitted&&formControl['endDate'].errors?'red':''" class="form-label">{{isSubmitted&&formControl['endDate'].errors?.hasOwnProperty('required')?'Selfdescription is required':'Self Description'}}</label>
+              <input type="date" class="form-control" formControlName="endDate" />
+            </div>
+          </div>
+          <div class="buttons text-end mb-2">
+            <button type="button" class="btn btn-danger me-3 button" (click)="close()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-success button">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>

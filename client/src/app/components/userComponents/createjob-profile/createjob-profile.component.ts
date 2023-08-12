@@ -146,7 +146,7 @@ export class CreatejobProfileComponent implements OnInit {
     this.formControls['location'].setValue(suggestion.location);
     this.coordinates = suggestion.coordinates;
     this.suggestions = [];
-  }
+  }  
 
   // Form submission
 

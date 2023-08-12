@@ -8,6 +8,7 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs';
+import { i_category } from 'src/app/interfaces/adminInterfaces/i_category';
 import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
@@ -23,7 +24,8 @@ export class PostJobComponent implements OnInit {
   suggestions!: i_suggestions[];
   location: string = '';
   coordianates!: number[];
-  categories!:string[]
+  categories!:i_category[]
+  isSubmitted:boolean=false
 
   private _unsubscribe$ = new Subject<void>();
   constructor(
@@ -48,7 +50,7 @@ export class PostJobComponent implements OnInit {
    this.categories=JSON.parse(localStorage.getItem('categories')!)
   }
 
-  getSuggestions() {
+  getSuggestions() {    
     this.formControl['location'].valueChanges
       .pipe(
         debounceTime(300),
@@ -81,6 +83,9 @@ export class PostJobComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form submitted');
+    this.isSubmitted=true
+    if (!this.postJobForm.valid) {
+      return
+    }
   }
 }
