@@ -16,8 +16,8 @@
                   formControlName="category"
                   aria-label="Default select example"
                 >
-                  <option selected>jjj</option>
-                  <option>kkk</option>
+                  <option selected>jj</option>
+                  <option *ngFor="let item of categories">{{item}}</option>
                 </select>
               </div>
             </div>
@@ -26,7 +26,18 @@
                 <p class="field"><b>Experiences</b></p>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="experience" />
+                <input type="text" class="form-control" formControlName="experience"/>
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-3">
+              <div class="col-4">
+                <p class="field"><b>Location</b></p>
+              </div>
+              <div class="col-8 location-container">
+                <input type="text" class="form-control" (input)="getSuggestions()" value="{{location}}" formControlName="location"  />
+                <ul class="list-unstyled suggestions">
+                  <li class="mb-1" *ngFor="let suggestion of suggestions" (click)="slectSuggestion(suggestion)">{{suggestion.location}}</li>
+                </ul>
               </div>
             </div>
             <div class="row mb-md-4 mb-3">
@@ -60,6 +71,7 @@
               <div class="col-8">
                 <input type="date" class="form-control" formControlName="startDate" />
               </div>
+         
             </div>
             <div class="row mb-md-4 mb-3">
               <div class="col-4">
@@ -67,14 +79,6 @@
               </div>
               <div class="col-8">
                 <input type="date" class="form-control" formControlName="endDate" />
-              </div>
-            </div>
-            <div class="row mb-md-4 mb-3">
-              <div class="col-4">
-                <p class="field"><b>Location</b></p>
-              </div>
-              <div class="col-8">
-                <input type="text" class="form-control" formControlName="location" />
               </div>
             </div>
             <div class="buttons text-end mb-2">

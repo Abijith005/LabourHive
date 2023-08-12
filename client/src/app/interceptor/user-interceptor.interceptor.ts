@@ -17,11 +17,9 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
 
     const isMapboxRequest=request.url.includes('api.mapbox.com')
     if (isMapboxRequest) {
-      
       return next.handle(request)
     }
     
-
     //Modifying requests
 
     let modifiedRequest = request.clone({
