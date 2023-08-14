@@ -11,17 +11,32 @@ const jobsSchema = new mongoose.Schema({
     required: [true, "category is required"],
   },
 
-  postDate: {
-    type: String,
-    required: [true, "post date is required"],
+  experience:{
+    type:String,
+    required:[true,'experience is required']
   },
 
-  workDateFrom: {
+  wage:{
+    type:String,
+    required:[true,'wage is required']
+  },
+  
+  requiredCount: {
+    type: Number,
+    required: [true, "required count is required"],
+  },
+
+  postDate: {
+    type: String,
+    default:new Date()
+  },
+
+  startDate: {
     type: Date,
     required: [true, "work date from is required"],
   },
 
-  workDateTo: {
+  endDate: {
     type: Date,
     required: [true, "work date to is required"],
   },
@@ -36,14 +51,9 @@ const jobsSchema = new mongoose.Schema({
     required: [true, "coordinates is required"],
   },
 
-  requiredCount: {
-    type: Number,
-    required: [true, "required count is required"],
-  },
-
   currentStatus: {
     type: String,
-    enum: ["active", "inactive"],
+    enum: ["active", "expired"],
     default: "active",
   },
 });

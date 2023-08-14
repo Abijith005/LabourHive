@@ -50,6 +50,12 @@ import { ChatComponent } from './components/userComponents/chat/chat.component';
 import { MapboxService } from './services/commonServices/mapbox.service';
 import { MyJobsComponent } from './components/userComponents/my-jobs/my-jobs.component';
 import { PostJobComponent } from './components/userComponents/post-job/post-job.component';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { PostedJobsComponent } from './components/userComponents/posted-jobs/posted-jobs.component';
+import { EngagedJobsComponent } from './components/userComponents/engaged-jobs/engaged-jobs.component';
+import { CustomDatePipe } from './pipes/userPipes/custom-date.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +89,9 @@ import { PostJobComponent } from './components/userComponents/post-job/post-job.
     ChatComponent,
     MyJobsComponent,
     PostJobComponent,
+    PostedJobsComponent,
+    EngagedJobsComponent,
+    CustomDatePipe
   ],
   imports: [
     BrowserModule,
@@ -100,8 +109,9 @@ import { PostJobComponent } from './components/userComponents/post-job/post-job.
     MatFormFieldModule,
     MatDialogModule,
     MatCardModule,
-    MatProgressSpinnerModule
-
+    MatProgressSpinnerModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   
   ],
   providers: [

@@ -35,7 +35,6 @@ export class RazorpayService implements OnDestroy {
           } else {
 
             this._swalService.showAlert('Payment Success ', res.message, 'success')
-            // navigate("/profile")
           }
         })
       }

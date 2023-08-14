@@ -67,7 +67,7 @@ export class CategoryMangementComponent implements OnInit, OnDestroy {
   async blockCategory(_id: string, status: boolean, name: string) {
     //swal funcion called
 
-    const confirmation = await this._swalService.showAlert(
+    const confirmation = await this._swalService.showConfirmation(
       `${status ? 'Block Category' : 'Unblock Category'}`,
       `Are you sure you want to ${status ? 'Block' : 'Unblock'} ${name} ?`,
       'warning'
@@ -92,13 +92,13 @@ export class CategoryMangementComponent implements OnInit, OnDestroy {
   async deleteCategory(_id: string, name: string) {
     //swal function called
 
-    const confirmation = await this._swalService.showAlert(
+    const confirmation = await this._swalService.showConfirmation(
       'Delete Category',
       `Are you sure you want to delete ${name} ?`,
       'warning'
     );
 
-    if (confirmation) {
+    if (confirmation) { 
       this._service
         .deleteCategory(_id)
         .pipe(takeUntil(this._unsubscribe$))

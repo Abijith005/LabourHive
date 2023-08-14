@@ -22,7 +22,6 @@ export class ChatService {
 
   //creating acive userlist when a user open chatting to get live messages
   joinChat(newUserId: string) {
-    console.log('joinchat', newUserId);
 
     this._socket.emit('join', newUserId);
   }

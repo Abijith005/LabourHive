@@ -165,21 +165,19 @@ export const labourProfile = async (req, res) => {
 
 export const searchJobs = async (req, res) => {
   try {
-    console.log(req.body);
     const { coordinates, searchKey } = req.body;
-    console.log(searchKey, "ddd");
-    const searchLon = coordinates[0];
-    const searchLat = coordinates[1];
-    //limit is set to 10 km
-    const limitDistance = 10;
-
+    const date=new Date()
     let jobs = await jobsModel
-      .find({ category: RegExp(searchKey, "i") })
+      .find({$and:[{ category: RegExp(searchKey, "i") },{startDate:{$gt:date}},{currentStatus:'active'}]})
       .lean();
 
     //if location is given then we need to filter jobs around 10 km radius of the given location
 
     if (coordinates) {
+      const searchLon = coordinates[0];
+      const searchLat = coordinates[1];
+      //limit is set to 10 km
+      const limitDistance = 10;
       // haversine formula to get distance from geocodes
       function haversineDistance(lat1, lon1, lat2, lon2) {
         const R = 6371; // Radius of the Earth in kilometers
@@ -218,5 +216,39 @@ export const searchJobs = async (req, res) => {
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
+  }
+};
+
+export const postJob = async (req, res) => {
+  try {
+    const user_id = jwt.verify(
+      req.cookies.userAuthToken,
+      process.env.JWT_SIGNATURE
+    )?._id;
+    await jobsModel.create({ client_id: user_id, ...req.body });
+    res.json({ success: true, message: "Job posted successfully" });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const getAllJobs = async (req, res) => {
+  try {
+    console.log('getall');
+    const currentDate = new Date();
+    const jobs = await jobsModel
+      .find({
+        $and: [
+          { startDate: { $gt: currentDate } },
+          { currentStatus: "active" },
+        ],
+      })
+      .lean();
+      console.log(jobs);
+    res.json(jobs);
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false });
   }
 };

@@ -30,7 +30,7 @@ else{
 
   openPostjob(){
     this._matDialog.open(PostJobComponent,{
-      width:'550px',
+      width:'520px',
       disableClose:true
     })
   }

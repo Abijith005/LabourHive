@@ -136,7 +136,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       const difference = endDate - startDate;
       this.totalDays = difference / (1000 * 60 * 60 * 24) + 1;
       this.totalWage = this.totalDays * Number(this.labourDetails?.wage);
-      this.totalPayable = this.totalWage + 0.1 * this.totalWage;
+      this.totalPayable = this.totalWage + 0.01 * this.totalWage;
     }
   }
 
@@ -181,6 +181,10 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           );
         }
       });
+  }
+
+  cancel() {
+    this.matDialogRef.close();
   }
 
   ngOnDestroy(): void {

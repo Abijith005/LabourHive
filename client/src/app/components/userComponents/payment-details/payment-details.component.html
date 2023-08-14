@@ -33,6 +33,7 @@
                 <p class="datas"><span class="tag-name">Total Payable</span>&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;₹ <span>{{totalPayable?totalPayable:labourDetails?.wage}}</span></p>
 
                 <div class="button">
+                    <button class="btn btn-danger me-2" (click)="cancel()">Cancel</button>
                     <button class="btn btn-primary" (click)="confirmPayment()"> Pay & Proceed</button>
                 </div>
         </div>

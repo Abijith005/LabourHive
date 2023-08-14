@@ -2,18 +2,19 @@
   <div class="container-fluid">
     <div class="container">
       <div class="row headings">
-        <div class="col-6 text-end" (click)="changeActive('posted')">
+        <div  class="col-6 text-end" (click)="changeActive('posted')" routerLink="postedJobs">
           <p class="active-page selector" [ngClass]="{'active-page': posted}" ><b>Posted Jobs</b></p>
         </div>
         <div class="col-6 row text-start">
-          <div class="col-7" (click)="changeActive('engaged')" >
-            <p class="selector" [ngClass]="{'active-page': engaged}"><b>Engaged Jobs</b></p>
+          <div class="col-7" (click)="changeActive('engaged')" routerLink="engagedJobs" >
+            <p class="selector" [ngClass]="{'active-page': engaged}" ><b>Engaged Jobs</b></p>
         </div>
           <div class="col-5 text-end">
             <button class="btn btn-primary button " (click)="openPostjob()">Post Job</button>
           </div>
         </div>
       </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </section>

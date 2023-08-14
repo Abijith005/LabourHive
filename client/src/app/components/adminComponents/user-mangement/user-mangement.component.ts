@@ -42,7 +42,7 @@ export class UserMangementComponent implements OnInit,OnDestroy {
   }
 
   async blockStatus(id: string, status: boolean, name: string) {
-    const confirmation = await this._swalService.showAlert(
+    const confirmation = await this._swalService.showConfirmation(
       `${status ? 'Block User' : 'Unblock User'}`,
       `Are you sure you want to ${status ? 'Block' : 'Unblock'} ${name} ?`,
       'warning'
