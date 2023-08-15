@@ -166,9 +166,15 @@ export const labourProfile = async (req, res) => {
 export const searchJobs = async (req, res) => {
   try {
     const { coordinates, searchKey } = req.body;
-    const date=new Date()
+    const date = new Date();
     let jobs = await jobsModel
-      .find({$and:[{ category: RegExp(searchKey, "i") },{startDate:{$gt:date}},{currentStatus:'active'}]})
+      .find({
+        $and: [
+          { category: RegExp(searchKey, "i") },
+          { startDate: { $gt: date } },
+          { currentStatus: "active" },
+        ],
+      })
       .lean();
 
     //if location is given then we need to filter jobs around 10 km radius of the given location
@@ -235,7 +241,7 @@ export const postJob = async (req, res) => {
 
 export const getAllJobs = async (req, res) => {
   try {
-    console.log('getall');
+    console.log("getall");
     const currentDate = new Date();
     const jobs = await jobsModel
       .find({
@@ -245,7 +251,7 @@ export const getAllJobs = async (req, res) => {
         ],
       })
       .lean();
-      console.log(jobs);
+    console.log(jobs);
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);

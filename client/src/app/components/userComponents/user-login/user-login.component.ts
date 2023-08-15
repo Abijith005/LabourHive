@@ -58,10 +58,10 @@ export class UserLoginComponent implements OnInit,OnDestroy {
             blockStatus: res.blockStatus,
             googleLogin: res.googleLogin,
             mobileNumber: res.mobileNumber ? res.mobileNumber : '',
+            isLoggedIn:res.success
           };
 
           this.store.dispatch(login({ userDatas: userData }));
-          localStorage.setItem('userLoggedIn', res.token!);
           const message = res.message;
           this.router.navigate(['/']);
 

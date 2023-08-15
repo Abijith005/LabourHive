@@ -1,10 +1,9 @@
-import { Component, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserHomeComponent } from './components/userComponents/user-home/user-home.component';
 import { UserLoginComponent } from './components/userComponents/user-login/user-login.component';
 import { UserRegisterComponent } from './components/userComponents/user-register/user-register.component';
 import { AdminLoginComponent } from './components/adminComponents/admin-login/admin-login.component';
-import { authLogin } from './guards/userAuth.guard';
 import { AdminNavBarComponent } from './components/adminComponents/admin-nav-bar/admin-nav-bar.component';
 import { UserMangementComponent } from './components/adminComponents/user-mangement/user-mangement.component';
 import { AdminDashboardComponent } from './components/adminComponents/admin-dashboard/admin-dashboard.component';
@@ -21,6 +20,7 @@ import { ChatComponent } from './components/userComponents/chat/chat.component';
 import { MyJobsComponent } from './components/userComponents/my-jobs/my-jobs.component';
 import { PostedJobsComponent } from './components/userComponents/posted-jobs/posted-jobs.component';
 import { EngagedJobsComponent } from './components/userComponents/engaged-jobs/engaged-jobs.component';
+import { guestAuthGuard } from './guards/guest-auth.guard';
 
 const routes: Routes =
   //user paths
@@ -53,11 +53,11 @@ const routes: Routes =
       ],
     },
 
-    { path: 'login', component: UserLoginComponent, canActivate: [authLogin] },
+    { path: 'login', component: UserLoginComponent, canActivate: [guestAuthGuard] },
     {
       path: 'register',
       component: UserRegisterComponent,
-      canActivate: [authLogin],
+      canActivate: [guestAuthGuard],
     },
 
     //admin paths

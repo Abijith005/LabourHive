@@ -1,25 +1,29 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { userDataState } from '../store/user.state';
 import { map } from 'rxjs';
+import { userDataState } from '../store/user.state';
 
-export const authLogin: CanActivateFn = (route, state) => {
+export const guestAuthGuard: CanActivateFn = (route, state) => {
+  
   const router: Router = inject(Router);
   const store: Store<userDataState> = inject(Store<userDataState>);
-  console.log('iam user guard');
+  console.log('iam guest guard');
+  
   return store.select('user').pipe(
-    map((state) => {
-      if (state.userDatas?.isLoggedIn) {
+    map((state) => {  
+      console.log(state,'state');
+          
+      if (!state.userDatas?.isLoggedIn) {
+        console.log('returned true');
+        
         return true;
-      } else {
+      } else {        
+        console.log('returned dfalse');
+        
         router.navigate(['']);
         return false;
       }
     })
   );
-};
-
-export const register: CanActivateFn = (route, state) => {
-  return true;
 };
