@@ -237,27 +237,31 @@ export async function userChangePassword(req, res) {
 
 export async function getUserDatas(req, res) {
   try {
+
+    
     const decode = await jwt.verify(
       req.cookies.userAuthToken,
       process.env.JWT_SIGNATURE
     );
     if (decode) {
       let user = await userModel.findOne({ _id: decode._id });
-      user=user.toObject()
-      user.isLoggedIn=true
-      res.json(user);
+      user = user.toObject();
+      user.isLoggedIn = true;
+      res.json({success:true,...user});
     } else {
       res.json({ success: false });
     }
   } catch (error) {
-    console.log("Error", error);
+      console.log("Error", error);
+      res.json({success:false})
   }
 }
 
 export async function userLogout(req, res) {
   try {
-    req.cookies.userAuthToken.maxAge(0)
-    res.json({ success: true, message: "User logged out" });
+    res
+      .cookie("userAuthToken", "", { maxAge: 0 })
+      .json({ success: true, message: "User logged out" });
   } catch (error) {
     console.log("Error", error);
   }

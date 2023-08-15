@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,6 +55,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { PostedJobsComponent } from './components/userComponents/posted-jobs/posted-jobs.component';
 import { EngagedJobsComponent } from './components/userComponents/engaged-jobs/engaged-jobs.component';
 import { CustomDatePipe } from './pipes/userPipes/custom-date.pipe';
+import { AppInitializerService } from './services/commonServices/app-initializer.service';
+import { SingleJobComponent } from './components/userComponents/single-job/single-job.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,8 @@ import { CustomDatePipe } from './pipes/userPipes/custom-date.pipe';
     PostJobComponent,
     PostedJobsComponent,
     EngagedJobsComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    SingleJobComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +120,14 @@ import { CustomDatePipe } from './pipes/userPipes/custom-date.pipe';
   providers: [
     CookieService,
     {provide:HTTP_INTERCEPTORS,useClass:UserInterceptorInterceptor,multi:true},
-    MapboxService
+    MapboxService,
+    AppInitializerService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (initializer: AppInitializerService) => () => initializer.initializeApp(),
+      multi: true,
+      deps: [AppInitializerService],
+    },
   ],
   bootstrap: [AppComponent]
 })

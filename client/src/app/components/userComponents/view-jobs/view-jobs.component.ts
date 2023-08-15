@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, map, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject,takeUntil } from 'rxjs';
 import { i_jobDetails } from 'src/app/interfaces/userInterfaces/i_jobDetails';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { JobService } from 'src/app/services/userServices/job.service';
+import { SingleJobComponent } from '../single-job/single-job.component';
 
 @Component({
   selector: 'labourHive-view-jobs',
@@ -23,7 +25,8 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _mapBoxServices: MapboxService,
-    private _jobSevices: JobService
+    private _jobSevices: JobService,
+    private _matDialog:MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -50,13 +53,12 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
         });
     } else {
       this.searchCoordinate = null;
-        this._jobSevices
-          .getAllJobs()
-          .pipe(takeUntil(this._unsubscribe$))
-          .subscribe((res) => {
-            this.jobs = res;
-          });
-      
+      this._jobSevices
+        .getAllJobs()
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((res) => {
+          this.jobs = res;
+        });
     }
   }
 
@@ -79,6 +81,10 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
 
   clear() {
     this.suggessions = [];
+  }
+
+  viewSingleJob() {
+    this._matDialog.open(SingleJobComponent)
   }
 
   ngOnDestroy(): void {

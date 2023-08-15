@@ -31,7 +31,6 @@
              
                 <li class="nav-item ms-5 me-5">
                 <a class="nav-link" [routerLink]="['']">Home</a>
-                <!-- <p>{{(userInformations$ |async)?.isLoggedIn}}</p> -->
               </li>
              
               <li class="nav-item ms-5 me-5">
@@ -44,7 +43,6 @@
               
               <li class="nav-item ms-5 me-5">
                 <a class="nav-link" [routerLink]="['/jobProfile']">Job Profile</a>
-                <p>{{(userInformations$|async)?.isLoggedIn}}</p>
               </li>
             </ul>
 
@@ -111,7 +109,7 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a class="dropdown-item" >My profile</a>
+              <a class="dropdown-item" routerLink="/login" >My profile</a>
             </li>
             <li>
               <a class="dropdown-item" href="#">Settings</a>

@@ -4,6 +4,7 @@ import { getAllCategories } from '../Controllers/CategoryController.js'
 import { createJobProfile, getAllJobs, getJobProfile, getLabours, labourProfile, postJob, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
+import { userAuthCheck } from '../middlewares/userAuth.js'
 
 const router=express.Router()  
 

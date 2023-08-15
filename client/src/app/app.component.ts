@@ -10,7 +10,7 @@ import { Subject, map, takeUntil } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements  OnDestroy {
   title = 'LabourHiveFrontEnd';
 
   private _unsubscribe$ = new Subject<void>();
@@ -18,20 +18,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private _store: Store<userDataState>,
     private _service: UserService
   ) {}
-
-  ngOnInit(): void {
-this._store.select('user').pipe(takeUntil(this._unsubscribe$)).subscribe(state=>{
-  if (state?.userDatas?.isLoggedIn) {
-    this._service
-      .getUserDatas()
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe((res) => {
-        this._store.dispatch(login({ userDatas: res }));
-      });    
-  }
-})
-
-  }
 
   ngOnDestroy(): void {
     this._unsubscribe$.next();

@@ -1,4 +1,4 @@
-import {  NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserHomeComponent } from './components/userComponents/user-home/user-home.component';
 import { UserLoginComponent } from './components/userComponents/user-login/user-login.component';
@@ -21,6 +21,7 @@ import { MyJobsComponent } from './components/userComponents/my-jobs/my-jobs.com
 import { PostedJobsComponent } from './components/userComponents/posted-jobs/posted-jobs.component';
 import { EngagedJobsComponent } from './components/userComponents/engaged-jobs/engaged-jobs.component';
 import { guestAuthGuard } from './guards/guest-auth.guard';
+import { userAuth } from './guards/userAuth.guard';
 
 const routes: Routes =
   //user paths
@@ -31,7 +32,7 @@ const routes: Routes =
       component: NavBarComponent,
       children: [
         { path: '', component: UserHomeComponent },
-        { path: 'jobProfile', component: JobProfileComponent },
+        { path: 'jobProfile', component: JobProfileComponent,canActivate:[userAuth]},
         {
           path: 'createJobProfile/:categories',
           component: CreatejobProfileComponent,
@@ -40,20 +41,27 @@ const routes: Routes =
         { path: 'viewLabours/:category', component: ViewLaboursComponent },
         {
           path: 'viewJobProfile/:labour_id',
-          component: ViewJobProfileComponent,children:[
-            {path:'chat',component:ChatComponent}
-          ],
+          component: ViewJobProfileComponent,
+          children: [{ path: 'chat', component: ChatComponent }],
         },
         { path: 'chat', component: ChatComponent },
-        {path:'myJobs',component:MyJobsComponent,children:[
-          {path:'',redirectTo:'postedJobs',pathMatch:'full'},
-          {path:'postedJobs',component:PostedJobsComponent},
-          {path:'engagedJobs',component:EngagedJobsComponent}
-        ]}
+        {
+          path: 'myJobs',
+          component: MyJobsComponent,canActivate:[userAuth],
+          children: [
+            { path: '', redirectTo: 'postedJobs', pathMatch: 'full' },
+            { path: 'postedJobs', component: PostedJobsComponent },
+            { path: 'engagedJobs', component: EngagedJobsComponent },
+          ],
+        },
       ],
     },
 
-    { path: 'login', component: UserLoginComponent, canActivate: [guestAuthGuard] },
+    {
+      path: 'login',
+      component: UserLoginComponent,
+      canActivate: [guestAuthGuard],
+    },
     {
       path: 'register',
       component: UserRegisterComponent,

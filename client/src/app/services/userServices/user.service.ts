@@ -41,7 +41,7 @@ export class UserService {
   }
 
   getUserDatas() {
-    return this._http.get<i_UserDetails>('/getUserDatas');
+    return this._http.get<i_UserDetails&i_authRes>('/getUserDatas');
   }
 
   getCategoryDetails() {
