@@ -109,7 +109,6 @@ export const updateJobProfile = async (req, res) => {
 
     //uploading to cloudinary
     async function uploadImage(image) {
-      console.log("uploading");
       return (await cloudinary.uploader.upload(image, { folder: "LabouHive" }))
         .secure_url;
     }
@@ -142,7 +141,6 @@ export const getLabours = async (req, res) => {
       })
       .lean();
     res.json(labours);
-    console.log(labours, "kkkk");
   } catch (error) {
     console.log("Error", error);
   }
@@ -241,7 +239,6 @@ export const postJob = async (req, res) => {
 
 export const getAllJobs = async (req, res) => {
   try {
-    console.log("getall");
     const currentDate = new Date();
     const jobs = await jobsModel
       .find({
@@ -251,7 +248,6 @@ export const getAllJobs = async (req, res) => {
         ],
       })
       .lean();
-    console.log(jobs);
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
