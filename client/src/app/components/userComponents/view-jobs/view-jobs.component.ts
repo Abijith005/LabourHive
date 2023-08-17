@@ -83,8 +83,13 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
     this.suggessions = [];
   }
 
-  viewSingleJob() {
-    this._matDialog.open(SingleJobComponent)
+  viewSingleJob(job:i_jobDetails) {
+    this._matDialog.open(SingleJobComponent,{
+      width:'550px',
+      height:'auto',
+      maxHeight:'900px',
+      data:job
+    })
   }
 
   ngOnDestroy(): void {

@@ -46,6 +46,11 @@ const jobsSchema = new mongoose.Schema({
     required: [true, "location is required"],
   },
 
+  jobDescription:{
+    type:String,
+    required:[true,'Job description']
+  },
+
   coordinates: {
     type: Array,
     required: [true, "coordinates is required"],

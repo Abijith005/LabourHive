@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription, map, takeUntil } from 'rxjs';
@@ -17,7 +25,10 @@ import { userDataState } from 'src/app/store/user.state';
   providers: [ChatService],
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  // getting receiver id from parent Component
   @Input() receiver_id: string = '';
+
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
 
   // receiver_id: string = '';
   userDatas$: Observable<i_UserDetails> | null = null;
@@ -37,14 +48,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   ) {
     _chatService.newMessageReceived().subscribe((data) => {
       this.messageArray.push(data);
+      setTimeout(()=>{
+        this.scrollToBottom()
+      },100)
     });
   }
 
   ngOnInit(): void {
-    //getting receiver id from activated route
-    // this.receiver_id = this._route.snapshot.paramMap.get('labour_id')!;
-    // console.log('receiverid',this.receiver_id);
-    
+
     //getting user details from store
     this.userDatas$ = this._store.select('user').pipe(
       map((state) => {
@@ -68,6 +79,17 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
 
+
+
+  // scroll bottom function
+  scrollToBottom() {
+    if (this.messageContainer) {
+      const offset=20
+      const container=this.messageContainer.nativeElement
+      container.scrollTop=container.scrollHeight+offset
+    }
+  }
+
   //change chat person
   chatPersonChange(receiver: i_chatReceiver) {
     this.currentChatPerson = receiver;
@@ -77,13 +99,15 @@ export class ChatComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
         this.messageArray = res;
+        setTimeout(() => {
+          this.scrollToBottom()
+        }, 100);
       });
   }
 
   sendMessage() {
     //sending to socket.io
     if (!this.messageText?.trim()) {
-      console.log('no messages');
       return;
     }
     const message = {
@@ -91,7 +115,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       message: this.messageText,
     };
     Object.freeze(message);
-    this.messageArray.push(message);
+   this.messageArray.push(message);
     this._chatService.sendMessage({
       receiver_id: this.receiver_id,
       message: this.messageText,
@@ -108,6 +132,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.messageText = '';
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100); 
   }
 
   ngOnDestroy(): void {

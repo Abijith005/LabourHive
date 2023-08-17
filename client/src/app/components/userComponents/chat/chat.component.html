@@ -36,7 +36,7 @@
               <h3><b>{{currentChatPerson.receiver}}</b></h3>
           </div>
   
-          <ul class="list-unstyled message">
+          <ul class="list-unstyled message" #messageContainer>
             <li [ngClass]="(message.user==='sender'?'sender':'receiver')"*ngFor="let message of messageArray">
               <div class="message-box">
                   <p class="mb-0" style=" overflow-x: hidden;">

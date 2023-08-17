@@ -52,9 +52,11 @@ width: 59vw;
 }
 
 .message{
-    height: 70vh;
-    overflow-y: scroll;
+    height: 66vh;
+    /* overflow-y: scroll; */
     scrollbar-width: none;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 .input-row{
     display: flex;

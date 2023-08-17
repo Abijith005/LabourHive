@@ -6,7 +6,6 @@ export default function socketConnect(io, activeUsers) {
       if (!activeUsers[newUserId]) {
         activeUsers[newUserId] = { user_id: newUserId, socketId: socket.id };
       }
-
       io.emit("getActiveUsers", activeUsers);
     });
 

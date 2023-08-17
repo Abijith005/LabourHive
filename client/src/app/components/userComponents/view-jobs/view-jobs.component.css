@@ -26,31 +26,19 @@
 }
 
 .jobs{
-    width: 440px;
-    height: 240px;
+    width: 300px;
+    height:430px;
     gap: 20px;
-    background-color: rgba(244, 244, 244, 1);
+    background-color: rgb(255, 255, 255);
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-
-.icon img{
-    margin: 10px 0px 20px 20px;
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+.jobs img{
+    height: 200px;
+     object-fit: contain;
 }
-
-.icon{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-}
-
-
 
 .card-row{
     display: flex;
@@ -58,11 +46,11 @@
 }
 
 .details{
-    margin-left: 20px;
+    padding: 10px;
 }
 .details p{
     white-space: nowrap;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .search-location{
@@ -92,6 +80,11 @@
     text-overflow: ellipsis; 
     max-width: 95%;    
     display: inline-block; 
+}
+
+.button{
+    display: flex;
+    justify-content: flex-end;
 }
 
 @media (max-width:768px){
@@ -128,6 +121,17 @@
         width: 155px;
         margin-top: 4px;
         
+    }
+    .details p{
+        font-size: 5px;
+    }
+
+    .jobs{
+        height: 300px;
+    }
+    
+    .jobs img{
+        height: 80px;
     }
     
   

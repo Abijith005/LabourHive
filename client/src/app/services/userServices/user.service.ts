@@ -73,7 +73,7 @@ export class UserService {
   }
 
   verifyPayment(data: i_paymentDetails) {
-    return this._http.post<any>(`/hirePayment/verifyPayment`, data);
+    return this._http.post<i_authRes>(`/hirePayment/verifyPayment`, data);
   }
 
   userLogout() {

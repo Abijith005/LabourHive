@@ -1,7 +1,39 @@
 <div class="container-fluid">
     <div class="container">
-        <div>
-            <p>Category :</p>
+        <h1 class="text-center mt-2" style="text-decoration: underline;"><b>Job Details</b></h1>
+        <div class='details'>
+            <label class="mb-3"><b>Category</b></label>
+            <div class="box mb-2">
+                <p class="datas">{{jobDetails.category}}</p>
+            </div>
+            <label class="mb-3"><b>Location</b></label>
+            <div class="box mb-2">
+                <p class="datas">{{jobDetails.location}}</p>
+            </div>
+            <label class="mb-3"><b>Date</b></label>
+            <div class="box mb-2">
+                <p class="datas">{{jobDetails.startDate|customDate}}
+                    &nbsp;to&nbsp; {{jobDetails.endDate|customDate}}</p>
+                </div>
+            <label class="mb-3"><b>Job Description</b></label>
+            <div class="box mb-2">
+                <p class="datas" style="text-align: justify;">{{jobDetails.jobDescription}}</p>
+                </div>
+            <label class="mb-3"><b>Offered Wage</b></label>
+            <div class="box mb-2">
+                <p class="datas">₹: {{jobDetails.wage}} /-</p>
+                </div>
+                <label class="mb-3"><b>Experience</b></label>
+                <div class="box mb-2">
+                    <p class="datas">{{jobDetails.experience}}&nbsp;&nbsp;Years</p>
+                </div>
+                <label class="mb-3"><b>Count</b></label>
+            <div class="box mb-2">
+                <p class="datas">{{jobDetails.requiredCount}}&nbsp;&nbsp;Labour</p>
+            </div>
+        </div>
+        <div class="button">
+            <button class="btn btn-success mb-2 mt-2">Apply</button>
         </div>
     </div>
 </div>
