@@ -34,6 +34,8 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
       .getAllJobs()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
+        console.log(res,'get all');
+        
         this.jobs = res;
       });
   }

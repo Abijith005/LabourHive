@@ -27,7 +27,7 @@
     <h1 class="mt-4 ms-5"><b>Categories</b></h1>
     <div class="row d-flex justify-content-center " >
       <div class="card col-md-2 mx-3 bg-light" style="box-shadow: 0 4px 6px rgb(0,0,0,0.5); border: thin solid rgb(0,0,0,0.3)" *ngFor="let item of categories">
-        <img src="{{item.vectorImage.url}}" class="card-img-top" style="height: 120px; object-fit: contain;" alt="Fissure in Sandstone"/>
+        <img src="{{item.vectorImage}}" class="card-img-top" style="height: 120px; object-fit: contain;" alt="Fissure in Sandstone"/>
         <div class="card-body text-center">
           <h1 class="card-title"><b> {{item.name}}</b> </h1>
           <p class="card-text">Basic Wage:₹ {{item.basicWage}} /day</p>

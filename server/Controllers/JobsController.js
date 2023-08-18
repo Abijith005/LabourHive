@@ -3,6 +3,7 @@ import jobProfileModel from "../Models/jobProfileModel.js";
 import jwt from "jsonwebtoken";
 import userModel from "../Models/userModel.js";
 import jobsModel from "../Models/jobsModel.js";
+import categoryModel from "../Models/categoryModel.js";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -13,8 +14,11 @@ export const createJobProfile = async (req, res) => {
     )?._id;
 
     //uploading images to cloudinary
-    const profilePic = (await cloudinary.uploader.upload(req.body.profilePic))
-      .secure_url;
+    const profilePic = (
+      await cloudinary.uploader.upload(req.body.profilePic, {
+        folder: "LabourHive",
+      })
+    ).secure_url;
     const workImages = await Promise.all(
       req.body.workImages.map(async (image) => {
         return await uploadImage(image);
@@ -229,6 +233,8 @@ export const postJob = async (req, res) => {
       req.cookies.userAuthToken,
       process.env.JWT_SIGNATURE
     )?._id;
+    const {_id}=await categoryModel.findOne({name:req.body.category},{_id:1})
+    req.body.category=_id
     await jobsModel.create({ client_id: user_id, ...req.body });
     res.json({ success: true, message: "Job posted successfully" });
   } catch (error) {
@@ -246,7 +252,7 @@ export const getAllJobs = async (req, res) => {
           { startDate: { $gt: currentDate } },
           { currentStatus: "active" },
         ],
-      })
+      }).populate('category')
       .lean();
     res.json(jobs);
   } catch (error) {

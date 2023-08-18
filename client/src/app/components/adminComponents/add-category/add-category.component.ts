@@ -21,6 +21,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   isSubmitted = false;
   selectedFiles!: File | null;
   finalImage: string = '';
+  subImage: string = '';
   addCategoryForm: FormGroup = new FormGroup({});
 
   private _unsubscribe$ = new Subject<void>();
@@ -38,6 +39,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
       category: ['', [Validators.required]],
       basicWage: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       vectorImage: ['', [Validators.required]],
+      subImage: ['', [Validators.required]],
     });
   }
 
@@ -45,20 +47,37 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
     return this.addCategoryForm.controls;
   }
   //converting image to base64 string
-  ImageTOBase(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      this.finalImage = reader.result as string;
-    };
+  ImageTOBase(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = (err) => {
+        reject(err);
+      };
+    });
   }
 
   //getting each image when selected
-  onFileSelected(event: Event) {
+  onVectorImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files?.length! > 0) {
       this.selectedFiles = inputElement.files![0];
-      this.ImageTOBase(this.selectedFiles!);
+      this.ImageTOBase(this.selectedFiles!).then((res) => {
+        this.finalImage = res;
+      });
+    }
+  }
+
+  onSubImageSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files?.length! > 0) {
+      this.selectedFiles = inputElement.files![0];
+      this.ImageTOBase(this.selectedFiles).then((res) => {
+        this.subImage = res;
+      });
     }
   }
 
@@ -69,6 +88,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
         name: this.addCategoryForm.get('category')?.value,
         basicWage: this.addCategoryForm.get('basicWage')?.value,
         vectorImage: this.finalImage!,
+        subImage:this.subImage!
       };
       this.isLoading = true;
       this._service

@@ -20,5 +20,8 @@ export class SingleJobComponent {
   close(){
     this._matDialogRef.close()
   }
+  
+  applyJob(job_id:string){
 
+  }
 }

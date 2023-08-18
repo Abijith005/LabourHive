@@ -21,8 +21,12 @@
             
               <div class="mb-4">
                 <label for="exampleInputEmail1" class="form-label">VectorImage</label>
-                <input type="file" class="form-control" id="exampleInputEmail1"  formControlName="vectorImage" (change)="onFileSelected($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['vectorImage'].errors}">
+                <input type="file" class="form-control" id="exampleInputEmail1"  formControlName="vectorImage" (change)="onVectorImageSelected($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['vectorImage'].errors}">
             </div>
+            <div class="mb-4">
+                <label for="exampleInputEmail1" class="form-label">Sub Image</label>
+                <input type="file" class="form-control" id="exampleInputEmail1"  formControlName="subImage" (change)="onSubImageSelected($event)" [ngClass]="{'is-invalid':isSubmitted&&formControls['subImage'].errors}">
+              </div>
               <div class="buttons mt-5">
                   <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
                   <button matDialogClose="" type="button" style="float: right;" class="me-2 btn btn-danger ">Cancel</button>

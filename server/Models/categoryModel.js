@@ -10,8 +10,12 @@ const categorySchema = new mongoose.Schema({
         required: [true, ['Number is required']]
     },
     vectorImage: {
-        type: Object,
+        type: String,
         required: [true, 'Image is required']
+    },
+    subImage:{
+        type:String,
+        required: [true, 'subImage is required']
     },
     blockStatus: {
         type: Boolean,

@@ -113,7 +113,7 @@ export class PostJobComponent implements OnInit {
     }
 
     const data: i_jobDetails = {
-      category: this.selectedCategory?.name!,
+      categoryName: this.selectedCategory?.name!,
       experience: this.formControl['experience'].value,
       requiredCount: this.formControl['requiredLabour'].value,
       wage: parseInt(this.formControl['offeredWage'].value),

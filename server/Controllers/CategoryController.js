@@ -5,9 +5,15 @@ import categoryModel from "../Models/categoryModel.js";
 export async function addCategory(req, res) {
   try {
     const { name, basicWage } = req.body;
-    const image = await cloudinary.uploader.upload(req.body.vectorImage, {
-      folder: "LabourHive",
-    });
+    async function uploadToCloudinary(image) {
+      return (
+        await cloudinary.uploader.upload(image, {
+          folder: "LabourHive",
+        })
+      ).secure_url;
+    }
+    const image =await uploadToCloudinary(req.body.vectorImage);
+    const subImage =await uploadToCloudinary(req.body.subImage);
     const category = await categoryModel.findOne({ name: name });
 
     if (!category) {
@@ -15,6 +21,7 @@ export async function addCategory(req, res) {
         name: name,
         basicWage: basicWage,
         vectorImage: image,
+        subImage: subImage,
       });
       const categories = await categoryModel.find().lean();
 
@@ -42,17 +49,23 @@ export async function getAllCategories(req, res) {
 
 export async function updateCategory(req, res) {
   try {
-    const { vectorImage, _id } = req.body;
+    const {subImage, vectorImage, _id } = req.body;
     const category = {
       name: req.body.name,
       basicWage: req.body.basicWage,
     };
 
+    async function uploadToCloudinary(image){
+      return (await cloudinary.uploader.upload(image,{folder:'LabourHive'})).secure_url
+    }
+
     if (vectorImage) {
-      const uploadImage = await cloudinary.uploader.upload(vectorImage, {
-        folder: "LabouHive",
-      });
-      category.vectorImage = uploadImage;
+      const uploadedVector = uploadToCloudinary(vectorImage)
+      category.vectorImage =await uploadedVector;
+    }
+    if (subImage) {
+      const uploadedSubImage=uploadToCloudinary(subImage)
+      category.subImage =await uploadedSubImage;
     }
 
     const update = await categoryModel.updateOne(

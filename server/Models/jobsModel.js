@@ -7,8 +7,8 @@ const jobsSchema = new mongoose.Schema({
   },
 
   category: {
-    type: String,
-    required: [true, "category is required"],
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'category'
   },
 
   experience:{

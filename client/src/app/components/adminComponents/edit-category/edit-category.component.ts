@@ -26,6 +26,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   selectedFiles!: File | null;
   category_id: string = '';
   categoryData$: Observable<i_categoryResponse> | null = null;
+  subImage:string=''
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -47,6 +48,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
       basicWage: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       vectorImage: ['', [Validators.required]],
+      subImage: ['', [Validators.required]],
+
     });
 
     //Fetching category data from store
@@ -75,25 +78,41 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     return this.editCategoryForm.controls;
   }
 
-  //convering image To Base64
 
-  ImageTOBase(file: File) {
+ //converting image to base64 string
+ ImageTOBase(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      this.finalImage = reader.result as string;
+      resolve(reader.result as string);
     };
-  }
+    reader.onerror = (err) => {
+      reject(err);
+    };
+  });
+}
 
-  onFileSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files?.length! > 0) {
-      this.selectedFiles = inputElement.files![0];
-      if (this.selectedFiles) {
-        this.ImageTOBase(this.selectedFiles);
-      }
-    }
+//getting each image when selected
+onVectorImageSelected(event: Event) {
+  const inputElement = event.target as HTMLInputElement;
+  if (inputElement.files?.length! > 0) {
+    this.selectedFiles = inputElement.files![0];
+    this.ImageTOBase(this.selectedFiles!).then((res) => {
+      this.finalImage = res;
+    });
   }
+}
+
+onSubImageSelected(event: Event) {
+  const inputElement = event.target as HTMLInputElement;
+  if (inputElement.files?.length! > 0) {
+    this.selectedFiles = inputElement.files![0];
+    this.ImageTOBase(this.selectedFiles).then((res) => {
+      this.subImage = res;
+    });
+  }
+}
 
   onSubmit() {
     this.isSubmitted = true;
@@ -102,6 +121,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         name: this.editCategoryForm.get('name')?.value,
         basicWage: this.editCategoryForm.get('basicWage')?.value,
         vectorImage: this.finalImage ? this.finalImage : '',
+        subImage:this.subImage,
         _id: this.category_id,
       };
       this.isLoading = true;
