@@ -1,20 +1,28 @@
 
 <div class="container-fluid">
     <div class="container">
-        <h2 class="text-start mt-2">
+        <div class="image-div row">
+            <div class="col-8">
+        <h1 class="text-start mt-2">
             <b>{{ jobDetails.category }}</b>
-        </h2>
-
-        <div class="exp">
+        </h1>
+        <div class="experience">
             <P class="details"><i class="ri-briefcase-line"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{jobDetails.experience}}&nbsp;&nbsp;Years<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>₹&nbsp;&nbsp;-&nbsp;&nbsp;{{ jobDetails.wage }}</P>
         </div>
         <div class="date">
             <p class="details"><span>
                 <i class="ri-calendar-todo-fill"></i>
             </span>&nbsp;&nbsp;
-                <span>{{ jobDetails.startDate | customDate }}</span>&nbsp;&nbsp;to&nbsp;&nbsp;<span>{{jobDetails.endDate | customDate}}</span>
-            </p>
-        </div>
+            <span>{{ jobDetails.startDate | customDate }}</span>&nbsp;&nbsp;to&nbsp;&nbsp;<span>{{jobDetails.endDate | customDate}}</span>
+        </p>
+    </div>
+</div>
+<div class="col-4 p-0 p-md-auto d-flex justify-content-between">
+    <img src="../../../../assets/userAssets/images/vecteezy_welder-illustration-figure_13959597.jpg" alt="">
+    <span class="close" (click)="close()">X</span>
+
+</div>
+</div>
         <div class="location">
             <p class="details">
                 <span>
@@ -42,14 +50,14 @@
         <div class="button mb-3">
             <p class="details">
                 <span>
-                    Posted Date:&nbsp;&nbsp;{{jobDetails.startDate|customDate}}
+                    Posted Date:&nbsp;{{jobDetails.startDate|customDate}}
                 </span>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <span>
-                    Total Requirement:&nbsp;&nbsp;{{jobDetails.requiredCount}}
+                    Total Requirement:&nbsp;{{jobDetails.requiredCount}}
                 </span>
             </p>
-            <button class="btn btn-primary">Apply</button>
+            <button class="btn btn-success">Apply</button>
         </div>
     </div>
 </div>

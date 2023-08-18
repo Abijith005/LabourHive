@@ -85,7 +85,7 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
 
   viewSingleJob(job:i_jobDetails) {
     this._matDialog.open(SingleJobComponent,{
-      width:'550px',
+      width:'580px',
       height:'auto',
       maxHeight:'900px',
       data:job
