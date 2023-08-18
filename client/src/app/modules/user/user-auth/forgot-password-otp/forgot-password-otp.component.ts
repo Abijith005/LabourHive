@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 
 @Component({
   selector: 'labourHive-forgot-password-otp',

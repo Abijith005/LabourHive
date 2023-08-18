@@ -15,7 +15,7 @@ import {
   i_messages,
 } from 'src/app/interfaces/userInterfaces/i_chatReceivers';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
-import { ChatService } from 'src/app/services/userServices/chat.service';
+import { ChatService } from 'src/app/modules/user/userServices/chat.service';
 import { userDataState } from 'src/app/store/user.state';
 
 @Component({

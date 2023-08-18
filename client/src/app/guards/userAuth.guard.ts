@@ -15,7 +15,7 @@ export const userAuth: CanActivateFn = (route, state) => {
       if (state.userDatas?.isLoggedIn) {
         return true;
       } else {
-        router.navigate(['/login']);
+        router.navigate(['']);
         HelperServices.showToaster('Please Login',false)
         return false;
       }

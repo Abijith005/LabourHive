@@ -7,14 +7,20 @@ import { AdminDashboardComponent } from './components/adminComponents/admin-dash
 import { CategoryMangementComponent } from './components/adminComponents/category-mangement/category-mangement.component';
 import { WorkMangementComponent } from './components/adminComponents/work-mangement/work-mangement.component';
 import { WalletMangementComponent } from './components/adminComponents/wallet-mangement/wallet-mangement.component';
+import { guestAuthGuard } from './guards/guest-auth.guard';
 
 
 
 const routes: Routes =
 
-  //user paths
 
-  [
+[
+      // Lazy-loaded modules
+  {
+    path: '',
+    loadChildren: () => import('./modules/user/user.module').then(module => module.UserModule),
+  },
+
 
     //admin paths
 

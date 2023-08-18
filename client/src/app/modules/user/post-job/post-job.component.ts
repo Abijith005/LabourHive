@@ -14,7 +14,7 @@ import { i_mapboxResp } from 'src/app/interfaces/userInterfaces/i_mapboxResp';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
-import { JobService } from 'src/app/services/userServices/job.service';
+import { JobService } from 'src/app/modules/user/userServices/job.service';
 
 @Component({
   selector: 'labourHive-post-job',
@@ -127,6 +127,7 @@ export class PostJobComponent implements OnInit {
     this._jobService.postJob(data).subscribe((res) => {
       if (res.success) {
         this._swalServices.showAlert('success', res.message, 'success');
+        this._matDialog.close()
       } else {
         this._swalServices.showAlert('failure', res.message, 'error');
       }

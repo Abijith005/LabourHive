@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 
 @Component({
   selector: 'labourHive-view-labours',

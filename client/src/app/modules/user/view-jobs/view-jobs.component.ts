@@ -4,7 +4,7 @@ import { Subject,takeUntil } from 'rxjs';
 import { i_jobDetails } from 'src/app/interfaces/userInterfaces/i_jobDetails';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
-import { JobService } from 'src/app/services/userServices/job.service';
+import { JobService } from 'src/app/modules/user/userServices/job.service';
 import { SingleJobComponent } from '../single-job/single-job.component';
 
 @Component({

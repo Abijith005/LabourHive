@@ -6,6 +6,7 @@ import { userDataState } from '../store/user.state';
 
 
 export const guestAuthGuard: CanActivateFn = (route, state) => {
+  
   const router: Router = inject(Router);
   const store: Store<userDataState> = inject(Store);
  

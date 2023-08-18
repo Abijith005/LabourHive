@@ -28,7 +28,6 @@ import { authReducer } from './store/user.reducer';
 import { AddCategoryComponent } from './components/adminComponents/add-category/add-category.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EditCategoryComponent } from './components/adminComponents/edit-category/edit-category.component';
-import { LoadingComponent } from './components/commonComponents/loading/loading.component';
 import { MapboxService } from './services/commonServices/mapbox.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -50,7 +49,6 @@ import { UserModule } from './modules/user/user.module';
     AddCategoryComponent,
     EditCategoryComponent,
 
-    LoadingComponent,
   ],
   imports: [
     BrowserModule,

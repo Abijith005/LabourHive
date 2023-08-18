@@ -14,8 +14,8 @@ import { i_paymentDetails } from 'src/app/interfaces/userInterfaces/i_paymentDet
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
-import { RazorpayService } from 'src/app/services/userServices/razorpay.service';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { RazorpayService } from 'src/app/modules/user/userServices/razorpay.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 
 @Component({
   selector: 'labourHive-payment-details',

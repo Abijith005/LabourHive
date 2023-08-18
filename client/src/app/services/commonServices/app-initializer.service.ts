@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../userServices/user.service';
+import { UserService } from '../../modules/user/userServices/user.service';
 import { Store } from '@ngrx/store';
 import { login } from 'src/app/store/user.actions';
 

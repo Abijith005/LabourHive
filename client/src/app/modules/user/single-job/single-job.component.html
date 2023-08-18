@@ -1,0 +1,55 @@
+
+<div class="container-fluid">
+    <div class="container">
+        <h2 class="text-start mt-2">
+            <b>{{ jobDetails.category }}</b>
+        </h2>
+
+        <div class="exp">
+            <P class="details"><i class="ri-briefcase-line"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{jobDetails.experience}}&nbsp;&nbsp;Years<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>₹&nbsp;&nbsp;-&nbsp;&nbsp;{{ jobDetails.wage }}</P>
+        </div>
+        <div class="date">
+            <p class="details"><span>
+                <i class="ri-calendar-todo-fill"></i>
+            </span>&nbsp;&nbsp;
+                <span>{{ jobDetails.startDate | customDate }}</span>&nbsp;&nbsp;to&nbsp;&nbsp;<span>{{jobDetails.endDate | customDate}}</span>
+            </p>
+        </div>
+        <div class="location">
+            <p class="details">
+                <span>
+                    <i class="ri-map-pin-line"></i>
+                </span>&nbsp;&nbsp;
+                <span>
+                    {{jobDetails.location}}
+                </span>
+            </p>
+        </div>
+
+        <div class="description">
+            <p class="desc-data details">
+                <span>
+                    <i class="ri-discuss-line"></i>
+                </span>
+                &nbsp;&nbsp;
+                <span class="data">
+                    {{jobDetails.jobDescription}}
+                </span>
+            </p>
+        </div>
+        <hr>
+
+        <div class="button mb-3">
+            <p class="details">
+                <span>
+                    Posted Date:&nbsp;&nbsp;{{jobDetails.startDate|customDate}}
+                </span>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <span>
+                    Total Requirement:&nbsp;&nbsp;{{jobDetails.requiredCount}}
+                </span>
+            </p>
+            <button class="btn btn-primary">Apply</button>
+        </div>
+    </div>
+</div>

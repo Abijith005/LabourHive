@@ -25,5 +25,5 @@ export default function socketConnect(io, activeUsers) {
         socket.to(receiver.socketId).emit("receive-message", message);
       }
     });
-  });
+  });     
 }

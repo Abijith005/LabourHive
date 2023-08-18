@@ -109,7 +109,7 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a class="dropdown-item" routerLink="/login" >My profile</a>
+              <a class="dropdown-item"  >My profile</a>
             </li>
             <li>
               <a class="dropdown-item" href="#">Settings</a>
@@ -119,16 +119,12 @@
             </li>
           </ul>
         </div>
-
-        <!-- <div *ngIf="userLoggedIn">
-          <p>{{userInformations?.name}}</p>
-        </div> -->
       </div>
       
       </div>
         
         <div *ngIf="!(userInformations$|async)?.isLoggedIn" style="margin-right: 3rem;">
-          <button mat-raised-button color="primary" [routerLink]="['login']">Login/Signup</button>
+          <button mat-raised-button color="primary" [routerLink]="['auth']">Login/Signup</button>
         </div>
       <!-- Right elements -->
     </div>

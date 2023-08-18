@@ -12,7 +12,7 @@
             <div class="mb-2">
                 <label for="exampleInputEmail1" [style.color]="isSubmitted&&formControls['category'].errors?'red':''"  class="form-label">{{isSubmitted&&formControls['category'].errors?.hasOwnProperty('required')?'Category is required':'Category '}}</label>
                 <select name="form-select" class="form-control form-select" formControlName="category" aria-label="Default select example" [ngClass]="{'isInvalid':isSubmitted&&formControls['category'].invalid}">
-                    <option selected >Select Category</option>
+                    <option selected >{{jobProfileData.category}}</option>
                     <option  *ngFor="let item of categories" >{{item.name}}</option>
                 </select>
             </div>
@@ -69,5 +69,5 @@
               </div>
         </form>
     </div>
-    <!-- <labourHive-loading *ngIf="isLoading"></labourHive-loading> -->
+    <labourHive-loading *ngIf="isLoading"></labourHive-loading>
 </mat-dialog-content>

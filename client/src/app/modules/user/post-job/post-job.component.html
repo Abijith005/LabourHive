@@ -35,7 +35,7 @@
               <input type="text" class="form-control" (input)="getSuggestions()" value="{{ location }}"
                 formControlName="location" />
               <ul class="list-unstyled suggestions">
-                <li class="mb-1" *ngFor="let suggestion of suggestions" (click)="slectSuggestion(suggestion)">
+                <li class="mb-1" *ngFor="let suggestion of suggestions" style="cursor: pointer;" (click)="slectSuggestion(suggestion)">
                   {{ suggestion.location }}
                 </li>
               </ul>

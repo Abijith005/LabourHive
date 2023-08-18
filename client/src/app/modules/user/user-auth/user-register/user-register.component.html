@@ -62,7 +62,7 @@
                   data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signup_with"
                   data-size="medium" data-logo_alignment="left">
                 </div>
-                  <p class="mb-2 mt-4 pb-lg-2 text-center" style="color: #393f81;">Already have an account? <a [routerLink]="['/login']" style="color: #393f81;">Login</a></p>
+                  <p class="mb-2 mt-4 pb-lg-2 text-center" style="color: #393f81;">Already have an account? <a [routerLink]="['../login']" style="color: #393f81;">Login</a></p>
                 </form>
                 <labourHive-register-otp *ngIf="otp" [userData]="registerData"></labourHive-register-otp>
               </div>

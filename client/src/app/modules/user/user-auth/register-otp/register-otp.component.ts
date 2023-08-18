@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 @Component({
   selector: 'labourHive-register-otp',
   templateUrl: './register-otp.component.html',

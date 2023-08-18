@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 import { logOut, login } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
 

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { i_categoryResponse } from 'src/app/interfaces/adminInterfaces/i_categoryResponse';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 @Component({
   selector: 'labourHive-user-home',
   templateUrl: './user-home.component.html',

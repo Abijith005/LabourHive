@@ -24,7 +24,7 @@ import { userAuthRoutingModule } from './user-auth-routing.module';
     UserLoginComponent,
     RegisterOtpComponent,
     ForgotPasswordComponent,
-    ForgotPasswordComponent,
+    ForgotPasswordOtpComponent,
     ChangePasswordComponent,
   ],
 

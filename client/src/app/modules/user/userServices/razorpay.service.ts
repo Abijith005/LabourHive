@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { WindowRefService } from '../commonServices/window-ref.service';
+import { WindowRefService } from '../../../services/commonServices/window-ref.service';
 import { UserService } from './user.service';
-import { SwalService } from '../commonServices/swal.service';
+import { SwalService } from '../../../services/commonServices/swal.service';
 import { i_paymentDetails } from 'src/app/interfaces/userInterfaces/i_paymentDetails';
 import { environment } from 'src/app/environments/environment';
 

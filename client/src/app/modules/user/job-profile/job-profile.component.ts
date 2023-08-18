@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
 import { jobProfile } from 'src/app/store/user.actions';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
-import { UserService } from 'src/app/services/userServices/user.service';
+import { UserService } from 'src/app/modules/user/userServices/user.service';
 import { EditJobProfileComponent } from '../edit-job-profile/edit-job-profile.component';
 import { CreatejobProfileComponent } from '../createjob-profile/createjob-profile.component';
 
@@ -64,7 +64,7 @@ export class JobProfileComponent implements OnInit,OnDestroy {
       height: '900px',
       disableClose: true,
     });
-  }
+  } 
 
   ngOnDestroy(): void {
     this._unsubscribe$.next()
