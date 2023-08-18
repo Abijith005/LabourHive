@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CreatejobProfileComponent } from '../createjob-profile/createjob-profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
-import { EditJobProfileComponent } from '../edit-job-profile/edit-job-profile.component';
 import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
 import { jobProfile } from 'src/app/store/user.actions';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { UserService } from 'src/app/services/userServices/user.service';
+import { EditJobProfileComponent } from '../edit-job-profile/edit-job-profile.component';
+import { CreatejobProfileComponent } from '../createjob-profile/createjob-profile.component';
 
 @Component({
   selector: 'labourHive-job-profile',

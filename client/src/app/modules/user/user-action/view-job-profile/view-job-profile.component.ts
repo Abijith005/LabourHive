@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
 import { UserService } from 'src/app/services/userServices/user.service';
 import { ChatService } from 'src/app/services/userServices/chat.service';
 import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
 import { Subject, map, takeUntil } from 'rxjs';
+import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
 
 @Component({
   selector: 'app-view-job-profile',
