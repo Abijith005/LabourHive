@@ -5,14 +5,12 @@ import userModel from "../Models/userModel.js";
 import jobsModel from "../Models/jobsModel.js";
 import categoryModel from "../Models/categoryModel.js";
 import applicantModel from '../Models/applicantModel.js'
+import { verifyToken } from "../Helpers/jwtVerify.js";
 
 export const createJobProfile = async (req, res) => {
   try {
     // getting user id from jwt token
-    const user_id = await jwt.verify(
-      req.cookies.userAuthToken,
-      process.env.JWT_SIGNATURE
-    )?._id;
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
 
     //uploading images to cloudinary
     const profilePic = (
@@ -53,10 +51,7 @@ export const createJobProfile = async (req, res) => {
 export const getJobProfile = async (req, res) => {
   try {
     //getting user_id
-    const user_id = await jwt.verify(
-      req.cookies.userAuthToken,
-      process.env.JWT_SIGNATURE
-    )?._id;
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
 
     let data = await jobProfileModel.findOne({ user_id: user_id });
 
@@ -132,10 +127,7 @@ export const updateJobProfile = async (req, res) => {
 
 export const getLabours = async (req, res) => {
   try {
-    const user_id = await jwt.verify(
-      req.cookies.userAuthToken,
-      process.env.JWT_SIGNATURE
-    )?._id;
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
     const labours = await jobProfileModel
       .find({ category: req.params.category })
       .find({
@@ -241,10 +233,7 @@ export const searchJobs = async (req, res) => {
 
 export const postJob = async (req, res) => {
   try {
-    const user_id = jwt.verify(
-      req.cookies.userAuthToken,
-      process.env.JWT_SIGNATURE
-    )?._id;
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
     const { _id } = await categoryModel.findOne(
       { name: req.body.category },
       { _id: 1 }
@@ -282,7 +271,7 @@ export const applyJob=async (req,res)=>{
   try {
 
     const {job_id}=req.body
-    const user_id=await jwt.verify(req.cookies.userAuthToken,process.env.JWT_SIGNATURE)._id
+    const user_id=(await verifyToken(req.cookies.userAuthToken))._id
     const jobProfile=await jobProfileModel.find({user_id:user_id})
     if (jobProfile) {
       const applicant=await applicantModel.findOne({job_id:job_id,applicant_id:user_id})
@@ -300,6 +289,18 @@ export const applyJob=async (req,res)=>{
     
   } catch (error) {
     console.error(error);
-    res.json({success:false,message:'Unknown erro ocuured'})
+    res.json({success:false,message:'Unknown error ocuured'})
+  }
+}
+
+export const getPostedJobs=async (req,res)=>{
+  try {
+    const user_id=(await verifyToken(req.cookies.userAuthToken))._id
+   const jobs=await jobsModel.find({client_id:user_id}).populate('category').lean()
+   jobs.ma
+   console.log(jobs);
+  } catch (error) {
+    console.error();
+    res.json({success:false,message:'Unknown error ocuured'})
   }
 }

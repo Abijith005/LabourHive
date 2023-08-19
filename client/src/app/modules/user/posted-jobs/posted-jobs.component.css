@@ -1,0 +1,22 @@
+.headings{
+    display:flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+.headings p{
+    font-size: 16px;
+    font-weight: bolder;
+    padding-top: .8rem;
+    
+}
+
+.datas{
+    display:flex;
+    justify-content: space-between;
+
+}
+
+.job-data{
+}
+

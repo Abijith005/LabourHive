@@ -28,4 +28,8 @@ export class JobService {
   applyjob(job_id:string){
     return this._http.post<i_authRes>(`/jobs/applyJob`,{job_id})
   }
+
+  getPostedjobs(){
+    return this._http.get<any>(`/jobs/getPostedJobs`)
+  }
 }
