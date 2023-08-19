@@ -51,6 +51,7 @@
 .details p{
     white-space: nowrap;
     font-size: 13px;
+    font-weight: 500;
 }
 
 .search-location{
@@ -132,6 +133,7 @@
     
     .jobs img{
         height: 80px;
+        width: 80px;
     }
     
   

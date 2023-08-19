@@ -3,7 +3,7 @@
     <div class="container">
         <div class="image-div row">
             <div class="col-8">
-        <h1 class="text-start mt-2 mb-3">
+        <h1 class="text-start mt-2 mb-4">
             <b>{{ jobDetails.category?.name}}</b>
         </h1>
         <div class="experience mb-3">
@@ -50,11 +50,11 @@
         <div class="button mb-3">
             <p class="details">
                 <span>
-                    Posted Date:&nbsp;{{jobDetails.startDate|customDate}}
+                    <b>Posted Date:</b>&nbsp;{{jobDetails.startDate|customDate}}
                 </span>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <span>
-                    Total Requirement:&nbsp;{{jobDetails.requiredCount}}
+                    <b>Total Requirement:</b>&nbsp;{{jobDetails.requiredCount}}
                 </span>
             </p>
             <button class="btn btn-success" (click)="applyJob(jobDetails._id!)">Apply</button>

@@ -24,4 +24,8 @@ export class JobService {
   jobSearch(data: i_searchData) {
     return this._http.post<any>(`/jobs/jobSearch`, data);
   }
+
+  applyjob(job_id:string){
+    return this._http.post<i_authRes>(`/jobs/applyJob`,{job_id})
+  }
 }

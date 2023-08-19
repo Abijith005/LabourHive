@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import userModel from "../Models/userModel.js";
 import jobsModel from "../Models/jobsModel.js";
 import categoryModel from "../Models/categoryModel.js";
+import applicantModel from '../Models/applicantModel.js'
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -168,17 +169,28 @@ export const labourProfile = async (req, res) => {
 export const searchJobs = async (req, res) => {
   try {
     const { coordinates, searchKey } = req.body;
+
+    //getting category ids maching search query
+
+    const categories = await categoryModel
+      .find({ name: RegExp(searchKey, "i") }, { _id: 1 })
+      .lean();
+
+    const category_ids = categories.map((item) => {
+      return item._id;
+    });
+
+    // getting todays date
     const date = new Date();
     let jobs = await jobsModel
       .find({
         $and: [
-          { category: RegExp(searchKey, "i") },
+          { category: { $in: category_ids } },
           { startDate: { $gt: date } },
           { currentStatus: "active" },
         ],
-      })
+      }).populate('category')
       .lean();
-
     //if location is given then we need to filter jobs around 10 km radius of the given location
 
     if (coordinates) {
@@ -233,8 +245,11 @@ export const postJob = async (req, res) => {
       req.cookies.userAuthToken,
       process.env.JWT_SIGNATURE
     )?._id;
-    const {_id}=await categoryModel.findOne({name:req.body.category},{_id:1})
-    req.body.category=_id
+    const { _id } = await categoryModel.findOne(
+      { name: req.body.category },
+      { _id: 1 }
+    );
+    req.body.category = _id;
     await jobsModel.create({ client_id: user_id, ...req.body });
     res.json({ success: true, message: "Job posted successfully" });
   } catch (error) {
@@ -252,7 +267,8 @@ export const getAllJobs = async (req, res) => {
           { startDate: { $gt: currentDate } },
           { currentStatus: "active" },
         ],
-      }).populate('category')
+      })
+      .populate("category")
       .lean();
     res.json(jobs);
   } catch (error) {
@@ -260,3 +276,30 @@ export const getAllJobs = async (req, res) => {
     res.json({ success: false });
   }
 };
+
+
+export const applyJob=async (req,res)=>{
+  try {
+
+    const {job_id}=req.body
+    const user_id=await jwt.verify(req.cookies.userAuthToken,process.env.JWT_SIGNATURE)._id
+    const jobProfile=await jobProfileModel.find({user_id:user_id})
+    if (jobProfile) {
+      const applicant=await applicantModel.findOne({job_id:job_id,applicant_id:user_id})
+      if (!applicant) {
+        await applicantModel.create({applicant_id:user_id,job_id:job_id})
+        res.json({success:true,message:'Job applied successfully'})
+      }
+      else{
+        res.json({success:false,message:'Already applied for this job'})
+      }
+    }
+    else{
+      res.json({success:false,message:'please create job profile'})
+    }
+    
+  } catch (error) {
+    console.error(error);
+    res.json({success:false,message:'Unknown erro ocuured'})
+  }
+}

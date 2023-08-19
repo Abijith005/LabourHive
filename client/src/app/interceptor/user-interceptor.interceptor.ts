@@ -2,37 +2,38 @@ import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { UserAuthService } from '../modules/user/userServices/user-auth.service';
 
 @Injectable()
 export class UserInterceptorInterceptor implements HttpInterceptor {
+  constructor(private _authService: UserAuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
+    const token = this._authService.getToken();
+    console.log(token, 'interrrrr');
 
     // console.log('iam intercetor',request);
-  
+
     //Excluding Mapbox requests being interrupted
 
-    const isMapboxRequest=request.url.includes('api.mapbox.com')
+    const isMapboxRequest = request.url.includes('api.mapbox.com');
     if (isMapboxRequest) {
-      return next.handle(request)
+      return next.handle(request);
     }
-    
+
     //Modifying requests
 
     let modifiedRequest = request.clone({
-      setHeaders:{
+      setHeaders: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${token}'
       },
-      withCredentials:true,
-      url: environment.API_URL + request.url
-    })
-    // console.log(modifiedRequest,'modiiiiiiiiiiiiiiiii');
-    
-    
+      withCredentials: true,
+      url: environment.API_URL + request.url,
+    });
+
     return next.handle(modifiedRequest);
   }
 }

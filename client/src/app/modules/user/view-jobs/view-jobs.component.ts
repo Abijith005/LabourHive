@@ -33,9 +33,7 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
     this._jobSevices
       .getAllJobs()
       .pipe(takeUntil(this._unsubscribe$))
-      .subscribe((res) => {
-        console.log(res,'get all');
-        
+      .subscribe((res) => {        
         this.jobs = res;
       });
   }
@@ -90,7 +88,8 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
       width:'580px',
       height:'auto',
       maxHeight:'900px',
-      data:job
+      data:job,
+      disableClose:true
     })
   }
 
