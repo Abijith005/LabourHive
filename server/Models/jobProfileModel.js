@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const jobProfileSchema = mongoose.Schema({
 
     user_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'user',
         required: [true, 'userId is required']
     },
     profilePic: {

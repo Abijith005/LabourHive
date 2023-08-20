@@ -6,6 +6,7 @@ import jobsModel from "../Models/jobsModel.js";
 import categoryModel from "../Models/categoryModel.js";
 import applicantModel from '../Models/applicantModel.js'
 import { verifyToken } from "../Helpers/jwtVerify.js";
+import mongoose from "mongoose";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -235,9 +236,8 @@ export const postJob = async (req, res) => {
   try {
     const user_id = (await verifyToken(req.cookies.userAuthToken))._id
     const { _id } = await categoryModel.findOne(
-      { name: req.body.category },
-      { _id: 1 }
-    );
+      { name: req.body.categoryName },
+      );
     req.body.category = _id;
     await jobsModel.create({ client_id: user_id, ...req.body });
     res.json({ success: true, message: "Job posted successfully" });
@@ -288,19 +288,53 @@ export const applyJob=async (req,res)=>{
     }
     
   } catch (error) {
-    console.error(error);
+   console.log('Error',error);
     res.json({success:false,message:'Unknown error ocuured'})
   }
 }
 
 export const getPostedJobs=async (req,res)=>{
   try {
+    console.log('posted jobs');
+    // getting user_id
     const user_id=(await verifyToken(req.cookies.userAuthToken))._id
-   const jobs=await jobsModel.find({client_id:user_id}).populate('category').lean()
-   jobs.ma
-   console.log(jobs);
+    // pipeline to get job data and applicant data
+  // const pipeline = [
+  //   
+  // ];
+  
+  const jobs = await jobsModel.aggregate([
+    { $match: { client_id:new mongoose.Types.ObjectId(user_id) } },
+    {$lookup:{from:'categories',localField:'category',foreignField:'_id',as:'category'}},
+    {$unwind:'$category'},
+    {$lookup:{from:'applicants',localField:'_id',foreignField:'job_id',as:'applicants'}},
+    {$unwind:'$applicants'},
+    {$lookup:{from:'jobprofiles',localField:'applicants.applicant_id',foreignField:'user_id',as:'applicants.profileData'}},
+    {$unwind:'$applicants.profileData'},
+    {$group:
+      {_id:'$_id',
+      client_id:{$first:'$client_id'},
+      categoryName:{$first:'$category.name'},
+      experience:{$first:'$experience'},
+      wage:{$first:'$wage'},
+      requiredCount:{$first:'$requiredCount'},
+      postDate:{$first:'$postDate'},
+      startDate:{$first:'$startDate'},
+      endDate:{$first:'$endDate'},
+      location:{$first:'$location'},
+      jobDescription:{$first:'$jobDescription'},
+      currentStatus:{$first:'$currentStatus'},
+      applicants:{$push:'$applicants'},
+    
+    }}
+
+  ])
+
+  console.log(JSON.stringify(jobs,null,2))
+
+
   } catch (error) {
-    console.error();
-    res.json({success:false,message:'Unknown error ocuured'})
+    console.log('Error',error);
+    res.json({success:false,message:'Unknown error occured'})
   }
 }
