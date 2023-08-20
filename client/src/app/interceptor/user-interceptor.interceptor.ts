@@ -4,10 +4,11 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { UserAuthService } from '../modules/user/userServices/user-auth.service';
-import { catchError, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Injectable()
 export class UserInterceptorInterceptor implements HttpInterceptor {
@@ -15,6 +16,7 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
     const token = this._authService.getToken();
+
     // console.log('iam intercetor',request);
 
     //Excluding Mapbox requests being interrupted
@@ -34,20 +36,21 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
       url: environment.API_URL + request.url,
     });
 
+    // return next.handle(modifiedRequest);
+
     return next.handle(modifiedRequest).pipe(
-      catchError((error:HttpErrorResponse)=>{
-        console.log('Error  interceptor errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',error);
-        return throwError(error)
-        
+      catchError((error: HttpErrorResponse) => {
+        console.log('Error interceptor', error);
+        return throwError(error);
       }),
-
-      catchError((response:any)=>{
-
-        if (!response.success) {
-          console.log('Error     interceptor errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',response);
-          
+      catchError((response: any) => {
+        
+        if (response instanceof HttpErrorResponse) {
+          console.log('Response interceptor (HttpErrorResponse)', response);
+        } else {
+          console.log('Response interceptor (Other response)', response);
         }
-        return throwError(response)
+        return throwError(response);
       })
     );
   }

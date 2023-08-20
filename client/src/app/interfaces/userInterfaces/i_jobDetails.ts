@@ -22,7 +22,7 @@ export interface i_jobDetails{
     Inactive='inActive'
 }
 
-interface i_applicantsData{
+export interface i_applicantsData{
     _id: string,
     job_id: string,
     applicant_id: string,
@@ -33,7 +33,8 @@ interface i_applicantsData{
 export interface i_postedJobs extends i_jobDetails{
     postDate:Date,
     currentStatus:e_jobStatus,
-    applicants:i_applicantsData
+    applicants:i_applicantsData,
+    applicantCount:number
 }
 
     

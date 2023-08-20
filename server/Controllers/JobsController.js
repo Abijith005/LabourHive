@@ -7,6 +7,7 @@ import categoryModel from "../Models/categoryModel.js";
 import applicantModel from "../Models/applicantModel.js";
 import { verifyToken } from "../Helpers/jwtVerify.js";
 import mongoose from "mongoose";
+import { json } from "stream/consumers";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -348,12 +349,14 @@ export const getPostedJobs = async (req, res) => {
           jobDescription: { $first: "$jobDescription" },
           currentStatus: { $first: "$currentStatus" },
           applicants: { $push: "$applicants" },
+          applicantCount:{$sum:1}
         },
       },
+    
     ];
 
     const jobs = await jobsModel.aggregate(pipeline);
-    res.json({...jobs,success:true})
+    res.json({ jobs, success: true });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="card-box">
+          <h1 class="text-center mt-md-4 mt-3"><b>Post Job</b></h1>
+          <form action="" class="p-2 p-md-4 pt-2" [formGroup]="editJobForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-md-3 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Category</b></p>
+              </div>
+              <div class="col-8">
+                <label  [style.color]="isSubmitted&&formControl['category'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['category'].errors">Category is required</label>
+                <select name="form-select" formControlName="category" class="form-control form-select"
+                  formControlName="category" aria-label="Default select example">
+                  <option selected>Select Category</option>
+                  <option *ngFor="let item of categories" (click)='selectCategory(item)'>{{ item.name }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Experiences</b></p>
+              </div>
+              <div class="col-8">
+                <label  [style.color]="isSubmitted&&formControl['experience'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['experience'].errors">{{formControl['experience'].errors.hasOwnProperty('required')?'Experience is required':(formControl['experience'].errors.hasOwnProperty('pattern')?'Invaid experience':'')}}</label>
+                <input type="text" class="form-control" formControlName="experience" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Location</b></p>
+              </div>
+              <div class="col-8 location-container">
+                <label  [style.color]="isSubmitted&&formControl['location'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['location'].errors">Location is required</label>
+                <input type="text" class="form-control" (input)="getSuggestions()" value="{{ location }}"
+                  formControlName="location" />
+                <ul class="list-unstyled suggestions">
+                  <li class="mb-1" *ngFor="let suggestion of suggestions" style="cursor: pointer;" (click)="slectSuggestion(suggestion)">
+                    {{ suggestion.location }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Required Labour</b></p>
+              </div>
+              <div class="col-8">
+                <label  [style.color]="isSubmitted&&formControl['requiredLabour'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['requiredLabour'].errors">{{formControl['requiredLabour'].errors.hasOwnProperty('required')?'Labour count is required':(formControl['requiredLabour'].errors.hasOwnProperty('pattern')?'Invaid count':'')}}</label>
+                <input type="text" class="form-control" formControlName="requiredLabour" />
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Offered Wage</b></p>
+              </div>
+              <div class="col-8">
+                <label  [style.color]="isSubmitted&&formControl['offeredWage'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['offeredWage'].errors">{{formControl['offeredWage'].errors.hasOwnProperty('required')?'Offered wage is required':(formControl['offeredWage'].errors.hasOwnProperty('basicWage')?'Wage should be greater than basic wage':'Invalid wage')}}</label>
+                <input type="text" class="form-control" formControlName="offeredWage" />
+                <p  class="mb-0" *ngIf="selectedCategory" style="font-size: 9px;">* Basic wage for {{selectedCategory.name}} is ₹: {{selectedCategory.basicWage}} /-</p>
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Job Description</b></p>
+              </div>
+              <div class="col-8">
+                <label  [style.color]="isSubmitted&&formControl['jobDescription'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['jobDescription'].errors">Job description is required</label>
+                <textarea formControlName="jobDescription" class="form-control" cols="" rows="2"></textarea>
+              </div>
+            </div>
+            <div class="row mb-md-4 mb-2">
+              <div class="col-4" style="display: flex;align-items: center;">
+                <p class="field"><b>Start Date</b></p>
+              </div>
+              <div class="col-8">
+                <mat-form-field class="" style="width: 100%;">
+                  <mat-label class="form-label">{{formControl['startDate'].errors?.hasOwnProperty('invalidDate')?'Invalid Start date':'Enter a date range'}}</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date" formControlName="startDate">
+                    <input matEndDate placeholder="End date" formControlName="endDate">
+                  </mat-date-range-input>
+                  <mat-hint class="form-label">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+                
+              </div>
+            </div>
+     
+  
+  
+            <div class="buttons text-end mt-4 mb-2">
+              <button type="button" class="btn btn-danger me-3 button" (click)="close()">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-success button">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

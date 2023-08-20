@@ -1,5 +1,5 @@
-<div class="container-fluid mt-4">
-    <div class="container" style="background-color: whitesmoke">
+<div class="container-fluid mt-4" *ngFor="let item of postedJobData">
+    <div class="container" style="background-color: whitesmoke" >
         <div class="headings row">
             <p class="col-3">Job</p>
             <p class="col-3">Applied Candidates</p>
@@ -10,22 +10,30 @@
         <div class="datas row">
             <div class="job-data col-3 d-flex flex-column align-items-center">
                 <div>
-                    <p><b><span><i class="ri-briefcase-line"></i>&nbsp;&nbsp;&nbsp;</span> Carpenter</b></p>
-                    <p><b><span><i class="ri-money-dollar-box-line"></i>&nbsp;&nbsp;&nbsp;4&nbsp;Years<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>₹&nbsp;5656</span></b></p>
-                    <p><b><span><i class="ri-map-pin-line"></i>&nbsp;&nbsp;&nbsp;</span> kannur</b></p> 
-                    <p><b><span><i class="ri-calendar-todo-fill"></i>&nbsp;&nbsp;&nbsp;</span> date</b></p>
+                    <div>
+                        <p><i class="ri-briefcase-line"></i>&nbsp;&nbsp;&nbsp;<span>{{item.categoryName}}</span></p>
+                    </div>
+                    <div>
+                        <p><i class="ri-money-dollar-box-line"></i>&nbsp;&nbsp;&nbsp;<span>{{item.experience}}</span>&nbsp;Years&nbsp;&nbsp;|&nbsp;&nbsp;₹&nbsp;<span>{{item.wage}}</span></p>
+                    </div>
+                    <div>
+                        <p style="display: flex;"><i class="ri-map-pin-line"></i>&nbsp;&nbsp;&nbsp;<span class="location" title="{{item.location}}">{{item.location}}</span></p> 
+                    </div>
+                    <div>
+                        <p><i class="ri-calendar-todo-fill"></i>&nbsp;&nbsp;&nbsp;<span>{{(item.startDate|customDate)}}</span>&nbsp;to&nbsp;<span>{{(item.endDate|customDate)}}</span></p>
+                    </div>
                 </div>
             </div>
-            <div class="job-data col-3" style="display: flex;gap: 1.5rem; justify-content:center ;">
+            <div class="job-data col-3" style="display: flex;gap: 1.5rem;">
                 <div>
-                    <p><b><span><i class="ri-user-follow-line"></i>&nbsp;</span> 452</b></p>
+                    <p class="mb-0"><i class="ri-user-follow-line"></i>&nbsp;<span>{{item.applicantCount}}</span>&nbsp;&nbsp;Applicants</p>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-success">View All</button>
+                    <button class="btn btn-sm btn-success" (click)="veiwApplicants(item.applicants)">View All</button>
                 </div>
             </div>
             <div class="job-data text-center col-3">
-                <p><b><span><i class="ri-lightbulb-flash-line"></i>&nbsp;</span> Active</b></p>
+                <p><i class="ri-lightbulb-flash-line" ></i>&nbsp;<span>{{item.currentStatus}}</span></p>
             </div>
             <div class="job-data text-center col-3">
                 <div class="dropdown">
@@ -33,7 +41,7 @@
                       Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                        <li><a class="dropdown-item" (click)="editJob(item)">Edit</a></li>
                       <li><a class="dropdown-item" href="#">Expire</a></li>
                     </ul>
                   </div>

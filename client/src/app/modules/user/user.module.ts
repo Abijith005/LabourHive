@@ -31,6 +31,8 @@ import { PostJobComponent } from './post-job/post-job.component';
 import { PostedJobsComponent } from './posted-jobs/posted-jobs.component';
 import { SingleJobComponent } from './single-job/single-job.component';
 import { LoadingComponent } from 'src/app/components/commonComponents/loading/loading.component';
+import { ViewApplicantsComponent } from './components/view-applicants/view-applicants.component';
+import { EditJobComponent } from './components/edit-job/edit-job.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { LoadingComponent } from 'src/app/components/commonComponents/loading/lo
     PostJobComponent,
     PostedJobsComponent,
     SingleJobComponent,
-    LoadingComponent
+    LoadingComponent,
+    ViewApplicantsComponent,
+    EditJobComponent
   ],
   imports: [
     CommonModule,

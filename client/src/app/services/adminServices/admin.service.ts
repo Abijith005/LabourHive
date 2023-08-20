@@ -21,7 +21,7 @@ export class AdminService {
   }
 
   getAllUsers(){
-    return this.http.get<i_UserDetails[]>('/admin/getAllUsers')
+    return this.http.get<{users:i_UserDetails[],success:boolean,message:string}>('/admin/getAllUsers')
   }
 
   blockStatus(id:string,blockStatus:boolean){

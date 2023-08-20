@@ -24,9 +24,9 @@
                         <h2 class="details">Rating</h2>
                         <h3 class="details "><b> {{jobProfileDetails?.rating}} 
                             <ng-container *ngFor="let item of jobProfileDetails?.rating!|starRating" >
-                                <i *ngIf="item==1" class="star ri-star-fill" style="color: gold;"></i>
-                                <i *ngIf="item==.5" class="star ri-star-half-line"style="color: gold;"></i>
-                                <i *ngIf="item==0" class=" star ri-star-line" style="color: rgb(0, 0, 0);"></i>
+                                <i *ngIf="item==1" class="fas fa-star" style="color: gold;"></i>
+                                <i *ngIf="item==.5" class="fas fa-star-half-stroke" style="color: gold;"></i>
+                                <i *ngIf="item==0" class="fas fa-star"></i>
                               </ng-container>
                         </b></h3>
 

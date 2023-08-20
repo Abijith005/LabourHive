@@ -32,7 +32,8 @@ export async function adminLogin(req, res) {
 export async function getAllUsers(req, res) {
   try {
     const users = await userModel.find().populate("jobProfileDatas").lean();
-    res.json(users);
+    
+    res.json({users:users,success:false});
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

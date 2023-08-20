@@ -16,7 +16,34 @@
     justify-content: space-between;
 
 }
-
-.job-data{
+.datas p i{
+    font-weight:900;
 }
 
+.datas p {
+    font-weight:400;
+}
+
+
+.job-data{
+    display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.centered-text {
+    text-align: center;
+  }
+
+  .location{
+    flex: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+p{
+    cursor: default;
+}

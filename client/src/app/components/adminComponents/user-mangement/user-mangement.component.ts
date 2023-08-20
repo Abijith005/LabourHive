@@ -13,13 +13,13 @@ import { adminDataState } from 'src/app/store/admin.state';
   templateUrl: './user-mangement.component.html',
   styleUrls: ['./user-mangement.component.css'],
 })
-export class UserMangementComponent implements OnInit,OnDestroy {
+export class UserMangementComponent implements OnInit, OnDestroy {
   // variable declarations
 
   userDatas$: Observable<i_UserDetails[]> | null = null;
   keyWord: string = '';
 
-  private _unsubscribe$=new Subject<void>()
+  private _unsubscribe$ = new Subject<void>();
 
   constructor(
     private service: AdminService,
@@ -28,19 +28,21 @@ export class UserMangementComponent implements OnInit,OnDestroy {
     private _swalService: SwalService
   ) {}
 
-
   ngOnInit(): void {
-    this.service.getAllUsers().pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
-      console.log(res,'res');
-      
-      this._store.dispatch(getAllusers({ userDatas: res }));
+    this.service
+      .getAllUsers()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((res) => {  
+              
+        // dispatching use datas to store
+        this._store.dispatch(getAllusers({ userDatas: res.users }));
 
-      this.userDatas$ = this._store.select('adminData').pipe(
-        map((state) => {
-          return state.datas!;
-        })
-      );
-    });
+        this.userDatas$ = this._store.select('adminData').pipe(
+          map((state) => {
+            return state.datas!;
+          })
+        );
+      });
   }
 
   async blockStatus(id: string, status: boolean, name: string) {
@@ -51,19 +53,22 @@ export class UserMangementComponent implements OnInit,OnDestroy {
     );
 
     if (confirmation) {
-      this.service.blockStatus(id, status).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
-        if (res.success) {
-          this._store.dispatch(blockUser({ _id: id }));
-          this.userDatas$ = this._store.select('adminData').pipe(
-            map((state) => {
-              return state.datas!;
-            })
-          );
-        }
+      this.service
+        .blockStatus(id, status)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((res) => {
+          if (res.success) {
+            this._store.dispatch(blockUser({ _id: id }));
+            this.userDatas$ = this._store.select('adminData').pipe(
+              map((state) => {
+                return state.datas!;
+              })
+            );
+          }
 
-        const message = res.message;
-        this._helper.showToaster(message, res.success);
-      });
+          const message = res.message;
+          this._helper.showToaster(message, res.success);
+        });
     }
   }
 
@@ -82,7 +87,7 @@ export class UserMangementComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe$.next()
-    this._unsubscribe$.complete()
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

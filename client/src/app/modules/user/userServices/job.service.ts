@@ -30,6 +30,6 @@ export class JobService {
   }
 
   getPostedjobs(){
-    return this._http.get<i_postedJobs>(`/jobs/getPostedJobs`)
+    return this._http.get<{jobs:i_postedJobs[],success:Boolean}>(`/jobs/getPostedJobs`)
   }
 }

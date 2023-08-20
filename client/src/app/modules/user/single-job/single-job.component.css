@@ -1,16 +1,13 @@
 .desc-data {
   display: flex;
   text-align: justify;
+  max-height: 130px;
+  overflow-y: scroll;
 }
 .location-data{
   display: flex;
   text-align: justify;
 
-}
-
-.desc-data .data {
-  max-height: 130px;
-  overflow-y: scroll;
 }
 
 .button {
