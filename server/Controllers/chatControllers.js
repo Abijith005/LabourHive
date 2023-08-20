@@ -28,7 +28,7 @@ export const createNewChatRoom = async (req, res) => {
     res.json({ success: true });
   } catch (error) {
     console.log("Error", error);
-    res.json({ success: false });
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
@@ -49,6 +49,7 @@ export const storeMessages = async (req, res) => {
     });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
@@ -77,6 +78,7 @@ export const getAllMessageReceivers = async (req, res) => {
     res.json(receiversData);
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
@@ -107,7 +109,6 @@ export const getChatMessages = async (req, res) => {
     res.json(messages);
   } catch (error) {
     console.log("Eror", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
-
-

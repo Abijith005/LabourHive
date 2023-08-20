@@ -31,6 +31,8 @@ export class UserMangementComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.service.getAllUsers().pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
+      console.log(res,'res');
+      
       this._store.dispatch(getAllusers({ userDatas: res }));
 
       this.userDatas$ = this._store.select('adminData').pipe(

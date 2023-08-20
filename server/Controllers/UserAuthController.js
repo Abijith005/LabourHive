@@ -38,6 +38,7 @@ export async function userRegister(req, res) {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -84,6 +85,7 @@ export async function userSubmitOtp(req, res) {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -137,6 +139,7 @@ export async function userLogin(req, res) {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -180,6 +183,7 @@ export async function userGoogleLogin(req, res) {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -200,6 +204,7 @@ export async function UserForgotPassword(req, res) {
     }
   } catch (error) {
     console.log("Err", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -214,6 +219,7 @@ export async function submitForgotPasswordOtp(req, res) {
     }
   } catch (error) {
     console.log("Err", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -232,13 +238,12 @@ export async function userChangePassword(req, res) {
     }
   } catch (error) {
     console.log("Err", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
 export async function getUserDatas(req, res) {
   try {
-
-    
     const decode = await jwt.verify(
       req.cookies.userAuthToken,
       process.env.JWT_SIGNATURE
@@ -247,13 +252,13 @@ export async function getUserDatas(req, res) {
       let user = await userModel.findOne({ _id: decode._id });
       user = user.toObject();
       user.isLoggedIn = true;
-      res.json({success:true,...user});
+      res.json({ success: true, ...user });
     } else {
       res.json({ success: false });
     }
   } catch (error) {
-      console.log("Error", error);
-      res.json({success:false})
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -264,5 +269,6 @@ export async function userLogout(req, res) {
       .json({ success: true, message: "User logged out" });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }

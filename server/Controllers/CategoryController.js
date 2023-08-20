@@ -1,4 +1,3 @@
-import { set } from "mongoose";
 import cloudinary from "../Config/cloudinary.js";
 import categoryModel from "../Models/categoryModel.js";
 
@@ -12,8 +11,8 @@ export async function addCategory(req, res) {
         })
       ).secure_url;
     }
-    const image =await uploadToCloudinary(req.body.vectorImage);
-    const subImage =await uploadToCloudinary(req.body.subImage);
+    const image = await uploadToCloudinary(req.body.vectorImage);
+    const subImage = await uploadToCloudinary(req.body.subImage);
     const category = await categoryModel.findOne({ name: name });
 
     if (!category) {
@@ -35,6 +34,7 @@ export async function addCategory(req, res) {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -44,28 +44,30 @@ export async function getAllCategories(req, res) {
     res.json({ categories });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
 export async function updateCategory(req, res) {
   try {
-    const {subImage, vectorImage, _id } = req.body;
+    const { subImage, vectorImage, _id } = req.body;
     const category = {
       name: req.body.name,
       basicWage: req.body.basicWage,
     };
 
-    async function uploadToCloudinary(image){
-      return (await cloudinary.uploader.upload(image,{folder:'LabourHive'})).secure_url
+    async function uploadToCloudinary(image) {
+      return (await cloudinary.uploader.upload(image, { folder: "LabourHive" }))
+        .secure_url;
     }
 
     if (vectorImage) {
-      const uploadedVector = uploadToCloudinary(vectorImage)
-      category.vectorImage =await uploadedVector;
+      const uploadedVector = uploadToCloudinary(vectorImage);
+      category.vectorImage = await uploadedVector;
     }
     if (subImage) {
-      const uploadedSubImage=uploadToCloudinary(subImage)
-      category.subImage =await uploadedSubImage;
+      const uploadedSubImage = uploadToCloudinary(subImage);
+      category.subImage = await uploadedSubImage;
     }
 
     const update = await categoryModel.updateOne(
@@ -85,6 +87,7 @@ export async function updateCategory(req, res) {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -103,6 +106,7 @@ export async function blockCategory(req, res) {
     res.json({ success: true, message, categories });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }
 
@@ -118,5 +122,6 @@ export async function deleteCategory(req, res) {
     });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 }

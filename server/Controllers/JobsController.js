@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken";
 import userModel from "../Models/userModel.js";
 import jobsModel from "../Models/jobsModel.js";
 import categoryModel from "../Models/categoryModel.js";
-import applicantModel from '../Models/applicantModel.js'
+import applicantModel from "../Models/applicantModel.js";
 import { verifyToken } from "../Helpers/jwtVerify.js";
 import mongoose from "mongoose";
 
 export const createJobProfile = async (req, res) => {
   try {
     // getting user id from jwt token
-    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
 
     //uploading images to cloudinary
     const profilePic = (
@@ -46,13 +46,14 @@ export const createJobProfile = async (req, res) => {
     res.json({ success: true, message: "Job profile created successfully" });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
 export const getJobProfile = async (req, res) => {
   try {
     //getting user_id
-    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
 
     let data = await jobProfileModel.findOne({ user_id: user_id });
 
@@ -65,6 +66,7 @@ export const getJobProfile = async (req, res) => {
     }
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
@@ -123,12 +125,13 @@ export const updateJobProfile = async (req, res) => {
     res.json({ success: true, message: "Job profile updated successfully" });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
 export const getLabours = async (req, res) => {
   try {
-    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
     const labours = await jobProfileModel
       .find({ category: req.params.category })
       .find({
@@ -141,6 +144,7 @@ export const getLabours = async (req, res) => {
     res.json(labours);
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
@@ -156,6 +160,7 @@ export const labourProfile = async (req, res) => {
     res.json({ success: true, ...labourProfile });
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
@@ -182,7 +187,8 @@ export const searchJobs = async (req, res) => {
           { startDate: { $gt: date } },
           { currentStatus: "active" },
         ],
-      }).populate('category')
+      })
+      .populate("category")
       .lean();
     //if location is given then we need to filter jobs around 10 km radius of the given location
 
@@ -229,15 +235,16 @@ export const searchJobs = async (req, res) => {
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
 export const postJob = async (req, res) => {
   try {
-    const user_id = (await verifyToken(req.cookies.userAuthToken))._id
-    const { _id } = await categoryModel.findOne(
-      { name: req.body.categoryName },
-      );
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
+    const { _id } = await categoryModel.findOne({
+      name: req.body.categoryName,
+    });
     req.body.category = _id;
     await jobsModel.create({ client_id: user_id, ...req.body });
     res.json({ success: true, message: "Job posted successfully" });
@@ -266,75 +273,89 @@ export const getAllJobs = async (req, res) => {
   }
 };
 
-
-export const applyJob=async (req,res)=>{
+export const applyJob = async (req, res) => {
   try {
-
-    const {job_id}=req.body
-    const user_id=(await verifyToken(req.cookies.userAuthToken))._id
-    const jobProfile=await jobProfileModel.find({user_id:user_id})
+    const { job_id } = req.body;
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
+    const jobProfile = await jobProfileModel.find({ user_id: user_id });
     if (jobProfile) {
-      const applicant=await applicantModel.findOne({job_id:job_id,applicant_id:user_id})
+      const applicant = await applicantModel.findOne({
+        job_id: job_id,
+        applicant_id: user_id,
+      });
       if (!applicant) {
-        await applicantModel.create({applicant_id:user_id,job_id:job_id})
-        res.json({success:true,message:'Job applied successfully'})
+        await applicantModel.create({ applicant_id: user_id, job_id: job_id });
+        res.json({ success: true, message: "Job applied successfully" });
+      } else {
+        res.json({ success: false, message: "Already applied for this job" });
       }
-      else{
-        res.json({success:false,message:'Already applied for this job'})
-      }
+    } else {
+      res.json({ success: false, message: "please create job profile" });
     }
-    else{
-      res.json({success:false,message:'please create job profile'})
-    }
-    
   } catch (error) {
-   console.log('Error',error);
-    res.json({success:false,message:'Unknown error ocuured'})
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error ocuured" });
   }
-}
+};
 
-export const getPostedJobs=async (req,res)=>{
+export const getPostedJobs = async (req, res) => {
   try {
-    console.log('posted jobs');
+    console.log("posted jobs");
     // getting user_id
-    const user_id=(await verifyToken(req.cookies.userAuthToken))._id
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
     // pipeline to get job data and applicant data
-  // const pipeline = [
-  //   
-  // ];
-  
-  const jobs = await jobsModel.aggregate([
-    { $match: { client_id:new mongoose.Types.ObjectId(user_id) } },
-    {$lookup:{from:'categories',localField:'category',foreignField:'_id',as:'category'}},
-    {$unwind:'$category'},
-    {$lookup:{from:'applicants',localField:'_id',foreignField:'job_id',as:'applicants'}},
-    {$unwind:'$applicants'},
-    {$lookup:{from:'jobprofiles',localField:'applicants.applicant_id',foreignField:'user_id',as:'applicants.profileData'}},
-    {$unwind:'$applicants.profileData'},
-    {$group:
-      {_id:'$_id',
-      client_id:{$first:'$client_id'},
-      categoryName:{$first:'$category.name'},
-      experience:{$first:'$experience'},
-      wage:{$first:'$wage'},
-      requiredCount:{$first:'$requiredCount'},
-      postDate:{$first:'$postDate'},
-      startDate:{$first:'$startDate'},
-      endDate:{$first:'$endDate'},
-      location:{$first:'$location'},
-      jobDescription:{$first:'$jobDescription'},
-      currentStatus:{$first:'$currentStatus'},
-      applicants:{$push:'$applicants'},
-    
-    }}
+    const pipeline = [
+      { $match: { client_id: new mongoose.Types.ObjectId(user_id) } },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      { $unwind: "$category" },
+      {
+        $lookup: {
+          from: "applicants",
+          localField: "_id",
+          foreignField: "job_id",
+          as: "applicants",
+        },
+      },
+      { $unwind: "$applicants" },
+      {
+        $lookup: {
+          from: "jobprofiles",
+          localField: "applicants.applicant_id",
+          foreignField: "user_id",
+          as: "applicants.profileData",
+        },
+      },
+      { $unwind: "$applicants.profileData" },
+      {
+        $group: {
+          _id: "$_id",
+          client_id: { $first: "$client_id" },
+          categoryName: { $first: "$category.name" },
+          experience: { $first: "$experience" },
+          wage: { $first: "$wage" },
+          requiredCount: { $first: "$requiredCount" },
+          postDate: { $first: "$postDate" },
+          startDate: { $first: "$startDate" },
+          endDate: { $first: "$endDate" },
+          location: { $first: "$location" },
+          jobDescription: { $first: "$jobDescription" },
+          currentStatus: { $first: "$currentStatus" },
+          applicants: { $push: "$applicants" },
+        },
+      },
+    ];
 
-  ])
-
-  console.log(JSON.stringify(jobs,null,2))
-
-
+    const jobs = await jobsModel.aggregate(pipeline);
+    res.json({...jobs,success:true})
   } catch (error) {
-    console.log('Error',error);
-    res.json({success:false,message:'Unknown error occured'})
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};
