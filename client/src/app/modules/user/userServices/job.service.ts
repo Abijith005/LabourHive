@@ -32,4 +32,8 @@ export class JobService {
   getPostedjobs(){
     return this._http.get<{jobs:i_postedJobs[],success:Boolean}>(`/jobs/getPostedJobs`)
   }
+
+  editJob(data:i_jobDetails,job_id:string){
+    return this._http.post<i_authRes>(`/jobs/editJob`,{...data,job_id})
+  }
 }

@@ -362,3 +362,22 @@ export const getPostedJobs = async (req, res) => {
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+export const editJob=async (req,res)=>{
+  try {
+    console.log(req.body);
+    const {job_id}=req.body
+    delete req.body.job_id
+    if (!req.body.location) {
+      delete req.body.location
+    }
+    console.log(req.body);
+    
+   const d= await jobsModel.updateOne({_id:job_id},{$set:{...req.body}})
+   console.log(d);
+
+  } catch (error) {
+    console.log('Error',error);
+    res.json({success:false,message:'Unknown error occured'})
+  }
+}

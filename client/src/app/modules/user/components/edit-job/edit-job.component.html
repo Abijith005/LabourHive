@@ -9,10 +9,9 @@
                 <p class="field"><b>Category</b></p>
               </div>
               <div class="col-8">
-                <label  [style.color]="isSubmitted&&formControl['category'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['category'].errors">Category is required</label>
-                <select name="form-select" formControlName="category" class="form-control form-select"
-                  formControlName="category" aria-label="Default select example">
-                  <option selected>Select Category</option>
+                <label  [style.color]="isSubmitted&&formControl['categoryName'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['categoryName'].errors">Category is required</label>
+                <select name="form-select"  class="form-control form-select"
+                  formControlName="categoryName" aria-label="Default select example">
                   <option *ngFor="let item of categories" (click)='selectCategory(item)'>{{ item.name }}</option>
                 </select>
               </div>
@@ -46,8 +45,8 @@
                 <p class="field"><b>Required Labour</b></p>
               </div>
               <div class="col-8">
-                <label  [style.color]="isSubmitted&&formControl['requiredLabour'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['requiredLabour'].errors">{{formControl['requiredLabour'].errors.hasOwnProperty('required')?'Labour count is required':(formControl['requiredLabour'].errors.hasOwnProperty('pattern')?'Invaid count':'')}}</label>
-                <input type="text" class="form-control" formControlName="requiredLabour" />
+                <label  [style.color]="isSubmitted&&formControl['requiredCount'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['requiredCount'].errors">{{formControl['requiredCount'].errors.hasOwnProperty('required')?'Labour count is required':(formControl['requiredCount'].errors.hasOwnProperty('pattern')?'Invaid count':'')}}</label>
+                <input type="text" class="form-control" formControlName="requiredCount" />
               </div>
             </div>
             <div class="row mb-md-4 mb-2">
@@ -55,8 +54,8 @@
                 <p class="field"><b>Offered Wage</b></p>
               </div>
               <div class="col-8">
-                <label  [style.color]="isSubmitted&&formControl['offeredWage'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['offeredWage'].errors">{{formControl['offeredWage'].errors.hasOwnProperty('required')?'Offered wage is required':(formControl['offeredWage'].errors.hasOwnProperty('basicWage')?'Wage should be greater than basic wage':'Invalid wage')}}</label>
-                <input type="text" class="form-control" formControlName="offeredWage" />
+                <label  [style.color]="isSubmitted&&formControl['wage'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['wage'].errors">{{formControl['wage'].errors.hasOwnProperty('required')?'Offered wage is required':(formControl['wage'].errors.hasOwnProperty('basicWage')?'Wage should be greater than basic wage':'Invalid wage')}}</label>
+                <input type="text" class="form-control" formControlName="wage" />
                 <p  class="mb-0" *ngIf="selectedCategory" style="font-size: 9px;">* Basic wage for {{selectedCategory.name}} is ₹: {{selectedCategory.basicWage}} /-</p>
               </div>
             </div>

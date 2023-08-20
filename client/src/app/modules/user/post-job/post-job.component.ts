@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
@@ -21,7 +21,7 @@ import { JobService } from 'src/app/modules/user/userServices/job.service';
   templateUrl: './post-job.component.html',
   styleUrls: ['./post-job.component.css'],
 })
-export class PostJobComponent implements OnInit {
+export class PostJobComponent implements OnInit,OnDestroy {
   // variable declarations
   postJobForm: FormGroup = new FormGroup({});
   suggestions!: i_suggestions[];
@@ -89,7 +89,6 @@ export class PostJobComponent implements OnInit {
 
   selectCategory(item: i_category) {
     this.selectedCategory = item;
-    console.log(this.selectedCategory);
   }
 
   close() {
@@ -124,7 +123,7 @@ export class PostJobComponent implements OnInit {
       coordinates: this.coordinates,
     };
 
-    this._jobService.postJob(data).subscribe((res) => {
+    this._jobService.postJob(data).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
       if (res.success) {
         this._swalServices.showAlert('success', res.message, 'success');
         this._matDialog.close()
@@ -132,5 +131,10 @@ export class PostJobComponent implements OnInit {
         this._swalServices.showAlert('failure', res.message, 'error');
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe$.next()
+    this._unsubscribe$.complete()
   }
 }

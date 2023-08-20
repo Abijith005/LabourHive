@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
@@ -22,7 +22,7 @@ import { PostJobComponent } from '../../post-job/post-job.component';
   templateUrl: './edit-job.component.html',
   styleUrls: ['./edit-job.component.css'],
 })
-export class EditJobComponent {
+export class EditJobComponent implements OnInit,OnDestroy {
   // variable declarations
   editJobForm: FormGroup = new FormGroup({});
   suggestions!: i_suggestions[];
@@ -30,7 +30,7 @@ export class EditJobComponent {
   coordinates!: number[];
   categories!: i_category[];
   isSubmitted: boolean = false;
-  selectedCategory: i_category | null = null;
+  selectedCategory!: i_category
   jobDetails!:i_jobDetails
 
   private _unsubscribe$ = new Subject<void>();
@@ -42,21 +42,19 @@ export class EditJobComponent {
     private _jobService: JobService,
     private _swalServices: SwalService
   ) {
-    this.jobDetails=_data
-    console.log(this.jobDetails);
-    this.editJobForm.patchValue(this.jobDetails)
+    this.jobDetails=_data    
     
   }
 
   ngOnInit(): void {
     this.editJobForm = this._fb.group({
-      category: ['', [Validators.required]],
+      categoryName: ['', [Validators.required]],
       experience: ['', [Validators.required, Validators.pattern('[0-9]*$')]],
-      requiredLabour: [
+      requiredCount: [
         '',
         [Validators.required, Validators.pattern('^(0*(?:[1-9]))*$')],
       ],
-      offeredWage: ['', [Validators.required, Validators.pattern('[0-9]*$')]],
+      wage: ['', [Validators.required, Validators.pattern('[0-9]*$')]],
       jobDescription: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
@@ -65,6 +63,8 @@ export class EditJobComponent {
 
     // get categories from local storage
     this.categories = JSON.parse(localStorage.getItem('categories')!);
+    this.editJobForm.patchValue(this.jobDetails)
+    this.selectedCategory=this.categories.find((e)=>e.name==this.jobDetails.categoryName)!
   }
 
   getSuggestions() {
@@ -97,7 +97,6 @@ export class EditJobComponent {
 
   selectCategory(item: i_category) {
     this.selectedCategory = item;
-    console.log(this.selectedCategory);
   }
 
   close() {
@@ -107,9 +106,9 @@ export class EditJobComponent {
   onSubmit() {
     this.isSubmitted = true;
     if (
-      this.formControl['offeredWage'].value < this.selectedCategory?.basicWage!
+      this.formControl['wage'].value < this.selectedCategory?.basicWage!
     ) {
-      this.formControl['offeredWage'].setErrors({ basicWage: true });
+      this.formControl['wage'].setErrors({ basicWage: true });
     }
     const startDate = new Date(this.formControl['startDate'].value).getTime();
     if (startDate <= new Date().getTime()) {
@@ -121,18 +120,20 @@ export class EditJobComponent {
     }
 
     const data: i_jobDetails = {
-      categoryName: this.selectedCategory?.name!,
+      categoryName: this.selectedCategory?._id!,
       experience: this.formControl['experience'].value,
-      requiredCount: this.formControl['requiredLabour'].value,
-      wage: parseInt(this.formControl['offeredWage'].value),
+      requiredCount: this.formControl['requiredCount'].value,
+      wage: parseInt(this.formControl['wage'].value),
       jobDescription: this.formControl['jobDescription'].value,
-      startDate: this.formControl['startDate'].value,
-      endDate: this.formControl['endDate'].value,
+      startDate:new Date(this.formControl['startDate'].value),
+      endDate:new Date(this.formControl['endDate'].value),
       location: this.location,
       coordinates: this.coordinates,
     };
 
-    this._jobService.postJob(data).subscribe((res) => {
+    console.log(data);
+    
+    this._jobService.editJob(data,this.jobDetails._id!).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
       if (res.success) {
         this._swalServices.showAlert('success', res.message, 'success');
         this._matDialog.close();
@@ -140,5 +141,10 @@ export class EditJobComponent {
         this._swalServices.showAlert('failure', res.message, 'error');
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe$.next()
+    this._unsubscribe$.complete()
   }
 }
