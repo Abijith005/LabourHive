@@ -12,6 +12,7 @@
                 <th scope="col">Experience</th>
                 <th scope="col">Wage</th>
                 <th scope="col">Applied Date</th>
+                <th scope="col">Status</th>
                 <th scope="col" class="loc">Location</th>
                 <th scope="col">Rating</th>
                 <th scope="col">Action</th>
@@ -27,6 +28,7 @@
                 <td>{{item.profileData.experience}}&nbsp; Years</td>
                 <td>₹ {{item.profileData.wage}}</td>
                 <td>{{item.createdAt|customDate}}</td>
+                <td>{{item.applicationStatus}}</td>
                 <td title="{{item.profileData.location}}" class="location">{{item.profileData.location}}</td>
                 <td>
                     <ng-container *ngFor="let item of (item.profileData.rating!|starRating)">
@@ -41,8 +43,8 @@
                       Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Reject</a></li>
-                      <li><a class="dropdown-item" href="#">View & Hire</a></li>
+                        <li><a class="dropdown-item" >Reject</a></li>
+                      <li><a class="dropdown-item" [routerLink]="['viewJobProfile/'+item.applicant_id]" (click)="close()">View & Hire</a></li>
                     </ul>
                   </div></td>
               </tr>

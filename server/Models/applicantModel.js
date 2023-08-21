@@ -11,6 +11,13 @@ const applicantSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
     },
+
+    applicationStatus:{
+      type:String,
+      enum:['accepted','rejected','pending'],
+      default:'pending',
+      required:[true, 'application status is required']
+    }
   },
   { timestamps: true }
 );

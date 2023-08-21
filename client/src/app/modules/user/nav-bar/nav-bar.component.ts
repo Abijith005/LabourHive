@@ -1,12 +1,10 @@
-import { state } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
 import { UserService } from 'src/app/modules/user/userServices/user.service';
-import { logOut, login } from 'src/app/store/user.actions';
+import { logOut} from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
 
 @Component({

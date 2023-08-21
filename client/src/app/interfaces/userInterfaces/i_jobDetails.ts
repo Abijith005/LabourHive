@@ -23,6 +23,7 @@ export interface i_applicantsData{
     job_id: string,
     applicant_id: string,
     createdAt: Date,
+    applicationStatus:string,
     profileData:i_jobProfile
 }
 

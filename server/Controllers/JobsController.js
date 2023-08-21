@@ -151,12 +151,15 @@ export const getLabours = async (req, res) => {
 
 export const labourProfile = async (req, res) => {
   try {
+    console.log(req.params.user_id,'user_id');
     let labourProfile = await jobProfileModel.findOne({
       user_id: req.params.user_id,
     });
 
     // converting mongoose object to normal object
     labourProfile = labourProfile.toObject();
+
+    console.log(labourProfile,'labour profiile');
 
     res.json({ success: true, ...labourProfile });
   } catch (error) {
@@ -370,6 +373,8 @@ export const getPostedJobs = async (req, res) => {
     ];
 
     const jobs = await jobsModel.aggregate(pipeline);
+
+    console.log(JSON.stringify(jobs,null,2));
     res.json({ jobs, success: true });
   } catch (error) {
     console.log("Error", error);

@@ -30,16 +30,7 @@ export class PostedJobsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this._jobService
-    //   .getPostedjobs()
-    //   .pipe(takeUntil(this._unsubscribe$))
-    //   .subscribe((res) => {
-    //     if (res.success) {
-    //       // this.postedJobData = res.jobs;
-    //       this.postJobDatas$=of(res.jobs)
-    //     }
-    //   });
-
+    // getting post job datas from server
     this.postJobDatas$ = this._jobService
       .getPostedjobs()
       .pipe(map((res) => (res.success ? res.jobs : [])));
@@ -47,7 +38,7 @@ export class PostedJobsComponent implements OnInit, OnDestroy {
   // opening view applicant component
   veiwApplicants(applicants: i_applicantsData) {
     this._matDialog.open(ViewApplicantsComponent, {
-      width: '950px',
+      width: '1100px',
       data: applicants,
       disableClose: true,
     });

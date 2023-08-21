@@ -38,7 +38,11 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('initialised');
+    
     this.labour_id = this._route.snapshot.paramMap.get('labour_id')!;
+    console.log(this.labour_id,'extracted labour id');
+    
 
     this._store
       .select('user')
