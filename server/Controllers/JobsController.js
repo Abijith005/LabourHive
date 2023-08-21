@@ -151,16 +151,12 @@ export const getLabours = async (req, res) => {
 
 export const labourProfile = async (req, res) => {
   try {
-    console.log(req.params.user_id,'user_id');
     let labourProfile = await jobProfileModel.findOne({
       user_id: req.params.user_id,
     });
 
     // converting mongoose object to normal object
-    labourProfile = labourProfile.toObject();
-
-    console.log(labourProfile,'labour profiile');
-
+    labourProfile = labourProfile.toObject()
     res.json({ success: true, ...labourProfile });
   } catch (error) {
     console.log("Error", error);
@@ -306,8 +302,8 @@ export const getPostedJobs = async (req, res) => {
   try {
     // getting user_id
     const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
-    // pipeline to get job data and applicant data
 
+    // pipeline to get job data and applicant data
     const pipeline = [
       { $match: { client_id: new mongoose.Types.ObjectId(user_id) } },
       {
@@ -373,8 +369,6 @@ export const getPostedJobs = async (req, res) => {
     ];
 
     const jobs = await jobsModel.aggregate(pipeline);
-
-    console.log(JSON.stringify(jobs,null,2));
     res.json({ jobs, success: true });
   } catch (error) {
     console.log("Error", error);
@@ -389,11 +383,8 @@ export const editJob = async (req, res) => {
     if (!req.body.location) {
       delete req.body.location;
     }
-     await jobsModel.updateOne(
-      { _id: job_id },
-      { $set: { ...req.body } }
-    );
-    res.json({success:true,message:'Job edited successfully'})
+    await jobsModel.updateOne({ _id: job_id }, { $set: { ...req.body } });
+    res.json({ success: true, message: "Job edited successfully" });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -402,7 +393,7 @@ export const editJob = async (req, res) => {
 
 export const expireJob = async (req, res) => {
   try {
-    const { job_id } = req.params;
+    const { job_id } = req.body;
     await jobsModel.updateOne(
       { _id: job_id },
       { $set: { currentStatus: "expired" } }
@@ -413,3 +404,30 @@ export const expireJob = async (req, res) => {
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+export const rejectJobApplication = async (req, res) => {
+  try {
+    const { application_id,value } = req.body;
+    await applicantModel.updateOne(
+      { _id: application_id },
+      { $set: { applicationStatus: value } }
+    );
+    res.json({ success: true, message: "Rejected application successfully" });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const getSinglejobDatas=async(req,res)=>{
+  try {
+    const application_id=req.params.application_id
+   const data=await applicantModel.findOne({_id:application_id}).populate('job_id').lean()
+   console.log(data,'data printed');
+   res.json({ success: true,data:data.job_id});
+    
+  } catch (error) {
+    console.log('Error',error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+}

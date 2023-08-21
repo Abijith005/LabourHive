@@ -1,58 +1,73 @@
-<div class="container-fluid" >
+<div class="container-fluid">
   <div class="header mt-3">
     <h2 class="text-center underline" style="text-decoration: underline;">Applicant Details</h2>
     <h3 class="close me-3" (click)="close()">X</h3>
   </div>
-    <div class="container" >
-        <table class="table table-borderless bg-light mt-3">
-            <thead >
-              <tr class="head">
-                <th scope="col">Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Experience</th>
-                <th scope="col">Wage</th>
-                <th scope="col">Applied Date</th>
-                <th scope="col">Status</th>
-                <th scope="col" class="loc">Location</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Action</th>
-            </tr>  
-            <tr style="background-color: white;">
-                <th st></th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let item of applicatsData" class="mt-3">
-              <tr class="data">
-                <td scope="row">{{item.profileData.name}}</td>
-                <td>{{item.profileData.category}}</td>
-                <td>{{item.profileData.experience}}&nbsp; Years</td>
-                <td>₹ {{item.profileData.wage}}</td>
-                <td>{{item.createdAt|customDate}}</td>
-                <td>{{item.applicationStatus}}</td>
-                <td title="{{item.profileData.location}}" class="location">{{item.profileData.location}}</td>
-                <td>
-                    <ng-container *ngFor="let item of (item.profileData.rating!|starRating)">
-                        <i *ngIf="item==1" class="fas fa-star" style="color: gold;"></i>
-                        <i *ngIf="item==.5" class="fas fa-star-half-stroke" style="color: gold;"></i>
-                        <i *ngIf="item==0" class="far fa-star"></i>
+  <div class="container">
+    <table class="table table-borderless bg-light mt-3">
+      <thead>
+        <tr class="head">
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Experience</th>
+          <th scope="col">Wage</th>
+          <th scope="col">Applied Date</th>
+          <th scope="col">Status</th>
+          <th scope="col" class="loc">Location</th>
+          <th scope="col">Rating</th>
+          <th scope="col">Action</th>
+        </tr>
+        <tr style="background-color: white;">
+          <th st></th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of applicatsData" class="mt-3">
+        <tr class="data">
+          <td scope="row">{{item.profileData.name}}</td>
+          <td>{{item.profileData.category}}</td>
+          <td>{{item.profileData.experience}}&nbsp; Years</td>
+          <td>₹ {{item.profileData.wage}}</td>
+          <td>{{item.createdAt|customDate}}</td>
+          <td>{{item.applicationStatus}}</td>
+          <td title="{{item.profileData.location}}" class="location">{{item.profileData.location}}</td>
+          <td>
+            <ng-container *ngFor="let item of (item.profileData.rating!|starRating)">
+              <i *ngIf="item==1" class="fas fa-star" style="color: gold;"></i>
+              <i *ngIf="item==.5" class="fas fa-star-half-stroke" style="color: gold;"></i>
+              <i *ngIf="item==0" class="far fa-star"></i>
 
-                    </ng-container>
-                </td>
-                <td>  <div class="dropdown">
-                    <button class="action btn btn-primary dropdown-toggle" type="button"id="dropdownMenuButton"data-mdb-toggle="dropdown"aria-expanded="false">
-                      Action
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" >Reject</a></li>
-                      <li><a class="dropdown-item" [routerLink]="['viewJobProfile/'+item.applicant_id]" (click)="close()">View & Hire</a></li>
-                    </ul>
-                  </div></td>
-              </tr>
-              <tr style="background-color: white;">
-                <td></td>
-              </tr>
-            </tbody>
+            </ng-container>
+          </td>
+          <td>
 
-          </table>
-    </div>
+            <i *ngIf="(currentJobStatus==='expired'&&item.applicationStatus==='pending'); else elseBlock" style="color: rgb(255, 136, 0);"
+              class="fas fa-circle-exclamation">&nbsp;<span style="font-size: 11px;">Job Expired</span></i>
+
+            <ng-template #elseBlock>
+              <div class="dropdown">
+                <button *ngIf="item.applicationStatus==='pending'"
+                  class="action btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-mdb-toggle="dropdown" aria-expanded="false">
+                  Action
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item" (click)="rejectApplication(item._id)">Reject</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['viewJobProfile/'+item.applicant_id]" [queryParams]="{application_id:item._id}" (click)="close()">View & Hire</a></li>
+                </ul>
+              </div>
+              <i *ngIf="item.applicationStatus==='rejected'" style="color: rgb(233, 15, 15);"
+                class="fas fa-circle-xmark">&nbsp;<span style="font-size: 11px;">Rejected</span></i>
+              <i *ngIf="item.applicationStatus==='hired'" style="color: rgb(14, 172, 14);"
+                class="fas fa-circle-check">&nbsp;<span style="font-size: 11px;">Hired</span></i>
+            </ng-template>
+          </td>
+
+        </tr>
+        <tr style="background-color: white;">
+          <td></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
 </div>

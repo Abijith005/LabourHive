@@ -30,7 +30,7 @@
                     <p class="mb-0"><i class="fas fa-user-check"></i>&nbsp;<span>{{item.applicantCount}}</span>&nbsp;&nbsp;Applicants</p>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-success" (click)="veiwApplicants(item.applicants)">View All</button>
+                    <button class="btn btn-sm btn-success" (click)="veiwApplicants(item.applicants,item.currentStatus)">View All</button>
                 </div>
             </div>
             <div class="job-data  col-2">
@@ -43,7 +43,7 @@
             </div>
             <div class="job-data text-center col-2">
                 <div class="dropdown">
-                    <i *ngIf="item.currentStatus!='active'" class="fas fa-circle-exclamation">&nbsp;<span style="font-size: 11px;">Job Expired</span></i>
+                    <i *ngIf="item.currentStatus!='active'" style="color: rgb(255, 136, 0);" class="fas fa-circle-exclamation">&nbsp;<span style="font-size: 11px;">Job Expired</span></i>
                     <button *ngIf="item.currentStatus=='active'" class="btn btn-primary dropdown-toggle" type="button"id="dropdownMenuButton"data-mdb-toggle="dropdown"aria-expanded="false">
                         Action
                     </button>

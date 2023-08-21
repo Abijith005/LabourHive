@@ -24,6 +24,7 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
   jobProfileDetails: i_jobProfile | null = null;
   labour_id!: string;
   user_id!: string;
+  application_id: string | null = null;
   chat: boolean = false;
 
   private _unsubscribe$ = new Subject<void>();
@@ -34,16 +35,19 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _chatServices: ChatService,
     private _store: Store<userDataState>,
-    private _router:Router
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
-    console.log('initialised');
-    
+    // getting labour_id from route
     this.labour_id = this._route.snapshot.paramMap.get('labour_id')!;
-    console.log(this.labour_id,'extracted labour id');
-    
 
+    // getting query from route if it present for updating applicant collection in db if labour is hired (for posted jobs)
+    const application_id =
+      this._route.snapshot.queryParamMap.get('application_id');
+    this.application_id = application_id;
+
+    // getting userData (user_id) from store for creating chat room and all
     this._store
       .select('user')
       .pipe(takeUntil(this._unsubscribe$))
@@ -51,16 +55,23 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
         this.user_id = data.userDatas?._id!;
       });
 
+    // getting labour details from db
     this._service.getLabourProfile(this.labour_id).subscribe((res) => {
       if (res.success) {
         this.jobProfileDetails = res;
       }
     });
   }
-
+  // opening payment details dialog
   openPayment() {
+    console.log(this.application_id, 'application_id form view job profile');
+
     this.matDialog.open(PaymentDetailsComponent, {
-      data: this.jobProfileDetails,
+      // data: this.jobProfileDetails,
+      data: {
+        profileData: this.jobProfileDetails,
+        application_id: this.application_id,
+      },
       disableClose: true,
     });
   }
@@ -74,7 +85,7 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
         if (res.success) {
           //activating chat-component
           this.chat = true;
-          this._router.navigate(['chat'],{relativeTo:this._route})
+          this._router.navigate(['chat'], { relativeTo: this._route });
         }
       });
   }

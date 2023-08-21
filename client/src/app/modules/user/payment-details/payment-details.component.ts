@@ -16,6 +16,10 @@ import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { RazorpayService } from 'src/app/modules/user/userServices/razorpay.service';
 import { UserService } from 'src/app/modules/user/userServices/user.service';
+import { JobService } from '../userServices/job.service';
+import { i_jobDetails } from 'src/app/interfaces/userInterfaces/i_jobDetails';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'labourHive-payment-details',
@@ -33,6 +37,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   totalWage: number | null = null;
   totalPayable: number | null = null;
   totalDays: number | null = null;
+  postedJobDetails: i_jobDetails | null = null;
+  isReadOnlyLocation: boolean = false;
 
   private _locationChanged$ = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
@@ -40,25 +46,28 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   constructor(
     // injecting data from parent to matdialog
 
-    @Inject(MAT_DIALOG_DATA) private _data: i_jobProfile,
+    @Inject(MAT_DIALOG_DATA)
+    private _data: { profileData: i_jobProfile; application_id: string | null },
     private matDialogRef: MatDialogRef<PaymentDetailsComponent>,
     private _fb: FormBuilder,
     private _mapboxService: MapboxService,
     private _service: UserService,
     private _swalService: SwalService,
-    private _razorpayService: RazorpayService
+    private _razorpayService: RazorpayService,
+    private _jobService: JobService,
+    private _location:Location
+   
+
   ) {
     //matDialog resizing
-
     this.matDialogRef.updateSize('500px', '700px');
-
-    this.labourDetails = _data;
+    this.labourDetails = _data.profileData;
   }
 
   ngOnInit(): void {
     this.hireForm = this._fb.group({
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
+      startDate: [null, [Validators.required]],
+      endDate: [null, [Validators.required]],
       location: ['', [Validators.required]],
     });
 
@@ -76,6 +85,35 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           coordinates: feature.center,
         }));
       });
+
+    // if payment is for posted job
+    if (this._data.application_id) {
+      // getting posted job details from db
+      this._jobService
+        .getSingleJobDatas(this._data.application_id)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((res) => {
+          if (res.success) {
+            this.postedJobDetails = res.data;
+            // patching values to the form values
+            this.formControls['startDate'].patchValue(
+              new Date(this.postedJobDetails.startDate)
+                .toISOString()
+                .split('T')[0]
+            );
+            this.formControls['endDate'].patchValue(
+              new Date(this.postedJobDetails.endDate)
+                .toISOString()
+                .split('T')[0]
+            );
+            this.onDateChange();
+          }
+          this.isReadOnlyLocation = true;
+          this.formControls['location'].patchValue(
+            this.postedJobDetails?.location
+          );
+        });
+    }
   }
 
   //get form controls
@@ -135,9 +173,19 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       //getting total days and amount
       const difference = endDate - startDate;
       this.totalDays = difference / (1000 * 60 * 60 * 24) + 1;
-      this.totalWage = this.totalDays * Number(this.labourDetails?.wage);
+      this.totalWage =
+        this.totalDays *
+        Number(
+          this.postedJobDetails
+            ? this.postedJobDetails.wage
+            : this.labourDetails?.wage
+        );
       this.totalPayable = this.totalWage + 0.01 * this.totalWage;
     }
+  }
+  //go back
+  goBack(){
+    this._location.back()
   }
 
   //payment controll
@@ -168,11 +216,19 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       .hirePayment(data.totalAmount)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        console.log(res);
-
         if (res.success) {
           //confirming payment and verfying
-          this._razorpayService.handleRazorPay(res.order, data);
+          this._razorpayService.handleRazorPay(res.order, data).then((res) => {
+            if (res.success) {
+              this.goBack
+              if (this._data.application_id) {
+                this._jobService
+                  .updateApplcation(this._data.application_id, 'hired')
+                  .pipe(takeUntil(this._unsubscribe$))
+                  .subscribe();
+              }
+            }
+          });
         } else {
           this._swalService.showAlert(
             'Ooops!!',

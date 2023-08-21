@@ -36,10 +36,10 @@ export class PostedJobsComponent implements OnInit, OnDestroy {
       .pipe(map((res) => (res.success ? res.jobs : [])));
   }
   // opening view applicant component
-  veiwApplicants(applicants: i_applicantsData) {
+  veiwApplicants(applicants: i_applicantsData,currentStatus:string) {
     this._matDialog.open(ViewApplicantsComponent, {
       width: '1100px',
-      data: applicants,
+      data: {applicants,currentStatus},
       disableClose: true,
     });
   }

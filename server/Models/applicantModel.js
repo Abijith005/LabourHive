@@ -14,7 +14,7 @@ const applicantSchema = new mongoose.Schema(
 
     applicationStatus:{
       type:String,
-      enum:['accepted','rejected','pending'],
+      enum:['hired','rejected','pending'],
       default:'pending',
       required:[true, 'application status is required']
     }

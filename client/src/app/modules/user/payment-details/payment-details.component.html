@@ -5,7 +5,7 @@
             <div class="details">
                 <p class="datas"><span class="tag-name">Name</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;<span>{{labourDetails?.name}}</span></p>
                 <p class="datas"><span class="tag-name">Category</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{labourDetails?.category}}</span></p>
-                <p class="datas"><span class="tag-name">Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{labourDetails?.wage}}</span> /Day</p>
+                <p class="datas"><span class="tag-name">Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{postedJobDetails?postedJobDetails.wage:labourDetails?.wage}}</span> /Day</p>
                 <form [formGroup]="hireForm" (ngSubmit)="confirmPayment()">
                     <div class="input-container">
                         <p class="datas"><span class="tag-name">Start Date</span> &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span><input type="date" formControlName="startDate" (change)="onDateChange()" ></span></p>
@@ -16,7 +16,8 @@
                         <p class="warning" *ngIf="isSubmitted&&formControls['endDate'].errors||isDateSelected&&formControls['endDate'].errors?.hasOwnProperty('greaterEndDate')">{{isDateSelected&&formControls['endDate'].errors?.hasOwnProperty('greaterEndDate')?'Invalid end date':'End date is required'}}</p>
                     </div>
                     <div class="input-container">
-                        <p class="datas"><span class="tag-name">Location</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span> <input (keyup)="inputChange($event)"  formControlName="location" placeholder="Enter Work Location" type="text">
+                        <p class="datas"><span class="tag-name">Location</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span> <input *ngIf="!postedJobDetails" (keyup)="inputChange($event)" formControlName="location" placeholder="Enter Work Location" type="text">
+                            <input style="cursor: default;" title="{{postedJobDetails.location}}" *ngIf="postedJobDetails" formControlName="location" [readonly]="isReadOnlyLocation" type="text">
                         <ul class="suggestion-list" *ngIf="suggestions.length>0" >
                             <li *ngFor="let suggestion of suggestions" (click)="selectLocation(suggestion)">{{suggestion.location}}</li>
                         </ul>
