@@ -5,6 +5,7 @@ import { i_applicantsData, i_jobDetails, i_postedJobs } from 'src/app/interfaces
 import { MatDialog } from '@angular/material/dialog';
 import { ViewApplicantsComponent } from '../components/view-applicants/view-applicants.component';
 import { EditJobComponent } from '../components/edit-job/edit-job.component';
+import { SwalService } from 'src/app/services/commonServices/swal.service';
 
 @Component({
   selector: 'app-posted-jobs',
@@ -18,7 +19,8 @@ export class PostedJobsComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   constructor(private _jobService: JobService,
-    private _matDialog:MatDialog) {}
+    private _matDialog:MatDialog,
+    private _swalServic:SwalService) {}
 
   ngOnInit(): void {
     this._jobService
@@ -41,8 +43,27 @@ this._matDialog.open(ViewApplicantsComponent,{
   editJob(data:i_jobDetails){
     this._matDialog.open(EditJobComponent,{
       width:'600px',
-      data:data
+      data:data,
+      disableClose:true
     })
+  }
+
+ async expireJob(job_id:string){
+    const confirmation=await this._swalServic.showConfirmation('Expire Job','Do you want to expire the job','warning')
+    if (confirmation) {
+      this._jobService.expireJob(job_id).pipe(takeUntil(this._unsubscribe$)).subscribe(res=>{
+        if (res.success) {
+          this._swalServic.showAlert('Success',res.message,'success')
+        }
+        else{
+          this._swalServic.showAlert('Failed',res.message,'error')
+  
+        }
+      })
+      
+    } else {
+      return
+    }
   }
 
   ngOnDestroy(): void {

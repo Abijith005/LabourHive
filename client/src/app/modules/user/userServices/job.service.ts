@@ -36,4 +36,8 @@ export class JobService {
   editJob(data:i_jobDetails,job_id:string){
     return this._http.post<i_authRes>(`/jobs/editJob`,{...data,job_id})
   }
+
+  expireJob(job_id:string){
+    return this._http.get<i_authRes>(`/jobs/expireJob/${job_id}`)
+  }
 }

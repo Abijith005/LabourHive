@@ -1,7 +1,7 @@
 import express from 'express'
 import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserAuthController.js'
 import { getAllCategories } from '../Controllers/CategoryController.js'
-import { applyJob, createJobProfile, editJob, getAllJobs, getJobProfile, getLabours, getPostedJobs, labourProfile, postJob, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
+import { applyJob, createJobProfile, editJob, expireJob, getAllJobs, getJobProfile, getLabours, getPostedJobs, labourProfile, postJob, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
 import { userAuthCheck } from '../middlewares/userAuth.js'
@@ -59,6 +59,8 @@ router.post('/jobs/applyJob',applyJob)
 router.get('/jobs/getPostedJobs',getPostedJobs)
 
 router.post('/jobs/editJob',editJob)
+
+router.get('/jobs/expireJob/:job_id',expireJob)
 
 router.get('/logout',userLogout)
 

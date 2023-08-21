@@ -2,7 +2,7 @@
     <div class="container">
       <div class="row">
         <div class="card-box">
-          <h1 class="text-center mt-md-4 mt-3"><b>Post Job</b></h1>
+          <h1 class="text-center mt-md-4 mt-3"><b>Edit Job</b></h1>
           <form action="" class="p-2 p-md-4 pt-2" [formGroup]="editJobForm" (ngSubmit)="onSubmit()">
             <div class="row mb-md-3 mb-2">
               <div class="col-4" style="display: flex;align-items: center;">
@@ -10,8 +10,8 @@
               </div>
               <div class="col-8">
                 <label  [style.color]="isSubmitted&&formControl['categoryName'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['categoryName'].errors">Category is required</label>
-                <select name="form-select"  class="form-control form-select"
-                  formControlName="categoryName" aria-label="Default select example">
+                <select name="form-select"  class="form-control form-select" formControlName="categoryName" aria-label="Default select example">
+                  <option  selected>{{selectedCategory.name}}</option>
                   <option *ngFor="let item of categories" (click)='selectCategory(item)'>{{ item.name }}</option>
                 </select>
               </div>

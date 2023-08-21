@@ -32,6 +32,7 @@ export interface i_applicantsData{
 
 export interface i_postedJobs extends i_jobDetails{
     postDate:Date,
+    updatedDate:Date
     currentStatus:e_jobStatus,
     applicants:i_applicantsData,
     applicantCount:number

@@ -31,7 +31,7 @@ export class EditJobComponent implements OnInit,OnDestroy {
   categories!: i_category[];
   isSubmitted: boolean = false;
   selectedCategory!: i_category
-  jobDetails!:i_jobDetails
+  jobDetails:i_jobDetails|null
 
   private _unsubscribe$ = new Subject<void>();
   constructor(
@@ -63,8 +63,12 @@ export class EditJobComponent implements OnInit,OnDestroy {
 
     // get categories from local storage
     this.categories = JSON.parse(localStorage.getItem('categories')!);
-    this.editJobForm.patchValue(this.jobDetails)
-    this.selectedCategory=this.categories.find((e)=>e.name==this.jobDetails.categoryName)!
+    console.log(this.jobDetails,'jobDetails');
+    
+    this.editJobForm.patchValue(this.jobDetails!)
+    this.selectedCategory=this.categories.find((e)=>e.name==this.jobDetails?.categoryName)!
+    // console.log(this.selectedCategory,'selectedCategory');
+    
   }
 
   getSuggestions() {
@@ -133,7 +137,7 @@ export class EditJobComponent implements OnInit,OnDestroy {
 
     console.log(data);
     
-    this._jobService.editJob(data,this.jobDetails._id!).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
+    this._jobService.editJob(data,this.jobDetails?._id!).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
       if (res.success) {
         this._swalServices.showAlert('success', res.message, 'success');
         this._matDialog.close();

@@ -26,11 +26,6 @@ const jobsSchema = new mongoose.Schema({
     required: [true, "required count is required"],
   },
 
-  postDate: {
-    type: String,
-    default:new Date()
-  },
-
   startDate: {
     type: Date,
     required: [true, "work date from is required"],
@@ -61,6 +56,9 @@ const jobsSchema = new mongoose.Schema({
     enum: ["active", "expired"],
     default: "active",
   },
+},
+{
+  timestamps:true
 });
 
 const jobsModel =  mongoose.model("jobs", jobsSchema);
