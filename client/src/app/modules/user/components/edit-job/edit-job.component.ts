@@ -15,14 +15,13 @@ import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { JobService } from 'src/app/modules/user/userServices/job.service';
-import { PostJobComponent } from '../../post-job/post-job.component';
 
 @Component({
   selector: 'labourHive-edit-job',
   templateUrl: './edit-job.component.html',
   styleUrls: ['./edit-job.component.css'],
 })
-export class EditJobComponent implements OnInit,OnDestroy {
+export class EditJobComponent implements OnInit, OnDestroy {
   // variable declarations
   editJobForm: FormGroup = new FormGroup({});
   suggestions!: i_suggestions[];
@@ -30,20 +29,19 @@ export class EditJobComponent implements OnInit,OnDestroy {
   coordinates!: number[];
   categories!: i_category[];
   isSubmitted: boolean = false;
-  selectedCategory!: i_category
-  jobDetails:i_jobDetails|null
+  selectedCategory!: i_category;
+  jobDetails: i_jobDetails | null;
 
   private _unsubscribe$ = new Subject<void>();
   constructor(
-    @Inject(MAT_DIALOG_DATA) private _data:i_jobDetails,
-    private _matDialog: MatDialogRef<PostJobComponent>,
+    @Inject(MAT_DIALOG_DATA) private _data: i_jobDetails,
     private _fb: FormBuilder,
     private _mapboxServices: MapboxService,
     private _jobService: JobService,
-    private _swalServices: SwalService
+    private _swalServices: SwalService,
+    private _matDialogRef: MatDialogRef<EditJobComponent>
   ) {
-    this.jobDetails=_data    
-    
+    this.jobDetails = _data;
   }
 
   ngOnInit(): void {
@@ -63,12 +61,20 @@ export class EditJobComponent implements OnInit,OnDestroy {
 
     // get categories from local storage
     this.categories = JSON.parse(localStorage.getItem('categories')!);
-    console.log(this.jobDetails,'jobDetails');
+    console.log(this.jobDetails, 'jobDetails');
+
+    // patching values to the form
+    this.editJobForm.patchValue(this.jobDetails!);
+
+    //getting category name that matches the category id
+    this.selectedCategory = this.categories.find(
+      (e) => e.name == this.jobDetails?.categoryName
+    )!;
+    console.log(this.selectedCategory,'selected catgory',this.jobDetails?.categoryName);
     
-    this.editJobForm.patchValue(this.jobDetails!)
-    this.selectedCategory=this.categories.find((e)=>e.name==this.jobDetails?.categoryName)!
-    // console.log(this.selectedCategory,'selectedCategory');
-    
+
+    // assigning the previous location to location field
+    this.location = this.jobDetails?.location!;
   }
 
   getSuggestions() {
@@ -104,14 +110,12 @@ export class EditJobComponent implements OnInit,OnDestroy {
   }
 
   close() {
-    this._matDialog.close();
+    this._matDialogRef.close();
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    if (
-      this.formControl['wage'].value < this.selectedCategory?.basicWage!
-    ) {
+    if (this.formControl['wage'].value < this.selectedCategory?.basicWage!) {
       this.formControl['wage'].setErrors({ basicWage: true });
     }
     const startDate = new Date(this.formControl['startDate'].value).getTime();
@@ -129,26 +133,31 @@ export class EditJobComponent implements OnInit,OnDestroy {
       requiredCount: this.formControl['requiredCount'].value,
       wage: parseInt(this.formControl['wage'].value),
       jobDescription: this.formControl['jobDescription'].value,
-      startDate:new Date(this.formControl['startDate'].value),
-      endDate:new Date(this.formControl['endDate'].value),
+      startDate: new Date(this.formControl['startDate'].value),
+      endDate: new Date(this.formControl['endDate'].value),
       location: this.location,
       coordinates: this.coordinates,
     };
 
-    console.log(data);
-    
-    this._jobService.editJob(data,this.jobDetails?._id!).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
-      if (res.success) {
-        this._swalServices.showAlert('success', res.message, 'success');
-        this._matDialog.close();
-      } else {
-        this._swalServices.showAlert('failure', res.message, 'error');
-      }
-    });
+    this._jobService
+      .editJob(data, this.jobDetails?._id!)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((res) => {
+        if (res.success) {
+          this._swalServices.showAlert('success', res.message, 'success');
+          delete data.categoryName
+          data._id = this.jobDetails?._id;
+          data.location = this.location;
+
+          this._matDialogRef.close(data);
+        } else {
+          this._swalServices.showAlert('failure', res.message, 'error');
+        }
+      });
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe$.next()
-    this._unsubscribe$.complete()
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

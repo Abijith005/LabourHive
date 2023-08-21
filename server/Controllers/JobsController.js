@@ -301,66 +301,11 @@ export const applyJob = async (req, res) => {
 
 export const getPostedJobs = async (req, res) => {
   try {
-    console.log("posted jobs");
     // getting user_id
     const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
     // pipeline to get job data and applicant data
 
-    const d=await jobsModel.find({client_id:user_id}).lean()
-    // console.log(d,'jobssssssssssssssssssss');
-
-    // const pipeline = [
-    //   { $match: { client_id: new mongoose.Types.ObjectId(user_id) } },
-    //   {
-    //     $lookup: {
-    //       from: "categories",
-    //       localField: "category",
-    //       foreignField: "_id",
-    //       as: "category",
-    //     },
-    //   },
-    //   { $unwind: "$category" },
-    //   {
-    //     $lookup: {
-    //       from: "applicants",
-    //       localField: "_id",
-    //       foreignField: "job_id",
-    //       as: "applicants",
-    //     },
-    //   },
-    //   { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
-    //   {
-    //     $lookup: {
-    //       from: "jobprofiles",
-    //       localField: "applicants.applicant_id",
-    //       foreignField: "user_id",
-    //       as: "applicants.profileData",
-    //     },
-    //   },
-    //   { $unwind: "$applicants.profileData" },
-    //   {
-    //     $group: {
-    //       _id: "$_id",
-    //       client_id: { $first: "$client_id" },
-    //       categoryName: { $first: "$category.name" },
-    //       experience: { $first: "$experience" },    
-    //       wage: { $first: "$wage" },
-    //       requiredCount: { $first: "$requiredCount" },
-    //       postDate: { $first: "$createdAt" },
-    //       updatedDate: { $first: "$updatedAt" },
-    //       startDate: { $first: "$startDate" },
-    //       endDate: { $first: "$endDate" },
-    //       location: { $first: "$location" },
-    //       jobDescription: { $first: "$jobDescription" },
-    //       currentStatus: { $first: "$currentStatus" },
-    //       applicants: { $push: "$applicants" },
-    //       applicantCount:{$sum:1}
-    //     },
-    //   },
-    
-    // ];
-
-    const pipeline =[
+    const pipeline = [
       { $match: { client_id: new mongoose.Types.ObjectId(user_id) } },
       {
         $lookup: {
@@ -370,7 +315,7 @@ export const getPostedJobs = async (req, res) => {
           as: "category",
         },
       },
-      { $unwind:'$category'},
+      { $unwind: "$category" },
       {
         $lookup: {
           from: "applicants",
@@ -387,12 +332,17 @@ export const getPostedJobs = async (req, res) => {
                 as: "profileData",
               },
             },
-            { $unwind: { path: "$profileData", preserveNullAndEmptyArrays: true } },
+            {
+              $unwind: {
+                path: "$profileData",
+                preserveNullAndEmptyArrays: true,
+              },
+            },
           ],
           as: "applicants",
         },
       },
-      {$unwind:{path:'$applicants',preserveNullAndEmptyArrays:true}},
+      { $unwind: { path: "$applicants", preserveNullAndEmptyArrays: true } },
       {
         $group: {
           _id: "$_id",
@@ -415,12 +365,11 @@ export const getPostedJobs = async (req, res) => {
         $addFields: {
           applicantCount: { $size: "$applicants" },
         },
-      }
-    ]
+      },
+      { $sort: { postDate: -1 } },
+    ];
 
- 
     const jobs = await jobsModel.aggregate(pipeline);
-    console.log(JSON.stringify(jobs,null,2));
     res.json({ jobs, success: true });
   } catch (error) {
     console.log("Error", error);
@@ -428,31 +377,34 @@ export const getPostedJobs = async (req, res) => {
   }
 };
 
-export const editJob=async (req,res)=>{
+export const editJob = async (req, res) => {
   try {
-    console.log(req.body);
-    const {job_id}=req.body
-    delete req.body.job_id
+    const { job_id } = req.body;
+    delete req.body.job_id;
     if (!req.body.location) {
-      delete req.body.location
-    }    
-   const d= await jobsModel.updateOne({_id:job_id},{$set:{...req.body}})
-   console.log(d);
-
+      delete req.body.location;
+    }
+     await jobsModel.updateOne(
+      { _id: job_id },
+      { $set: { ...req.body } }
+    );
+    res.json({success:true,message:'Job edited successfully'})
   } catch (error) {
-    console.log('Error',error);
-    res.json({success:false,message:'Unknown error occured'})
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};
 
-export const expireJob=async (req,res)=>{
+export const expireJob = async (req, res) => {
   try {
-    const {job_id}=req.params
-    await jobsModel.updateOne({_id:job_id},{$set:{currentStatus:'expired'}})
-    res.json({success:true,message:'Job status updated successfully'})
-    
+    const { job_id } = req.params;
+    await jobsModel.updateOne(
+      { _id: job_id },
+      { $set: { currentStatus: "expired" } }
+    );
+    res.json({ success: true, message: "Job status updated successfully" });
   } catch (error) {
-    console.log('Error',error);
-    res.json({success:false,message:'Unknown error occured'})
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};

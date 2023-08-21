@@ -1,5 +1,8 @@
 <div class="container-fluid" >
+  <div class="header mt-3">
     <h2 class="text-center underline" style="text-decoration: underline;">Applicant Details</h2>
+    <h3 class="close me-3" (click)="close()">X</h3>
+  </div>
     <div class="container" >
         <table class="table table-borderless bg-light mt-3">
             <thead >
@@ -8,6 +11,7 @@
                 <th scope="col">Category</th>
                 <th scope="col">Experience</th>
                 <th scope="col">Wage</th>
+                <th scope="col">Applied Date</th>
                 <th scope="col" class="loc">Location</th>
                 <th scope="col">Rating</th>
                 <th scope="col">Action</th>
@@ -22,6 +26,7 @@
                 <td>{{item.profileData.category}}</td>
                 <td>{{item.profileData.experience}}&nbsp; Years</td>
                 <td>₹ {{item.profileData.wage}}</td>
+                <td>{{item.createdAt|customDate}}</td>
                 <td title="{{item.profileData.location}}" class="location">{{item.profileData.location}}</td>
                 <td>
                     <ng-container *ngFor="let item of (item.profileData.rating!|starRating)">

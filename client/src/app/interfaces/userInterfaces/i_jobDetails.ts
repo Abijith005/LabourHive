@@ -14,12 +14,8 @@ export interface i_jobDetails{
     startDate:Date,
     endDate: Date,
     location:string,
-    coordinates:number[]
-}
-
- enum e_jobStatus{
-    Active='active',
-    Inactive='inActive'
+    coordinates:number[],
+    [key: string]: any;
 }
 
 export interface i_applicantsData{
@@ -33,7 +29,7 @@ export interface i_applicantsData{
 export interface i_postedJobs extends i_jobDetails{
     postDate:Date,
     updatedDate:Date
-    currentStatus:e_jobStatus,
+    currentStatus:string,
     applicants:i_applicantsData,
     applicantCount:number
 }

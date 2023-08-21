@@ -1,43 +1,50 @@
-<div class="container-fluid mb-4" *ngFor="let item of postedJobData">
+<div class="container-fluid mb-4" *ngFor="let item of postJobDatas$ | async">
     <div class="container" style="background-color: whitesmoke;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); border-radius: 5px;" >
         <div class="headings row">
             <p class="col-3">Job</p>
             <p class="col-3">Applied Candidates</p>
-            <p class="col-3">Job Status</p>
-            <p class="col-3">Actions</p>
+            <p class="col-2">Vaccancy</p>
+            <p class="col-2">Job Status</p>
+            <p class="col-2">Actions</p>
         </div>
         <hr />
         <div class="datas row">
             <div class="job-data col-3 d-flex flex-column align-items-center">
                 <div>
                     <div>
-                        <p><i class="ri-briefcase-line"></i>&nbsp;&nbsp;&nbsp;<span>{{item.categoryName}}</span></p>
+                        <p><i class="fas fa-briefcase"></i>&nbsp;&nbsp;&nbsp;<span>{{item.categoryName}}</span></p>
                     </div>
                     <div>
-                        <p><i class="ri-money-dollar-box-line"></i>&nbsp;&nbsp;&nbsp;<span>{{item.experience}}</span>&nbsp;Years&nbsp;&nbsp;|&nbsp;&nbsp;₹&nbsp;<span>{{item.wage}}&nbsp;/&nbsp;Day</span></p>
+                        <p><i class="fas fa-hand-holding-dollar"></i>&nbsp;&nbsp;&nbsp;<span>{{item.experience}}</span>&nbsp;Years&nbsp;&nbsp;|&nbsp;&nbsp;₹&nbsp;<span>{{item.wage}}&nbsp;/&nbsp;Day</span></p>
                     </div>
                     <div>
-                        <p style="display: flex;"><i class="ri-map-pin-line"></i>&nbsp;&nbsp;&nbsp;<span class="location" title="{{item.location}}">{{item.location}}</span></p> 
+                        <p style="display: flex;"><i class="fas fa-location-dot"></i>&nbsp;&nbsp;&nbsp;<span class="location" title="{{item.location}}">{{item.location}}</span></p> 
                     </div>
                     <div>
-                        <p><i class="ri-calendar-todo-fill"></i>&nbsp;&nbsp;&nbsp;<span>{{(item.startDate|customDate)}}</span>&nbsp;to&nbsp;<span>{{(item.endDate|customDate)}}</span></p>
+                        <p><i class="fas fa-calendar-days"></i>&nbsp;&nbsp;&nbsp;<span>{{(item.startDate|customDate)}}</span>&nbsp;to&nbsp;<span>{{(item.endDate|customDate)}}</span></p>
                     </div>
                 </div>
             </div>
             <div class="job-data col-3" style="display: flex;gap: 1.5rem;">
                 <div>
-                    <p class="mb-0"><i class="ri-user-follow-line"></i>&nbsp;<span>{{item.applicantCount}}</span>&nbsp;&nbsp;Applicants</p>
+                    <p class="mb-0"><i class="fas fa-user-check"></i>&nbsp;<span>{{item.applicantCount}}</span>&nbsp;&nbsp;Applicants</p>
                 </div>
                 <div>
                     <button class="btn btn-sm btn-success" (click)="veiwApplicants(item.applicants)">View All</button>
                 </div>
             </div>
-            <div class="job-data text-center col-3">
-                <p><i class="ri-lightbulb-flash-line" ></i>&nbsp;<span>{{item.currentStatus}}</span></p>
+            <div class="job-data  col-2">
+                <div>
+                    <p class="mb-0"><i class="fas fa-users"></i>&nbsp;&nbsp;&nbsp;<span>{{item.requiredCount}}</span></p>
+                </div>
             </div>
-            <div class="job-data text-center col-3">
+            <div class="job-data text-center col-2">
+                <p class="mb-0"><i class="fas fa-lightbulb" [ngStyle]="{color: item.currentStatus=='active'?'gold':''}"></i>&nbsp;<span>{{item.currentStatus|titlecase}}</span></p>
+            </div>
+            <div class="job-data text-center col-2">
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button"id="dropdownMenuButton"data-mdb-toggle="dropdown"aria-expanded="false">
+                    <i *ngIf="item.currentStatus!='active'" class="fas fa-circle-exclamation">&nbsp;<span style="font-size: 11px;">Job Expired</span></i>
+                    <button *ngIf="item.currentStatus=='active'" class="btn btn-primary dropdown-toggle" type="button"id="dropdownMenuButton"data-mdb-toggle="dropdown"aria-expanded="false">
                         Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
