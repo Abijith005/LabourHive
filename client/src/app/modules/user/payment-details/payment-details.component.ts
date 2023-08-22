@@ -1,4 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
@@ -18,8 +24,8 @@ import { RazorpayService } from 'src/app/modules/user/userServices/razorpay.serv
 import { UserService } from 'src/app/modules/user/userServices/user.service';
 import { JobService } from '../userServices/job.service';
 import { i_jobDetails } from 'src/app/interfaces/userInterfaces/i_jobDetails';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'labourHive-payment-details',
@@ -39,6 +45,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   totalDays: number | null = null;
   postedJobDetails: i_jobDetails | null = null;
   isReadOnlyLocation: boolean = false;
+  coordinates:number[]|[]=[]
 
   private _locationChanged$ = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
@@ -55,9 +62,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     private _swalService: SwalService,
     private _razorpayService: RazorpayService,
     private _jobService: JobService,
-    private _location:Location
-   
-
+    private _location: Location,
+    private _cdRef: ChangeDetectorRef
   ) {
     //matDialog resizing
     this.matDialogRef.updateSize('500px', '700px');
@@ -139,6 +145,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
   selectLocation(suggestion: i_suggestions) {
     this.formControls['location'].patchValue(suggestion.location);
+    this.coordinates=suggestion.coordinates
     this.suggestions = [];
   }
 
@@ -183,9 +190,11 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       this.totalPayable = this.totalWage + 0.01 * this.totalWage;
     }
   }
+
   //go back
-  goBack(){
-    this._location.back()
+  goBack() {
+   this._location.back()
+   this._cdRef.detectChanges()
   }
 
   //payment controll
@@ -207,7 +216,9 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       startDate: new Date(this.formControls['startDate'].value),
       endDate: new Date(this.formControls['endDate'].value),
       location: this.formControls['location'].value,
-      coordinates: this.labourDetails?.coordinates!,
+      offeredWage:this.postedJobDetails?this.postedJobDetails.wage:null,
+      coordinates: this.postedJobDetails?this.postedJobDetails.coordinates:this.coordinates,
+      job_id:this.postedJobDetails?this.postedJobDetails._id:null
     };
     Object.freeze(data);
 
@@ -218,17 +229,33 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res.success) {
           //confirming payment and verfying
-          this._razorpayService.handleRazorPay(res.order, data).then((res) => {
-            if (res.success) {
-              this.goBack
-              if (this._data.application_id) {
-                this._jobService
-                  .updateApplcation(this._data.application_id, 'hired')
-                  .pipe(takeUntil(this._unsubscribe$))
-                  .subscribe();
+          this._razorpayService
+            .handleRazorPay(res.order, data)
+            .then(async (res) => {
+              if (res.success) {
+                this.closeDialogBox();
+                const confirmation = await this._swalService.showAlert(
+                  'Payment Success ',
+                  'Hired labour successfully',
+                  'success'
+                );
+                if (confirmation) {
+                  this.goBack();
+                }
+                if (this._data.application_id) {
+                  this._jobService
+                    .updateApplcation(this._data.application_id, 'hired')
+                    .pipe(takeUntil(this._unsubscribe$))
+                    .subscribe();
+                }
+              } else {
+                this._swalService.showAlert(
+                  'Payment Failed ',
+                  'payment verification failed',
+                  'error'
+                );
               }
-            }
-          });
+            });
         } else {
           this._swalService.showAlert(
             'Ooops!!',
@@ -239,7 +266,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  cancel() {
+  closeDialogBox() {
     this.matDialogRef.close();
   }
 

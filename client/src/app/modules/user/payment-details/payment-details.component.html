@@ -31,10 +31,10 @@
                 <p class="datas" *ngIf="totalDays"><span class="tag-name" >Total Days</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{totalDays}} Days</span></p>
                 <p class="datas"><span class="tag-name">Total Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;₹ <span >{{totalWage?totalWage:labourDetails?.wage}}</span></p>
                 <p class="datas"><span class="tag-name">Service Charge</span>&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;1% of Total Wage</p>
-                <p class="datas"><span class="tag-name">Total Payable</span>&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;₹ <span>{{totalPayable?totalPayable:labourDetails?.wage}}</span></p>
+                <p (click)="goBack()" class="datas"><span class="tag-name">Total Payable</span>&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;₹ <span>{{totalPayable?totalPayable:labourDetails?.wage}}</span></p>
 
                 <div class="button">
-                    <button class="btn btn-danger me-2" (click)="cancel()">Cancel</button>
+                    <button class="btn btn-danger me-2" (click)="closeDialogBox()">Cancel</button>
                     <button class="btn btn-primary" (click)="confirmPayment()"> Pay & Proceed</button>
                 </div>
         </div>

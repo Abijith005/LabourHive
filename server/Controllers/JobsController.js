@@ -423,7 +423,6 @@ export const getSinglejobDatas=async(req,res)=>{
   try {
     const application_id=req.params.application_id
    const data=await applicantModel.findOne({_id:application_id}).populate('job_id').lean()
-   console.log(data,'data printed');
    res.json({ success: true,data:data.job_id});
     
   } catch (error) {

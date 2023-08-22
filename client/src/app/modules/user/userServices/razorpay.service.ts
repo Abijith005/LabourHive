@@ -18,71 +18,43 @@ export class RazorpayService implements OnDestroy {
 
   private _unsubscribe$ = new Subject();
 
-  handleRazorPay(order: any, data: i_paymentDetails):Promise<{success:boolean}> {
-    return new Promise<{success:boolean}>((resolve, reject) => {
-      
+  handleRazorPay(
+    order: any,
+    data: i_paymentDetails
+  ): Promise<{ success: boolean }> {
+    return new Promise<{ success: boolean }>((resolve, reject) => {
       const options: any = {
         key: environment.RAZORPAY_KEY_ID,
-      amount: order.amount,
-      currency: order.currency,
-      name: 'Labour Hive',
-      description: 'Hiring Payment',
-      order_id: order.id,
-      handler: (response: any) => {
-        this._service
-          .verifyPayment({ ...response, ...data })
-          .pipe(takeUntil(this._unsubscribe$))
-          .subscribe((res) => {
-            if (!res.success) {
-              this._swalService.showAlert('Payment Failed ',res.message,'error');
-              reject({ success: false });
-            } else {
-              this._swalService.showAlert('Payment Success ',res.message,'success');
-              resolve({ success: true });
-            }
-          });
-      },
-    };
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Labour Hive',
+        description: 'Hiring Payment',
+        order_id: order.id,
+        handler: (response: any) => {
+          this._service
+            .verifyPayment({ ...response, ...data })
+            .pipe(takeUntil(this._unsubscribe$))
+            .subscribe((res) => {
+              if (!res.success) {
+                reject({ success: false });
+              } else {
+                resolve({ success: true });
+              }
+            });
+        },
+      };
 
-    const rzp = new this._winRef.nativeWindow.Razorpay(options);
-    rzp.open();
-    rzp.on('payment.failed', (response: any) => {
-      this._swalService.showAlert('Payment Failed','Unknown error please try again','error');
+      const rzp = new this._winRef.nativeWindow.Razorpay(options);
+      rzp.open();
+      rzp.on('payment.failed', (response: any) => {
+        this._swalService.showAlert(
+          'Payment Failed',
+          'Unknown error please try again',
+          'error'
+        );
+      });
     });
-  })
   }
-
-
-  // handleRazorPay(order: any, data: i_paymentDetails): Promise<{ success: boolean }> {
-  //   return new Promise<{ success: boolean }>((resolve, reject) => {
-  //     const options: any = {
-  //       key: environment.RAZORPAY_KEY_ID,
-  //       amount: order.amount,
-  //       currency: order.currency,
-  //       name: 'Labour Hive',
-  //       description: 'Hiring Payment',
-  //       order_id: order.id,
-  //       handler: (response: any) => {
-  //         this._service.verifyPayment({ ...response, ...data })
-  //           .pipe(takeUntil(this._unsubscribe$))
-  //           .subscribe((res) => {
-  //             if (!res.success) {
-  //               this._swalService.showAlert('Payment Failed', res.message, 'error');
-  //               resolve({ success: false });
-  //             } else {
-  //               this._swalService.showAlert('Payment Success', res.message, 'success');
-  //               resolve({ success: true });
-  //             }
-  //           });
-  //       },
-  //     };
-  //     const rzp = new this._winRef.nativeWindow.Razorpay(options);
-  //       rzp.open();
-  //       rzp.on('payment.failed', (response: any) => {
-  //         this._swalService.showAlert('Payment Failed','Unknown error please try again','error');
-  //       });
-  //   });
-  // }
 
   ngOnDestroy(): void {
     this._unsubscribe$.complete();

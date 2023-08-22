@@ -36,6 +36,7 @@ export class SwalService {
         confirmButtonColor: '##00A000',
         confirmButtonText: 'Ok',
         reverseButtons: true,
+        allowOutsideClick:false
       });
       return result.isConfirmed;
       

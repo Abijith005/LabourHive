@@ -2,15 +2,18 @@ import mongoose, { Schema } from "mongoose";
 
 const hiringSchema = new mongoose.Schema({
   job_id: {
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:false
   },
   client_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'user',
     required: [true, "client_id is required"],
   },
   labour_id: {
-    type: Array,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'user',
     required: [true, "labour_id is required"],
   },
   hiringDate: {
@@ -44,6 +47,10 @@ const hiringSchema = new mongoose.Schema({
   totalAmount: {
     type: Number,
     required: [true, "totalAmount is required"],
+  },
+  offeredWage:{
+    type:Number,
+    required:[false,'offerred wage is not mandatory']
   },
   labourCount: {
     type: Number,
