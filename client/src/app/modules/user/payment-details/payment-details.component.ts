@@ -207,7 +207,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
     //datas to send backend
     const data: i_paymentDetails = {
-      labour_id: this.labourDetails?._id!,
+      labour_id: this.labourDetails?.user_id!,
       labourName: this.labourDetails?.name!,
       wage: this.labourDetails?.wage!,
       category: this.labourDetails?.category!,

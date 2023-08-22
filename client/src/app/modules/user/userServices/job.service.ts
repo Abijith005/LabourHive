@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
-import { i_jobDetails, i_postedJobs } from 'src/app/interfaces/userInterfaces/i_jobDetails';
+import { i_engagedJobs, i_jobDetails, i_postedJobs } from 'src/app/interfaces/userInterfaces/i_jobDetails';
 
 interface i_searchData {
   coordinates: number[] | null;
@@ -46,6 +46,10 @@ export class JobService {
   }
 
   getSingleJobDatas(application_id:string){
-    return this._http.get<{success:boolean,data:i_jobDetails}>(`/jobs/getSinglejobDatas/${application_id}`)
+    return this._http.get<{success:boolean,data:i_jobDetails,message:string}>(`/jobs/getSinglejobDatas/${application_id}`)
+  }
+
+  getEngagedJobs(){
+    return this._http.get<{engagedJobs:i_engagedJobs[],success:boolean,message:string}>(`/jobs/getEngagedJobs`)
   }
 }

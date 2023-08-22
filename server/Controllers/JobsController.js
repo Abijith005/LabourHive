@@ -8,6 +8,7 @@ import applicantModel from "../Models/applicantModel.js";
 import { verifyToken } from "../Helpers/jwtVerify.js";
 import mongoose from "mongoose";
 import { json } from "stream/consumers";
+import hiringModel from "../Models/hiringModel.js";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -156,7 +157,7 @@ export const labourProfile = async (req, res) => {
     });
 
     // converting mongoose object to normal object
-    labourProfile = labourProfile.toObject()
+    labourProfile = labourProfile.toObject();
     res.json({ success: true, ...labourProfile });
   } catch (error) {
     console.log("Error", error);
@@ -407,7 +408,7 @@ export const expireJob = async (req, res) => {
 
 export const rejectJobApplication = async (req, res) => {
   try {
-    const { application_id,value } = req.body;
+    const { application_id, value } = req.body;
     await applicantModel.updateOne(
       { _id: application_id },
       { $set: { applicationStatus: value } }
@@ -419,14 +420,34 @@ export const rejectJobApplication = async (req, res) => {
   }
 };
 
-export const getSinglejobDatas=async(req,res)=>{
+export const getSinglejobDatas = async (req, res) => {
   try {
-    const application_id=req.params.application_id
-   const data=await applicantModel.findOne({_id:application_id}).populate('job_id').lean()
-   res.json({ success: true,data:data.job_id});
-    
+    const application_id = req.params.application_id;
+    const data = await applicantModel
+      .findOne({ _id: application_id })
+      .populate("job_id")
+      .lean();
+    res.json({ success: true, data: data.job_id });
   } catch (error) {
-    console.log('Error',error);
+    console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};
+
+export const getEngagedJobs = async (req, res) => {
+  try {
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
+    console.log(user_id);
+    const engagedJobs = await hiringModel
+      .find({ labour_id: user_id })
+      .populate([
+        { path: "job_id", select: "_id  experience jobDescription createdAt" },
+        { path: "client_id", select: "_id name " },
+      ])
+      .lean();
+      res.json({success:true,engagedJobs:engagedJobs})
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};

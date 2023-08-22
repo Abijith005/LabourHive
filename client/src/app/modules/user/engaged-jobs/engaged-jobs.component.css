@@ -1,0 +1,71 @@
+.headings {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+.headings p {
+  font-size: 16px;
+  font-weight: bolder;
+  padding-top: 0.8rem;
+}
+
+.datas {
+  display: flex;
+  justify-content: space-between;
+}
+.datas p i {
+  font-weight: 900;
+}
+
+.datas p {
+  font-weight: 400;
+}
+
+.job-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.location {
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+p {
+  cursor: default;
+}
+
+.dropdown-item {
+  cursor: default;
+}
+
+.chat-button {
+  padding: 6px 10px 6px 10px;
+  font-size: 10px;
+}
+
+.job-description {
+  display: flex;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ellipsis{
+    flex: 1;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
+}

@@ -33,7 +33,7 @@ import { SingleJobComponent } from './single-job/single-job.component';
 import { LoadingComponent } from 'src/app/components/commonComponents/loading/loading.component';
 import { ViewApplicantsComponent } from './components/view-applicants/view-applicants.component';
 import { EditJobComponent } from './components/edit-job/edit-job.component';
-
+import {  MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     UserHomeComponent,
@@ -75,6 +75,7 @@ import { EditJobComponent } from './components/edit-job/edit-job.component';
     MatDialogModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatTooltipModule
   ],
 })
 export class UserModule {}
