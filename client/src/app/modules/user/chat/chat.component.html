@@ -47,10 +47,10 @@
             <li class="mb-3 message-input">
               <div class="row input-row">
                 <div class="col-md-10 ">
-                  <input [(ngModel)]="messageText"  placeholder="Type a message">
+                  <input [(ngModel)]="messageText" (keyup)="sendMessage($event)"  placeholder="Type a message">
                 </div>
                 <div class="col-md-2  text-center">
-                  <button type="button" class="btn btn-info btn-rounded float-end" (click)="sendMessage()">Send</button>
+                  <button type="button" class="btn btn-info btn-rounded float-end" (click)="sendMessage($event)">Send</button>
                 </div>
               </div>
             </li>

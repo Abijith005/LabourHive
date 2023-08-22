@@ -54,18 +54,20 @@ p {
   font-size: 10px;
 }
 
-.job-description {
-  display: flex;
+.ellipsis{
   text-align: justify;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  cursor: pointer;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  flex: 1;
+
 }
 
-.ellipsis{
-    flex: 1;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: initial;
+.description{
+  display: flex;
+  text-align: justify;
+
 }
+

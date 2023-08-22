@@ -36,7 +36,7 @@ export class ChatService {
     let observable = new Observable<{ user: string; message: string }>(
       (observer) => {
         this._socket.on('receive-message', (data) => {
-          console.log('new message cs', data);
+          console.log(data,'new message');
           observer.next(data);
         });
         return () => {
@@ -46,7 +46,6 @@ export class ChatService {
     );
     return observable;
   }
-
   //disconnect user
 disconnect(){
   this._socket.emit('disconnectUser')

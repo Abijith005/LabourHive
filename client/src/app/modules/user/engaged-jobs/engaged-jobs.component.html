@@ -17,7 +17,7 @@
                         <p><i class="fas fa-hand-holding-dollar"></i>&nbsp;&nbsp;&nbsp;<span>{{item.job_id.experience}}</span>&nbsp;Years&nbsp;&nbsp;|&nbsp;&nbsp;₹&nbsp;<span>{{item.offeredWage}}&nbsp;/&nbsp;Day</span></p>
                     </div>
                     <div>
-                        <p style="display: flex;"><i class="fas fa-location-dot"></i>&nbsp;&nbsp;&nbsp;<span class="location" title="dgsda">{{item.location}}</span></p> 
+                        <p style="display: flex;"><i class="fas fa-location-dot"></i>&nbsp;&nbsp;&nbsp;<span class="location" title="{{item.location}}">{{item.location}}</span></p> 
                     </div>
                     <div>
                         <p><i class="fas fa-calendar-days"></i>&nbsp;&nbsp;&nbsp;<span>{{item.startDate|customDate}}</span>&nbsp;-&nbsp;&nbsp;<span>{{item.endDate|customDate}}</span></p>
@@ -29,7 +29,7 @@
             </div>
             <div class="job-data  col-4">
                 <div class="job-description" (click)="toggleDecsription()">
-                    <p class="mb-0 "><i class="fas fa-note-sticky"></i>&nbsp;&nbsp;&nbsp;<span style="width:400px;" [ngClass]="{ellipsis: showDescription}" [matTooltip]="'Click to see description'" matTooltipPosition="right">{{item.job_id.jobDescription}}</span></p>
+                    <p class="mb-0 description "><i class="fas fa-note-sticky"></i>&nbsp;&nbsp;&nbsp;<span style="width:400px;" [ngClass]="{ellipsis: hideDescription}" [matTooltip]="'Click to see description'" matTooltipPosition="right">{{item.job_id.jobDescription}}</span></p>
                 </div>
             </div>
             <div class="job-data text-center col-2">
@@ -39,8 +39,8 @@
                         Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" >Cancel</a></li>
-                        <li><a class="dropdown-item" >Chat</a></li>
+                        <li><a class="dropdown-item"(click)="cancelJob(item._id)" >Cancel</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['/chat']" [queryParams]="{receiver:item.client_id._id}"  >Chat</a></li>
                     </ul>
                 </div>
             </div>

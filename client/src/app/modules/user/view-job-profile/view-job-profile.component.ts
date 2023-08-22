@@ -85,7 +85,9 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
         if (res.success) {
           //activating chat-component
           this.chat = true;
-          this._router.navigate(['chat'], { relativeTo: this._route });
+          const queryParams={receiver:this.jobProfileDetails?.user_id}
+          
+          this._router.navigate(['chat'],{queryParams:queryParams});
         }
       });
   }

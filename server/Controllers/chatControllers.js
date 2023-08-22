@@ -34,6 +34,7 @@ export const createNewChatRoom = async (req, res) => {
 
 export const storeMessages = async (req, res) => {
   try {
+    console.log(req.body);
     const { receiver_id, message, sender_id } = req.body;
     const { _id } = await chatRoomModel.findOne({
       $or: [
@@ -62,7 +63,7 @@ export const getAllMessageReceivers = async (req, res) => {
       .populate("receiver_id sender_id")
       .lean();
 
-    const receiversData = await data.map((item) => {
+    const receiversData =data.map((item) => {
       if (user_id === item.sender_id._id.toString()) {
         return {
           room_id: item._id,

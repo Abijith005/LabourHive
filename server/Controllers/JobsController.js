@@ -451,3 +451,15 @@ export const getEngagedJobs = async (req, res) => {
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+
+export const cancelJobRequest=async (req,res)=>{
+  try {
+    const {hire_id}=req.body
+    await hiringModel.updateOne({_id:hire_id},{$set:{hireStatus:'cancelRequested'}})
+
+  } catch (error) {
+    console.log('Error',error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+}

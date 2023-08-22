@@ -52,9 +52,10 @@ const hiringSchema = new mongoose.Schema({
     type:Number,
     required:[false,'offerred wage is not mandatory']
   },
-  labourCount: {
-    type: Number,
-    default: 1,
+  hireStatus: {
+    type: String,
+    enum:['hired','cancelled','cancelRequested'],
+    default:'hired'
   },
 });
 

@@ -52,4 +52,8 @@ export class JobService {
   getEngagedJobs(){
     return this._http.get<{engagedJobs:i_engagedJobs[],success:boolean,message:string}>(`/jobs/getEngagedJobs`)
   }
+  
+  cancelJob(hire_id:string){
+    return this._http.patch(`/jobs/cancelJob`,{hire_id})
+  }
 }
