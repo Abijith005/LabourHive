@@ -15,7 +15,7 @@ export class SwalService {
         text,
         icon:icon=='success'?'success':(icon=='warning'?'warning':'error'),
         showCancelButton: true,
-        confirmButtonColor: '#d33',
+        confirmButtonColor: 'green',
         confirmButtonText: 'Yes',
         cancelButtonText: 'Cancel',
         reverseButtons: true,

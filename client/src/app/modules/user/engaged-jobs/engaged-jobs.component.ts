@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { JobService } from '../userServices/job.service';
 import { i_engagedJobs } from 'src/app/interfaces/userInterfaces/i_jobDetails';
 import { Observable, map } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { SwalService } from 'src/app/services/commonServices/swal.service';
 
 @Component({
   selector: 'app-engaged-jobs',
@@ -12,25 +12,34 @@ import { ActivatedRoute } from '@angular/router';
 export class EngagedJobsComponent implements OnInit {
   // variable declarations
 
-  hideDescription:boolean=true
+  hideDescription: boolean = true;
   engagedJobDatas$: Observable<i_engagedJobs[]> | null = null;
 
-  constructor(private _jobService: JobService,
-    _jobServices:JobService
-    ) {}
+  constructor(private _jobService: JobService, _jobServices: JobService,
+    private _swalService:SwalService) {}
 
   ngOnInit(): void {
-    this.engagedJobDatas$ = this._jobService.getEngagedJobs().pipe(map((data:{engagedJobs:i_engagedJobs[],success:boolean,message:string})=>{
-      return data.engagedJobs
-    }))
-}
+    this.engagedJobDatas$ = this._jobService.getEngagedJobs().pipe(
+      map(
+        (data: {
+          engagedJobs: i_engagedJobs[];
+          success: boolean;
+          message: string;
+        }) => {
+          return data.engagedJobs;
+        }
+      )
+    );
+  }
 
-toggleDecsription(){
-this.hideDescription=!this.hideDescription
-}
+  toggleDecsription() {
+    this.hideDescription = !this.hideDescription;
+  }
 
-cancelJob(hire_id:string){
-this._jobService.cancelJob(hire_id).subscribe()
-}
-
+  async cancelJob(hire_id: string) {
+    const confirmation=this._swalService.showConfirmation('Cancel Job','Do you want request for cancel the job','warning')
+    console.log(confirmation);
+    
+    this._jobService.cancelJob(hire_id).subscribe();
+  }
 }

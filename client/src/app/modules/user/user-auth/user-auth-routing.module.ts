@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { guestAuthGuard } from 'src/app/guards/guest-auth.guard';
 import { UserRegisterComponent } from './user-register/user-register.component';
 
 const userAuthRoutes: Routes = [
-  {path:'auth',canActivate:[guestAuthGuard],children:[
     {
       path:'',redirectTo:'login',pathMatch:'full'
     },
@@ -18,7 +16,6 @@ const userAuthRoutes: Routes = [
       component: UserRegisterComponent,
     },
 
-  ]}
     ]
 
 

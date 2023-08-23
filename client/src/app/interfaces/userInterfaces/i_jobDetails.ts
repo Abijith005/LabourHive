@@ -35,6 +35,12 @@ export interface i_postedJobs extends i_jobDetails{
     applicantCount:number
 }
 
+enum hireStatus{
+    Hired='hired',
+    Cancelled='cancelled',
+    CancelRequested='cancelRequested'
+
+}
 export interface i_engagedJobs {
 _id:string,
 job_id:{
@@ -57,4 +63,5 @@ location:string
 coordinates:number[],
 totalAmount:number,
 offeredWage:number,
+hireStatus:hireStatus
 }

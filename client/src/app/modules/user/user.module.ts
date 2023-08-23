@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from 'src/app/modules/user/footer/footer.component';
-import { UserAuthModule } from './user-auth/user-auth.module';
+// import { UserAuthModule } from './user-auth-module/user-auth.module';
 import { userRoutingModule } from './user-routing.module';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -60,7 +60,6 @@ import {  MatTooltipModule } from '@angular/material/tooltip';
   ],
   imports: [
     CommonModule,
-    UserAuthModule,
     userRoutingModule,
     MatButtonModule,
     MatDialogModule,

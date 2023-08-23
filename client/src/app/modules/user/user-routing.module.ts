@@ -13,6 +13,7 @@ import { MyJobsComponent } from './my-jobs/my-jobs.component';
 import { PostedJobsComponent } from './posted-jobs/posted-jobs.component';
 import { EngagedJobsComponent } from './engaged-jobs/engaged-jobs.component';
 import { guestAuthGuard } from 'src/app/guards/guest-auth.guard';
+import { UserProfileLandingComponent } from './user-profile/user-proile-landing/user-profile-landing.component';
 
 const userRoutes: Routes = [
   {
@@ -47,11 +48,26 @@ const userRoutes: Routes = [
           { path: 'engagedJobs', component: EngagedJobsComponent },
         ],
       },
+      {
+        path: 'userProfile',
+        canActivateChild: [userAuth],
+        loadChildren: () =>
+          import('./user-profile/user-profile.module').then( 
+            (module) => module.UserProfileModule
+          ),
+      },
     ],
   },
 
-  { path: 'auth' ,canActivateChild: [guestAuthGuard],
-loadChildren:()=> import('../user/user-auth/user-auth.module').then((module)=>module.UserAuthModule) },
+  {
+    path: 'auth',               
+    canActivateChild: [guestAuthGuard],
+    loadChildren: () =>
+      import('./user-auth/user-auth.module').then(
+        (module) => module.UserAuthModule
+      ),
+  },
+
 ];
 
 @NgModule({

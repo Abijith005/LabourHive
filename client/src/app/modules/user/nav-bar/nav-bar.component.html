@@ -87,7 +87,6 @@
         <div *ngIf="(userInformations$ |async)?.isLoggedIn" class="dropdown ">
             <a
               class="dropdown-toggle d-flex align-items-center hidden-arrow"
-              href="#"
               id="navbarDropdownMenuAvatar"
               role="button"
               data-mdb-toggle="dropdown"
@@ -109,10 +108,7 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a class="dropdown-item"  >My profile</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" [routerLink]="['userProfile']"  >My profile</a>
             </li>
             <li>
               <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Logout</a>
