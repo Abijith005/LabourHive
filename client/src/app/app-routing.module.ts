@@ -18,7 +18,7 @@ const routes: Routes =
       // Lazy-loaded modules
   {
     path: '',
-    loadChildren: () => import('./modules/user/user.module').then(module => module.UserModule),
+    loadChildren: () => import('./modules/user-module/user.module').then(module => module.UserModule),
   },
 
 

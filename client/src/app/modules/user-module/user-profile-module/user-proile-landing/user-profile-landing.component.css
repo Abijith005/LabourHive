@@ -1,0 +1,42 @@
+.profile-container{
+height: 80vh;
+}
+
+.container{
+    border-radius: 10px;
+
+}
+
+.side-bar{
+    background-color: rgb(244, 244, 244);
+    box-shadow: 0 1px 4px rgb(0, 0, 0,.3);
+    border-radius: 10px 0 0 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.side-item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    display: flex;
+    gap: 15px;
+    color: rgb(112, 106, 106);
+    cursor: pointer;
+
+
+}
+
+.side-item.active {
+    color: black;
+    border-left: 4px solid black;
+    border-radius: 2px 0px 0px 2px;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .5);
+
+
+}

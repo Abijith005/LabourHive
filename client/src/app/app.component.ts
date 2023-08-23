@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { userDataState } from './store/user.state';
-import { login } from './store/user.actions';
-import { UserService } from './modules/user/userServices/user.service';
-import { Subject, map, takeUntil } from 'rxjs';
+import { UserService } from './modules/user-module/userServices/user.service';
+import { Subject,  } from 'rxjs';
 
 @Component({
   selector: 'app-root',

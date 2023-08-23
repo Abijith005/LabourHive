@@ -7,7 +7,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { UserAuthService } from '../modules/user/userServices/user-auth.service';
+import { UserAuthService } from '../modules/user-module/userServices/user-auth.service';
 import { catchError, tap, throwError } from 'rxjs';
 
 @Injectable()
