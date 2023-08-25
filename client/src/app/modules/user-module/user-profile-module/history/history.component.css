@@ -9,6 +9,10 @@
   .heading{
     font-weight: bolder;
   }
+
+  li{
+    cursor: pointer;
+  }
  
 
 

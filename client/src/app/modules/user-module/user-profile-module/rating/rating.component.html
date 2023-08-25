@@ -1,0 +1,12 @@
+<div class="container-fluid">
+  <div class="container">
+    <h2 class="heading text-center">Feed Back</h2>
+    <div class="review-box p-2 text-center">
+        <textarea  cols="50" rows="4"></textarea>
+    </div>
+    <div class="star-box p-2 pb-5">
+        <h2 class="mb-3">Rate Labour</h2>
+        <i class="fas fa-star me-2" [style.color]="i<rating?'gold':''" (click)="rate(i)" *ngFor="let item of stars,let i=index"></i>
+    </div>
+  </div>
+</div>

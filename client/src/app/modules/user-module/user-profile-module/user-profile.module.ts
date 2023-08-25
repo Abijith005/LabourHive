@@ -9,6 +9,8 @@ import { SchedulesComponent } from './schedules/schedules.component';
 import { HistoryComponent } from './history/history.component';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SharedModule } from '../../shared/shared.module';
+import { RatingComponent } from './rating/rating.component';
 
 
 
@@ -20,12 +22,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     WalletComponent,
     SchedulesComponent,
     HistoryComponent,
+    RatingComponent,
+    
   ],
   imports: [
     CommonModule,
     userProfileRoutingModule,
     MatProgressBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SharedModule
+
+  
   ]
 })
 export class UserProfileModule { }

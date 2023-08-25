@@ -33,6 +33,7 @@ import { PaymentDetailsComponent } from './components/payment-details/payment-de
 import { MyJobsComponent } from './components/my-jobs/my-jobs.component';
 import { PostedJobsComponent } from './components/posted-jobs/posted-jobs.component';
 import { SingleJobComponent } from './components/single-job/single-job.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     UserHomeComponent,
@@ -42,8 +43,6 @@ import { SingleJobComponent } from './components/single-job/single-job.component
     EditJobProfileComponent,
     EngagedJobsComponent,
     JobProfileComponent,
-    StarRatingPipe,
-    CustomDatePipe,
     ViewLaboursComponent,
     ViewJobProfileComponent,
     ChatComponent,
@@ -73,7 +72,7 @@ import { SingleJobComponent } from './components/single-job/single-job.component
     MatDialogModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,SharedModule
   ],
 })
 export class UserModule {}

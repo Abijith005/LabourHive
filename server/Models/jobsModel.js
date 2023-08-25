@@ -53,7 +53,7 @@ const jobsSchema = new mongoose.Schema({
 
   currentStatus: {
     type: String,
-    enum: ["active", "expired"],
+    enum: ["active", "expired","completed"],
     default: "active",
   },
 },

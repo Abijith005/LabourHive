@@ -4,7 +4,7 @@ import { getAllCategories } from '../Controllers/CategoryController.js'
 import { applyJob, cancelJobRequest, createJobProfile, editJob, expireJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
-import { userAuthCheck } from '../middlewares/userAuth.js'
+import { getProfileHistory } from '../Controllers/profileControllers.js'
 
 const router=express.Router()  
 
@@ -69,6 +69,8 @@ router.get('/jobs/getSinglejobDatas/:application_id',getSinglejobDatas)
 router.get('/jobs/getEngagedJobs',getEngagedJobs)
 
 router.patch('/jobs/cancelJob',cancelJobRequest)
+
+router.get('/profile/history',getProfileHistory)
 
 router.get('/logout',userLogout)
 
