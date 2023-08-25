@@ -1,0 +1,19 @@
+.heading{
+    font-weight: bolder;
+}
+
+.total span{
+    font-size: 20px;
+    font-weight:bolder;
+}
+
+  .head {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  
+  .data {
+    background-color: whitesmoke;
+  }
+  
+ 
+  

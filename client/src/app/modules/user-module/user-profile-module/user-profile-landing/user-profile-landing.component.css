@@ -4,11 +4,12 @@ height: 80vh;
 
 .container{
     border-radius: 10px;
+    border: thin solid rgb(0, 0, 0,.1);
 
 }
 
 .side-bar{
-    background-color: rgb(244, 244, 244);
+    background-color:rgba(213, 211, 211, 0.84);
     box-shadow: 0 1px 4px rgb(0, 0, 0,.3);
     border-radius: 10px 0 0 10px;
     height: 100%;

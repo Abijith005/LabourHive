@@ -1,0 +1,37 @@
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .heading{
+    font-weight: bolder;
+  }
+  
+  .card {
+    flex: 0 0 calc(14.28% - 10px); /* Divide 100% by 7 cards and subtract gap width */
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 6px 6px 7px rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .date{
+    font-size: 25px;
+    font-weight: bolder;
+  }
+
+  .fas:hover {
+    transform: scale(1.5);
+    transition: transform 0.3s ease-out;
+}
+.fas{
+      transition: transform 0.3s ease-in;
+
+  }

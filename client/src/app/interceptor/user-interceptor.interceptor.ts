@@ -4,7 +4,6 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpErrorResponse,
-  HttpResponse,
 } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { UserAuthService } from '../modules/user-module/userServices/user-auth.service';
