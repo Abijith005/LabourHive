@@ -53,7 +53,7 @@ const jobProfileSchema = mongoose.Schema({
 
     rating:{
         type:Number,
-        default:3.5
+        default:0
     },
 
    

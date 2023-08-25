@@ -45,9 +45,11 @@ async cancelHire(_id:string){
   }
 }
 
-rateLabour(){
+rateLabour(labour_id:string,hire_id:string){
 this._matDialog.open(RatingComponent,{
-  width:'500px'
+  width:'500px',
+  disableClose:true,
+  data:{labour_id,hire_id}
 })
 }
 

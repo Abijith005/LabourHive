@@ -11,6 +11,7 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '../../shared/shared.module';
 import { RatingComponent } from './rating/rating.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -30,7 +31,8 @@ import { RatingComponent } from './rating/rating.component';
     userProfileRoutingModule,
     MatProgressBarModule,
     MatTooltipModule,
-    SharedModule
+    SharedModule,
+    FormsModule
 
   
   ]

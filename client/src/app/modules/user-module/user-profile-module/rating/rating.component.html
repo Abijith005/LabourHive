@@ -2,11 +2,15 @@
   <div class="container">
     <h2 class="heading text-center">Feed Back</h2>
     <div class="review-box p-2 text-center">
-        <textarea  cols="50" rows="4"></textarea>
+        <textarea [(ngModel)]="review" cols="50" rows="4"></textarea>
     </div>
     <div class="star-box p-2 pb-5">
-        <h2 class="mb-3">Rate Labour</h2>
+        <h3 class="mb-3"><b>Rate Labour</b></h3>
         <i class="fas fa-star me-2" [style.color]="i<rating?'gold':''" (click)="rate(i)" *ngFor="let item of stars,let i=index"></i>
+    </div>
+    <div class="button mb-3">
+      <button class="btn btn-sm btn-danger" (click)="close()">Close</button>
+      <button class="btn btn-sm btn-success" (click)="onSubmit()">Submit</button>
     </div>
   </div>
 </div>

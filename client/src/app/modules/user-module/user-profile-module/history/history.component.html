@@ -32,7 +32,7 @@
                         <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='active'" (click)="cancelHire(item._id)"><a class="dropdown-item" >Cancel Hire</a></li>
                         <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='active'"><a class="dropdown-item">Chat</a></li>
                         <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='completed'"><a class="dropdown-item">Complain</a></li>
-                        <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='completed'" (click)="rateLabour()"><a class="dropdown-item">Rate</a></li>
+                        <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='completed'" (click)="rateLabour(item.labour_id._id,item._id)"><a class="dropdown-item">Rate</a></li>
                     </ul>
                 </div>
             </td>
