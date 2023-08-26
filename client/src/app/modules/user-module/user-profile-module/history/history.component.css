@@ -1,19 +1,29 @@
 .head {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  }
-  
-  .data {
-    background-color: whitesmoke;
-  }
-  
-  .heading{
-    font-weight: bolder;
-  }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
 
-  li{
-    cursor: pointer;
-  }
- 
+.data {
+  background-color: whitesmoke;
+}
 
+.heading {
+  font-weight: bolder;
+}
 
+li {
+  cursor: pointer;
+}
+
+td {
+  vertical-align: middle;
+  font-size: smaller;
+}
+
+th{
+  font-size: smaller;
+}
+
+.dropdown-toggle{
+padding: 5px;
+}
 

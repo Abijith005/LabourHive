@@ -3,6 +3,7 @@ import { verifyToken } from "../Helpers/jwtVerify.js";
 import hiringModel from "../Models/hiringModel.js";
 import reviewModel from "../Models/reviewModel.js";
 import jobProfileModel from "../Models/jobProfileModel.js";
+import complaintModel from "../Models/complaintModel.js";
 
 export const getProfileHistory = async (req, res) => {
   try {
@@ -19,7 +20,7 @@ export const getProfileHistory = async (req, res) => {
           as: "review",
         },
       },
-      { $unwind: "$review" },
+      { $unwind: {path:"$review",preserveNullAndEmptyArrays:true }},
       {
         $lookup: {
           from: "users",
@@ -38,45 +39,37 @@ export const getProfileHistory = async (req, res) => {
         },
       },
       { $unwind: "$job" },
-      {$project:{
-        '_id':1,
-        'hiringDate':1,
-        'category':1,
-        'startDate':1,
-        'totalDays':1,
-        'totalAmount':1,
-        'hireStatus':1,
-        'review._id':1,
-        'labour._id':1,
-        'labour.name':1,
-        'job._id':1,
-        'job.currentStatus':1
-
-
-      }}
+      {
+        $lookup: {
+          from: "complaints",
+          localField: "_id",
+          foreignField: "hire_id",
+          as: "complaint",
+        },
+      },
+      {
+        $unwind: { path: "$complaint", preserveNullAndEmptyArrays: true },
+      },
+      {
+        $project: {
+          _id: 1,
+          hiringDate: 1,
+          category: 1,
+          startDate: 1,
+          totalDays: 1,
+          totalAmount: 1,
+          hireStatus: 1,
+          "review._id": 1,
+          "labour._id": 1,
+          "labour.name": 1,
+          "job._id": 1,
+          "job.currentStatus": 1,
+          "complaint._id": 1,
+        },
+      },
     ];
-    const d = await hiringModel.aggregate(pipeline);
-    console.log(JSON.stringify(d, null, 3), "klklkl");
-
-    // const data = await hiringModel
-    //   .find(
-    //     { client_id: user_id },
-    //     {
-    //       labourCount: 0,
-    //       offeredWage: 0,
-    //       totalAmount: 0,
-    //       coordinates: 0,
-    //       location: 0,
-    //       endDate: 0,
-    //       totalDays: 0,
-    //     }
-    //   )
-    //   .populate([
-    //     { path: "job_id", select: "_id currentStatus" },
-    //     { path: "labour_id", select: "_id name" },
-    //   ])
-    //   .lean();
-    // res.json({ success: true, data });
+    const data = await hiringModel.aggregate(pipeline);
+    res.json({ success: true, data });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -88,7 +81,7 @@ export const postReview = async (req, res) => {
     const user_id = (
       await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
     )._id;
-    await reviewModel.create({ client_id: user_id, ...req.body });
+    const {_id}=await reviewModel.create({ client_id: user_id, ...req.body });
     const pipeline = [
       {
         $match: { labour_id: new mongoose.Types.ObjectId(req.body.labour_id) },
@@ -96,13 +89,27 @@ export const postReview = async (req, res) => {
       { $group: { _id: null, totalRating: { $avg: "$rating" } } },
     ];
     const rating = await reviewModel.aggregate(pipeline);
-    console.log(rating);
     await jobProfileModel.updateOne(
       { user_id: req.body.labour_id },
       { $set: { rating: rating.totalRating } }
     );
 
-    res.json({ success: true, message: "Successfully posted labour review" });
+    res.json({ success: true, message: "Successfully posted labour review",review_id:_id});
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const postComplaint = async (req, res) => {
+  try {
+    const {_id} = await complaintModel.findOneAndUpdate(
+      { hire_id: req.body.hire_id },
+      { $setOnInsert: { ...req.body } },
+      { upsert: true, setDefaultsOnInsert: true, new: true }
+    );
+    
+    res.json({ success: true, message: "Complaint registered successfully",complaint_id:_id });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

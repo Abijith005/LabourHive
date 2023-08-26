@@ -457,7 +457,7 @@ export const cancelJobRequest=async (req,res)=>{
   try {
     const {hire_id}=req.body
     await hiringModel.updateOne({_id:hire_id},{$set:{hireStatus:'cancelRequested'}})
-    res.json({success:true,message:'Successfully requested for cancel Hiring'})
+    res.json({success:true,message:'Successfully requested for cancel Hiring',currentStatus:'cancelRequested'})
 
   } catch (error) {
     console.log('Error',error);

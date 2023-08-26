@@ -55,6 +55,6 @@ export class JobService {
   
   cancelJob(hire_id:string){
   
-    return this._http.patch<i_authRes>(`/jobs/cancelJob`,{hire_id})
+    return this._http.patch<{success:boolean,message:string,currentStatus:string}>(`/jobs/cancelJob`,{hire_id})
   }
 }

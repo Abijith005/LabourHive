@@ -15,6 +15,10 @@ export class UserProfileService {
   }
 
   postReview(reviewText:string,rating:number,labour_id:string,hire_id:string){
-    return this._http.post<i_authRes>('/profile/postReview',{reviewText,rating,labour_id,hire_id})
+    return this._http.post<{success:boolean,message:string,review_id:string}>('/profile/postReview',{reviewText,rating,labour_id,hire_id})
+  }
+
+  registerComplaint(complaintText:string,hire_id:string){
+    return this._http.post<{success:boolean,message:string,complaint_id:string}>('/profile/registerComplaint',{complaintText,hire_id})
   }
 }

@@ -8,7 +8,10 @@
             <th scope="col">Category</th>
             <th scope="col">Hire Date</th>
             <th scope="col">Work Date</th>
-            <th scope="col">Status</th>
+            <th scope="col">Hire Status</th>
+            <th scope="col">Job Status</th>
+            <th scope="col">Days</th>
+            <th scope="col">Amount</th>
             <th scope="col"class="text-center">Action</th>
           </tr>
           <tr style="background-color: white;">
@@ -18,23 +21,32 @@
         <tbody  class="mt-3">
           <tr class="data" *ngFor="let item of historyData">
             <td scope="row" class="text-center">1</td>
-            <td>{{item.labour_id.name}}</td>
+            <td>{{item.labour.name}}</td>
             <td>{{item.category}}</td>
             <td>{{item.hiringDate|customDate}}</td>
             <td>{{item.startDate|customDate}}</td>
             <td>{{item.hireStatus|titlecase}}</td>
+            <td>{{item.job.currentStatus}}</td>
+            <td>{{item.totalDays}} Days</td>
+            <td>₹ {{item.totalAmount}}</td>
             <td class="text-center">
+              <div *ngIf="item.complaint||item.hireStatus==='cancelRequested'; else elseBlock">
+                <i class="fas fa-circle-exclamation" style="color: gold;" ></i>
+                <span class="ms-1">{{item.job.currentStatus==='expire'?'Expired':(item.hireStatus==='cancelRequested'?' Cancel Requested':(item.hireStatus==='cancelled'?'Cancelled':'Complained'))}}</span>
+              </div>
+              <ng-template #elseBlock>
                 <div class="dropdown">
-                    <button  class="btn btn-primary dropdown-toggle chat-button" type="button"id="dropdownMenuButton"data-mdb-toggle="dropdown"aria-expanded="false">
+                    <button  class="btn btn-primary dropdown-toggle" type="button"id="dropdownMenuButton"data-mdb-toggle="dropdown"aria-expanded="false">
                         Action
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='active'" (click)="cancelHire(item._id)"><a class="dropdown-item" >Cancel Hire</a></li>
-                        <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='active'"><a class="dropdown-item">Chat</a></li>
-                        <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='completed'"><a class="dropdown-item">Complain</a></li>
-                        <li *ngIf="item.hireStatus=='hired'&&item.job_id.currentStatus=='completed'" (click)="rateLabour(item.labour_id._id,item._id)"><a class="dropdown-item">Rate</a></li>
+                        <li *ngIf="item.hireStatus=='hired'&&item.job.currentStatus=='active'" (click)="cancelHire(item._id)"><a class="dropdown-item" >Cancel Hire</a></li>
+                        <li *ngIf="item.hireStatus=='hired'&&item.job.currentStatus=='active'"><a class="dropdown-item">Chat</a></li>
+                        <li *ngIf="item.hireStatus=='hired'&&item.job.currentStatus=='completed'&&!item.complaint" (click)="complain(item._id)"><a class="dropdown-item">Complain</a></li>
+                        <li *ngIf="item.hireStatus=='hired'&&item.job.currentStatus=='completed'&&!item.review" (click)="rateLabour(item.labour._id,item._id)"><a class="dropdown-item">Rate</a></li>
                     </ul>
                 </div>
+              </ng-template>
             </td>
         </tr>
           <tr style="background-color: white; border: none;">
