@@ -58,6 +58,22 @@ const hiringSchema = new mongoose.Schema({
     default:'hired'
   },
 });
+hiringSchema.post('save',async function(doc){
+  try {
+    const days=Math.floor((doc.endDate-doc.startDate)/(24*60*60*1000))
+    const  dates= Array.from({length:days+1},(_,index)=>{
+      const currentDate=new Date(doc.startDate)
+      currentDate.setDate(this.startDate.getDate()+index)
+      return {date:currentDate,job_id:doc.job_id}
+    })
+    console.log(dates);
+
+    
+  } catch (error) {
+    console.log('Error',error);
+
+  }
+})
 
 const hiringModel =  mongoose.model("hiring", hiringSchema);
 
