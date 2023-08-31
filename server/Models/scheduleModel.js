@@ -14,9 +14,9 @@ const scheduleSchema = new mongoose.Schema({
           type: Date,
           required: [true, "Date is required"],
         },
-        job_id: {
+        hire_id: {
           type: mongoose.Schema.Types.ObjectId,
-          required: [true, "job id is required"],
+          required: false,
         },
       },
     ],
@@ -29,3 +29,15 @@ const scheduleSchema = new mongoose.Schema({
     },
   },
 });
+
+
+
+scheduleSchema.pre("save", function (next) {
+  if (this.weekSchedule.length >= 7) {
+    this.weekSchedule.shift();
+  }
+  next();
+});
+
+const scheduleModel = mongoose.model("schedule", scheduleSchema);
+export default scheduleModel;

@@ -32,6 +32,7 @@ import { MapboxService } from './services/commonServices/mapbox.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AppInitializerService } from './services/commonServices/app-initializer.service';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -81,6 +82,7 @@ import { AppInitializerService } from './services/commonServices/app-initializer
       multi: true,
       deps: [AppInitializerService],
     },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

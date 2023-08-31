@@ -52,7 +52,6 @@ import { SharedModule } from '../shared/shared.module';
     PostJobComponent,
     PostedJobsComponent,
     SingleJobComponent,
-    LoadingComponent,
     ViewApplicantsComponent,
     EditJobComponent
   ],

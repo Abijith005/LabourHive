@@ -56,6 +56,11 @@ const jobsSchema = new mongoose.Schema({
     enum: ["active", "expired","completed"],
     default: "active",
   },
+
+  postedJob:{
+    type:Boolean,
+    default:true
+  }
 },
 {
   timestamps:true

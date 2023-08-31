@@ -2,6 +2,8 @@ import Razorpay from "razorpay";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import hiringModel from "../Models/hiringModel.js";
+import jobsModel from "../Models/jobsModel.js";
+import categoryModel from "../Models/categoryModel.js";
 
 const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -31,7 +33,17 @@ export const hirePayment = async (req, res) => {
 
 export const verifyPayment = async (req, res) => {
   try {
+    const client_id = await jwt.verify(
+      req.cookies.userAuthToken,
+      process.env.JWT_SIGNATURE
+    )?._id;
     const data = req.body;
+    console.log(data,'datataaaaaaaaaaaaaaaaa');
+    const {_id}=await categoryModel.findOne({name:req.body.category})
+
+    if (!req.body.job_id) {
+      const job=await jobsModel.create({...data,client_id,category:_id,requiredCount:1,experience:0,postedJob:false})
+    }
 
     const razorpayPayment_id =
       data.razorpay_order_id + "|" + data.razorpay_payment_id;
@@ -44,10 +56,7 @@ export const verifyPayment = async (req, res) => {
       .digest("hex");
 
     if (expectedSignature === data.razorpay_signature) {
-      const client_id = await jwt.verify(
-        req.cookies.userAuthToken,
-        process.env.JWT_SIGNATURE
-      )?._id;
+    
       const hiringDate = new Date();
 
       //deleting unwanted from body
@@ -59,7 +68,7 @@ export const verifyPayment = async (req, res) => {
       //uploading to db
       await hiringModel.create({ ...data });
 
-      return res.json({ success: true, message: "Hired labour successfully" });
+      return res.json({ success: f, message: "Hired labour successfully" });
     } else {
       return res.json({
         success: false,

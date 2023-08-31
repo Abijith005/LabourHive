@@ -122,6 +122,8 @@ export class PostJobComponent implements OnInit,OnDestroy {
       location: this.location,
       coordinates: this.coordinates,
     };
+    console.log(data,'post job data');
+    
 
     this._jobService.postJob(data).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
       if (res.success) {

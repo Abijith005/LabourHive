@@ -57,4 +57,8 @@ export class JobService {
   
     return this._http.patch<{success:boolean,message:string,currentStatus:string}>(`/jobs/cancelJob`,{hire_id})
   }
+
+  getJobInfo(hire_id:string){    
+    return this._http.get<i_jobDetails>(`/jobs/getJobInfo/${hire_id}`)
+  }
 }

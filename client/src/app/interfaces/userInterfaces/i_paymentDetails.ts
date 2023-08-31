@@ -11,4 +11,5 @@ export interface i_paymentDetails {
   location: string;
   offeredWage?: number | null;
   coordinates: number[];
+  jobDescription?:string
 }

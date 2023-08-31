@@ -187,6 +187,7 @@ export const searchJobs = async (req, res) => {
           { category: { $in: category_ids } },
           { startDate: { $gt: date } },
           { currentStatus: "active" },
+          { postedJob: true },
         ],
       })
       .populate("category")
@@ -242,13 +243,21 @@ export const searchJobs = async (req, res) => {
 
 export const postJob = async (req, res) => {
   try {
-    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
-    const { _id } = await categoryModel.findOne({
-      name: req.body.categoryName,
-    });
-    req.body.category = _id;
-    await jobsModel.create({ client_id: user_id, ...req.body });
-    res.json({ success: true, message: "Job posted successfully" });
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
+
+    const timeZoneOffset = 5.5 * 60 * 60 * 1000; // 5 hours and 30 minutes in milliseconds
+    const startDateLocal = new Date(startDate.getTime() + timeZoneOffset);
+    const endDateLocal = new Date(endDate.getTime() + timeZoneOffset);
+    req.body.startDate=startDate,req.body.endDate=endDate
+    console.log(req.body,'updated',);
+    // const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
+    // const { _id } = await categoryModel.findOne({
+    //   name: req.body.categoryName,
+    // });
+    // req.body.category = _id;
+    // await jobsModel.create({ client_id: user_id, ...req.body });
+    // res.json({ success: true, message: "Job posted successfully" });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -263,6 +272,7 @@ export const getAllJobs = async (req, res) => {
         $and: [
           { startDate: { $gt: currentDate } },
           { currentStatus: "active" },
+          { postedJob: true },
         ],
       })
       .populate("category")
@@ -427,6 +437,7 @@ export const getSinglejobDatas = async (req, res) => {
       .findOne({ _id: application_id })
       .populate("job_id")
       .lean();
+    console.log(data);
     res.json({ success: true, data: data.job_id });
   } catch (error) {
     console.log("Error", error);
@@ -445,22 +456,27 @@ export const getEngagedJobs = async (req, res) => {
         { path: "client_id", select: "_id name " },
       ])
       .lean();
-      res.json({success:true,engagedJobs:engagedJobs})
+    res.json({ success: true, engagedJobs: engagedJobs });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
 
-
-export const cancelJobRequest=async (req,res)=>{
+export const cancelJobRequest = async (req, res) => {
   try {
-    const {hire_id}=req.body
-    await hiringModel.updateOne({_id:hire_id},{$set:{hireStatus:'cancelRequested'}})
-    res.json({success:true,message:'Successfully requested for cancel Hiring',currentStatus:'cancelRequested'})
-
+    const { hire_id } = req.body;
+    await hiringModel.updateOne(
+      { _id: hire_id },
+      { $set: { hireStatus: "cancelRequested" } }
+    );
+    res.json({
+      success: true,
+      message: "Successfully requested for cancel Hiring",
+      currentStatus: "cancelRequested",
+    });
   } catch (error) {
-    console.log('Error',error);
+    console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserProfileService } from '../../userServices/user-profile.service';
 import { Subject, takeUntil } from 'rxjs';
-import { i_userProfile } from 'src/app/interfaces/userInterfaces/userProfile';
+import { i_userProfile } from 'src/app/interfaces/userInterfaces/i_userProfile';
 import { JobService } from '../../userServices/job.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,6 +33,9 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
         this.historyData = res.data;
+        console.log(this.historyData,'historydatssssssssssssssssssssssssssssssssssss');
+        
+        
       });
   }
 

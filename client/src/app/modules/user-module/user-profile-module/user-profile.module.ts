@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '../../shared/shared.module';
 import { RatingComponent } from './rating/rating.component';
 import { FormsModule } from '@angular/forms';
+import { JobInfoComponent } from './job-info/job-info.component';
 
 
 
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     SchedulesComponent,
     HistoryComponent,
     RatingComponent,
+    JobInfoComponent,
     
   ],
   imports: [

@@ -64,10 +64,7 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
   }
   // opening payment details dialog
   openPayment() {
-    console.log(this.application_id, 'application_id form view job profile');
-
     this.matDialog.open(PaymentDetailsComponent, {
-      // data: this.jobProfileDetails,
       data: {
         profileData: this.jobProfileDetails,
         application_id: this.application_id,

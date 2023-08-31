@@ -5,7 +5,12 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   Subject,
@@ -43,8 +48,9 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   totalPayable: number | null = null;
   totalDays: number | null = null;
   postedJobDetails: i_jobDetails | null = null;
-  isReadOnlyLocation: boolean = false;
-  coordinates:number[]|[]=[]
+  isReadOnly: boolean = false;
+  coordinates: number[] | [] = [];
+  application_id: string | null = null;
 
   private _locationChanged$ = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
@@ -67,6 +73,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     //matDialog resizing
     this.matDialogRef.updateSize('500px', '700px');
     this.labourDetails = _data.profileData;
+    this.application_id = _data.application_id;
   }
 
   ngOnInit(): void {
@@ -75,6 +82,9 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       endDate: [null, [Validators.required]],
       location: ['', [Validators.required]],
     });
+
+    // updateing size of the dialogbox
+    this.matDialogRef.updateSize('500px', '800px');
 
     //switching to new obervable
     this._locationChanged$
@@ -91,7 +101,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
         }));
       });
 
-    // if payment is for posted job
+    //if the payment is for posted job
     if (this._data.application_id) {
       // getting posted job details from db
       this._jobService
@@ -100,6 +110,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           if (res.success) {
             this.postedJobDetails = res.data;
+            console.log('posted job details',this.postedJobDetails);
+            
             // patching values to the form values
             this.formControls['startDate'].patchValue(
               new Date(this.postedJobDetails.startDate)
@@ -113,11 +125,17 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
             );
             this.onDateChange();
           }
-          this.isReadOnlyLocation = true;
+          this.isReadOnly = true;
           this.formControls['location'].patchValue(
             this.postedJobDetails?.location
           );
         });
+    } else {
+      // adding description to the form control
+      this.hireForm.addControl(
+        'description',
+        new FormControl('', [Validators.required])
+      );
     }
   }
 
@@ -144,7 +162,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
   selectLocation(suggestion: i_suggestions) {
     this.formControls['location'].patchValue(suggestion.location);
-    this.coordinates=suggestion.coordinates
+    this.coordinates = suggestion.coordinates;
     this.suggestions = [];
   }
 
@@ -192,8 +210,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
   //go back
   goBack() {
-   this._location.back()
-   this._cdRef.detectChanges()
+    this._location.back();
+    this._cdRef.detectChanges();
   }
 
   //payment controll
@@ -201,6 +219,11 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     this.isSubmitted = true;
 
     if (!this.hireForm.valid) {
+      console.log(
+        this.formControls['description'],
+        'form controllllllllllllssssssssssssssss'
+      );
+
       return;
     }
 
@@ -215,9 +238,12 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       startDate: new Date(this.formControls['startDate'].value),
       endDate: new Date(this.formControls['endDate'].value),
       location: this.formControls['location'].value,
-      offeredWage:this.postedJobDetails?this.postedJobDetails.wage:null,
-      coordinates: this.postedJobDetails?this.postedJobDetails.coordinates:this.coordinates,
-      job_id:this.postedJobDetails?this.postedJobDetails._id:null
+      offeredWage: this.postedJobDetails ? this.postedJobDetails.wage : null,
+      coordinates: this.postedJobDetails
+        ? this.postedJobDetails.coordinates
+        : this.coordinates,
+      job_id: this.postedJobDetails ? this.postedJobDetails._id : null,
+      jobDescription:this.formControls['description']?.value
     };
     Object.freeze(data);
 

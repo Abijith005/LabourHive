@@ -1,6 +1,6 @@
 export interface i_userProfile {
   _id: string;
-  job: {
+  job?: {
     _id: string,
     currentStatus: string
   };
