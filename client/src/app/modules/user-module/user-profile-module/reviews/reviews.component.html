@@ -3,13 +3,13 @@
 
   <div class="row">
     <div class="col-3">
-      <h3><b>1808 Reviews</b></h3>
+      <h3><b>{{reviews?.totalReviews}} Reviews</b></h3>
       <span><b>Over All Rating</b></span>
-      <span class="rating ms-1">
-        <i class="fas fa-star"></i><i class="fas fa-star"></i
-        ><i class="fas fa-star"></i><i class="fas fa-star"></i
-        ><i class="fas fa-star"></i>
-      </span>
+      <ng-container class="rating ms-1" *ngFor="let item of (reviews?.avgRating!)|starRating">
+        <i *ngIf="item==1" class="fas fa-star" style="color: gold;"></i>
+        <i *ngIf="item==.5" class="fas fa-star-half-stroke" style="color: gold;"></i>
+        <i *ngIf="item==0" class="fas fa-star" style="color:rgba(0, 0,0, 0.6);"></i>
+      </ng-container>
       <div class="progressbar mt-4">
         <span class="d-flex align-items-center" style="gap: 8px">
           <b>5</b> <i class="fas fa-star"></i>
@@ -17,7 +17,7 @@
             class="example-margin"
             color="warn"
             mode="determinate"
-            value="30"
+            value={{reviews?.fiveRating!*100}}
             bufferValue="75"
           >
           </mat-progress-bar
@@ -28,7 +28,7 @@
             class="example-margin"
             color="warn"
             mode="determinate"
-            value="35"
+            value={{reviews?.fourRating!*100}}
             bufferValue="75"
           >
           </mat-progress-bar
@@ -39,7 +39,7 @@
             class="example-margin"
             color="warn"
             mode="determinate"
-            value="25"
+            value={{reviews?.threeRating!*100}}
             bufferValue="75"
           >
           </mat-progress-bar
@@ -50,18 +50,18 @@
             class="example-margin"
             color="warn"
             mode="determinate"
-            value="15"
-            bufferValue="100"
+            value={{reviews?.twoRating!*100}}
+            bufferValue="75"
           >
           </mat-progress-bar
-        ></span>
+        > </span>
         <span class="d-flex align-items-center" style="gap: 8px">
           <b>1</b> <i class="fas fa-star"></i>
           <mat-progress-bar
             class="example-margin"
             color="warn"
             mode="determinate"
-            value="5"
+            value={{reviews?.oneRating!*100}}
             bufferValue="75"
           >
           </mat-progress-bar
@@ -70,110 +70,33 @@
     </div>
     <div class="col-9 py-2 review-col">
         
-        <div class="text-container mb-3" style="background-color: rgba(240, 240, 240, 0.377);">
+        <div class="text-container mb-3" style="background-color: rgba(240, 240, 240, 0.377);" *ngFor="let item of reviews?.reviews">
           <div class="review-box">
             <div class="top d-flex justify-content-between">
               <div class="col-7">
                 <img
-                  src="../../../../../assets/userAssets/images/831.jpg"
+                  src={{(item.client.profilePicture)?iitem.client.profilePicture:'"../../../../../assets/userAssets/images/831.jpg"'}}
                   style="height: 80px; width: 80px;border-radius: 40px; margin-right: 2rem;"
                 />
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i>
+                <ng-container class="rating ms-1" *ngFor="let item of (item.rating)|starRating">
+                  <i *ngIf="item==1" class="fas fa-star" style="color: gold;"></i>
+                  <i *ngIf="item==.5" class="fas fa-star-half-stroke" style="color: gold;"></i>
+                  <i *ngIf="item==0" class="fas fa-star" style="color:rgba(0, 0,0, 0.6);"></i>
+                </ng-container>
               </div>
               <div class="col-5 date">
-                <span class="me-5"><b>27-aug-2022</b></span>
+                <span class="me-5"><b>{{item.createdAt|customDate}}</b></span>
               </div>
             </div>
             <div class="name">
-              <b class="ps-3">Abijith </b>
+              <b class="ps-3">{{item.client.name}}</b>
             </div>
             <div class="review-text mt-2">
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making
+              {{item.reviewText}}
             </div>
           </div>
         </div>
-        <div class="text-container mb-3">
-          <div class="review-box">
-            <div class="top d-flex justify-content-between">
-              <div class="col-7">
-                <img
-                  src="../../../../../assets/userAssets/images/831.jpg"
-                  style="height: 80px; width: 80px"
-                />
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i>
-              </div>
-              <div class="col-5 date">
-                <span class="me-5"><b>27-aug-2022</b></span>
-              </div>
-            </div>
-            <div class="name">
-              <b class="ps-3">Abijith </b>
-            </div>
-            <div class="review-text mt-2">
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making
-            </div>
-          </div>
-        </div>
-        <div class="text-container mb-3">
-          <div class="review-box">
-            <div class="top d-flex justify-content-between">
-              <div class="col-7">
-                <img
-                  src="../../../../../assets/userAssets/images/831.jpg"
-                  style="height: 80px; width: 80px"
-                />
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i>
-              </div>
-              <div class="col-5 date">
-                <span class="me-5"><b>27-aug-2022</b></span>
-              </div>
-            </div>
-            <div class="name">
-              <b class="ps-3">Abijith </b>
-            </div>
-            <div class="review-text mt-2">
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making
-            </div>
-          </div>
-        </div>
-        <div class="text-container mb-3">
-          <div class="review-box">
-            <div class="top d-flex justify-content-between">
-              <div class="col-7">
-                <img
-                  src="../../../../../assets/userAssets/images/831.jpg"
-                  style="height: 80px; width: 80px"
-                />
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i>
-              </div>
-              <div class="col-5 date">
-                <span class="me-5"><b>27-aug-2022</b></span>
-              </div>
-            </div>
-            <div class="name">
-              <b class="ps-3">Abijith </b>
-            </div>
-            <div class="review-text mt-2">
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making
-            </div>
-          </div>
-        </div>
+       
     </div>
   </div>
 </div>

@@ -38,11 +38,11 @@ export const verifyPayment = async (req, res) => {
       process.env.JWT_SIGNATURE
     )?._id;
     const data = req.body;
-    console.log(data,'datataaaaaaaaaaaaaaaaa');
     const {_id}=await categoryModel.findOne({name:req.body.category})
 
     if (!req.body.job_id) {
       const job=await jobsModel.create({...data,client_id,category:_id,requiredCount:1,experience:0,postedJob:false})
+    req.body.job_id=job._id
     }
 
     const razorpayPayment_id =
@@ -68,7 +68,7 @@ export const verifyPayment = async (req, res) => {
       //uploading to db
       await hiringModel.create({ ...data });
 
-      return res.json({ success: f, message: "Hired labour successfully" });
+      return res.json({ success: true, message: "Hired labour successfully" });
     } else {
       return res.json({
         success: false,

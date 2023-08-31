@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
+import { i_review } from 'src/app/interfaces/userInterfaces/i_review';
 import { i_userProfile } from 'src/app/interfaces/userInterfaces/i_userProfile';
 import { i_userSchedule } from 'src/app/interfaces/userInterfaces/i_userSchedule';
 
@@ -25,5 +26,9 @@ export class UserProfileService {
 
   getSchedules(){
     return this._http.get<i_userSchedule[]>(`/profile/getSchedules`)
+  }
+
+  getReviews(){
+    return this._http.get<i_review>(`/profile/getReviews`)
   }
 }

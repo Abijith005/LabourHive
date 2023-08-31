@@ -4,7 +4,7 @@ import { getAllCategories } from '../Controllers/CategoryController.js'
 import { applyJob, cancelJobRequest, createJobProfile, editJob, expireJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
-import { getJobInfo, getProfileHistory, getSchedules, postComplaint, postReview } from '../Controllers/profileControllers.js'
+import { getJobInfo, getProfileHistory, getReviews, getSchedules, postComplaint, postReview } from '../Controllers/profileControllers.js'
 
 const router=express.Router()  
 
@@ -79,6 +79,8 @@ router.post('/profile/registerComplaint',postComplaint)
 router.get('/profile/getSchedules',getSchedules)
 
 router.get('/jobs/getJobInfo/:hire_id',getJobInfo)
+
+router.get('/profile/getReviews',getReviews)
 
 router.get('/logout',userLogout)
 

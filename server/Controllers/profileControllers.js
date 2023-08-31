@@ -6,6 +6,7 @@ import jobProfileModel from "../Models/jobProfileModel.js";
 import complaintModel from "../Models/complaintModel.js";
 import scheduleModel from "../Models/scheduleModel.js";
 import { populate } from "dotenv";
+import { group } from "console";
 
 export const getProfileHistory = async (req, res) => {
   try {
@@ -71,7 +72,6 @@ export const getProfileHistory = async (req, res) => {
       },
     ];
     const data = await hiringModel.aggregate(pipeline);
-    console.log(data);
     res.json({ success: true, data });
   } catch (error) {
     console.log("Error", error);
@@ -95,9 +95,9 @@ export const postReview = async (req, res) => {
       { $group: { _id: null, totalRating: { $avg: "$rating" } } },
     ];
     const rating = await reviewModel.aggregate(pipeline);
-    await jobProfileModel.updateOne(
+    const d = await jobProfileModel.updateOne(
       { user_id: req.body.labour_id },
-      { $set: { rating: rating.totalRating } }
+      { $set: { rating: rating[0].totalRating } }
     );
 
     res.json({
@@ -182,18 +182,98 @@ export const getSchedules = async (req, res) => {
 export const getJobInfo = async (req, res) => {
   try {
     const { hire_id } = req.params;
-    const {job_id} = await hiringModel
-      .findOne({ _id: hire_id },{job_id:1})
+    const { job_id } = await hiringModel
+      .findOne({ _id: hire_id }, { job_id: 1 })
       .populate({
-        path: 'job_id',
+        path: "job_id",
         populate: {
-          path: 'category',select:'name'
+          path: "category",
+          select: "name",
         },
       });
-    console.log(job_id, "dhfjhdsjhf");
     res.json(job_id);
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const getReviews = async (req, res) => {
+  try {
+    const user_id = (
+      await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
+    )._id;
+    console.log(user_id);
+    const reviews = await reviewModel.aggregate([
+      { $match: { labour_id: new mongoose.Types.ObjectId(user_id) } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "client_id",
+          foreignField: "_id",
+          as: "client",
+        },
+      },
+      { $unwind: { path: "$client", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 1,
+          labour_id: 1,
+          hire_id: 1,
+          reviewText: 1,
+          rating: 1,
+          createdAt: 1,
+          client: {
+            _id: "$client._id",
+            name: "$client.name",
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: "$rating" },
+          totalReviews: { $sum: 1 },
+          totalFiveRatings: {
+            $sum: { $cond: [{ $eq: ["$rating", 5] }, 1, 0] },
+          },
+          totalFourRatings: {
+            $sum: { $cond: [{ $eq: ["$rating", 4] }, 1, 0] },
+          },
+          totalThreeRatings: {
+            $sum: { $cond: [{ $eq: ["$rating", 3] }, 1, 0] },
+          },
+          totalTwoRatings: {
+            $sum: { $cond: [{ $eq: ["$rating", 2] }, 1, 0] },
+          },
+          totalOneRatings: {
+            $sum: { $cond: [{ $eq: ["$rating", 1] }, 1, 0] },
+          },
+          reviews: { $push: "$$ROOT" },
+        },
+      },
+      {
+        $project:{
+          _id:0,
+          avgRating:1,
+          reviews:1,
+          totalReviews:1,
+          fiveRating:{$divide:['$totalFiveRatings','$totalReviews']},
+          fourRating:{$divide:['$totalFourRatings','$totalReviews']},
+          threeRating:{$divide:['$totalThreeRatings','$totalReviews']},
+          twoRating:{$divide:['$totalTwoRatings','$totalReviews']},
+          oneRating:{$divide:['$totalOneRatings','$totalReviews']},
+        }
+      }
+    ]);
+
+    console.log(
+      JSON.stringify(reviews[0], null, 3),
+      "reviewssssssssssssssssssssss"
+    );
+
+    res.json(reviews[0])
+  } catch (error) {
+    console.log("Error", error);
   }
 };

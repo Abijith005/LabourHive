@@ -34,7 +34,6 @@ export const createNewChatRoom = async (req, res) => {
 
 export const storeMessages = async (req, res) => {
   try {
-    console.log(req.body);
     const { receiver_id, message, sender_id } = req.body;
     const { _id } = await chatRoomModel.findOne({
       $or: [

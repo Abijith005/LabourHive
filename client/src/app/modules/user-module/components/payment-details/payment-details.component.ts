@@ -110,8 +110,7 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           if (res.success) {
             this.postedJobDetails = res.data;
-            console.log('posted job details',this.postedJobDetails);
-            
+                        
             // patching values to the form values
             this.formControls['startDate'].patchValue(
               new Date(this.postedJobDetails.startDate)
@@ -219,11 +218,6 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     this.isSubmitted = true;
 
     if (!this.hireForm.valid) {
-      console.log(
-        this.formControls['description'],
-        'form controllllllllllllssssssssssssssss'
-      );
-
       return;
     }
 
