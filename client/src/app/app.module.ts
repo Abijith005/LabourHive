@@ -17,22 +17,17 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
-import { AdminNavBarComponent } from './components/adminComponents/admin-nav-bar/admin-nav-bar.component';
-import { UserMangementComponent } from './components/adminComponents/user-mangement/user-mangement.component';
 import {MatCardModule} from '@angular/material/card';
-import { CategoryMangementComponent } from './components/adminComponents/category-mangement/category-mangement.component';
-import { WorkMangementComponent } from './components/adminComponents/work-mangement/work-mangement.component';
-import { WalletMangementComponent } from './components/adminComponents/wallet-mangement/wallet-mangement.component';
 import { adminDataReducer } from './store/admin.reducer';
 import { authReducer } from './store/user.reducer';
-import { AddCategoryComponent } from './components/adminComponents/add-category/add-category.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { EditCategoryComponent } from './components/adminComponents/edit-category/edit-category.component';
 import { MapboxService } from './services/commonServices/mapbox.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AppInitializerService } from './services/commonServices/app-initializer.service';
 import { DatePipe } from '@angular/common';
+import { AdminModule } from './modules/admin/admin.module';
+import { UserModule } from './modules/user-module/user.module';
 
 
 
@@ -40,19 +35,13 @@ import { DatePipe } from '@angular/common';
   declarations: [
     AppComponent,
     AdminLoginComponent,
-    AdminDashboardComponent,
-    AdminNavBarComponent,
-    UserMangementComponent,
-    CategoryMangementComponent,
-    WorkMangementComponent,
-    WalletMangementComponent,
-    AddCategoryComponent,
-    EditCategoryComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AdminModule,
+    UserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

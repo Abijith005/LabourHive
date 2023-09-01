@@ -47,7 +47,6 @@ export class RatingComponent implements OnDestroy {
       )
       .pipe(takeUntil(this._unsubscribe))
       .subscribe((res) => {
-        console.log(res);
         if (res.success) {
           this._swalService.showAlert('Success', res.message, 'success');
           this._matDialogRef.close(res.review_id)

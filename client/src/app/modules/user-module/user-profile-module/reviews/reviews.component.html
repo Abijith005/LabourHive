@@ -75,7 +75,7 @@
             <div class="top d-flex justify-content-between">
               <div class="col-7">
                 <img
-                  src={{(item.client.profilePicture)?iitem.client.profilePicture:'"../../../../../assets/userAssets/images/831.jpg"'}}
+                  src="{{'../../../../../assets/userAssets/images/831.jpg'||'../../../../../../../assets/userAssets/images/1408.jpg'}}"
                   style="height: 80px; width: 80px;border-radius: 40px; margin-right: 2rem;"
                 />
                 <ng-container class="rating ms-1" *ngFor="let item of (item.rating)|starRating">

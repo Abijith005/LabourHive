@@ -32,9 +32,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .getHistory()
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        this.historyData = res.data;
-        console.log(this.historyData,'historydatssssssssssssssssssssssssssssssssssss');
-        
+        this.historyData = res.data;        
         
       });
   }
