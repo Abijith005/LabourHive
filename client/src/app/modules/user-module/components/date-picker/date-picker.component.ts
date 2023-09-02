@@ -9,10 +9,15 @@ import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 })
 export class DatePickerComponent {
   date:Date|null=null
+  isCalendarOpen = false;
+
+  toggleCalendar(): void {
+    this.isCalendarOpen = !this.isCalendarOpen;
+  }
 
   ondd(event:Event){
     const input=event.target as HTMLInputElement
-    console.log(input.value,'dskjfhkdhfhjkdsf');
+    console.log(input.value,'dskj');
     
     console.log(this.date,'dkfjkdshfhjsdfhjds');
     

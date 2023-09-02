@@ -2,3 +2,10 @@
     background: orange !important;
     border-radius: 100%;
 }
+.mat-datepicker {
+    width: 300px; /* Adjust the width as needed */
+    padding: 8px; /* Adjust the padding as needed */
+    background-color: white; /* Customize the background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow for a similar look */
+  }
+  

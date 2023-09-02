@@ -54,6 +54,12 @@
 
 }
 
+.example-custom-date-class{
+    background-color: rgb(60, 150, 0) !important;
+    border-radius: 100%;
+}
+
+
 .text {
     position: absolute;
     top: 90%;
@@ -76,6 +82,12 @@ justify-content: flex-end;
     border-radius: 8px;
 }
 
+.mat-datepicker {
+    width: 300px; 
+    padding: 8px;
+    background-color: white; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
 
 
 

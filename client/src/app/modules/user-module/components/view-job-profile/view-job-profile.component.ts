@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { i_jobProfile } from 'src/app/interfaces/userInterfaces/i_jobProfile';
 import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
@@ -9,11 +9,13 @@ import { Store } from '@ngrx/store';
 import { userDataState } from 'src/app/store/user.state';
 import { Subject, map, takeUntil } from 'rxjs';
 import { PaymentDetailsComponent } from '../payment-details/payment-details.component';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-view-job-profile',
   templateUrl: './view-job-profile.component.html',
   styleUrls: ['./view-job-profile.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ViewJobProfileComponent implements OnInit, OnDestroy {
   //variable declarations
@@ -26,6 +28,9 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
   user_id!: string;
   application_id: string | null = null;
   chat: boolean = false;
+  isCalendarOpen = false;
+  maxDate: Date;
+  minDate: Date;
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -36,7 +41,16 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
     private _chatServices: ChatService,
     private _store: Store<userDataState>,
     private _router: Router
-  ) {}
+  ) {
+    const currentDate=new Date()
+    const tommorrow=new Date(new Date().setDate(new Date().getDate()+1))
+    const sevenDays=new Date(currentDate.setDate(currentDate.getDate()+7))
+
+    console.log(tommorrow,'tommorrow',sevenDays);
+    this.maxDate=sevenDays
+    this.minDate=tommorrow
+
+  }
 
   ngOnInit(): void {
     // getting labour_id from route
@@ -59,8 +73,6 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
     this._service.getLabourProfile(this.labour_id).subscribe((res) => {
       if (res.success) {
         this.jobProfileDetails = res;
-        console.log(this.jobProfileDetails.schedule,'scheduleeeeeeeeeeeeeeeeeeeeeeeeeee');
-        
       }
     });
   }
@@ -84,12 +96,30 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
         if (res.success) {
           //activating chat-component
           this.chat = true;
-          const queryParams={receiver:this.jobProfileDetails?.user_id}
-          
-          this._router.navigate(['chat'],{queryParams:queryParams});
+          const queryParams = { receiver: this.jobProfileDetails?.user_id };
+
+          this._router.navigate(['chat'], { queryParams: queryParams });
         }
       });
   }
+
+  toggleCalendar(): void {
+    this.isCalendarOpen = !this.isCalendarOpen;
+  }
+
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highlight dates inside the month view.
+    if (view === 'month') {
+      const date = cellDate.getDate();
+
+      // Highlight the 1st and 20th day of each month.
+      return !this.jobProfileDetails?.schedule?.includes(date)&&date<=this.maxDate.getDate()&&date>=this.minDate.getDate()
+        ? 'example-custom-date-class'
+        : '';
+    }
+
+    return '';
+  };
 
   ngOnDestroy(): void {
     this._unsubscribe$.next();
