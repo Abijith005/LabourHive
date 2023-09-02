@@ -4,6 +4,7 @@ import {
   Inject,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -30,11 +31,13 @@ import { UserService } from 'src/app/modules/user-module/userServices/user.servi
 import { i_jobDetails } from 'src/app/interfaces/userInterfaces/i_jobDetails';
 import { Location } from '@angular/common';
 import { JobService } from '../../userServices/job.service';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
   selector: 'labourHive-payment-details',
   templateUrl: './payment-details.component.html',
   styleUrls: ['./payment-details.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PaymentDetailsComponent implements OnInit, OnDestroy {
   //variable declarations
@@ -51,6 +54,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   isReadOnly: boolean = false;
   coordinates: number[] | [] = [];
   application_id: string | null = null;
+  minDate: Date;
+  maxDate: Date;
 
   private _locationChanged$ = new Subject<string>();
   private _unsubscribe$ = new Subject<void>();
@@ -74,6 +79,16 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     this.matDialogRef.updateSize('500px', '700px');
     this.labourDetails = _data.profileData;
     this.application_id = _data.application_id;
+
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1); // Set the minimum date to tomorrow
+
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 7); // Set the maximum date to 7 days from today
+
+    this.minDate = tomorrow;
+    this.maxDate = maxDate;
   }
 
   ngOnInit(): void {
@@ -103,6 +118,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
     //if the payment is for posted job
     if (this._data.application_id) {
+      console.log(this._data.application_id, 'apllication_iddddddddddd');
+
       // getting posted job details from db
       this._jobService
         .getSingleJobDatas(this._data.application_id)
@@ -110,7 +127,6 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           if (res.success) {
             this.postedJobDetails = res.data;
-                        
             // patching values to the form values
             this.formControls['startDate'].patchValue(
               new Date(this.postedJobDetails.startDate)
@@ -130,6 +146,8 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           );
         });
     } else {
+      console.log('esleeeeeeeeee', this._data.profileData);
+
       // adding description to the form control
       this.hireForm.addControl(
         'description',
@@ -137,6 +155,18 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       );
     }
   }
+  // highlighting the engaged dates
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highlight dates inside the month view.
+    if (view === 'month') {
+      const date = cellDate.getDate();
+
+      // Highlight the 1st and 20th day of each month.
+      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
 
   //get form controls
   get formControls() {
@@ -177,23 +207,6 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       ).getTime();
       const endDate = new Date(this.formControls['endDate'].value).getTime();
 
-      if (startDate < new Date().getTime() || startDate > endDate) {
-        //custom validation for date
-
-        if (startDate < new Date().getTime()) {
-          this.formControls['startDate'].setErrors({ lesserStartDate: true });
-        }
-        if (startDate > endDate) {
-          this.formControls['endDate'].setErrors({ greaterEndDate: true });
-        }
-        this.isDateSelected = true;
-        this.totalWage = null;
-        this.totalDays = null;
-        this.totalPayable = null;
-        return;
-      }
-
-      //getting total days and amount
       const difference = endDate - startDate;
       this.totalDays = difference / (1000 * 60 * 60 * 24) + 1;
       this.totalWage =
@@ -237,9 +250,10 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
         ? this.postedJobDetails.coordinates
         : this.coordinates,
       job_id: this.postedJobDetails ? this.postedJobDetails._id : null,
-      jobDescription:this.formControls['description']?.value
+      jobDescription: this.formControls['description']?.value,
     };
     Object.freeze(data);
+    console.log(data, 'datstttttttttttttttttttt');
 
     //getting order_id for razorpay
     this._service

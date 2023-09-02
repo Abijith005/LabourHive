@@ -76,13 +76,13 @@
             <div class="col-8">
               <mat-form-field class="" style="width: 100%;">
                 <mat-label class="form-label">{{formControl['startDate'].errors?.hasOwnProperty('invalidDate')?'Invalid Start date':'Enter a date range'}}</mat-label>
-                <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate placeholder="Start date" formControlName="startDate">
-                  <input matEndDate placeholder="End date" formControlName="endDate">
+                <mat-date-range-input [min]="minDate" [max]="maxDate" [rangePicker]="picker">
+                  <input matStartDate  placeholder="Start date" formControlName="startDate">
+                  <input matEndDate  placeholder="End date" formControlName="endDate">
                 </mat-date-range-input>
                 <mat-hint class="form-label">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-date-range-picker [dateClass]="dateClass"   #picker></mat-date-range-picker>
               </mat-form-field>
               
             </div>

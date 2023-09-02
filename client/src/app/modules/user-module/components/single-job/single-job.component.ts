@@ -34,6 +34,8 @@ export class SingleJobComponent implements OnDestroy {
   }
 
   applyJob(job_id: string) {
+    console.log(job_id);
+    
     this._store
       .select('user')
       .pipe(takeUntil(this._unsubscribe$))

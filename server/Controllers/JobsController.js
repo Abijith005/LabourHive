@@ -9,6 +9,7 @@ import { verifyToken } from "../Helpers/jwtVerify.js";
 import mongoose from "mongoose";
 import { json } from "stream/consumers";
 import hiringModel from "../Models/hiringModel.js";
+import scheduleModel from "../Models/scheduleModel.js";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -154,11 +155,13 @@ export const labourProfile = async (req, res) => {
   try {
     let labourProfile = await jobProfileModel.findOne({
       user_id: req.params.user_id,
-    });
+    })
 
+    const weekSchedule=await scheduleModel.findOne({user_id:req.params.user_id})
+    const schedule=weekSchedule?.weekSchedule?Array.from(weekSchedule.weekSchedule,item=>item.date):[]
     // converting mongoose object to normal object
     labourProfile = labourProfile.toObject();
-    res.json({ success: true, ...labourProfile });
+    res.json({ success: true, ...labourProfile,schedule });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -244,11 +247,15 @@ export const searchJobs = async (req, res) => {
 export const postJob = async (req, res) => {
   try {
     // avoiding error of time zone converstion by adding one day
+
     const startDate = new Date(req.body.startDate);
-    startDate.setDate(startDate.getDate() + 1);
+    startDate.setHours(startDate.getHours() + 5, startDate.getMinutes() + 30);
+
     const endDate = new Date(req.body.endDate);
-    endDate.setDate(endDate.getDate() + 1);
-    req.body.startDate=startDate,req.body.endDate=endDate
+    endDate.setHours(endDate.getHours() + 5, endDate.getMinutes() + 30);
+
+    req.body.startDate=startDate.toISOString(),req.body.endDate=endDate.toISOString()
+
     const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
     const { _id } = await categoryModel.findOne({
       name: req.body.categoryName,

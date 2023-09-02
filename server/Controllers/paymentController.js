@@ -26,8 +26,8 @@ export const hirePayment = async (req, res) => {
       }
     });
   } catch (error) {
-    res.json({ success: false, message: "server error" });
     console.log("Error", error);
+    res.json({ success: false, message: "server error" });
   }
 };
 
@@ -64,6 +64,16 @@ export const verifyPayment = async (req, res) => {
         delete data.razorpay_payment_id,
         delete data.razorpay_signature;
       (data.client_id = client_id), (data.hiringDate = hiringDate);
+
+      // change date format 
+      const startDate = new Date(data.startDate);
+      startDate.setHours(startDate.getHours() + 5, startDate.getMinutes() + 30);
+      data.startDate = startDate.toISOString();
+
+
+      const endDate = new Date(data.endDate);
+      endDate.setHours(endDate.getHours() + 5, endDate.getMinutes() + 30);
+      data.endDate = endDate.toISOString();
 
       //uploading to db
       await hiringModel.create({ ...data });

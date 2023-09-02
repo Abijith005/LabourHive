@@ -1,6 +1,7 @@
 .datas{
     font-size:18px;
     margin-bottom: 25px;
+    cursor: default;
 } input {
     border: none;
     border-radius: 5px;
@@ -18,6 +19,11 @@ textarea{
 
 .input-container{
     position: relative;
+}
+
+.example-custom-date-class {
+    background: orange !important;
+    border-radius: 100%;
 }
 
 .warning{
@@ -50,6 +56,7 @@ textarea{
 
 .details{
 padding: 20px 5px 5px 5px;
+
 }
 
 .tag-name{
@@ -73,6 +80,15 @@ padding: 20px 5px 5px 5px;
    display: flex;
    justify-content:flex-end;
    margin-top: 40px;
+}
+
+.location-block {
+    white-space: nowrap;    
+    overflow: hidden;        
+    text-overflow: ellipsis;  
+    max-width: 200px;         
+    display: inline-block;   
+    vertical-align: middle;
 }
 
 

@@ -161,8 +161,9 @@ export const getSchedules = async (req, res) => {
       },
     ]);
 
-    weekSchedules = weekSchedules[0].weekSchedules;
-    for (let i = 0; i < 7; i++) {
+    console.log(weekSchedules,'weekschedulessssssssssssssssssssss');
+    weekSchedules = weekSchedules[0]?.weekSchedules?weekSchedules[0].weekSchedules:[];
+    for (let i = 0; i < 8; i++) {
       const expectedDate = new Date(currentDate);
       expectedDate.setDate(currentDate.getDate() + i);
       if (

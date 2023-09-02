@@ -1,21 +1,21 @@
 <div class="container-fluid">
   <div class="container">
     <h1 class="text-center heading">HIRE &nbsp;DETAILS</h1>
-    <div class="content d-flex justify-content-center">
+    <div class="content d-flex justify-content-center ">
       <div class="details">
-        <p class="datas">
+        <p class="datas mb-md-4">
           <span class="tag-name">Name</span
           >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;<span
             >{{ labourDetails?.name }}</span
           >
         </p>
-        <p class="datas">
+        <p class="datas mb-md-4">
           <span class="tag-name">Category</span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{
             labourDetails?.category
           }}</span>
         </p>
-        <p class="datas">
+        <p class="datas mb-md-4">
           <span class="tag-name">Wage</span
           >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
             >{{
@@ -25,116 +25,99 @@
           /Day
         </p>
         <form [formGroup]="hireForm" (ngSubmit)="confirmPayment()">
-          <div class="input-container">
-            <p class="datas">
-              <span class="tag-name">Start Date</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
-                ><input
-                  [readOnly]="isReadOnly"
-                  type="date"
-                  formControlName="startDate"
-                  (change)="onDateChange()"
-              /></span>
-            </p>
-            <p
-              class="warning"
-              *ngIf="
-                (isSubmitted && formControls['startDate'].errors) ||
-                (isDateSelected &&
-                  formControls['startDate'].errors?.hasOwnProperty(
-                    'lesserStartDate'
-                  ))
-              "
-            >
-              {{
-                isDateSelected &&
-                formControls["startDate"].errors?.hasOwnProperty(
-                  "lesserStartDate"
-                )
-                  ? "Invalid start date"
-                  : "Start date is required"
-              }}
-            </p>
-          </div>
-          <div class="input-container">
-            <p class="datas">
-              <span class="tag-name">End Date</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
-                ><input
-                  [readOnly]="isReadOnly"
-                  type="date"
-                  (change)="onDateChange()"
-                  formControlName="endDate"
-              /></span>
-            </p>
-            <p
-              class="warning"
-              *ngIf="
-                (isSubmitted && formControls['endDate'].errors) ||
-                (isDateSelected &&
-                  formControls['endDate'].errors?.hasOwnProperty(
-                    'greaterEndDate'
-                  ))
-              "
-            >
-              {{
-                isDateSelected &&
-                formControls["endDate"].errors?.hasOwnProperty("greaterEndDate")
-                  ? "Invalid end date"
-                  : "End date is required"
-              }}
-            </p>
-          </div>
-          <div class="input-container" *ngIf="!application_id">
-            <p class="datas">
-              <span class="tag-name">Description</span>
-              &nbsp;:&nbsp;&nbsp;<span>
-                <textarea formControlName="description" rows="3"></textarea>
-              </span>
-            </p>
-            <p
-              class="warning"
-              *ngIf="isSubmitted && formControls['description'].errors"
-            >
-              Description is required
-            </p>
-          </div>
-          <div class="input-container">
-            <p class="datas">
-              <span class="tag-name">Location</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>
-                <input
-                  *ngIf="!postedJobDetails"
-                  (keyup)="inputChange($event)"
-                  formControlName="location"
-                  placeholder="Enter Work Location"
-                  type="text"
-                />
-                <input
-                  style="cursor: default"
-                  title="{{ postedJobDetails.location }}"
-                  *ngIf="postedJobDetails"
-                  formControlName="location"
-                  [readonly]="isReadOnly"
-                  type="text"
-                />
-                <ul class="suggestion-list" *ngIf="suggestions.length > 0">
-                  <li
-                    *ngFor="let suggestion of suggestions"
-                    (click)="selectLocation(suggestion)"
-                  >
-                    {{ suggestion.location }}
-                  </li>
-                </ul>
-              </span>
-            </p>
-            <p
-              class="warning"
-              *ngIf="isSubmitted && formControls['location'].errors"
-            >
-              Location is required
-            </p>
-          </div>
+          <ng-container *ngIf="application_id ;else elseBlock" >
+            <div class="input-container">
+              <p class="datas mb-md-4">
+                <span class="tag-name">Start Date</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+                  >{{postedJobDetails?.startDate!|customDate}}</span>
+              </p>
+             </div>
+            <div class="input-container">
+              <p class="datas mb-md-4">
+                <span class="tag-name">End Date</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+                  >{{postedJobDetails?.endDate!|customDate}}</span>
+              </p>
+             </div>
+            <div class="input-container">
+              <p class="datas mb-md-4" style="display: inline-block;">
+                <span class="tag-name">Location</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<span style="cursor: pointer;" matTooltip="{{postedJobDetails?.location}}" class="location-block"
+                  >{{postedJobDetails?.location}}</span>
+              </p>
+             </div>
+          </ng-container>
+          <ng-template #elseBlock>
+            <div class="input-container">
+              <p class="datas mb-md-4">
+                <span class="tag-name">Date</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+                  > <mat-form-field >
+                    <mat-label class="form-label">{{isSubmitted&&(formControls['startDate'].errors||formControls['endDate'].errors)?'Invalid date range':'Enter a date range'}}</mat-label>
+                    <mat-date-range-input  [min]="minDate" [max]="maxDate" [rangePicker]="picker" >
+                      <input matStartDate  placeholder="Start date" formControlName="startDate" (dateChange)="onDateChange()">
+                      <input matEndDate  placeholder="End date" formControlName="endDate" (dateChange)="onDateChange()" >
+                    </mat-date-range-input>
+                    <mat-hint class="form-label">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker [dateClass]="dateClass"   #picker></mat-date-range-picker>
+                  </mat-form-field></span>
+              </p>
+             </div>
+             <div class="input-container">
+              <p class="datas mb-md-4 d-flex align-items-center">
+                <span class="tag-name">Description</span>
+                &nbsp;:&nbsp;&nbsp;<span>
+                  <textarea formControlName="description" rows="3"></textarea>
+                </span>
+              </p>
+              <p
+                class="warning"
+                *ngIf="isSubmitted && formControls['description'].errors"
+              >
+                Description is required
+              </p>
+            </div>
+            <div class="input-container">
+              <p class="datas mb-md-4">
+                <span class="tag-name">Location</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>
+                  <input
+                    *ngIf="!postedJobDetails"
+                    (keyup)="inputChange($event)"
+                    formControlName="location"
+                    placeholder="Enter Work Location"
+                    type="text"
+                  />
+                  <input
+                    style="cursor: default"
+                    title="{{ postedJobDetails.location }}"
+                    *ngIf="postedJobDetails"
+                    formControlName="location"
+                    [readonly]="isReadOnly"
+                    type="text"
+                  />
+                  <ul class="suggestion-list" *ngIf="suggestions.length > 0">
+                    <li
+                      *ngFor="let suggestion of suggestions"
+                      (click)="selectLocation(suggestion)"
+                    >
+                      {{ suggestion.location }}
+                    </li>
+                  </ul>
+                </span>
+              </p>
+              <p
+                class="warning"
+                *ngIf="isSubmitted && formControls['location'].errors"
+              >
+                Location is required
+              </p>
+            </div>
+          </ng-template>
+
+         
         </form>
       </div>
     </div>

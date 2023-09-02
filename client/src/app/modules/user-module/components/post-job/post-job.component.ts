@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {
@@ -15,11 +15,14 @@ import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { JobService } from 'src/app/modules/user-module/userServices/job.service';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
   selector: 'labourHive-post-job',
   templateUrl: './post-job.component.html',
   styleUrls: ['./post-job.component.css'],
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class PostJobComponent implements OnInit,OnDestroy {
   // variable declarations
@@ -30,6 +33,8 @@ export class PostJobComponent implements OnInit,OnDestroy {
   categories!: i_category[];
   isSubmitted: boolean = false;
   selectedCategory: i_category | null = null;
+  minDate: Date;
+  maxDate: Date;
 
   private _unsubscribe$ = new Subject<void>();
   constructor(
@@ -38,7 +43,18 @@ export class PostJobComponent implements OnInit,OnDestroy {
     private _mapboxServices: MapboxService,
     private _jobService: JobService,
     private _swalServices: SwalService
-  ) {}
+  ) {
+
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1); // Set the minimum date to tomorrow
+    
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 7); // Set the maximum date to 7 days from today
+    
+    this.minDate = tomorrow;
+    this.maxDate = maxDate;
+  }
 
   ngOnInit(): void {
     this.postJobForm = this._fb.group({
@@ -94,6 +110,19 @@ export class PostJobComponent implements OnInit,OnDestroy {
   close() {
     this._matDialog.close();
   }
+
+  
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highlight dates inside the month view.
+    if (view === 'month') {
+      const date = cellDate.getDate();
+
+      // Highlight the 1st and 20th day of each month.
+      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
 
   onSubmit() {
     this.isSubmitted = true;

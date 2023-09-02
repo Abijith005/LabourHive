@@ -31,6 +31,7 @@ import { MyJobsComponent } from './components/my-jobs/my-jobs.component';
 import { PostedJobsComponent } from './components/posted-jobs/posted-jobs.component';
 import { SingleJobComponent } from './components/single-job/single-job.component';
 import { SharedModule } from '../shared/shared.module';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 @NgModule({
   declarations: [
     UserHomeComponent,
@@ -50,7 +51,8 @@ import { SharedModule } from '../shared/shared.module';
     PostedJobsComponent,
     SingleJobComponent,
     ViewApplicantsComponent,
-    EditJobComponent
+    EditJobComponent,
+    DatePickerComponent
   ],
   imports: [
     CommonModule,

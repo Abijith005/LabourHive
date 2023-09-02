@@ -5,6 +5,12 @@
    
 }
 
+.example-custom-date-class {
+    background: orange !important;
+    border-radius: 100%;
+}
+
+
 .suggestions{
     position: absolute;
     background-color: #ffffff;
