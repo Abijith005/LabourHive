@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminLoginComponent } from './components/adminComponents/admin-login/admin-login.component';
+import { AdminLoginComponent } from './modules/admin/admin-login/admin-login.component';
 
 const routes: Routes = [
   // Lazy-loaded modules

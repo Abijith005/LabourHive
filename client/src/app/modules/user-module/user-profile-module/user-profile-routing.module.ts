@@ -6,6 +6,7 @@ import { ReviewsComponent } from './reviews/reviews.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { HistoryComponent } from './history/history.component';
+import { ChatComponent } from '../components/chat/chat.component';
 
 const userProfileRoutes: Routes = [
   {
@@ -17,7 +18,8 @@ const userProfileRoutes: Routes = [
       {path:'reviews',component:ReviewsComponent},
       {path:'wallet',component:WalletComponent},
       {path:'schedules',component:SchedulesComponent},
-      {path:'history',component:HistoryComponent}
+      {path:'history',component:HistoryComponent},
+      {path:'chat',component:ChatComponent}
     ],
   },
 ];

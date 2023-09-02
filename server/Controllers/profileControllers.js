@@ -95,9 +95,9 @@ export const postReview = async (req, res) => {
       { $group: { _id: null, totalRating: { $avg: "$rating" } } },
     ];
     const rating = await reviewModel.aggregate(pipeline);
-    const d = await jobProfileModel.updateOne(
+    await jobProfileModel.updateOne(
       { user_id: req.body.labour_id },
-      { $set: { rating: rating[0].totalRating } }
+      { $set: { rating:rating[0].totalRating.toFixed(1)} }
     );
 
     res.json({
@@ -253,18 +253,18 @@ export const getReviews = async (req, res) => {
         },
       },
       {
-        $project:{
-          _id:0,
-          avgRating:1,
-          reviews:1,
-          totalReviews:1,
-          fiveRating:{$divide:['$totalFiveRatings','$totalReviews']},
-          fourRating:{$divide:['$totalFourRatings','$totalReviews']},
-          threeRating:{$divide:['$totalThreeRatings','$totalReviews']},
-          twoRating:{$divide:['$totalTwoRatings','$totalReviews']},
-          oneRating:{$divide:['$totalOneRatings','$totalReviews']},
-        }
-      }
+        $project: {
+          _id: 0,
+          avgRating: 1,
+          reviews: 1,
+          totalReviews: 1,
+          fiveRating: { $divide: ["$totalFiveRatings", "$totalReviews"] },
+          fourRating: { $divide: ["$totalFourRatings", "$totalReviews"] },
+          threeRating: { $divide: ["$totalThreeRatings", "$totalReviews"] },
+          twoRating: { $divide: ["$totalTwoRatings", "$totalReviews"] },
+          oneRating: { $divide: ["$totalOneRatings", "$totalReviews"] },
+        },
+      },
     ]);
 
     console.log(
@@ -272,7 +272,7 @@ export const getReviews = async (req, res) => {
       "reviewssssssssssssssssssssss"
     );
 
-    res.json(reviews[0])
+    res.json(reviews[0]);
   } catch (error) {
     console.log("Error", error);
   }

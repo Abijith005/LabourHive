@@ -2,8 +2,6 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminLoginComponent } from './components/adminComponents/admin-login/admin-login.component';
-import { AdminDashboardComponent } from './components/adminComponents/admin-dashboard/admin-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import{HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
@@ -28,6 +26,7 @@ import { AppInitializerService } from './services/commonServices/app-initializer
 import { DatePipe } from '@angular/common';
 import { AdminModule } from './modules/admin/admin.module';
 import { UserModule } from './modules/user-module/user.module';
+import { AdminLoginComponent } from './modules/admin/admin-login/admin-login.component';
 
 
 

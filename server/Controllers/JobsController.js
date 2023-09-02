@@ -476,3 +476,17 @@ export const cancelJobRequest = async (req, res) => {
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+export const getAllJobDetails=async (req,res)=>{
+  try {
+    const currentDate=new Date()
+    currentDate.setHours(0,0,0,0)
+    const jobs=await jobsModel.find({startDate:{$gt:currentDate}}).populate([{path:'client_id',select:'name'},{path:'category',select:'name'}]).lean()
+    console.log(jobs,'kldfjdjfldsfjljsdlf');
+    res.json(jobs)
+    
+  } catch (error) {
+    console.log("Error",error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+}

@@ -19,6 +19,9 @@
                       <i class="fas fa-calendar-days"></i>
                                             <b>SCHEDULES</b>
                     </div>
+                    <div class="side-item" [class.active]="activeItem==='chat'" (click)="changeActive('chat')" [routerLink]="['chat']">
+                      <i class="fas fa-arrow-rotate-right"></i>                      <b>CHAT</b>
+                    </div>
                     <div class="side-item" [class.active]="activeItem==='history'" (click)="changeActive('history')" [routerLink]="['history']">
                       <i class="fas fa-arrow-rotate-right"></i>                      <b>HISTORY</b>
                     </div>

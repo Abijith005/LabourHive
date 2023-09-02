@@ -1,47 +1,173 @@
 <div class="container-fluid">
-    <div class="container">
-        <h1 class="text-center heading">HIRE &nbsp;DETAILS </h1>
-        <div class="content d-flex justify-content-center">
-            <div class="details">
-                <p class="datas"><span class="tag-name">Name</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;<span>{{labourDetails?.name}}</span></p>
-                <p class="datas"><span class="tag-name">Category</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{labourDetails?.category}}</span></p>
-                <p class="datas"><span class="tag-name">Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{postedJobDetails?postedJobDetails.wage:labourDetails?.wage}}</span> /Day</p>
-                <form [formGroup]="hireForm" (ngSubmit)="confirmPayment()">
-                    <div class="input-container">
-                        <p class="datas"><span class="tag-name">Start Date</span> &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span><input [readOnly]="isReadOnly" type="date" formControlName="startDate" (change)="onDateChange()" ></span></p>
-                        <p class="warning" *ngIf="isSubmitted&&formControls['startDate'].errors||isDateSelected&&formControls['startDate'].errors?.hasOwnProperty('lesserStartDate')">{{isDateSelected&&formControls['startDate'].errors?.hasOwnProperty('lesserStartDate')?'Invalid start date':'Start date is required'}}</p>
-                    </div>
-                    <div class="input-container">
-                        <p class="datas"><span class="tag-name">End Date</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span><input [readOnly]="isReadOnly" type="date" (change)="onDateChange()" formControlName="endDate" ></span></p>
-                        <p class="warning" *ngIf="isSubmitted&&formControls['endDate'].errors||isDateSelected&&formControls['endDate'].errors?.hasOwnProperty('greaterEndDate')">{{isDateSelected&&formControls['endDate'].errors?.hasOwnProperty('greaterEndDate')?'Invalid end date':'End date is required'}}</p>
-                    </div>
-                    <div class="input-container" *ngIf="!application_id">
-                        <p class="datas"><span class="tag-name">Description</span> &nbsp;:&nbsp;&nbsp;<span><textarea  formControlName="description" rows="3"></textarea></span></p>
-                        <p class="warning" *ngIf="isSubmitted&&formControls['description'].errors">Description is required</p>
-                    </div>
-                    <div class="input-container">
-                        <p class="datas"><span class="tag-name">Location</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span> <input *ngIf="!postedJobDetails" (keyup)="inputChange($event)" formControlName="location" placeholder="Enter Work Location" type="text">
-                            <input style="cursor: default;" title="{{postedJobDetails.location}}" *ngIf="postedJobDetails" formControlName="location" [readonly]="isReadOnly" type="text">
-                        <ul class="suggestion-list" *ngIf="suggestions.length>0" >
-                            <li *ngFor="let suggestion of suggestions" (click)="selectLocation(suggestion)">{{suggestion.location}}</li>
-                        </ul>
-                        </span> </p>
-                        <p class="warning" *ngIf="isSubmitted&&formControls['location'].errors">Location is required</p>
-                    </div>
-                </form>
-            </div>
-        </div>
-            <div class="payment-card">
-                <p class="datas" *ngIf="totalDays"><span class="tag-name" >Total Days</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{totalDays}} Days</span></p>
-                <p class="datas"><span class="tag-name">Total Wage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;₹ <span >{{totalWage?totalWage:labourDetails?.wage}}</span></p>
-                <p class="datas"><span class="tag-name">Service Charge</span>&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;1% of Total Wage</p>
-                <p (click)="goBack()" class="datas"><span class="tag-name">Total Payable</span>&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;₹ <span>{{totalPayable?totalPayable:labourDetails?.wage}}</span></p>
-
-                <div class="button">
-                    <button class="btn btn-danger me-2" (click)="closeDialogBox()">Cancel</button>
-                    <button class="btn btn-primary" (click)="confirmPayment()"> Pay & Proceed</button>
-                </div>
-        </div>
-        
+  <div class="container">
+    <h1 class="text-center heading">HIRE &nbsp;DETAILS</h1>
+    <div class="content d-flex justify-content-center">
+      <div class="details">
+        <p class="datas">
+          <span class="tag-name">Name</span
+          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;<span
+            >{{ labourDetails?.name }}</span
+          >
+        </p>
+        <p class="datas">
+          <span class="tag-name">Category</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{
+            labourDetails?.category
+          }}</span>
+        </p>
+        <p class="datas">
+          <span class="tag-name">Wage</span
+          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+            >{{
+              postedJobDetails ? postedJobDetails.wage : labourDetails?.wage
+            }}</span
+          >
+          /Day
+        </p>
+        <form [formGroup]="hireForm" (ngSubmit)="confirmPayment()">
+          <div class="input-container">
+            <p class="datas">
+              <span class="tag-name">Start Date</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+                ><input
+                  [readOnly]="isReadOnly"
+                  type="date"
+                  formControlName="startDate"
+                  (change)="onDateChange()"
+              /></span>
+            </p>
+            <p
+              class="warning"
+              *ngIf="
+                (isSubmitted && formControls['startDate'].errors) ||
+                (isDateSelected &&
+                  formControls['startDate'].errors?.hasOwnProperty(
+                    'lesserStartDate'
+                  ))
+              "
+            >
+              {{
+                isDateSelected &&
+                formControls["startDate"].errors?.hasOwnProperty(
+                  "lesserStartDate"
+                )
+                  ? "Invalid start date"
+                  : "Start date is required"
+              }}
+            </p>
+          </div>
+          <div class="input-container">
+            <p class="datas">
+              <span class="tag-name">End Date</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+                ><input
+                  [readOnly]="isReadOnly"
+                  type="date"
+                  (change)="onDateChange()"
+                  formControlName="endDate"
+              /></span>
+            </p>
+            <p
+              class="warning"
+              *ngIf="
+                (isSubmitted && formControls['endDate'].errors) ||
+                (isDateSelected &&
+                  formControls['endDate'].errors?.hasOwnProperty(
+                    'greaterEndDate'
+                  ))
+              "
+            >
+              {{
+                isDateSelected &&
+                formControls["endDate"].errors?.hasOwnProperty("greaterEndDate")
+                  ? "Invalid end date"
+                  : "End date is required"
+              }}
+            </p>
+          </div>
+          <div class="input-container" *ngIf="!application_id">
+            <p class="datas">
+              <span class="tag-name">Description</span>
+              &nbsp;:&nbsp;&nbsp;<span>
+                <textarea formControlName="description" rows="3"></textarea>
+              </span>
+            </p>
+            <p
+              class="warning"
+              *ngIf="isSubmitted && formControls['description'].errors"
+            >
+              Description is required
+            </p>
+          </div>
+          <div class="input-container">
+            <p class="datas">
+              <span class="tag-name">Location</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span>
+                <input
+                  *ngIf="!postedJobDetails"
+                  (keyup)="inputChange($event)"
+                  formControlName="location"
+                  placeholder="Enter Work Location"
+                  type="text"
+                />
+                <input
+                  style="cursor: default"
+                  title="{{ postedJobDetails.location }}"
+                  *ngIf="postedJobDetails"
+                  formControlName="location"
+                  [readonly]="isReadOnly"
+                  type="text"
+                />
+                <ul class="suggestion-list" *ngIf="suggestions.length > 0">
+                  <li
+                    *ngFor="let suggestion of suggestions"
+                    (click)="selectLocation(suggestion)"
+                  >
+                    {{ suggestion.location }}
+                  </li>
+                </ul>
+              </span>
+            </p>
+            <p
+              class="warning"
+              *ngIf="isSubmitted && formControls['location'].errors"
+            >
+              Location is required
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
+    <div class="payment-card">
+      <p class="datas" *ngIf="totalDays">
+        <span class="tag-name">Total Days</span
+        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
+          >{{ totalDays }} Days</span
+        >
+      </p>
+      <p class="datas">
+        <span class="tag-name">Total Wage</span
+        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;₹
+        <span>{{ totalWage ? totalWage : labourDetails?.wage }}</span>
+      </p>
+      <p class="datas">
+        <span class="tag-name">Service Charge</span
+        >&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;1% of Total Wage
+      </p>
+      <p (click)="goBack()" class="datas">
+        <span class="tag-name">Total Payable</span
+        >&nbsp;&nbsp;&nbsp;&NonBreakingSpace;&nbsp;:&nbsp;&nbsp;₹
+        <span>{{ totalPayable ? totalPayable : labourDetails?.wage }}</span>
+      </p>
+
+      <div class="button">
+        <button class="btn btn-danger me-2" (click)="closeDialogBox()">
+          Cancel
+        </button>
+        <button class="btn btn-primary" (click)="confirmPayment()">
+          Pay & Proceed
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
