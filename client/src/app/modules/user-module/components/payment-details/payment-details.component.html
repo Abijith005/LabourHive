@@ -54,7 +54,7 @@
                 <span class="tag-name">Date</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span
                   > <mat-form-field >
-                    <mat-label class="form-label">{{isSubmitted&&(formControls['startDate'].errors||formControls['endDate'].errors)?'Invalid date range':'Enter a date range'}}</mat-label>
+                    <mat-label class="form-label" [style.color]="isSubmitted&&(formControls['startDate'].errors||formControls['endDate'].errors)?'red':''" >{{isSubmitted&&formControls['startDate'].errors?.hasOwnProperty('wrongDate')?'Cant select this date range':(isSubmitted&&(formControls['startDate'].errors||formControls['endDate'].errors)?'Invalid date range':'Enter a date range')}}</mat-label>
                     <mat-date-range-input  [min]="minDate" [max]="maxDate" [rangePicker]="picker" >
                       <input matStartDate  placeholder="Start date" formControlName="startDate" (dateChange)="onDateChange()">
                       <input matEndDate  placeholder="End date" formControlName="endDate" (dateChange)="onDateChange()" >

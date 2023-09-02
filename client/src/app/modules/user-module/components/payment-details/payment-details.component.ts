@@ -82,10 +82,10 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
     const today = new Date();
     const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1); // Set the minimum date to tomorrow
+    tomorrow.setDate(today.getDate() + 1);
 
     const maxDate = new Date(today);
-    maxDate.setDate(today.getDate() + 7); // Set the maximum date to 7 days from today
+    maxDate.setDate(today.getDate() + 7); 
 
     this.minDate = tomorrow;
     this.maxDate = maxDate;
@@ -118,8 +118,6 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
     //if the payment is for posted job
     if (this._data.application_id) {
-      console.log(this._data.application_id, 'apllication_iddddddddddd');
-
       // getting posted job details from db
       this._jobService
         .getSingleJobDatas(this._data.application_id)
@@ -161,8 +159,9 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     if (view === 'month') {
       const date = cellDate.getDate();
 
+
       // Highlight the 1st and 20th day of each month.
-      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
+      return this._data.profileData.schedule?.includes(date) ? 'example-custom-date-class' : '';
     }
 
     return '';
@@ -202,6 +201,15 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       !this.formControls['startDate'].errors &&
       !this.formControls['endDate'].errors
     ) {
+      const start=this.formControls['startDate'].value.getDate()
+      const end=this.formControls['endDate'].value.getDate()
+     this._data.profileData.schedule?.forEach(item=>{
+      if (item>=start&&item<=end) {
+        this.formControls['startDate'].setErrors({wrongDate:true})
+      }
+     })
+
+
       const startDate = new Date(
         this.formControls['startDate'].value
       ).getTime();

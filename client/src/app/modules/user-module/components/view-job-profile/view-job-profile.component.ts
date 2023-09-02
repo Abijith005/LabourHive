@@ -59,6 +59,8 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
     this._service.getLabourProfile(this.labour_id).subscribe((res) => {
       if (res.success) {
         this.jobProfileDetails = res;
+        console.log(this.jobProfileDetails.schedule,'scheduleeeeeeeeeeeeeeeeeeeeeeeeeee');
+        
       }
     });
   }

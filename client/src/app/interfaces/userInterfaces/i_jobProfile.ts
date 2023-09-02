@@ -11,5 +11,5 @@ export interface i_jobProfile {
   _id?: string;
   user_id?: string;
   rating?: number;
-  schedule?:Date[]
+  schedule?:number[]
 }

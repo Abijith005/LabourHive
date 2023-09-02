@@ -157,8 +157,9 @@ export const labourProfile = async (req, res) => {
       user_id: req.params.user_id,
     })
 
+    const today=new Date().getDate()
     const weekSchedule=await scheduleModel.findOne({user_id:req.params.user_id})
-    const schedule=weekSchedule?.weekSchedule?Array.from(weekSchedule.weekSchedule,item=>item.date):[]
+    const schedule=weekSchedule?.weekSchedule?Array.from(weekSchedule.weekSchedule, item => item.date.getDate()).filter(date => date > today):[]
     // converting mongoose object to normal object
     labourProfile = labourProfile.toObject();
     res.json({ success: true, ...labourProfile,schedule });
