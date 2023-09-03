@@ -21,6 +21,7 @@ import { WorkMangementComponent } from './work-mangement/work-mangement.componen
 import { WalletMangementComponent } from './wallet-mangement/wallet-mangement.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { ViewHiringsComponent } from './view-hirings/view-hirings.component';
 
 
 
@@ -33,7 +34,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     WorkMangementComponent,
     WalletMangementComponent,
     AddCategoryComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    ViewHiringsComponent
   ],
   imports: [
     CommonModule,

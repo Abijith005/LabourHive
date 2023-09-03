@@ -155,15 +155,20 @@ export const labourProfile = async (req, res) => {
   try {
     let labourProfile = await jobProfileModel.findOne({
       user_id: req.params.user_id,
-    })
+    });
 
-    const today=new Date().getDate()
-    console.log(req.params.user_id,'gsdsfsdfsadfasfsfsda');
-    const weekSchedule=await scheduleModel.findOne({user_id:req.params.user_id})
-    const schedule=weekSchedule?.weekSchedule?Array.from(weekSchedule.weekSchedule, item => item.date.getDate()).filter(date => date > today):[]
+    const today = new Date().getDate();
+    const weekSchedule = await scheduleModel.findOne({
+      user_id: req.params.user_id,
+    });
+    const schedule = weekSchedule?.weekSchedule
+      ? Array.from(weekSchedule.weekSchedule, (item) =>
+          item.date.getDate()
+        ).filter((date) => date > today)
+      : [];
     // converting mongoose object to normal object
     labourProfile = labourProfile.toObject();
-    res.json({ success: true, ...labourProfile,schedule });
+    res.json({ success: true, ...labourProfile, schedule });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -256,7 +261,8 @@ export const postJob = async (req, res) => {
     const endDate = new Date(req.body.endDate);
     endDate.setHours(endDate.getHours() + 5, endDate.getMinutes() + 30);
 
-    req.body.startDate=startDate.toISOString(),req.body.endDate=endDate.toISOString()
+    (req.body.startDate = startDate.toISOString()),
+      (req.body.endDate = endDate.toISOString());
 
     const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
     const { _id } = await categoryModel.findOne({
@@ -409,12 +415,12 @@ export const editJob = async (req, res) => {
   }
 };
 
-export const expireJob = async (req, res) => {
+export const changeJobStatus = async (req, res) => {
   try {
-    const { job_id } = req.body;
+    const { job_id,status } = req.body;
     await jobsModel.updateOne(
       { _id: job_id },
-      { $set: { currentStatus: "expired" } }
+      { $set: { currentStatus: status } }
     );
     res.json({ success: true, message: "Job status updated successfully" });
   } catch (error) {
@@ -486,16 +492,32 @@ export const cancelJobRequest = async (req, res) => {
   }
 };
 
-export const getAllJobDetails=async (req,res)=>{
+export const getAllJobDetails = async (req, res) => {
   try {
-    const currentDate=new Date()
-    currentDate.setHours(0,0,0,0)
-    const jobs=await jobsModel.find({startDate:{$gt:currentDate}}).populate([{path:'client_id',select:'name'},{path:'category',select:'name'}]).lean()
-    console.log(jobs,'kldfjdjfldsfjljsdlf');
-    res.json(jobs)
-    
+    const { filter, search, page } = req.query;
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const client_id = await userModel
+      .find({ name: RegExp(search, "i") }, { _id: 1 })
+      .lean();
+
+    const jobs = await jobsModel
+      .find({
+        $and: [
+          { currentStatus: RegExp(filter, "i") },
+          { client_id: { $in: client_id } },
+        ],
+      })
+      .populate([
+        { path: "client_id", select: "name" },
+        { path: "category", select: "name" },
+      ])
+      .lean();
+    res.json(jobs);
   } catch (error) {
-    console.log("Error",error);
+    console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};
+
+

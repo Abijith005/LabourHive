@@ -41,7 +41,7 @@ export class ViewApplicantsComponent implements OnDestroy {
     );
     if (confirmation) {
       this._jobService
-        .updateApplcation(application_id,'rejected')
+        .updateApplcation(application_id, 'rejected')
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
           if (res.success) {

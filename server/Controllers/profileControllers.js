@@ -5,8 +5,6 @@ import reviewModel from "../Models/reviewModel.js";
 import jobProfileModel from "../Models/jobProfileModel.js";
 import complaintModel from "../Models/complaintModel.js";
 import scheduleModel from "../Models/scheduleModel.js";
-import { populate } from "dotenv";
-import { group } from "console";
 
 export const getProfileHistory = async (req, res) => {
   try {
@@ -161,7 +159,6 @@ export const getSchedules = async (req, res) => {
       },
     ]);
 
-    console.log(weekSchedules,'weekschedulessssssssssssssssssssss');
     weekSchedules = weekSchedules[0]?.weekSchedules?weekSchedules[0].weekSchedules:[];
     for (let i = 0; i < 8; i++) {
       const expectedDate = new Date(currentDate);
@@ -204,7 +201,6 @@ export const getReviews = async (req, res) => {
     const user_id = (
       await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
     )._id;
-    console.log(user_id);
     const reviews = await reviewModel.aggregate([
       { $match: { labour_id: new mongoose.Types.ObjectId(user_id) } },
       {
@@ -267,11 +263,6 @@ export const getReviews = async (req, res) => {
         },
       },
     ]);
-
-    console.log(
-      JSON.stringify(reviews[0], null, 3),
-      "reviewssssssssssssssssssssss"
-    );
 
     res.json(reviews[0]);
   } catch (error) {

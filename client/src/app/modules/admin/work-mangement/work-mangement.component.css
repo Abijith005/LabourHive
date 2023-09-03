@@ -22,10 +22,12 @@ tr{
     text-align: center;
 }
 
-.blockBtn{
 
-    height: 35px;
-    border-radius: 5px;
-    width: 100px;
+
+.filter{
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, .3);
+    border: thin solid rgba(0, 0, 0, .2);
+}li{
+    cursor: pointer;
 }
 

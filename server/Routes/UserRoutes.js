@@ -1,7 +1,7 @@
 import express from 'express'
 import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserAuthController.js'
 import { getAllCategories } from '../Controllers/CategoryController.js'
-import { applyJob, cancelJobRequest, createJobProfile, editJob, expireJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
+import { applyJob, cancelJobRequest, changeJobStatus, createJobProfile, editJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
 import { getJobInfo, getProfileHistory, getReviews, getSchedules, postComplaint, postReview } from '../Controllers/profileControllers.js'
@@ -60,7 +60,7 @@ router.get('/jobs/getPostedJobs',getPostedJobs)
 
 router.put('/jobs/editJob',editJob)
 
-router.patch('/jobs/expireJob',expireJob)
+router.patch('/jobs/expireJob',changeJobStatus)
 
 router.patch('/jobs/updateApplication',rejectJobApplication)
 

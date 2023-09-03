@@ -144,7 +144,6 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
           );
         });
     } else {
-      console.log('esleeeeeeeeee', this._data.profileData);
 
       // adding description to the form control
       this.hireForm.addControl(
@@ -200,15 +199,14 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
     if (
       !this.formControls['startDate'].errors &&
       !this.formControls['endDate'].errors
-    ) {
-      const start=this.formControls['startDate'].value.getDate()
-      const end=this.formControls['endDate'].value.getDate()
+    ) {      
+      const start=new Date(this.formControls['startDate'].value).getDate()
+      const end=new Date(this.formControls['endDate'].value).getDate()
      this._data.profileData.schedule?.forEach(item=>{
-      if (item>=start&&item<=end) {
+      if (item>=start&&item<=end&&!this.application_id) {        
         this.formControls['startDate'].setErrors({wrongDate:true})
       }
      })
-
 
       const startDate = new Date(
         this.formControls['startDate'].value
@@ -238,9 +236,10 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
   confirmPayment() {
     this.isSubmitted = true;
 
-    if (!this.hireForm.valid) {
+    if (!this.hireForm.valid) {      
       return;
     }
+    
 
     //datas to send backend
     const data: i_paymentDetails = {
@@ -261,7 +260,6 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
       jobDescription: this.formControls['description']?.value,
     };
     Object.freeze(data);
-    console.log(data, 'datstttttttttttttttttttt');
 
     //getting order_id for razorpay
     this._service

@@ -51,13 +51,18 @@ const hiringSchema = new mongoose.Schema({
   },
   offeredWage: {
     type: Number,
-    required: [false, "offerred wage is not mandatory"],
+    required: false,
   },
   hireStatus: {
     type: String,
     enum: ["hired", "cancelled", "cancelRequested"],
     default: "hired",
   },
+  paymentToLabour:{
+    type:String,
+    enum:['pending','rejected','approved'],
+    default:'pending'
+  }
 });
 
 // adding the work date to the labour schedule model by post middleware
@@ -74,7 +79,6 @@ hiringSchema.post("save", async function (doc) {
       currentDate.setDate(this.startDate.getDate() + index);
       return { date: currentDate, hire_id: doc._id };
     });
-    console.log(dates);
 
    await scheduleModel.updateOne(
       { user_id: doc.labour_id },

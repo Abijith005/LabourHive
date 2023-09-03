@@ -1,8 +1,10 @@
 import express from 'express'
 import { adminLogin, blockOrUnblockUser, getAllUsers } from '../Controllers/AdminController.js'
 import { addCategory, blockCategory, deleteCategory, getAllCategories, updateCategory } from '../Controllers/CategoryController.js'
-import { getAllJobDetails } from '../Controllers/JobsController.js'
+import { changeJobStatus, getAllJobDetails } from '../Controllers/JobsController.js'
 import { getWalletDetails } from '../Controllers/walletController.js'
+import { getHirings } from '../Controllers/hireController.js'
+import { updatePayment } from '../Controllers/paymentController.js'
 const router=express.Router()
 
 
@@ -25,6 +27,12 @@ router.delete('/deleteCategory/:_id',deleteCategory)
 router.get('/getAllJobDetails',getAllJobDetails)
 
 router.get('/getWalletDetails',getWalletDetails)
+
+router.get('/getHirings',getHirings)
+
+router.patch('/changeJobStatus',changeJobStatus)
+
+router.patch('/updatePayment',updatePayment)
 
 
 

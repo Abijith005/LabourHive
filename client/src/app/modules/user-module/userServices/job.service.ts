@@ -37,8 +37,8 @@ export class JobService {
     return this._http.put<i_authRes>(`/jobs/editJob`,{...data,job_id})
   }
 
-  expireJob(job_id:string){
-    return this._http.patch<i_authRes>(`/jobs/expireJob`,{job_id})
+  changeJobStatus(job_id:string,status:string){
+    return this._http.patch<i_authRes>(`/jobs/expireJob`,{job_id,status})
   }
 
   updateApplcation(application_id:string,value:string){

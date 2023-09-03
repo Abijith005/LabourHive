@@ -49,7 +49,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" (click)="editJob(item)">Edit</a></li>
-                        <li><a class="dropdown-item" (click)="expireJob(item._id!)">Expire</a></li>
+                        <li><a class="dropdown-item" (click)="changeJobStatus(item._id!,'expired')">Expire</a></li>
                     </ul>
                 </div>
             </div>

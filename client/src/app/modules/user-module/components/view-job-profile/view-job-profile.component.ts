@@ -42,14 +42,12 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
     private _store: Store<userDataState>,
     private _router: Router
   ) {
-    const currentDate=new Date()
-    const tommorrow=new Date(new Date().setDate(new Date().getDate()+1))
-    const sevenDays=new Date(currentDate.setDate(currentDate.getDate()+7))
+    const currentDate = new Date();
+    const tommorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+    const sevenDays = new Date(currentDate.setDate(currentDate.getDate() + 7));
 
-    console.log(tommorrow,'tommorrow',sevenDays);
-    this.maxDate=sevenDays
-    this.minDate=tommorrow
-
+    this.maxDate = sevenDays;
+    this.minDate = tommorrow;
   }
 
   ngOnInit(): void {
@@ -113,7 +111,9 @@ export class ViewJobProfileComponent implements OnInit, OnDestroy {
       const date = cellDate.getDate();
 
       // Highlight the 1st and 20th day of each month.
-      return !this.jobProfileDetails?.schedule?.includes(date)&&date<=this.maxDate.getDate()&&date>=this.minDate.getDate()
+      return !this.jobProfileDetails?.schedule?.includes(date) &&
+        date <= this.maxDate.getDate() &&
+        date >= this.minDate.getDate()
         ? 'example-custom-date-class'
         : '';
     }

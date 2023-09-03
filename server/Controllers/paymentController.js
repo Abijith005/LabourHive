@@ -90,3 +90,26 @@ export const verifyPayment = async (req, res) => {
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+export const updatePayment=async (req,res)=>{
+  try {
+    let status,message
+    const {hire_id,payment}=req.body
+    console.log(hire_id,payment,'paymentttttttttttttttttt');
+    if (payment) {
+      status='approved'
+      message='Amount transffered to labour wallet successfully'
+      
+      // await
+    }else{
+      status='rejected'
+      message='Payment rejected successfully'
+    }
+    await hiringModel.updateOne({_id:hire_id},{$set:{paymentToLabour:status}})
+    res.json({success:true,message:message})
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+    
+  }
+}

@@ -81,7 +81,7 @@ export class PostedJobsComponent implements OnInit, OnDestroy {
       });
   }
 
-  async expireJob(job_id: string) {
+  async changeJobStatus(job_id: string,status:string) {
     const confirmation = await this._swalServic.showConfirmation(
       'Expire Job',
       'Do you want to expire the job',
@@ -89,7 +89,7 @@ export class PostedJobsComponent implements OnInit, OnDestroy {
     );
     if (confirmation) {
       this._jobService
-        .expireJob(job_id)
+        .changeJobStatus(job_id,status)
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
           if (res.success) {

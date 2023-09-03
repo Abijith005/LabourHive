@@ -1,39 +1,93 @@
 <div class="header d-flex justify-content-between ms-3 me-3 pt-4">
-    <h3><b>JOB MANAGEMENT</b></h3>
-    <div class="search ">
-      <!-- <input type="text" placeholder="Search" name="keyWord" [(ngModel)]="keyWord" (keyup)="searchUser()"
-        style="width: 200px;"> -->
-      <!-- <button class="btn btn-success ms-2">Search</button> -->
+  <h3><b>JOB MANAGEMENT</b></h3>
+  <div class="search">
+    <div class="btn-group filter me-3">
+      <button
+        type="button"
+        class="btn btn-sm btn-link dropdown-toggle"
+        style="width: 120px"
+        data-mdb-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{ filter ? filter : "Filter" }}
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" (click)="onChangeFilter('All')">All</a>
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onChangeFilter('Completed')"
+            >Completed</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onChangeFilter('Upcoming')"
+            >Upcoming</a
+          >
+        </li>
+      </ul>
     </div>
+    <input
+      type="text"
+      placeholder="Search"
+      [(ngModel)]="search"
+      (input)="onInputChange()"
+      name="keyWord"
+      style="width: 200px"
+    />
+    <button class="btn btn-success btn-sm ms-2" (click)="searchJob()">
+      Search
+    </button>
   </div>
-  <div class="m-2">
-  
-    <table class="table table-striped mt-3">
-      <thead class="tableHeadings">
-        <tr>
-          <th scope="col">Sl No.</th>
-          <th scope="col">Category</th>
-          <th scope="col">Client</th>
-          <th scope="col">Post Date</th>
-          <th scope="col">Work Date</th>
-          <th scope="col">Labour Required</th>
-          <th scope="col">Wage</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of jobDetails,let i='index'">
-          <th scope="row">{{i+1}}</th>
-          <td>{{item.category.name}}</td>
-          <td>{{item.client_id.name}}</td>
-          <td>{{item.createdAt|customDate}}</td>
-          <td>{{item.startDate|customDate}}</td>
-          <td>{{item.requiredCount}}</td>
-          <td>₹ {{item.wage}}</td>
-          <td><button class="btn btn-dark text-white blockBtn">Actions</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  
+</div>
+<div class="m-2">
+  <table class="table table-striped mt-3">
+    <thead class="tableHeadings">
+      <tr>
+        <th scope="col">Sl No.</th>
+        <th scope="col">Category</th>
+        <th scope="col">Client</th>
+        <th scope="col">Post Date</th>
+        <th scope="col">Work Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Labour Required</th>
+        <th scope="col">Wage</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of jobDetails; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ item.category.name }}</td>
+        <td>{{ item.client_id.name }}</td>
+        <td>{{ item.createdAt | customDate }}</td>
+        <td>{{ item.startDate | customDate }}</td>
+        <td>{{ item.endDate | customDate }}</td>
+        <td>{{ item.requiredCount }}</td>
+        <td>₹ {{ item.wage }}</td>
+        <td>{{ item.currentStatus }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary dropdown-toggle"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Actions
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngIf="item.currentStatus==='active'">
+              <a class="dropdown-item" (click)="changeStatus(item._id,'completed')"
+                >Completed</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="viewHirings(item._id)">View Hirings</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
