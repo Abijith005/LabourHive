@@ -9,37 +9,62 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-view-hirings',
   templateUrl: './view-hirings.component.html',
-  styleUrls: ['./view-hirings.component.css']
+  styleUrls: ['./view-hirings.component.css'],
 })
-export class ViewHiringsComponent implements OnInit,OnDestroy{
+export class ViewHiringsComponent implements OnInit, OnDestroy {
   // variable declarations
 
-  hiringDatas:i_hirings[]|null=null
+  hiringDatas: i_hirings[] | null = null;
 
-  private _unsubscribe$=new Subject<void>()
+  private _unsubscribe$ = new Subject<void>();
 
-constructor(
-  @Inject(MAT_DIALOG_DATA) private _job_id:string,
-  private _matDialogRef:MatDialogRef<ViewHiringsComponent>,
-  private _jobManagement:AdminJobManagementService,
-  private _swalService:SwalService
-  ){}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private _job_id: string,
+    private _matDialogRef: MatDialogRef<ViewHiringsComponent>,
+    private _jobManagement: AdminJobManagementService,
+    private _swalService: SwalService
+  ) {}
 
-  ngOnInit(): void {    
-    this._jobManagement.getHirings(this._job_id).subscribe(res=>{      
-      this.hiringDatas=res
-    })
-    
+  ngOnInit(): void {
+    this._jobManagement.getHirings(this._job_id).subscribe((res) => {
+      this.hiringDatas = res;
+    });
   }
 
-  viewComplaint(compalint:{complaintText:string}){
-    Swal.fire(compalint.complaintText)
+  viewComplaint(compalint: { complaintText: string }) {
+    Swal.fire(compalint.complaintText);
   }
-  payment(hire_id:string,payment:boolean){
-    this._jobManagement.updatePayment(hire_id,payment).pipe(takeUntil(this._unsubscribe$)).subscribe(res=>{
-      const title=res.success?'Success':'error'
-      this._swalService.showAlert(title,res.message,title)
-    })
+  async payment(
+    hire_id: string,
+    payment: boolean,
+    labour_id: string,
+    amount: number
+  ) {
+    const message = payment
+      ? 'Do you want to approve the payment'
+      : 'Do you want to reject the payment';
+    const confirmation = await this._swalService.showConfirmation(
+      'Payment To Labour',
+      message,
+      'warning'
+    );
+    if (confirmation) {
+      this._jobManagement
+        .updatePayment(hire_id, payment, labour_id, amount)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((res) => {
+          if (res.success) {
+            this.hiringDatas?.map(data=>{
+              if (data._id===hire_id) {
+                const status=payment?'approved':'rejected'
+                data.paymentToLabour=status
+              }
+            })
+          }
+          const title = res.success ? 'success' : 'error';
+          this._swalService.showAlert(title, res.message, title);
+        });
+    }
   }
 
   close() {
@@ -47,7 +72,7 @@ constructor(
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe$.next()
-    this._unsubscribe$.complete()
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

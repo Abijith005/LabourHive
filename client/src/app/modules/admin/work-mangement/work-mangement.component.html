@@ -1,6 +1,25 @@
 <div class="header d-flex justify-content-between ms-3 me-3 pt-4">
   <h3><b>JOB MANAGEMENT</b></h3>
   <div class="search">
+    <mat-form-field class="example-form-field me-3" >
+      <mat-label>select a date range</mat-label>
+      <mat-date-range-input [rangePicker]="rangePicker">
+        <input [(ngModel)]="startDate" matStartDate placeholder="Start date" />
+        <input [(ngModel)]="endDate" matEndDate placeholder="End date"  />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="rangePicker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #rangePicker>
+        <mat-date-range-picker-actions>
+          <button mat-button matDateRangePickerCancel (click)="clearDates()">Clear</button>
+          <button (click)="onDateChange()" mat-raised-button color="primary" matDateRangePickerApply>
+            Apply 
+          </button>
+        </mat-date-range-picker-actions>
+      </mat-date-range-picker>
+    </mat-form-field>
     <div class="btn-group filter me-3">
       <button
         type="button"
@@ -77,13 +96,17 @@
             Actions
           </button>
           <ul class="dropdown-menu">
-            <li *ngIf="item.currentStatus==='active'">
-              <a class="dropdown-item" (click)="changeStatus(item._id,'completed')"
+            <li *ngIf="item.currentStatus === 'active'">
+              <a
+                class="dropdown-item"
+                (click)="changeStatus(item._id, 'completed')"
                 >Completed</a
               >
             </li>
             <li>
-              <a class="dropdown-item" (click)="viewHirings(item._id)">View Hirings</a>
+              <a class="dropdown-item" (click)="viewHirings(item._id)"
+                >View Hirings</a
+              >
             </li>
           </ul>
         </td>

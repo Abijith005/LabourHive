@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "jobProfile",
   },
+  wallet:{
+    type:Number,
+    default:0,
+    required:[true,'wallet required']
+  }
 });
 
 const userModel = mongoose.model("user", userSchema);

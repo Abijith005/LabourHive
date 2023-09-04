@@ -11,21 +11,6 @@
     background-color: whitesmoke;
   }
   
-  .location {
-    flex: 1;
-    align-items: center;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
-    max-height: 4rem;
-    padding: 9px 3px 4px 3px;
-  }
-  .loc {
-    width: 120px;
-  }
   td,
   th {
     cursor: default;

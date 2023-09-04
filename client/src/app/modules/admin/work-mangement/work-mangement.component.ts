@@ -13,18 +13,21 @@ import { i_allJobs } from 'src/app/interfaces/adminInterfaces/i_allJobs';
 })
 export class WorkMangementComponent implements OnInit, OnDestroy {
   // variable declarations
-  jobDetails: i_allJobs[]|null = null;
+  jobDetails: i_allJobs[] | null = null;
   filter: string = '';
   filterValue: string = '';
   page: number = 1;
   search: string = '';
+  startDate:Date|null=null
+  endDate:Date|null=null
+  daterange:any
 
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
     private _jobManagementService: AdminJobManagementService,
     private _matDialog: MatDialog,
-    private _swalServices:SwalService
+    private _swalServices: SwalService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +36,7 @@ export class WorkMangementComponent implements OnInit, OnDestroy {
 
   getJobs() {
     this._jobManagementService
-      .getJobDetails(this.filterValue, this.search, this.page)
+      .getJobDetails(this.filterValue, this.search, this.page,this.startDate,this.endDate)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
         this.jobDetails = res;
@@ -61,21 +64,41 @@ export class WorkMangementComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeStatus(job_id: string,status:string) {
-    this._jobManagementService.changeJobStatus(job_id,status).pipe(takeUntil(this._unsubscribe$)).subscribe(res=>{
-      if (res.success) {
-        this._swalServices.showAlert('Success',res.message,'success')
-        this.jobDetails?.map(data=>{
-          if (data._id===job_id) {
-            data.currentStatus='completed'
-          }
-        })
-      }
-      
-    })
+  clearDates(){
+    this.startDate=null
+    this.endDate=null
   }
 
-  viewHirings(job_id:string) {    
+  onDateChange(){
+this.getJobs()
+  }
+
+
+
+  async changeStatus(job_id: string, status: string) {
+    const confirmation = await this._swalServices.showConfirmation(
+      'Change Job Status',
+      'Do you want to change job status',
+      'warning'
+    );
+    if (confirmation) {
+      this._jobManagementService
+        .changeJobStatus(job_id, status)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((res) => {
+          if (res.success) {
+            this._swalServices.showAlert('Success', res.message, 'success');
+            this.jobDetails?.map((data) => {
+              if (data._id === job_id) {
+                data.currentStatus = 'completed';
+              }
+            });
+          }
+        });
+    }
+  }
+
+  viewHirings(job_id: string) {
     this._matDialog.open(ViewHiringsComponent, {
       width: '1300px',
       data: job_id,

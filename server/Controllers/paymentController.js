@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import hiringModel from "../Models/hiringModel.js";
 import jobsModel from "../Models/jobsModel.js";
 import categoryModel from "../Models/categoryModel.js";
+import walletModel from "../Models/walletModel.js";
 
 const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -38,11 +39,18 @@ export const verifyPayment = async (req, res) => {
       process.env.JWT_SIGNATURE
     )?._id;
     const data = req.body;
-    const {_id}=await categoryModel.findOne({name:req.body.category})
+    const { _id } = await categoryModel.findOne({ name: req.body.category });
 
     if (!req.body.job_id) {
-      const job=await jobsModel.create({...data,client_id,category:_id,requiredCount:1,experience:0,postedJob:false})
-    req.body.job_id=job._id
+      const job = await jobsModel.create({
+        ...data,
+        client_id,
+        category: _id,
+        requiredCount: 1,
+        experience: 0,
+        postedJob: false,
+      });
+      req.body.job_id = job._id;
     }
 
     const razorpayPayment_id =
@@ -56,7 +64,6 @@ export const verifyPayment = async (req, res) => {
       .digest("hex");
 
     if (expectedSignature === data.razorpay_signature) {
-    
       const hiringDate = new Date();
 
       //deleting unwanted from body
@@ -65,11 +72,10 @@ export const verifyPayment = async (req, res) => {
         delete data.razorpay_signature;
       (data.client_id = client_id), (data.hiringDate = hiringDate);
 
-      // change date format 
+      // change date format
       const startDate = new Date(data.startDate);
       startDate.setHours(startDate.getHours() + 5, startDate.getMinutes() + 30);
       data.startDate = startDate.toISOString();
-
 
       const endDate = new Date(data.endDate);
       endDate.setHours(endDate.getHours() + 5, endDate.getMinutes() + 30);
@@ -91,25 +97,30 @@ export const verifyPayment = async (req, res) => {
   }
 };
 
-export const updatePayment=async (req,res)=>{
+export const updatePayment = async (req, res) => {
   try {
-    let status,message
-    const {hire_id,payment}=req.body
-    console.log(hire_id,payment,'paymentttttttttttttttttt');
+    let status, message;
+    const { hire_id, payment, user_id, amount } = req.body;
     if (payment) {
-      status='approved'
-      message='Amount transffered to labour wallet successfully'
-      
-      // await
-    }else{
-      status='rejected'
-      message='Payment rejected successfully'
+      status = "approved";
+      message = "Amount transffered to labour wallet successfully";
+      await walletModel.create({
+        hire_id: hire_id,
+        user_id: user_id,
+        amount: amount/1.01,
+        transaction: "credit",
+      });
+    } else {
+      status = "rejected";
+      message = "Payment rejected successfully";
     }
-    await hiringModel.updateOne({_id:hire_id},{$set:{paymentToLabour:status}})
-    res.json({success:true,message:message})
+    await hiringModel.updateOne(
+      { _id: hire_id },
+      { $set: { paymentToLabour: status } }
+    );
+    res.json({ success: true, message: message });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
-    
   }
-}
+};

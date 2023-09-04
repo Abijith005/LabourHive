@@ -417,7 +417,7 @@ export const editJob = async (req, res) => {
 
 export const changeJobStatus = async (req, res) => {
   try {
-    const { job_id,status } = req.body;
+    const { job_id, status } = req.body;
     await jobsModel.updateOne(
       { _id: job_id },
       { $set: { currentStatus: status } }
@@ -494,30 +494,40 @@ export const cancelJobRequest = async (req, res) => {
 
 export const getAllJobDetails = async (req, res) => {
   try {
-    const { filter, search, page } = req.query;
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
+    const { filter, search, page, startDate, endDate } = req.query;
+    const sDate = startDate ? new Date(startDate) : null;
+    const eDate = endDate ? new Date(endDate) : null;
+    // const sDate=startDate?new Date(new Date(startDate).setHours(new Date(startDate).getHours()+5,new Date(startDate).getMinutes()+30)):''
+    // console.log(sDate);
+
     const client_id = await userModel
       .find({ name: RegExp(search, "i") }, { _id: 1 })
       .lean();
+    let query = {
+      currentStatus: RegExp(filter, "i"),
+      client_id: { $in: client_id },
+    };
+    if (sDate) {
+      console.log(startsDate,'startdateeeeeeeeeeeeeeeeeeeeeeeee');
+      query.startDate = { $gte: sDate };
+    }
+    if (eDate) {
+      query.endDate = { $lte: eDate };
+    }
+
+    console.log(query);
 
     const jobs = await jobsModel
-      .find({
-        $and: [
-          { currentStatus: RegExp(filter, "i") },
-          { client_id: { $in: client_id } },
-        ],
-      })
+      .find(query)
       .populate([
         { path: "client_id", select: "name" },
         { path: "category", select: "name" },
       ])
       .lean();
+    console.log(jobs, "sdfsdfafasf");
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
-
-
