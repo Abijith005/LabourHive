@@ -494,11 +494,23 @@ export const cancelJobRequest = async (req, res) => {
 
 export const getAllJobDetails = async (req, res) => {
   try {
-    const { filter, search, page, startDate, endDate } = req.query;
-    const sDate = startDate ? new Date(startDate) : null;
-    const eDate = endDate ? new Date(endDate) : null;
-    // const sDate=startDate?new Date(new Date(startDate).setHours(new Date(startDate).getHours()+5,new Date(startDate).getMinutes()+30)):''
-    // console.log(sDate);
+    const { filter, search, page, startDate, endDate } = req.body;
+    const sDate = startDate
+      ? new Date(
+          new Date(startDate).setHours(
+            new Date(startDate).getHours() + 5,
+            new Date(startDate).getMinutes() + 30
+          )
+        )
+      : null;
+    const eDate = endDate
+      ? new Date(
+          new Date(endDate).setHours(
+            new Date(endDate).getHours() + 5,
+            new Date(endDate).getMinutes() + 30
+          )
+        )
+      : null;
 
     const client_id = await userModel
       .find({ name: RegExp(search, "i") }, { _id: 1 })
@@ -508,8 +520,7 @@ export const getAllJobDetails = async (req, res) => {
       client_id: { $in: client_id },
     };
     if (sDate) {
-      console.log(startsDate,'startdateeeeeeeeeeeeeeeeeeeeeeeee');
-      query.startDate = { $gte: sDate };
+      query.endDate = { $gte: sDate };
     }
     if (eDate) {
       query.endDate = { $lte: eDate };

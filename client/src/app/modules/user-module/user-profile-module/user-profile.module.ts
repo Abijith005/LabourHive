@@ -11,8 +11,9 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '../../shared/shared.module';
 import { RatingComponent } from './rating/rating.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JobInfoComponent } from './job-info/job-info.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
 
 
 
@@ -26,6 +27,7 @@ import { JobInfoComponent } from './job-info/job-info.component';
     HistoryComponent,
     RatingComponent,
     JobInfoComponent,
+    WithdrawComponent,
     
   ],
   imports: [
@@ -34,7 +36,8 @@ import { JobInfoComponent } from './job-info/job-info.component';
     MatProgressBarModule,
     MatTooltipModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
 
   
   ]

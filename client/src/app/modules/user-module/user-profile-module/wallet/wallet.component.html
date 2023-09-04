@@ -1,10 +1,9 @@
 <div class="container-fluid">
     <div class="mt-4 ms-4"><h2 class="heading">WALLET</h2></div>
     <div class="total d-flex justify-content-around ">
-        <span class="d-flex align-items-center">Total Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-indian-rupee-sign"> {{a}}</i></span>
-        <button class="btn btn-primary">Withdraw</button>
+        <span class="d-flex align-items-center">Total Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-indian-rupee-sign">&nbsp;&nbsp;&nbsp;{{total}}</i></span>
+        <button class="btn btn-primary" (click)="withdraw()">Withdraw</button>
     </div>
-    <!-- <div class="mt-5 ms-4"><h3 class="heading text-center" style="text-decoration: underline;">Transaction History</h3></div> -->
     <div class=" mt-5">
         <table class="table table-borderless bg-light mt-3">
             <thead>
@@ -21,19 +20,19 @@
                 <th st></th>
               </tr>
             </thead>
-            <tbody  class="mt-3">
+            <tbody  class="mt-3" *ngFor="let item of walletDetails, let i=index">
               <tr class="data">
-                <td scope="row">1</td>
-                <td>abijith</td>
-                <td>Credit</td>
-                <td>12000</td>
-                <td>26-Aug-2022</td>
-                <td>Wage Transfer</td>
-                <td>12000</td>
+                <td scope="row">{{i+1}}</td>
+                <td>{{item.hire_id.client_id.name}}</td>
+                <td>{{item.transaction|titlecase}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.createdAt|customDate}}</td>
+                <td>{{item.action|titlecase}}</td>
+                <td>{{item.balance}}</td>
             </tr>
-              <tr style="background-color: white; border: none;">
-                <td></td>
-              </tr>
+            <tr style="background-color: white;">
+              <td></td>
+            </tr>
             </tbody>
       
           </table>

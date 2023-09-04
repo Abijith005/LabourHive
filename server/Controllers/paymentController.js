@@ -109,6 +109,7 @@ export const updatePayment = async (req, res) => {
         user_id: user_id,
         amount: amount/1.01,
         transaction: "credit",
+        action:'wage Transfer'
       });
     } else {
       status = "rejected";

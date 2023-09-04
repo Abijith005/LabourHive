@@ -70,7 +70,8 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
     MatDialogModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatTooltipModule,SharedModule
+    MatTooltipModule,SharedModule,
+    ReactiveFormsModule
   ],
 })
 export class UserModule {}

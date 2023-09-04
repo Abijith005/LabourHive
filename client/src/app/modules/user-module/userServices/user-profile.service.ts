@@ -4,6 +4,8 @@ import { i_authRes } from 'src/app/interfaces/userInterfaces/i_authRes';
 import { i_review } from 'src/app/interfaces/userInterfaces/i_review';
 import { i_userProfile } from 'src/app/interfaces/userInterfaces/i_userProfile';
 import { i_userSchedule } from 'src/app/interfaces/userInterfaces/i_userSchedule';
+import { i_walletDetails } from 'src/app/interfaces/userInterfaces/i_walletDetails';
+import { i_withdrawData } from 'src/app/interfaces/userInterfaces/i_withdrawData';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +33,13 @@ export class UserProfileService {
   getReviews(){
     return this._http.get<i_review>(`/profile/getReviews`)
   }
+
+  getWallet(){
+    return this._http.get<i_walletDetails[]>(`/profile/getWallet`)
+  }
+
+  withdrawRequest(data:i_withdrawData){
+    return this._http.post<i_authRes>(`/profile/withdrawalRequest`,data)
+  }
+
 }

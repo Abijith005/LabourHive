@@ -5,6 +5,9 @@ import reviewModel from "../Models/reviewModel.js";
 import jobProfileModel from "../Models/jobProfileModel.js";
 import complaintModel from "../Models/complaintModel.js";
 import scheduleModel from "../Models/scheduleModel.js";
+import withdrawModel from "../Models/withdrawModel.js";
+import userModel from "../Models/userModel.js";
+import bcrypt from "bcrypt";
 
 export const getProfileHistory = async (req, res) => {
   try {
@@ -95,7 +98,7 @@ export const postReview = async (req, res) => {
     const rating = await reviewModel.aggregate(pipeline);
     await jobProfileModel.updateOne(
       { user_id: req.body.labour_id },
-      { $set: { rating:rating[0].totalRating.toFixed(1)} }
+      { $set: { rating: rating[0].totalRating.toFixed(1) } }
     );
 
     res.json({
@@ -159,7 +162,9 @@ export const getSchedules = async (req, res) => {
       },
     ]);
 
-    weekSchedules = weekSchedules[0]?.weekSchedules?weekSchedules[0].weekSchedules:[];
+    weekSchedules = weekSchedules[0]?.weekSchedules
+      ? weekSchedules[0].weekSchedules
+      : [];
     for (let i = 0; i < 8; i++) {
       const expectedDate = new Date(currentDate);
       expectedDate.setDate(currentDate.getDate() + i);
@@ -267,5 +272,30 @@ export const getReviews = async (req, res) => {
     res.json(reviews[0]);
   } catch (error) {
     console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const requestWithdrawal = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { password } = req.body;
+    const data=req.body
+    const user_id = await verifyToken(
+      req.cookies.userAuthToken,
+      process.env.JWT_SIGNATURE
+    );
+    const user = await userModel.findOne({ _id: user_id });
+    const verifyPassword =await bcrypt.compare(password, user.password);
+    if (verifyPassword) {
+      delete data.password;
+      await withdrawModel.create({...data,user_id});
+      res.json({ success: true, message: "Withdrawal requested successfully" });
+    } else {
+      res.json({ success: false, message: "Incorrect password" });
+    }
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
   }
 };

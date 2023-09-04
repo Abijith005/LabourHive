@@ -67,6 +67,7 @@ export class WorkMangementComponent implements OnInit, OnDestroy {
   clearDates(){
     this.startDate=null
     this.endDate=null
+    this.getJobs()
   }
 
   onDateChange(){

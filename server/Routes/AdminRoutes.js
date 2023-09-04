@@ -24,7 +24,7 @@ router.patch('/blockCategory',blockCategory)
 
 router.delete('/deleteCategory/:_id',deleteCategory)
 
-router.get('/getAllJobDetails',getAllJobDetails)
+router.post('/getAllJobDetails',getAllJobDetails)
 
 router.get('/getWalletDetails',getWalletDetails)
 

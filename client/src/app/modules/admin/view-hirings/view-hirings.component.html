@@ -34,17 +34,43 @@
           <td>{{ item.hireStatus | titlecase }}</td>
           <td>{{ item.job.currentStatus | titlecase }}</td>
           <td>
-            {{ item.paymentToLabour |titlecase}}
-          </td>
-          <td>
-            <button *ngIf="item.complaint; else elseBlock" class="btn btn-danger btn-sm" (click)="viewComplaint(item.complaint)">View</button>
-            <ng-template #elseBlock >
-                No complaints
-            </ng-template>
+            <i
+              *ngIf="item.paymentToLabour === 'approved'"
+              class="fas fa-circle-check"
+              style="font-size: x-small; color: green"
+              > {{ item.paymentToLabour | titlecase }}</i
+            >
+            <i
+              *ngIf="item.paymentToLabour === 'rejected'"
+              class="fas fa-circle-xmark"
+              style="font-size: x-small; color: rgb(211, 0, 0)"
+              > {{ item.paymentToLabour | titlecase }}</i
+            >
+            <span
+              *ngIf="
+                item.paymentToLabour !== 'approved' &&
+                item.paymentToLabour !== 'rejected'
+              "
+              > {{ item.paymentToLabour | titlecase }}</span
+            >
           </td>
           <td>
             <button
-            *ngIf="item.job.currentStatus==='completed'&&item.paymentToLabour==='pending'; else noAction"
+              *ngIf="item.complaint; else elseBlock"
+              class="btn btn-danger btn-sm"
+              (click)="viewComplaint(item.complaint)"
+            >
+              View
+            </button>
+            <ng-template #elseBlock> No complaints </ng-template>
+          </td>
+          <td>
+            <button
+              *ngIf="
+                item.job.currentStatus === 'completed' &&
+                  item.paymentToLabour === 'pending';
+                else noAction
+              "
               type="button"
               class="btn btn-sm btn-primary dropdown-toggle"
               data-mdb-toggle="dropdown"
@@ -52,17 +78,31 @@
             >
               Actions
             </button>
-            <ul class="dropdown-menu" >
+            <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" (click)="payment(item._id,true,item.labour._id,item.totalAmount)">Pay Labour</a>
+                <a
+                  class="dropdown-item"
+                  (click)="
+                    payment(item._id, true, item.labour._id, item.totalAmount)
+                  "
+                  >Pay Labour</a
+                >
               </li>
               <li>
-                <a class="dropdown-item" (click)="payment(item._id,false,item.labour._id,item.totalAmount)">Reject Payment</a>
+                <a
+                  class="dropdown-item"
+                  (click)="
+                    payment(item._id, false, item.labour._id, item.totalAmount)
+                  "
+                  >Reject Payment</a
+                >
               </li>
             </ul>
 
             <ng-template #noAction>
-                <i class="fas fa-ban text-info"  style="font-size: x-small;"> No Action</i>
+              <i class="fas fa-ban text-info" style="font-size: x-small">
+                No Action</i
+              >
             </ng-template>
           </td>
         </tr>
