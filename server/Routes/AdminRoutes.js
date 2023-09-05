@@ -4,7 +4,7 @@ import { addCategory, blockCategory, deleteCategory, getAllCategories, updateCat
 import { changeJobStatus, getAllJobDetails } from '../Controllers/JobsController.js'
 import { getWalletDetails, getWithdrawDatas } from '../Controllers/walletController.js'
 import { getHirings } from '../Controllers/hireController.js'
-import { updatePayment } from '../Controllers/paymentController.js'
+import { adminPayment, adminPaymentVerifying, updatePayment } from '../Controllers/paymentController.js'
 const router=express.Router()
 
 
@@ -32,7 +32,11 @@ router.get('/getHirings',getHirings)
 
 router.patch('/changeJobStatus',changeJobStatus)
 
+router.post('/adminPayment',adminPayment)
+
 router.patch('/updatePayment',updatePayment)
+
+router.post('/verifyPayment', adminPaymentVerifying)
 
 
 

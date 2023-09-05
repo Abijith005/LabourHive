@@ -10,22 +10,55 @@
         <tr>
           <th scope="col">Sl No.</th>
           <th scope="col">User</th>
+          <th scope="col">Acoount Holder</th>
           <th scope="col">Request Date</th>
           <th scope="col">Account Number</th>
           <th scope="col">IFSC Code</th>
           <th scope="col">Amount</th>
+          <th scope="col">Wallet Balance</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of walletDetails,let i='index'">
           <th scope="row">{{i+1}}</th>
-          <td>{{item.category.name}}</td>
-          <td>{{item.client_id.name}}</td>
+          <td>{{item.user_id.name}}</td>
+          <td>{{item.accountHolder}}</td>
           <td>{{item.createdAt|customDate}}</td>
-          <td>{{item.startDate|customDate}}</td>
-          <td>₹ {{item.wage}}</td>
-          <td><button class="btn btn-dark text-white blockBtn">Actions</button></td>
+          <td>{{item.accountNumber}}</td>
+          <td>{{item.ifscCode}}</td>
+          <td>₹ {{item.amount}}</td>
+          <td>₹ {{item.user_id.wallet}}</td>
+          <td>
+            <button
+            *ngIf="item.status==='requested';else noAction"
+              type="button"
+              class="btn btn-sm btn-primary dropdown-toggle"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Actions
+            </button>
+            <ul class="dropdown-menu">
+              <li >
+                <a
+                  class="dropdown-item"
+                  (click)="confirmPayment(item._id, item.amount,item.user_id.wallet,item.user_id._id)"
+                  >Pay</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" (click)="rejectRequest(item._id)"
+                  >Reject</a
+                >
+              </li>
+            </ul>
+            <ng-template #noAction>
+              <i class="fas fa-ban text-info" style="font-size: x-small">
+                No Action</i
+              >
+            </ng-template>
+          </td>
         </tr>
       </tbody>
     </table>

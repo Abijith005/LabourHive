@@ -2,7 +2,7 @@ import express from 'express'
 import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserAuthController.js'
 import { getAllCategories } from '../Controllers/CategoryController.js'
 import { applyJob, cancelJobRequest, changeJobStatus, createJobProfile, editJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
-import { hirePayment, verifyPayment } from '../Controllers/paymentController.js'
+import { Payment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
 import { getJobInfo, getProfileHistory, getReviews, getSchedules, postComplaint, postReview, requestWithdrawal } from '../Controllers/profileControllers.js'
 import { getWalletDetails } from '../Controllers/walletController.js'
@@ -37,7 +37,7 @@ router.get('/getLabours/:category',getLabours)
 
 router.get('/getLabourProfile/:user_id',labourProfile)
 
-router.post('/hirePayment',hirePayment)
+router.post('/hirePayment',Payment)
 
 router.post('/hirePayment/verifyPayment',verifyPayment)
 
@@ -86,8 +86,6 @@ router.get('/profile/getReviews',getReviews)
 router.get('/profile/getWallet',getWalletDetails)
 
 router.post('/profile/withdrawalRequest',requestWithdrawal)
-
-
 
 router.get('/logout',userLogout)
 

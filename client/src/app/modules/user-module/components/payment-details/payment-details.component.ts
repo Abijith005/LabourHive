@@ -263,13 +263,13 @@ export class PaymentDetailsComponent implements OnInit, OnDestroy {
 
     //getting order_id for razorpay
     this._service
-      .hirePayment(data.totalAmount)
+      .payment(data.totalAmount)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
         if (res.success) {
           //confirming payment and verfying
           this._razorpayService
-            .handleRazorPay(res.order, data)
+            .handleRazorpay(res.order, data)
             .then(async (res) => {
               if (res.success) {
                 this.closeDialogBox();

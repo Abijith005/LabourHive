@@ -6,6 +6,7 @@ import { UserMangementComponent } from "./user-mangement/user-mangement.componen
 import { CategoryMangementComponent } from "./category-mangement/category-mangement.component";
 import { WorkMangementComponent } from "./work-mangement/work-mangement.component";
 import { WalletMangementComponent } from "./wallet-mangement/wallet-mangement.component";
+import { HireManagementComponent } from "./hire-management/hire-management.component";
 
 const adminRoutes:Routes=[
 {
@@ -17,6 +18,7 @@ const adminRoutes:Routes=[
     { path: 'categoryManagement', component: CategoryMangementComponent },
     { path: 'workManagement', component: WorkMangementComponent },
     { path: 'walletManagement', component: WalletMangementComponent },
+    {path:'hireManagement',component:HireManagementComponent}
   ],
 },]
 

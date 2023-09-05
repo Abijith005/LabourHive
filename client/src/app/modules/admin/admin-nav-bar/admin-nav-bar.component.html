@@ -63,6 +63,10 @@
       <i class="ri-briefcase-line"></i>
       <b>WORK MANAGEMENT</b>
     </div>
+    <div class="side-item" [class.active]="activeItem==='hire'" (click)="changeActive('hire')" [routerLink]="['hireManagement']">
+      <i class="ri-briefcase-line"></i>
+      <b>HIRE MANAGEMENT</b>
+    </div>
     <div class="side-item" [class.active]="activeItem==='wallet'" (click)="changeActive('wallet')" [routerLink]="['walletManagement']">
       <i class="ri-wallet-line"></i>
       <b>WALLET MANAGEMENT</b>

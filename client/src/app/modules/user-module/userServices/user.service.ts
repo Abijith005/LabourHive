@@ -68,7 +68,7 @@ export class UserService {
     return this._http.get<i_jobProfile & i_authRes>(`/getLabourProfile/${_id}`);
   }
 
-  hirePayment(totalAmount: number) {
+  payment(totalAmount: number) {
     return this._http.post<i_authRes & any>(`/hirePayment`, { totalAmount });
   }
 

@@ -16,6 +16,7 @@ export const getWalletDetails = async (req, res) => {
       })
       .populate({ path: "user_id", select: "wallet" })
       .lean();
+      console.log(wallet);
     res.json(wallet);
   } catch (error) {
     console.log("Error", error);
@@ -26,8 +27,8 @@ export const getWalletDetails = async (req, res) => {
 export const getWithdrawDatas = async (req, res) => {
   try {
     const query = {};
-
-    const datas =await withdrawModel.find(query).lean();
+    const datas =await withdrawModel.find(query).populate({path:'user_id',select:'name wallet'}).lean();
+    console.log(datas,'sadfds');
     res.json(datas);
   } catch (error) {
     console.log("Error", error);

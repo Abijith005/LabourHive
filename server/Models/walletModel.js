@@ -6,7 +6,7 @@ const walletSchema = new mongoose.Schema(
     hire_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "hiring",
-      required: [true, "hire_id is required"],
+      required: false,
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -19,7 +19,7 @@ const walletSchema = new mongoose.Schema(
     },
     action: {
       type: String,
-      enum: ["wage Transfer", "refund", "hire Payment"],
+      enum: ["wage Transfer", "refund", "hire Payment",'withdrawal'],
       required: [true, "action is required"],
     },
 

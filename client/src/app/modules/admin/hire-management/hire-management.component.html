@@ -1,0 +1,38 @@
+<div class="header d-flex justify-content-between ms-3 me-3 pt-4">
+    <h3><b>USER MANAGEMENT</b></h3>
+    <div class="search ">
+      <!-- <input type="text" placeholder="Search" name="keyWord" [(ngModel)]="keyWord" (keyup)="searchUser()"
+        style="width: 200px;"> -->
+    </div>
+  </div>
+  <div class="m-2">
+  
+    <table class="table table-striped mt-3">
+      <thead class="tableHeadings">
+        <tr>
+          <th scope="col">Sl No.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Category</th>
+          <th scope="col">Wallet Balance</th>
+          <th scope="col">Total Works</th>
+          <th scope="col">Total Hire</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let item of (userDatas$ |async),let i='index'">
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.name}}</td>
+          <td class="">{{item.email}}</td>
+          <td>{{item.jobProfileDatas?.category?item.jobProfileDatas?.category:'Nill'}}</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td><button class="btn btn-dark text-white blockBtn"(click)="blockStatus(item._id,!item.blockStatus,item.name)">{{item.blockStatus?'Unblock':'Block'}}</button></td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+  
+  
