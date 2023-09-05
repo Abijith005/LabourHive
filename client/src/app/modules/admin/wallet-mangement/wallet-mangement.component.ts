@@ -22,6 +22,8 @@ export class WalletMangementComponent implements OnInit, OnDestroy {
       .getWalletDetails()
       .pipe(takeUntil(this._unsubscibe$))
       .subscribe((res) => {
+        console.log(res);
+        
         this.walletDetails = res;
       });
   }

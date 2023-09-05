@@ -18,11 +18,11 @@ export class WithdrawComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private _total:number,
+    @Inject(MAT_DIALOG_DATA) private _total: number,
     private _fb: FormBuilder,
     private _matDialogRef: MatDialogRef<WithdrawComponent>,
     private _profileServices: UserProfileService,
-    private _swalService:SwalService
+    private _swalService: SwalService
   ) {}
 
   ngOnInit(): void {
@@ -46,10 +46,11 @@ export class WithdrawComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isSubmitted = true;
 
-    if (this.formControls['amount'].value>this._total) {
-      this.formControls['amount'].setErrors({greaterAmount:true})
+    if (this.formControls['amount'].value > this._total) {
+      this.formControls['amount'].setErrors({ greaterAmount: true });
+      return;
     }
-    if (!this.withdrawForm.valid) {
+    if (!this.withdrawForm.valid||this.formControls['amount'].value==0) {
       return;
     }
 
@@ -65,10 +66,9 @@ export class WithdrawComponent implements OnInit, OnDestroy {
     this._profileServices
       .withdrawRequest(data)
       .pipe(takeUntil(this._unsubscribe$))
-      .subscribe(res=>{
-        const title=res.success?'success':'Failed'
-        this._swalService.showAlert(title,res.message,title)
-        
+      .subscribe((res) => {
+        const title = res.success ? 'success' : 'Failed';
+        this._swalService.showAlert(title, res.message, title);
       });
   }
 

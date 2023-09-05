@@ -1,112 +1,144 @@
-
 <div class="container d-flex justify-content-center">
-    <div class="col-8">
-        <h2 class="text-center m-4"><b>Withdraw Details</b></h2>
-        <form [formGroup]="withdrawForm" (ngSubmit)="onSubmit()" class="mb-4">
-          <div class="mb-2">
-            <label
-              [style.color]="
-                isSubmitted && formControls['accountHolder'].errors ? 'rgb(240, 0, 0)' : ''
-              "
-              class="form-label"
-              >{{
-                isSubmitted && formControls["accountHolder"].errors?.hasOwnProperty("required")
-                  ? "Account holder is required"
-                  : "Account Holder"
-              }}</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="accountHolder"
-              [ngClass]="{ 'is-invalid': isSubmitted && formControls['accountHolder'].errors }"
-            />
-          </div>
-        
-          <div class="mb-2">
-            <label
-              [style.color]="
-                isSubmitted && formControls['accountNumber'].errors ? 'rgb(240, 0, 0)' : ''
-              "
-              class="form-label"
-              >{{
-                isSubmitted && formControls["accountNumber"].errors?.hasOwnProperty("required")
-                  ? "Account number is required"
-                  : "Account Number"
-              }}</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="accountNumber"
-              [ngClass]="{ 'is-invalid': isSubmitted && formControls['accountNumber'].errors }"
-            />
-          </div>
-          <div class="mb-2">
-            <label
-              [style.color]="
-                isSubmitted && formControls['ifscCode'].errors ? 'rgb(240, 0, 0)' : ''
-              "
-              class="form-label"
-              >{{
-                isSubmitted && formControls["ifscCode"].errors?.hasOwnProperty("required")
-                  ? "IFSC code is required"
-                  : "IFSC code"
-              }}</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="ifscCode"
-              [ngClass]="{ 'is-invalid': isSubmitted && formControls['ifscCode'].errors }"
-            />
-          </div>
-        
-          <div class="mb-2">
-            <label
-              [style.color]="
-                isSubmitted && formControls['amount'].errors ? 'rgb(240, 0, 0)' : ''
-              "
-              class="form-label"
-              >{{
-                isSubmitted && formControls["amount"].errors?.hasOwnProperty("required")
-                  ? "Amount  is required"
-                  : (isSubmitted && formControls["amount"].errors?.hasOwnProperty("pattern")?'Invalid amount':"Amount")
-              }}</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="amount"
-              [ngClass]="{ 'is-invalid': isSubmitted && formControls['amount'].errors }"
-            />
-          </div>
-        
-          <div class="mb-2">
-            <label
-              [style.color]="
-                isSubmitted && formControls['password'].errors ? 'rgb(240, 0, 0)' : ''
-              "
-              class="form-label"
-              >{{
-                isSubmitted && formControls["password"].errors?.hasOwnProperty("required")
-                  ? "Password code is required"
-                  : "Password"
-              }}</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              formControlName="password"
-              [ngClass]="{ 'is-invalid': isSubmitted && formControls['password'].errors }"
-            />
-          </div>
-          <div class="button d-flex justify-content-end mt-4">
-              <button type="button" class="btn  btn-sm btn-danger me-2" (click)="close()">Cancel</button>
-              <button type="submit" class="btn  btn-sm btn-success">Submit</button>
+  <div class="col-8">
+    <h2 class="text-center m-4"><b>Withdraw Details</b></h2>
+    <form [formGroup]="withdrawForm" (ngSubmit)="onSubmit()" class="mb-4">
+      <div class="mb-2">
+        <label
+          [style.color]="
+            isSubmitted && formControls['accountHolder'].errors
+              ? 'rgb(240, 0, 0)'
+              : ''
+          "
+          class="form-label"
+          >{{
+            isSubmitted &&
+            formControls["accountHolder"].errors?.hasOwnProperty("required")
+              ? "Account holder is required"
+              : "Account Holder"
+          }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="accountHolder"
+          [ngClass]="{
+            'is-invalid': isSubmitted && formControls['accountHolder'].errors
+          }"
+        />
+      </div>
 
-          </div>
-        </form>
-    </div>
+      <div class="mb-2">
+        <label
+          [style.color]="
+            isSubmitted && formControls['accountNumber'].errors
+              ? 'rgb(240, 0, 0)'
+              : ''
+          "
+          class="form-label"
+          >{{
+            isSubmitted &&
+            formControls["accountNumber"].errors?.hasOwnProperty("required")
+              ? "Account number is required"
+              : "Account Number"
+          }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="accountNumber"
+          [ngClass]="{
+            'is-invalid': isSubmitted && formControls['accountNumber'].errors
+          }"
+        />
+      </div>
+      <div class="mb-2">
+        <label
+          [style.color]="
+            isSubmitted && formControls['ifscCode'].errors
+              ? 'rgb(240, 0, 0)'
+              : ''
+          "
+          class="form-label"
+          >{{
+            isSubmitted &&
+            formControls["ifscCode"].errors?.hasOwnProperty("required")
+              ? "IFSC code is required"
+              : "IFSC code"
+          }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="ifscCode"
+          [ngClass]="{
+            'is-invalid': isSubmitted && formControls['ifscCode'].errors
+          }"
+        />
+      </div>
 
+      <div class="mb-2">
+        <label
+          [style.color]="
+            isSubmitted && formControls['amount'].errors ? 'rgb(240, 0, 0)' : ''
+          "
+          class="form-label"
+          >{{
+            isSubmitted &&
+            formControls["amount"].errors?.hasOwnProperty("required")
+              ? "Amount  is required"
+              : isSubmitted &&
+                formControls["amount"].errors?.hasOwnProperty("pattern")
+              ? "Invalid amount"
+              : isSubmitted &&
+                formControls["amount"].errors?.hasOwnProperty("greaterAmount")
+              ? "Amount is greater than balance"
+              : "Amount"
+          }}</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          formControlName="amount"
+          [ngClass]="{
+            'is-invalid': isSubmitted && formControls['amount'].errors
+          }"
+        />
+      </div>
+
+      <div class="mb-2">
+        <label
+          [style.color]="
+            isSubmitted && formControls['password'].errors
+              ? 'rgb(240, 0, 0)'
+              : ''
+          "
+          class="form-label"
+          >{{
+            isSubmitted &&
+            formControls["password"].errors?.hasOwnProperty("required")
+              ? "Password code is required"
+              : "Password"
+          }}</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          [ngClass]="{
+            'is-invalid': isSubmitted && formControls['password'].errors
+          }"
+        />
+      </div>
+      <div class="button d-flex justify-content-end mt-4">
+        <button
+          type="button"
+          class="btn btn-sm btn-danger me-2"
+          (click)="close()"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-sm btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -28,7 +28,9 @@ const withdrawSchema=new mongoose.Schema({
     },
     
 
-})
+},
+{timestamps:true}
+)
 
 const withdrawModel=mongoose.model('withdraw',withdrawSchema)
 export default withdrawModel
