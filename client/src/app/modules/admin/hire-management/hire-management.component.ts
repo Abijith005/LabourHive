@@ -8,6 +8,7 @@ import { AdminHireManagementService } from 'src/app/services/adminServices/admin
 })
 export class HireManagementComponent implements OnInit {
   // variable declarataion
+  hireDatas:any
 
   constructor(private  _hireService:AdminHireManagementService){
 
@@ -15,8 +16,7 @@ export class HireManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this._hireService.getAllHireDetails().subscribe(res=>{
-      console.log(res);
-      
+      this.hireDatas=res      
     })
   }
 

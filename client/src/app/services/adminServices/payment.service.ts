@@ -18,6 +18,6 @@ export class PaymentService {
   }
 
   rejectwithdrawRequest(request_id:string){
-    return this._http.patch(`/admin/rejectWithdraw`,{request_id})
+    return this._http.patch<i_authRes>(`/admin/rejectWithdrawRequest`,{request_id})
   }
 }

@@ -16,6 +16,7 @@
           <th scope="col">IFSC Code</th>
           <th scope="col">Amount</th>
           <th scope="col">Wallet Balance</th>
+          <th scope="col">Status</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -29,6 +30,7 @@
           <td>{{item.ifscCode}}</td>
           <td>₹ {{item.amount}}</td>
           <td>₹ {{item.user_id.wallet}}</td>
+          <td>{{item.status|titlecase}}</td>
           <td>
             <button
             *ngIf="item.status==='requested';else noAction"

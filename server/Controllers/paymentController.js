@@ -212,3 +212,17 @@ export const adminPayment = async (req, res) => {
     res.json({ success: false, message: "server error" });
   }
 };
+
+export const rejectWithdrawRequest=async (req,res)=>{
+  try {
+    const {request_id}=req.body
+
+    await withdrawModel.updateOne({_id:request_id},{$set:{status:'rejected'}})
+    res.json({success:true,message:'Withdrawal Request Rejected Successfully'})
+    
+  } catch (error) {
+    
+    console.log("Error", error);
+    res.json({ success: false, message: "server error" });
+  }
+}

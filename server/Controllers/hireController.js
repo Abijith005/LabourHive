@@ -55,11 +55,24 @@ export const getHirings = async (req, res) => {
       },
     ];
     const hireDatas = await hiringModel.aggregate(pipeline);
-    console.log(hireDatas,'hiredatassssssssssssssss');
     res.json(hireDatas);
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+
+export const getAllHireDetails=async (req,res)=>{
+  try {
+    const hireDatas=await hiringModel.find().populate({path:'client_id',select:'name'}).populate({path:'labour_id',select:'name'}).lean()
+    console.log(hireDatas,'fdsffdfdf');
+    res.json(hireDatas)
+
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "server error" });
+    
+  }
+}
 

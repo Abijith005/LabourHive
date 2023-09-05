@@ -51,6 +51,7 @@ export class WalletMangementComponent implements OnInit, OnDestroy {
                 this.walletDetails.map(data=>{
                   if (data.user_id._id===user_id) {
                     data.user_id.wallet-=amount
+                    data.status='approved'
                   }
                 })
                 const confirmation = await this._swalService.showAlert(
@@ -79,7 +80,15 @@ export class WalletMangementComponent implements OnInit, OnDestroy {
 
   rejectRequest(request_id:string){
     this._paymentService.rejectwithdrawRequest(request_id).pipe(takeUntil(this._unsubscribe$)).subscribe(res=>{
-
+    const title=res.success?'success':'Failed'
+    this._swalService.showAlert(title,res.message,title)
+    if (res.success) {
+      this.walletDetails.map(data=>{
+        if (data._id===request_id) {
+          data.status='rejected'
+        }
+      })
+    }
     })
   }
   ngOnDestroy(): void {
