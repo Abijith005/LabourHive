@@ -278,7 +278,6 @@ export const getReviews = async (req, res) => {
 
 export const requestWithdrawal = async (req, res) => {
   try {
-    console.log(req.body);
     const { password } = req.body;
     const data=req.body
     const user_id = await verifyToken(

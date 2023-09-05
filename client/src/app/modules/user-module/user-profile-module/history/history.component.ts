@@ -37,7 +37,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       });
   }
 
-  async cancelHire(_id: string) {
+  async cancelHire(_id: string,) {
     const confirmation = await this._swalService.showConfirmation(
       'Cancel Hiring',
       'Do you want to cancel the hiring',
@@ -45,7 +45,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
     );
     if (confirmation) {
       this._jobService
-        .cancelJob(_id)
+        .cancelJob(_id,'client')
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
           if (res.success) {

@@ -24,15 +24,36 @@
       <tbody>
         <tr *ngFor="let item of hireDatas,let i='index'">
           <th scope="row">{{i+1}}</th>
-          <td>{{item.name}}</td>
-          <td class="">{{item.email}}</td>
-          <td>{{item.jobProfileDatas?.category?item.jobProfileDatas?.category:'Nill'}}</td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-          <!-- <td><button class="btn btn-dark text-white blockBtn"(click)="blockStatus(item._id,!item.blockStatus,item.name)">{{item.blockStatus?'Unblock':'Block'}}</button></td> -->
-        </tr>
+          <td>{{item.client_id.name}}</td>
+          <td>{{item.labour_id.name}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.hiringDate|customDate}}</td>
+          <td>{{item.startDate|customDate}}</td>
+          <td>{{item.endDate|customDate}}</td>
+          <td>{{item.hireStatus}}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-sm btn-primary dropdown-toggle"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Actions
+            </button>
+            <ul class="dropdown-menu">
+              <li >
+                <a
+                  class="dropdown-item"
+                  >Completed</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" 
+                  >View Hirings</a
+                >
+              </li>
+            </ul>
+          </td>        </tr>
       </tbody>
     </table>
   </div>

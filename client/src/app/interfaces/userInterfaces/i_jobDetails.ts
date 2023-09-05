@@ -63,5 +63,5 @@ location:string
 coordinates:number[],
 totalAmount:number,
 offeredWage:number,
-hireStatus:hireStatus
+hireStatus:string
 }

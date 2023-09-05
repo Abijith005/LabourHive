@@ -476,15 +476,20 @@ export const getEngagedJobs = async (req, res) => {
 
 export const cancelJobRequest = async (req, res) => {
   try {
+    const hireStatus =
+      req.body?.party === "client"
+        ? "cancelRequested_client"
+        : "cancelRequested_labour";
+
     const { hire_id } = req.body;
     await hiringModel.updateOne(
       { _id: hire_id },
-      { $set: { hireStatus: "cancelRequested" } }
+      { $set: { hireStatus} }
     );
     res.json({
       success: true,
       message: "Successfully requested for cancel Hiring",
-      currentStatus: "cancelRequested",
+      currentStatus: "cancelRequested_client",
     });
   } catch (error) {
     console.log("Error", error);

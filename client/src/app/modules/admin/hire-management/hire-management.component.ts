@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { i_hireDatas } from 'src/app/interfaces/adminInterfaces/i_hirings';
 import { AdminHireManagementService } from 'src/app/services/adminServices/admin-hire-management.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AdminHireManagementService } from 'src/app/services/adminServices/admin
 })
 export class HireManagementComponent implements OnInit {
   // variable declarataion
-  hireDatas:any
+  hireDatas:i_hireDatas[]|[]=[]
 
   constructor(private  _hireService:AdminHireManagementService){
 

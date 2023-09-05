@@ -7,9 +7,6 @@ const initialState: adminState = {
     category:null
 }
 
-
-
-
 export const adminDataReducer = createReducer(
     initialState,
     on(getAllusers, (state, { userDatas }) => ({

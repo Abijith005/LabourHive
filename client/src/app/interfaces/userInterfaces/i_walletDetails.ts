@@ -1,6 +1,6 @@
 export interface i_walletDetails {
   _id: string;
-  hire_id: {
+  hire_id?: {
     id: string;
     client_id: {
       id: string;

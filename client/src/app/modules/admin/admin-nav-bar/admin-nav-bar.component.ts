@@ -5,16 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './admin-nav-bar.component.html',
   styleUrls: ['./admin-nav-bar.component.css'],
 })
-export class AdminNavBarComponent implements OnInit {
+export class AdminNavBarComponent  {
   constructor() {}
   // variable decalration
   showSideBar = false;
   activeItem: string = 'home';
-
-  ngOnInit(): void {
-    console.log('initialised navabeeeeeeee');
-    
-  }
 
   //changing items in side bar (for css class activation)
   changeActive(item: string) {

@@ -55,7 +55,8 @@ const hiringSchema = new mongoose.Schema({
   },
   hireStatus: {
     type: String,
-    enum: ["hired", "cancelled", "cancelRequested"],
+    // enum: ["hired", "cancelled", "cancelRequested"],
+    enum: ["hired", "cancelled_client","cancelled_labour", "cancelRequested_client","cancelRequested_labour"],
     default: "hired",
   },
   paymentToLabour:{

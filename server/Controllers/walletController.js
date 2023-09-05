@@ -16,6 +16,7 @@ export const getWalletDetails = async (req, res) => {
       })
       .populate({ path: "user_id", select: "wallet" })
       .lean();
+      console.log(wallet);
     res.json(wallet);
   } catch (error) {
     console.log("Error", error);
