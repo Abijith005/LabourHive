@@ -3,8 +3,8 @@ import { adminLogin, blockOrUnblockUser, getAllUsers } from '../Controllers/Admi
 import { addCategory, blockCategory, deleteCategory, getAllCategories, updateCategory } from '../Controllers/CategoryController.js'
 import { changeJobStatus, getAllJobDetails } from '../Controllers/JobsController.js'
 import { getWithdrawDatas } from '../Controllers/walletController.js'
-import { getAllHireDetails, getHirings } from '../Controllers/hireController.js'
-import { adminPayment, adminPaymentVerifying, rejectWithdrawRequest, updatePayment } from '../Controllers/paymentController.js'
+import { approveHireCancel, getAllComplaints, getAllHireDetails, getHirings } from '../Controllers/hireController.js'
+import { adminPayment, adminPaymentVerifying, adminRefund, rejectWithdrawRequest, updatePayment } from '../Controllers/paymentController.js'
 const router=express.Router()
 
 
@@ -36,11 +36,17 @@ router.patch('/rejectWithdrawRequest',rejectWithdrawRequest)
 
 router.post('/adminPayment',adminPayment)
 
+router.post('/adminRefund',adminRefund)
+
 router.patch('/updatePayment',updatePayment)
 
 router.post('/verifyPayment', adminPaymentVerifying)
 
 router.get('/getAllHireDetails',getAllHireDetails)
+
+router.patch('/approveHireCancel',approveHireCancel)
+
+router.get('/getComplaints',getAllComplaints)
 
 
 

@@ -57,7 +57,7 @@ export class ViewHiringsComponent implements OnInit, OnDestroy {
             this.hiringDatas?.map(data=>{
               if (data._id===hire_id) {
                 const status=payment?'approved':'rejected'
-                data.paymentToLabour=status
+                data.payment=status
               }
             })
           }

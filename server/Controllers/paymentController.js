@@ -40,6 +40,10 @@ export const verifyPayment = async (req, res) => {
       process.env.JWT_SIGNATURE
     )?._id;
     const data = req.body;
+    console.log(
+      data,
+      "1234654678979465466544568888888888888888888888888*****************************"
+    );
     const { _id } = await categoryModel.findOne({ name: req.body.category });
 
     if (!req.body.job_id) {
@@ -67,6 +71,7 @@ export const verifyPayment = async (req, res) => {
     if (expectedSignature === data.razorpay_signature) {
       const hiringDate = new Date();
 
+      data.razorPay_id = data.razorpay_payment_id;
       //deleting unwanted from body
       delete data.razorpay_order_id,
         delete data.razorpay_payment_id,
@@ -118,8 +123,9 @@ export const updatePayment = async (req, res) => {
     }
     await hiringModel.updateOne(
       { _id: hire_id },
-      { $set: { paymentToLabour: status } }
+      { $set: { payment: status } },
     );
+
     res.json({ success: true, message: message });
   } catch (error) {
     console.log("Error", error);
@@ -141,14 +147,14 @@ export const adminPaymentVerifying = async (req, res) => {
       .digest("hex");
 
     if (expectedSignature === data.razorpay_signature) {
-     const updatedDocument= await withdrawModel.findOneAndUpdate(
+      const updatedDocument = await withdrawModel.findOneAndUpdate(
         { _id: data._id },
         { status: "approved" },
-        {new:true}
+        { new: true }
       );
       if (updatedDocument) {
         updatedDocument.status = "approved";
-        updatedDocument.save()
+        updatedDocument.save();
       }
       return res.json({
         success: true,
@@ -203,9 +209,11 @@ export const adminPayment = async (req, res) => {
           res.json({ success: true, order });
         }
       });
-    }
-    else{
-      res.json({ success: false, message:'Invalid amount cant proceed payment' });
+    } else {
+      res.json({
+        success: false,
+        message: "Invalid amount cant proceed payment",
+      });
     }
   } catch (error) {
     console.log("Error", error);
@@ -213,16 +221,39 @@ export const adminPayment = async (req, res) => {
   }
 };
 
-export const rejectWithdrawRequest=async (req,res)=>{
+export const adminRefund = async (req, res) => {
   try {
-    const {request_id}=req.body
-
-    await withdrawModel.updateOne({_id:request_id},{$set:{status:'rejected'}})
-    res.json({success:true,message:'Withdrawal Request Rejected Successfully'})
-    
+    const { amount, razorPay_id } = req.body;
+    const refund = await razorpayInstance.payments.refund(razorPay_id, {
+      amount: parseInt(amount),
+    });
+    if (refund.status == "processed") {
+      await hiringModel.updateOne(
+        { razorPay_id: razorPay_id },
+        { $set: { payment: "refunded" } }
+      );
+      res.json({ success: true, message: "Refund Successfully Processed" });
+    }
   } catch (error) {
-    
     console.log("Error", error);
     res.json({ success: false, message: "server error" });
   }
-}
+};
+
+export const rejectWithdrawRequest = async (req, res) => {
+  try {
+    const { request_id } = req.body;
+
+    await withdrawModel.updateOne(
+      { _id: request_id },
+      { $set: { status: "rejected" } }
+    );
+    res.json({
+      success: true,
+      message: "Withdrawal Request Rejected Successfully",
+    });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "server error" });
+  }
+};

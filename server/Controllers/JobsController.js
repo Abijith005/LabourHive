@@ -278,6 +278,7 @@ export const postJob = async (req, res) => {
 };
 
 export const getAllJobs = async (req, res) => {
+
   try {
     const currentDate = new Date();
     const jobs = await jobsModel
@@ -290,6 +291,7 @@ export const getAllJobs = async (req, res) => {
       })
       .populate("category")
       .lean();
+      console.log(jobs,currentDate,'skjdahfjkhsadfhjkshadjkf');
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
@@ -531,8 +533,6 @@ export const getAllJobDetails = async (req, res) => {
       query.endDate = { $lte: eDate };
     }
 
-    console.log(query);
-
     const jobs = await jobsModel
       .find(query)
       .populate([
@@ -540,7 +540,6 @@ export const getAllJobDetails = async (req, res) => {
         { path: "category", select: "name" },
       ])
       .lean();
-    console.log(jobs, "sdfsdfafasf");
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);

@@ -7,6 +7,10 @@ const hiringSchema = new mongoose.Schema({
     ref: "jobs",
     required: false,
   },
+  razorPay_id: {
+    type: String,
+    required: [true, "payment id is required"],
+  },
   client_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
@@ -55,15 +59,20 @@ const hiringSchema = new mongoose.Schema({
   },
   hireStatus: {
     type: String,
-    // enum: ["hired", "cancelled", "cancelRequested"],
-    enum: ["hired", "cancelled_client","cancelled_labour", "cancelRequested_client","cancelRequested_labour"],
+    enum: [
+      "hired",
+      "cancelled_client",
+      "cancelled_labour",
+      "cancelRequested_client",
+      "cancelRequested_labour",
+    ],
     default: "hired",
   },
-  paymentToLabour:{
-    type:String,
-    enum:['pending','rejected','approved'],
-    default:'pending'
-  }
+  payment: {
+    type: String,
+    enum: ["pending", "rejected", "approved", "refunded"],
+    default: "pending",
+  },
 });
 
 // adding the work date to the labour schedule model by post middleware
@@ -81,7 +90,7 @@ hiringSchema.post("save", async function (doc) {
       return { date: currentDate, hire_id: doc._id };
     });
 
-   await scheduleModel.updateOne(
+    await scheduleModel.updateOne(
       { user_id: doc.labour_id },
       { $push: { weekSchedule: { $each: dates } } },
       { upsert: true },

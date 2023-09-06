@@ -1,0 +1,58 @@
+<div class="header d-flex justify-content-between ms-3 me-3 pt-4">
+    <h3><b>HIRE MANAGEMENT</b></h3>
+    <div class="search">
+    </div>
+  </div>
+  <div class="m-2">
+    <table class="table table-striped mt-3">
+      <thead class="tableHeadings">
+        <tr>
+          <th scope="col">Sl No.</th>
+          <th scope="col">Client</th>
+          <th scope="col">Labour</th>
+          <th scope="col">Category</th>
+          <th scope="col">Hire Date</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Payment</th>
+          <th scope="col">Status</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of complaintDatas; let i = index" class="mb-5">
+        <tr >
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ item.client.name|titlecase }}</td>
+          <td>{{ item.labour.name|titlecase  }}</td>
+          <td>{{ item.hireData.category|titlecase  }}</td>
+          <td>{{ item.hireData.hiringDate | customDate }}</td>
+          <td>{{ item.hireData.startDate | customDate }}</td>
+          <td>{{ item.hireData.endDate | customDate }}</td>
+          <td>{{ item.hireData.payment|titlecase }}</td>
+          <td>{{ item.hireStatus|titlecase  }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-sm btn-primary dropdown-toggle"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Actions
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" (click)="showComplaint(item.complaintText)">View Complaint</a>
+              </li>
+              <li *ngIf="item.hireData.payment==='pending'">
+                <a class="dropdown-item" (click)="holdPayment(item.hireData._id,false,item.labour._id,0)">Hold Payment</a>
+              </li>
+            </ul>
+            <!-- <ng-template #noAction > <i class="fas fa-ban text-info" style="font-size: x-small">
+              No Action</i
+            > </ng-template> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

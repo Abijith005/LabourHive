@@ -23,6 +23,8 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { ViewHiringsComponent } from './view-hirings/view-hirings.component';
 import { HireManagementComponent } from './hire-management/hire-management.component';
+import { ComplaintManagementComponent } from './complaint-management/complaint-management.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -37,7 +39,8 @@ import { HireManagementComponent } from './hire-management/hire-management.compo
     AddCategoryComponent,
     EditCategoryComponent,
     ViewHiringsComponent,
-    HireManagementComponent
+    HireManagementComponent,
+    ComplaintManagementComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +59,8 @@ import { HireManagementComponent } from './hire-management/hire-management.compo
     MatCardModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    SharedModule
+    SharedModule,
+    NgApexchartsModule
   ]
 })
 export class AdminModule { }

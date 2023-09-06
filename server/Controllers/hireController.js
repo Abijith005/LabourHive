@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import hiringModel from "../Models/hiringModel.js";
+import complaintModel from "../Models/complaintModel.js";
 
 export const getHirings = async (req, res) => {
   try {
@@ -44,7 +45,7 @@ export const getHirings = async (req, res) => {
           location: 1,
           totalAmount: 1,
           hireStatus: 1,
-          paymentToLabour:1,
+          payment: 1,
           "labour.name": 1,
           "labour._id": 1,
           "job._id": 1,
@@ -62,17 +63,91 @@ export const getHirings = async (req, res) => {
   }
 };
 
-
-export const getAllHireDetails=async (req,res)=>{
+export const getAllHireDetails = async (req, res) => {
   try {
-    const hireDatas=await hiringModel.find().populate({path:'client_id',select:'name'}).populate({path:'labour_id',select:'name'}).lean()
-    console.log(hireDatas,'fdsffdfdf');
-    res.json(hireDatas)
-
+    const hireDatas = await hiringModel
+      .find()
+      .populate({ path: "client_id", select: "name" })
+      .populate({ path: "labour_id", select: "name" })
+      .lean();
+    res.json(hireDatas);
   } catch (error) {
     console.log("Error", error);
-    res.json({ success: false, message: "server error" });
-    
+    res.json({ success: false, message: "Unknown error occured" });
   }
-}
+};
 
+export const approveHireCancel = async (req, res) => {
+  try {
+    const { hire_id } = req.body;
+    const hireStatus =
+      req.body?.hireStatus === "cancelRequested_labour"
+        ? "cancelled_labour"
+        : "cancelled_client";
+
+    await hiringModel.updateOne(
+      { _id: hire_id },
+      { $set: { hireStatus: hireStatus } }
+    );
+    res.json({ success: true, message: "Hiring cancelled successfully" });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const getAllComplaints = async (req, res) => {
+  try {
+    // const complaints=await complaintModel.find().populate({path:'hire_id',populate:[{path:'client_id',select:"name"},{path:'labour_id',select:'name'}]}).lean()
+    const query=[
+      {
+        $lookup: {
+          from: "hirings",
+          localField: "hire_id",
+          foreignField: "_id",
+          as: "hireData",
+        },
+      },
+      { $unwind: { path: "$hireData", preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "hireData.client_id",
+          foreignField: "_id",
+          as: "client",
+        },
+      },
+      { $unwind: { path: "$client", preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "hireData.labour_id",
+          foreignField: "_id",
+          as: "labour",
+        },
+      },
+      { $unwind: { path: "$labour", preserveNullAndEmptyArrays: true } },
+      {$project:{
+        hire_id:1,
+        complaintText:1,
+        hireStatus:1,
+        'hireData._id':1,
+        'hireData.startDate':1,
+        'hireData.endDate':1,
+        'hireData.hiringDate':1,
+        'hireData.payment':1,
+        'hireData.category':1,
+        'client._id':1,
+        'client.name':1,
+        'labour._id':1,
+        'labour.name':1,
+      }}
+    ]
+    const complaints = await complaintModel.aggregate(query);
+    console.log(JSON.stringify(complaints, null, 2), "safdaf");
+    res.json(complaints);
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};

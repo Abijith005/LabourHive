@@ -49,7 +49,7 @@
   <div class="side-bar-container ">
     <div class="side-item " [class.active]="activeItem==='home'" (click)="changeActive('home')" [routerLink]="['/admin']">
       <i class="ri-home-line"></i>
-      <b>Home</b>
+      <b>HOME</b>
     </div>
     <div class="side-item" [class.active]="activeItem==='user'" (click)="changeActive('user')" [routerLink]="['userManagement']">
       <i class="ri-user-settings-line"></i>
@@ -64,8 +64,12 @@
       <b>WORK MANAGEMENT</b>
     </div>
     <div class="side-item" [class.active]="activeItem==='hire'" (click)="changeActive('hire')" [routerLink]="['hireManagement']">
-      <i class="ri-briefcase-line"></i>
+      <i class="far fa-address-book"></i>
       <b>HIRE MANAGEMENT</b>
+    </div>
+    <div class="side-item" [class.active]="activeItem==='complaint'" (click)="changeActive('complaint')" [routerLink]="['complaintManagement']">
+      <i class="far fa-file-lines"></i>
+      <b>COMPLAINT MANAGEMENT</b>
     </div>
     <div class="side-item" [class.active]="activeItem==='wallet'" (click)="changeActive('wallet')" [routerLink]="['walletManagement']">
       <i class="ri-wallet-line"></i>

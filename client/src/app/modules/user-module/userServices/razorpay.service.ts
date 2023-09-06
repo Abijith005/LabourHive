@@ -65,7 +65,7 @@ export class RazorpayService implements OnDestroy {
         amount: order.amount,
         currency: order.currency,
         name: 'Labour Hive',
-        description: 'Hiring Payment',
+        description: 'Wage Payment',
         order_id: order.id,
         handler: (response: any) => {
           this._adminServices
@@ -92,7 +92,42 @@ export class RazorpayService implements OnDestroy {
       });
     });
   }
+  
+  
+  adminHandleRazorpayRefund(order:any,_id:string): Promise<{ success: boolean }> {
+    return new Promise<{ success: boolean }>((resolve, reject) => {
+      const options: any = {
+        key: environment.RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Labour Hive',
+        description: 'Payment Refund',
+        order_id: order.id,
+        handler: (response: any) => {
+          this._adminServices
+            .adminPaymentVerify({ ...response,_id })
+            .pipe(takeUntil(this._unsubscribe$))
+            .subscribe((res) => {
+              if (!res.success) {
+                reject({ success: false });
+              } else {
+                resolve({ success: true });
+              }
+            });
+        },
+      };
 
+      const rzp = new this._winRef.nativeWindow.Razorpay(options);
+      rzp.open();
+      rzp.on('payment.failed', (response: any) => {
+        this._swalService.showAlert(
+          'Payment Failed',
+          'Unknown error please try again',
+          'error'
+        );
+      });
+    });
+  }
   ngOnDestroy(): void {
     this._unsubscribe$.complete();
   }

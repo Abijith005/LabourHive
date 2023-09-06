@@ -35,23 +35,23 @@
           <td>{{ item.job.currentStatus | titlecase }}</td>
           <td>
             <i
-              *ngIf="item.paymentToLabour === 'approved'"
+              *ngIf="item.payment === 'approved'"
               class="fas fa-circle-check"
               style="font-size: x-small; color: green"
-              > {{ item.paymentToLabour | titlecase }}</i
+            >
+              {{ item.payment | titlecase }}</i
             >
             <i
-              *ngIf="item.paymentToLabour === 'rejected'"
+              *ngIf="item.payment === 'rejected'"
               class="fas fa-circle-xmark"
               style="font-size: x-small; color: rgb(211, 0, 0)"
-              > {{ item.paymentToLabour | titlecase }}</i
+            >
+              {{ item.payment | titlecase }}</i
             >
             <span
-              *ngIf="
-                item.paymentToLabour !== 'approved' &&
-                item.paymentToLabour !== 'rejected'
-              "
-              > {{ item.paymentToLabour | titlecase }}</span
+              *ngIf="item.payment !== 'approved' && item.payment !== 'rejected'"
+            >
+              {{ item.payment | titlecase }}</span
             >
           </td>
           <td>
@@ -68,7 +68,7 @@
             <button
               *ngIf="
                 item.job.currentStatus === 'completed' &&
-                  item.paymentToLabour === 'pending';
+                  item.payment === 'pending';
                 else noAction
               "
               type="button"

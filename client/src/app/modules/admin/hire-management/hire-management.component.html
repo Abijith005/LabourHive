@@ -1,61 +1,60 @@
 <div class="header d-flex justify-content-between ms-3 me-3 pt-4">
-    <h3><b>HIRE MANAGEMENT</b></h3>
-    <div class="search ">
-      <!-- <input type="text" placeholder="Search" name="keyWord" [(ngModel)]="keyWord" (keyup)="searchUser()"
+  <h3><b>HIRE MANAGEMENT</b></h3>
+  <div class="search">
+    <!-- <input type="text" placeholder="Search" name="keyWord" [(ngModel)]="keyWord" (keyup)="searchUser()"
         style="width: 200px;"> -->
-    </div>
   </div>
-  <div class="m-2">
-  
-    <table class="table table-striped mt-3">
-      <thead class="tableHeadings">
-        <tr>
-          <th scope="col">Sl No.</th>
-          <th scope="col">Client</th>
-          <th scope="col">Labour</th>
-          <th scope="col">Category</th>
-          <th scope="col">Hire Date</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">End Date</th>
-          <th scope="col">Status</th>
-          <th scope="col">Options</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of hireDatas,let i='index'">
-          <th scope="row">{{i+1}}</th>
-          <td>{{item.client_id.name}}</td>
-          <td>{{item.labour_id.name}}</td>
-          <td>{{item.category}}</td>
-          <td>{{item.hiringDate|customDate}}</td>
-          <td>{{item.startDate|customDate}}</td>
-          <td>{{item.endDate|customDate}}</td>
-          <td>{{item.hireStatus}}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-sm btn-primary dropdown-toggle"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Actions
-            </button>
-            <ul class="dropdown-menu">
-              <li >
-                <a
-                  class="dropdown-item"
-                  >Completed</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" 
-                  >View Hirings</a
-                >
-              </li>
-            </ul>
-          </td>        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  
+</div>
+<div class="m-2">
+  <table class="table table-striped mt-3">
+    <thead class="tableHeadings">
+      <tr>
+        <th scope="col">Sl No.</th>
+        <th scope="col">Client</th>
+        <th scope="col">Labour</th>
+        <th scope="col">Category</th>
+        <th scope="col">Hire Date</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Payment</th>
+        <th scope="col">Status</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of hireDatas; let i = index" class="mb-5">
+      <tr >
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ item.client_id.name|titlecase }}</td>
+        <td>{{ item.labour_id.name|titlecase}}</td>
+        <td>{{ item.category|titlecase }}</td>
+        <td>{{ item.hiringDate | customDate }}</td>
+        <td>{{ item.startDate | customDate }}</td>
+        <td>{{ item.endDate | customDate }}</td>
+        <td>{{ item.payment|titlecase}}</td>
+        <td>{{ item.hireStatus }}</td>
+        <td>
+          <button
+            *ngIf="item.hireStatus!='hired'&&item.hireStatus!='cancelled_client';else noAction"
+            type="button"
+            class="btn btn-sm btn-primary dropdown-toggle"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Actions
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngIf="item.hireStatus === 'cancelRequested_labour'||item.hireStatus === 'cancelRequested_client'" (click)="approveCancel(item._id,item.hireStatus)">
+              <a class="dropdown-item">Approve Cancel</a>
+            </li>
+            <li *ngIf="item.hireStatus === 'cancelled_labour'" (click)="refund(item._id,item.totalAmount,item.razorPay_id)">
+              <a class="dropdown-item">Refund Payment</a>
+            </li>
+          </ul>
+          <ng-template #noAction > <i class="fas fa-ban text-info" style="font-size: x-small">
+            No Action</i
+          > </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

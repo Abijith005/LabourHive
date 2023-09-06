@@ -1,34 +1,63 @@
-
-<div class="container-fluid" style="margin-top: 100px;">
-    <div class="container bg-light shadow">
-        <div class="row profile-container" >
-            <div class="col-2 p-0 side-bar">
-                    <div class="side-item mt-5" [class.active]="activeItem==='basicInfo'" (click)="changeActive('basicInfo')" [routerLink]="['basicInfo']">
-                      <i class="fas fa-circle-info"></i>
-                      <b>BASIC INFO</b>
-                    </div>
-                    <div class="side-item" [class.active]="activeItem==='reviews'" (click)="changeActive('reviews')" [routerLink]="['reviews']">
-                      <i class="fas fa-pen-to-square"></i>
-                       <b>REVIEWS</b>
-                    </div>
-                    <div class="side-item" [class.active]="activeItem==='wallet'" (click)="changeActive('wallet')" [routerLink]="['wallet']">
-                      <i class="fas fa-wallet"></i>     
-                                       <b>WALLET</b>
-                    </div>
-                    <div class="side-item" [class.active]="activeItem==='schedules'" (click)="changeActive('schedules')" [routerLink]="['schedules']">
-                      <i class="fas fa-calendar-days"></i>
-                                            <b>SCHEDULES</b>
-                    </div>
-                    <div class="side-item" [class.active]="activeItem==='chat'" (click)="changeActive('chat')" [routerLink]="['chat']">
-                      <i class="fas fa-arrow-rotate-right"></i>                      <b>CHAT</b>
-                    </div>
-                    <div class="side-item" [class.active]="activeItem==='history'" (click)="changeActive('history')" [routerLink]="['history']">
-                      <i class="fas fa-arrow-rotate-right"></i>                      <b>HISTORY</b>
-                    </div>
-            </div>
-            <div class="col-10 contents">
-              <router-outlet></router-outlet>
-            </div>
+<div class="container-fluid" style="margin-top: 100px">
+  <div class="container bg-light shadow">
+    <div class="row profile-container">
+      <div class="col-2 p-0 side-bar">
+        <div
+          class="side-item mt-5"
+          [class.active]="activeItem === 'basicInfo'"
+          (click)="changeActive('basicInfo')"
+          [routerLink]="['basicInfo']"
+        >
+          <i class="fas fa-circle-info"></i>
+          <b>BASIC INFO</b>
         </div>
+        <div
+          class="side-item"
+          [class.active]="activeItem === 'reviews'"
+          (click)="changeActive('reviews')"
+          [routerLink]="['reviews']"
+        >
+          <i class="fas fa-pen-to-square"></i>
+          <b>REVIEWS</b>
+        </div>
+        <div
+          class="side-item"
+          [class.active]="activeItem === 'wallet'"
+          (click)="changeActive('wallet')"
+          [routerLink]="['wallet']"
+        >
+          <i class="fas fa-wallet"></i>
+          <b>WALLET</b>
+        </div>
+        <div
+          class="side-item"
+          [class.active]="activeItem === 'schedules'"
+          (click)="changeActive('schedules')"
+          [routerLink]="['schedules']"
+        >
+          <i class="fas fa-calendar-days"></i>
+          <b>SCHEDULES</b>
+        </div>
+        <div
+          class="side-item"
+          [class.active]="activeItem === 'chat'"
+          (click)="changeActive('chat')"
+          [routerLink]="['chat']"
+        >
+          <i class="fas fa-comments"></i> <b>CHAT</b>
+        </div>
+        <div
+          class="side-item"
+          [class.active]="activeItem === 'history'"
+          (click)="changeActive('history')"
+          [routerLink]="['history']"
+        >
+          <i class="fas fa-arrow-rotate-right"></i> <b>HISTORY</b>
+        </div>
+      </div>
+      <div class="col-10 contents">
+        <router-outlet></router-outlet>
+      </div>
     </div>
+  </div>
 </div>
