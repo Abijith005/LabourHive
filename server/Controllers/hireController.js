@@ -98,7 +98,6 @@ export const approveHireCancel = async (req, res) => {
 
 export const getAllComplaints = async (req, res) => {
   try {
-    // const complaints=await complaintModel.find().populate({path:'hire_id',populate:[{path:'client_id',select:"name"},{path:'labour_id',select:'name'}]}).lean()
     const query=[
       {
         $lookup: {
@@ -144,7 +143,6 @@ export const getAllComplaints = async (req, res) => {
       }}
     ]
     const complaints = await complaintModel.aggregate(query);
-    console.log(JSON.stringify(complaints, null, 2), "safdaf");
     res.json(complaints);
   } catch (error) {
     console.log("Error", error);

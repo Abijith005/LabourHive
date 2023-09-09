@@ -1,7 +1,7 @@
 <!-- Navbar -->
-<nav class="navbar user-nav navbar-expand-lg navbar-light" style="background-color: rgb(233, 233, 233); box-shadow:  0 0px 0px rgba(0, 0, 0, 0.5)!important; z-index: 100;">
+<nav class="navbar user-nav navbar-expand-lg navbar-light m-0" style="background-color: rgb(233, 233, 233); box-shadow:  0 0px 0px rgba(0, 0, 0, 0.5)!important; z-index: 100;">
     <!-- Container wrapper -->
-    <div class="container-fluid">
+    <div class="container-fluid m-0">
       <!-- Toggle button -->
       <button
         class="navbar-toggler"
@@ -48,12 +48,18 @@
 
         <!-- Left links -->
       </div>
+
+
+      <!-- hjkhkhkjhjhk -->
+      <!-- <div  class="side-bar">
+      
+      </div> -->
       <!-- Collapsible wrapper -->
   
       <!-- Right elements -->
       <div class="d-flex align-items-center">
         <!-- Notifications -->
-        <div *ngIf="(userInformations$ |async)?.isLoggedIn" class="dropdown me-3">
+        <div hidden="true" *ngIf="(userInformations$ |async)?.isLoggedIn" class="dropdown me-3">
           <a
             class="text-reset me-3 dropdown-toggle hidden-arrow"
             href="#"

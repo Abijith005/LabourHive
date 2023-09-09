@@ -31,7 +31,7 @@
               </div>
               <div class="col-8 location-container">
                 <label  [style.color]="isSubmitted&&formControl['location'].errors?'red':''" class="form-label" *ngIf="isSubmitted&&formControl['location'].errors">Location is required</label>
-                <input type="text" class="form-control" (input)="getSuggestions()" value="{{ location }}"
+                <input [matTooltip]="location" type="text" class="form-control" (input)="getSuggestions()" value="{{ location }}"
                   formControlName="location" />
                 <ul class="list-unstyled suggestions">
                   <li class="mb-1" *ngFor="let suggestion of suggestions" style="cursor: pointer;" (click)="slectSuggestion(suggestion)">

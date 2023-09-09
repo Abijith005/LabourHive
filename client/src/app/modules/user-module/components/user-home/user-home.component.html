@@ -22,23 +22,24 @@
   
   
   <!-- Category Listing -->
-  
+  <div class="container">
   <div class="category mb-4  ">
     <h1 class="mt-4 ms-5"><b>Categories</b></h1>
-    <div class="row d-flex justify-content-center " >
-      <div class="card col-md-2 mx-3 bg-light" style="box-shadow: 0 4px 6px rgb(0,0,0,0.5); border: thin solid rgb(0,0,0,0.3)" *ngFor="let item of categories">
-        <img src="{{item.vectorImage}}" class="card-img-top" style="height: 120px; object-fit: contain;" alt="Fissure in Sandstone"/>
+    <div class="row d-flex justify-content-around" >
+      <div class="category-labour col-md-2 col-5 bg-light" *ngFor="let item of categories">
+        <img src="{{item.vectorImage}}" class="card-img-top"  alt="Fissure in Sandstone"/>
         <div class="card-body text-center">
           <h1 class="card-title"><b> {{item.name}}</b> </h1>
           <p class="card-text">Basic Wage:₹ {{item.basicWage}} /day</p>
-          <p class="">Available Labours :200</p>
+          <p class="">Available Labours :{{item.count}}</p>
           <div class="text-center">
-            <button class="btn btn-primary" [routerLink]="['/viewLabours/'+item.name]">View</button>
+            <button class="btn btn-primary btn-sm" [routerLink]="['/viewLabours/'+item.name]">View</button>
           </div>
         </div>
       </div>
    
     </div>
+  </div>
   </div>
 
 </div>

@@ -18,6 +18,10 @@ export class AdminPaymentManagementService {
   }
 
   rejectwithdrawRequest(request_id:string){
-    return this._http.patch(`/admin/rejectWithdraw`,{request_id})
+    return this._http.patch<i_authRes>(`/admin/rejectWithdraw`,{request_id})
+  }
+
+  getRevenueDatas(){
+    return this._http.get<any>('/admin/getRevenueData')
   }
 }

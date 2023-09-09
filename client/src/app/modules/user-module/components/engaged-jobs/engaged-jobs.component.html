@@ -62,13 +62,13 @@
       </div>
       <div
         class="job-data col-4"
-        (click)="toggleDecsription()"
+        (click)="toggleDescription(item._id)"
         [matTooltip]="'Click to see description'"
       >
         <div class="job-description">
           <p class="mb-0 description">
             <i class="fas fa-note-sticky"></i>&nbsp;&nbsp;&nbsp;<span
-              [ngClass]="{ ellipsis: hideDescription }"
+              [ngClass]="{ ellipsis: !descriptionVisibilityMap.get(item._id) }"
               matTooltipPosition="right"
               >{{ item.job_id.jobDescription }}</span
             >

@@ -278,20 +278,23 @@ export const postJob = async (req, res) => {
 };
 
 export const getAllJobs = async (req, res) => {
-
   try {
+    const user_id = (
+      await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
+    )._id;
     const currentDate = new Date();
     const jobs = await jobsModel
       .find({
         $and: [
           { startDate: { $gt: currentDate } },
           { currentStatus: "active" },
+          { client_id: { $ne: user_id } },
           { postedJob: true },
         ],
       })
       .populate("category")
       .lean();
-      console.log(jobs,currentDate,'skjdahfjkhsadfhjkshadjkf');
+    console.log(jobs, currentDate, "skjdahfjkhsadfhjkshadjkf");
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
@@ -419,12 +422,21 @@ export const editJob = async (req, res) => {
 
 export const changeJobStatus = async (req, res) => {
   try {
+    const currentDate = new Date();
     const { job_id, status } = req.body;
-    await jobsModel.updateOne(
-      { _id: job_id },
+    const update = await jobsModel.updateOne(
+      { $and: [{ _id: job_id }, { endDate: { $lt: currentDate } }] },
       { $set: { currentStatus: status } }
     );
-    res.json({ success: true, message: "Job status updated successfully" });
+    console.log(update, "dsdfdf");
+    if (update.modifiedCount) {
+      res.json({ success: true, message: "Job status updated successfully" });
+    } else {
+      res.json({
+        success: false,
+        message: "Cant Update! Job end date mismatched",
+      });
+    }
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -484,10 +496,7 @@ export const cancelJobRequest = async (req, res) => {
         : "cancelRequested_labour";
 
     const { hire_id } = req.body;
-    await hiringModel.updateOne(
-      { _id: hire_id },
-      { $set: { hireStatus} }
-    );
+    await hiringModel.updateOne({ _id: hire_id }, { $set: { hireStatus } });
     res.json({
       success: true,
       message: "Successfully requested for cancel Hiring",
@@ -541,6 +550,85 @@ export const getAllJobDetails = async (req, res) => {
       ])
       .lean();
     res.json(jobs);
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const getHederDatas = async (req, res) => {
+  try {
+    const hirePipeLine = [
+      {
+        $facet: {
+          totalHirings: [
+            {
+              $group: {
+                _id: null,
+                count: { $sum: 1 },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+              },
+            },
+          ],
+          totalRevenue: [
+            {
+              $match: {
+                payment: "approved",
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                totalRevenue: {
+                  $sum: {
+                    $subtract: [
+                      "$totalAmount",
+                      { $divide: ["$totalAmount", 1.01] },
+                    ],
+                  },
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                revenue: { $divide: ["$totalRevenue", 1000] },
+              },
+            },
+          ],
+        },
+      },
+      { $unwind: { path: "$totalHirings", preserveNullAndEmptyArrays: true } },
+      { $unwind: { path: "$totalRevenue", preserveNullAndEmptyArrays: true } },
+    ];
+
+    const currentDate = new Date();
+
+    const users = await userModel.find().countDocuments();
+
+    const datas = await hiringModel.aggregate(hirePipeLine);
+
+    const jobs = await jobsModel
+      .find({
+        $and: [
+          { currentStatus: "active" },
+          { startDate: { $gt: currentDate } },
+        ],
+      })
+      .countDocuments();
+
+    const headerDatas = {
+      totalRevenue: datas[0]?.totalRevenue.revenue,
+      totalHire: datas[0]?.totalHirings.count,
+      totalUsers: users,
+      totalJobs: jobs,
+    };
+
+    res.json(headerDatas)
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

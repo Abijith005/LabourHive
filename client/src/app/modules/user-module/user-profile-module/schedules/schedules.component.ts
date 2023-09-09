@@ -3,7 +3,6 @@ import { UserProfileService } from '../../userServices/user-profile.service';
 import { i_userSchedule } from 'src/app/interfaces/userInterfaces/i_userSchedule';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { SingleJobComponent } from '../../components/single-job/single-job.component';
 import { JobInfoComponent } from '../job-info/job-info.component';
 
 @Component({
@@ -27,6 +26,7 @@ export class SchedulesComponent implements OnInit {
 
   viewJob(hire_id:string){
     this._matDialog.open(JobInfoComponent,{
+      maxWidth:'700px',
       data:hire_id
     })
 

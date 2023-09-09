@@ -123,7 +123,7 @@ export const updatePayment = async (req, res) => {
     }
     await hiringModel.updateOne(
       { _id: hire_id },
-      { $set: { payment: status } },
+      { $set: { payment: status } }
     );
 
     res.json({ success: true, message: message });
@@ -252,6 +252,176 @@ export const rejectWithdrawRequest = async (req, res) => {
       success: true,
       message: "Withdrawal Request Rejected Successfully",
     });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "server error" });
+  }
+};
+
+export const getRevenueDatas = async (req, res) => {
+  try {
+    const currentYear = new Date().getFullYear();
+    const aggregationDatas = await hiringModel.aggregate([
+      {
+        $facet: {
+          revenueDatas: [
+            {
+              $match: {
+                payment: "approved",
+                $expr: {
+                  $eq: [{ $year: "$endDate" }, currentYear],
+                },
+              },
+            },
+            {
+              $group: {
+                _id: {
+                  year: { $year: "$endDate" },
+                  month: { $month: "$endDate" },
+                },
+                sum: {
+                  $sum: {
+                    $subtract: ["$totalAmount", { $divide: ["$totalAmount", 1.01] }],
+                  },
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                label: "$_id.month",
+                y: { $divide: ["$sum", 1000] },
+              },
+            },
+            {
+              $sort: {
+                label: 1,
+              },
+            },
+          ],
+          totalHiringCount: [
+            {
+              $group: {
+                _id: null,
+                count: { $sum: 1 },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+              },
+            },
+          ],
+          categoryHiringCount: [
+            {
+              $group: {
+                _id: "$category",
+                y: { $sum: 1 },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                name: "$_id",
+                y: 1,
+              },
+            },
+            {
+              $sort: {
+                category: 1,
+              },
+            },
+          ],
+          hiringDatas:[
+            {$match:{
+              $expr:{$eq:[{$year:'$endDate'},currentYear]}
+            }},
+            {$group:{
+              _id:{
+               year:{$year:'$hiringDate'},
+                month:{$month:'$hiringDate'},
+                count:{$sum:1}
+              },
+            }},
+            {$project:{
+              _id:0,
+              label:'$_id.month',
+              y:'$_id.count'
+            }}
+          ]
+        },
+      },
+      {$unwind:{path:'$totalHiringCount'}}
+    ]);
+
+    const revenueDatas=aggregationDatas[0]?.revenueDatas
+    const hiringDatas=aggregationDatas[0]?.hiringDatas
+    const categoryHiringCount=aggregationDatas[0]?.categoryHiringCount
+    
+    // for giving month name in tha aggregated data
+    const monthMapping = [
+      null,
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const monthlyRevenue = [
+      { label: "Jan", y: 0 },
+      { label: "Feb", y: 0 },
+      { label: "Mar", y: 0 },
+      { label: "Apr", y: 0 },
+      { label: "May", y: 0 },
+      { label: "Jun", y: 0 },
+      { label: "Jul", y: 0 },
+      { label: "Aug", y: 0 },
+      { label: "Sep", y: 0 },
+      { label: "Oct", y: 0 },
+      { label: "Nov", y: 0 },
+      { label: "Dec", y: 0 },
+    ];
+
+    const monthlyHiring = [
+      { label: "Jan", y: 0 },
+      { label: "Feb", y: 0 },
+      { label: "Mar", y: 0 },
+      { label: "Apr", y: 0 },
+      { label: "May", y: 0 },
+      { label: "Jun", y: 0 },
+      { label: "Jul", y: 0 },
+      { label: "Aug", y: 0 },
+      { label: "Sep", y: 0 },
+      { label: "Oct", y: 0 },
+      { label: "Nov", y: 0 },
+      { label: "Dec", y: 0 },
+    ];
+
+    revenueDatas.forEach((data) => {
+      data.label = monthMapping[data.label];
+      const monthIndex = monthMapping.indexOf(data.label);
+      if (monthIndex != -1) {
+        monthlyRevenue[monthIndex].y = data.y;
+      }
+    });
+
+    hiringDatas.forEach((data) => {
+      data.label = monthMapping[data.label];
+      const monthIndex = monthMapping.indexOf(data.label);
+      if (monthIndex != -1) {
+        monthlyHiring[monthIndex].y = data.y;
+      }
+    });
+
+    res.json({monthlyRevenue,monthlyHiring,categoryHiringCount});
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "server error" });

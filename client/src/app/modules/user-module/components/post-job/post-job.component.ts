@@ -112,17 +112,6 @@ export class PostJobComponent implements OnInit,OnDestroy {
   }
 
   
-  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    // Only highlight dates inside the month view.
-    if (view === 'month') {
-      const date = cellDate.getDate();
-
-      // Highlight the 1st and 20th day of each month.
-      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
-    }
-
-    return '';
-  };
 
   onSubmit() {
     this.isSubmitted = true;

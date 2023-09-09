@@ -14,6 +14,7 @@ import { RatingComponent } from './rating/rating.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JobInfoComponent } from './job-info/job-info.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
+import { EditBasicInfoComponent } from './edit-basic-info/edit-basic-info.component';
 
 
 
@@ -28,6 +29,7 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
     RatingComponent,
     JobInfoComponent,
     WithdrawComponent,
+    EditBasicInfoComponent,
     
   ],
   imports: [

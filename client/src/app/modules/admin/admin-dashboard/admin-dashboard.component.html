@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
   <div class="container">
-    <div class="row">
+    <div class="row mb-5">
       <div class="col-md-3 col-6 mb-3">
         <div class="over-view row">
           <div class="icon col-md-4">
@@ -22,7 +22,7 @@
           <div class="col-md-8">
             <div class="ms-3 details">
               <p class="heading mb-3">Revenue</p>
-              <p class="data">4500 K</p>
+              <p class="data">{{summaryDatas?.totalRevenue}} K</p>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
           <div class="col-md-8">
             <div class="ms-3 details">
               <p class="heading mb-3">Users</p>
-              <p class="data">3564</p>
+              <p class="data">{{summaryDatas?.totalUsers}}</p>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
           <div class="col-md-8">
             <div class="ms-3 details">
               <p class="heading mb-3">Total Hire</p>
-              <p class="data">8765</p>
+              <p class="data">{{summaryDatas?.totalHire}}</p>
             </div>
           </div>
         </div>
@@ -79,18 +79,25 @@
           <div class="col-md-8">
             <div class="ms-3 details">
               <p class="heading mb-3">Active Jobs</p>
-              <p class="data">4763</p>
+              <p class="data">{{summaryDatas?.totalJobs}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-3 col-6 mb-3">
-            <!-- Your chart goes here -->
-            <!-- <ng-apexcharts [options]="chartOptions" [series]="chartOptions.series"></ng-apexcharts> -->
-          </div>
+    <div class="sales-report">
     </div>
+    <div class="row" style="margin-top: 80px;">
+      <div class="col-md-4 col-sm-12">
+        <canvasjs-chart [options]="columnChart" [styles]="{width: '100%', height: '360px'}"></canvasjs-chart>    
+    </div> 
+    <div class="col-md-4 col-sm-12 mb-3">
+      <canvasjs-chart [options]="lineChart" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>    
+    </div>
+    <div class="col-md-4 col-sm-12 mb-3" >
+      <canvasjs-chart [options]="pieChart" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>    
+    </div>
+  </div>
+   
   </div>
 </div>

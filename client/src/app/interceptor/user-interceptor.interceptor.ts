@@ -14,9 +14,8 @@ export class UserInterceptorInterceptor implements HttpInterceptor {
   constructor(private _authService: UserAuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
-    const token = this._authService.getToken();
+    // const token = this._authService.getToken();
 
-    // console.log('iam intercetor',request);
 
     //Excluding Mapbox requests being interrupted
 

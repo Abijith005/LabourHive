@@ -1,64 +1,97 @@
-// import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AdminJobManagementService } from 'src/app/services/adminServices/admin-job-management.service';
+import { AdminPaymentManagementService } from 'src/app/services/adminServices/admin-payment-management.service';
 
-// @Component({
-//   selector: 'labourHive-admin-dashboard',
-//   templateUrl: './admin-dashboard.component.html',
-//   styleUrls: ['./admin-dashboard.component.css']
-// })
-// export class AdminDashboardComponent {
-
-// }
-
-
-
-import { Component, ViewChild } from "@angular/core";
-import { ChartComponent } from "ng-apexcharts";
-
-import {
-  ApexNonAxisChartSeries,
-  ApexResponsive,
-  ApexChart
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  responsive: ApexResponsive[];
-  labels: any;
-};
-
+interface summaryDatas{
+  totalRevenue: number;
+  totalHire: number;
+  totalUsers: number;
+  totalJobs: number;
+ }
 @Component({
   selector: 'labourHive-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+  styleUrls: ['./admin-dashboard.component.css'],
 })
+export class AdminDashboardComponent implements OnInit {
+  // variable declarations
+  columnChart: any = '';
+  lineChart: any = '';
+  pieChart: any = '';
+  summaryDatas:summaryDatas|null=null
 
-export class AdminDashboardComponent {
-  @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  constructor(
+    private _paymetService: AdminPaymentManagementService,
+    private _jobService: AdminJobManagementService
+  ) {}
 
-  constructor() {
-    this.chartOptions = {
-      series: [44, 55, 13, 43, 22],
-      chart: {
-        width: 380,
-        type: "pie"
-      },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+  ngOnInit(): void {
+    this._paymetService.getRevenueDatas().subscribe((res) => {
+      const coloumnChartOptions = {
+        title: {
+          text: 'Monthly Revenue',
+        },
+        theme: 'light2',
+        animationEnabled: false,
+        exportEnabled: false,
+        axisY: {
+          includeZero: true,
+          valueFormatString: '₹#,##0k',
+        },
+        data: [
+          {
+            type: 'column', //change type to bar, line, area, pie, etc
+            yValueFormatString: '₹#,##0k',
+            color: '#01b8aa',
+            dataPoints: res.monthlyRevenue,
+          },
+        ],
+      };
+
+      const lineChartOptions = {
+        title: {
+          text: 'Monthly Jobs Data',
+        },
+        theme: 'light2',
+        animationEnabled: true,
+        exportEnabled: false,
+        axisY: {
+          includeZero: true,
+          valueFormatString: '#,##0',
+        },
+        data: [
+          {
+            type: 'area', //change type to bar, line, area, pie, etc
+            yValueFormatString: '#,##0',
+            color: '#01b8aa',
+            dataPoints: res.monthlyHiring,
+          },
+        ],
+      };
+
+      const pieChartOptions = {
+        animationEnabled: true,
+        theme: 'light2',
+        title: {
+          text: 'Total Hire Breakdown',
+        },
+        data: [
+          {
+            type: 'doughnut',
+            yValueFormatString: "#,###.##'%'",
+            indexLabel: '{name}',
+            dataPoints: res.categoryHiringCount,
+          },
+        ],
+      };
+
+      this.columnChart = coloumnChartOptions;
+      this.lineChart = lineChartOptions;
+      this.pieChart = pieChartOptions;
+    });
+
+    this._jobService.getHeaderDatas().subscribe((res) => {
+      this.summaryDatas=res
+    });
   }
 }
-

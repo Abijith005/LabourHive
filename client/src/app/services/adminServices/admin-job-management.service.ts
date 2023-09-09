@@ -50,4 +50,13 @@ export class AdminJobManagementService {
       amount,
     });
   }
+
+  getHeaderDatas() {
+    return this._http.get<{
+      totalRevenue: number;
+      totalHire: number;
+      totalUsers: number;
+      totalJobs: number;
+    }>('/admin/getHeaderDatas');
+  }
 }

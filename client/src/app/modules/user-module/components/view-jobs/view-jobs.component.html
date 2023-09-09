@@ -32,10 +32,10 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div
-        class="col-md-2 col-6 mt-4 p-0 d-flex justify-content-center"
+        class=" col-md-3 col-6 my-3 p-0 d-flex justify-content-center"
         *ngFor="let job of jobs"
       >
         <div class="jobs">
@@ -70,133 +70,7 @@
             </p>
           </div>
           <div class="button">
-            <button class="btn btn-primary me-3" (click)="viewSingleJob(job)">
-              View
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-md-2 col-6 mt-4 p-0 d-flex justify-content-center"
-        *ngFor="let job of jobs"
-      >
-        <div class="jobs">
-          <img
-            class="card-img-top"
-            src="{{ job.category?.subImage }}"
-            alt="Card image cap"
-          />
-          <div class="details">
-            <p>
-              <b>Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;<span>{{ job.category?.name }}</span>
-            </p>
-            <p class="location">
-              <b>Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.location }}
-            </p>
-            <p>
-              <b
-                >Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.startDate | customDate }} &nbsp;to&nbsp;
-              {{ job.endDate | customDate }}
-            </p>
-            <p>
-              <b> Experience &nbsp;&nbsp;&nbsp;:</b>
-              {{ job.experience }}&nbsp;&nbsp;Years
-            </p>
-            <p>
-              <b>
-                Count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.requiredCount }}&nbsp;&nbsp;Labour
-            </p>
-          </div>
-          <div class="button">
-            <button class="btn btn-primary me-3" (click)="viewSingleJob(job)">
-              View
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-md-2 col-6 mt-4 p-0 d-flex justify-content-center"
-        *ngFor="let job of jobs"
-      >
-        <div class="jobs">
-          <img
-            class="card-img-top"
-            src="{{ job.category?.subImage }}"
-            alt="Card image cap"
-          />
-          <div class="details">
-            <p>
-              <b>Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;<span>{{ job.category?.name }}</span>
-            </p>
-            <p class="location">
-              <b>Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.location }}
-            </p>
-            <p>
-              <b
-                >Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.startDate | customDate }} &nbsp;to&nbsp;
-              {{ job.endDate | customDate }}
-            </p>
-            <p>
-              <b> Experience &nbsp;&nbsp;&nbsp;:</b>
-              {{ job.experience }}&nbsp;&nbsp;Years
-            </p>
-            <p>
-              <b>
-                Count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.requiredCount }}&nbsp;&nbsp;Labour
-            </p>
-          </div>
-          <div class="button">
-            <button class="btn btn-primary me-3" (click)="viewSingleJob(job)">
-              View
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-md-2 col-6 mt-4 p-0 d-flex justify-content-center"
-        *ngFor="let job of jobs"
-      >
-        <div class="jobs">
-          <img
-            class="card-img-top"
-            src="{{ job.category?.subImage }}"
-            alt="Card image cap"
-          />
-          <div class="details">
-            <p>
-              <b>Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;<span>{{ job.category?.name }}</span>
-            </p>
-            <p class="location">
-              <b>Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.location }}
-            </p>
-            <p>
-              <b
-                >Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.startDate | customDate }} &nbsp;to&nbsp;
-              {{ job.endDate | customDate }}
-            </p>
-            <p>
-              <b> Experience &nbsp;&nbsp;&nbsp;:</b>
-              {{ job.experience }}&nbsp;&nbsp;Years
-            </p>
-            <p>
-              <b>
-                Count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
-              >&nbsp;{{ job.requiredCount }}&nbsp;&nbsp;Labour
-            </p>
-          </div>
-          <div class="button">
-            <button class="btn btn-primary me-3" (click)="viewSingleJob(job)">
+            <button class="btn btn-primary btn-sm me-3" (click)="viewSingleJob(job)">
               View
             </button>
           </div>

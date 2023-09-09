@@ -1,5 +1,6 @@
 import cloudinary from "../Config/cloudinary.js";
 import categoryModel from "../Models/categoryModel.js";
+import jobProfileModel from "../Models/jobProfileModel.js";
 
 export async function addCategory(req, res) {
   try {
@@ -41,6 +42,23 @@ export async function addCategory(req, res) {
 export async function getAllCategories(req, res) {
   try {
     const categories = await categoryModel.find().lean();
+    const laboursCount = await jobProfileModel.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    categories.forEach((data) => {
+      const category = data.name;
+      let count = laboursCount.find((e) => e._id === category)?.count;
+
+      count = count ? count : 0;
+      data.count = count;
+    });
+    console.log(categories, "safdsfdsf", laboursCount);
     res.json({ categories });
   } catch (error) {
     console.log("Error", error);

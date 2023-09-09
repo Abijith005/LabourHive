@@ -31,7 +31,7 @@
         <td>{{ item.startDate | customDate }}</td>
         <td>{{ item.endDate | customDate }}</td>
         <td>{{ item.payment|titlecase}}</td>
-        <td>{{ item.hireStatus }}</td>
+        <td>{{ item.hireStatus|titlecase }}</td>
         <td>
           <button
             *ngIf="item.hireStatus!='hired'&&item.hireStatus!='cancelled_client';else noAction"

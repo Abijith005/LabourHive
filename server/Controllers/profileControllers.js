@@ -298,3 +298,16 @@ export const requestWithdrawal = async (req, res) => {
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+
+export const editBasicInfo=async(req,res)=>{
+  try {
+    const user_id=(await verifyToken(req.cookies.userAuthToken,process.env.JWT_SIGNATURE))._id
+    console.log(req.body,'sdfasdfsdf',user_id);
+
+    
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+    
+  }
+}

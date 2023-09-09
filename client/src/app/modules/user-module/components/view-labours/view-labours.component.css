@@ -9,7 +9,6 @@
 
 }
 
-
 .card-row{
     display: flex;
     gap: 20px;
@@ -34,15 +33,18 @@
 
 .name{
     font-weight: bolder;
-    text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.4);
+    /* text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.4); */
     font-size: 22px;
+    padding: 5px;
 }
 
 .category{
     color: rgb(35, 35, 194);
     font-weight: bold;
-    font-size: 19px;
+    font-size: 16px;
     text-shadow: 1px 3px 3px rgba(0, 0, 0, 0.4);
+    padding: 5px;
+    margin-top: 12px !important;
 }
 
 .buttons button {
@@ -70,3 +72,106 @@
         width: 18px; 
         height: 18px; 
   }
+
+  .search-box{
+    background-color: rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    border: thin solid rgba(0, 0, 0, 0.3);
+    padding-top: 1em;
+}
+
+.search{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    gap: 10px;
+}
+
+.search-location{
+    position: relative;
+}
+
+.suggestion-list{
+    position: absolute;
+    top: 50px;
+    left:348px;
+    background-color: white;
+    z-index: 100;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    width: 338px;
+    margin-top: 4px;
+    
+}
+.suggestion-list li{
+    cursor: pointer;
+    padding:8px;
+}
+
+
+@media (max-width:768px){
+    .search-box{
+     padding-top: .5em;
+    }
+ 
+    .search{
+     padding-bottom: 4px;
+     padding-top: .2em;
+    }
+ 
+    .suggestion{
+     font-size: 10px;
+     padding-left: 25px;
+     margin-bottom: 2px;
+    }
+   .form-control{
+    
+         width: 130px;
+         height: 25px; 
+ 
+         font-size: 12px; 
+     }
+ 
+     .btn {
+         font-size: 10px;
+         padding: 5px 10px; 
+     }
+ 
+     .suggestion-list{
+         top: 28px;
+         left:150px;
+         width: 155px;
+         margin-top: 4px;
+         
+     }
+     .details p{
+         font-size: 5px;
+     }
+     .jobs{
+        height: 200px;
+    
+    }
+    .img img{
+        height: 50px;
+        width: 50px;
+        
+    }
+
+    .name{
+        font-size: 15px;
+        margin-bottom: 10px !important;
+    }
+    
+    .category{
+        font-size: 12px;
+    }
+    
+
+
+    
+   
+ }

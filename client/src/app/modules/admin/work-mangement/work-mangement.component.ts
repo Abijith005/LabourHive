@@ -87,8 +87,9 @@ this.getJobs()
         .changeJobStatus(job_id, status)
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
+          const title=res.success?'success':'Failed'
+          this._swalServices.showAlert(title, res.message,title);
           if (res.success) {
-            this._swalServices.showAlert('Success', res.message, 'success');
             this.jobDetails?.map((data) => {
               if (data._id === job_id) {
                 data.currentStatus = 'completed';

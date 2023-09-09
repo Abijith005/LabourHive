@@ -13,6 +13,10 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
   labourDetails: i_jobProfile[] | null = null;
   category!: string;
   isLoading = false;
+  suggessions:any
+  searchLocation:any
+  searchKey:any
+
 
   private _unSubscribe$ = new Subject<void>();
 
@@ -37,6 +41,12 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
   viewJobProfile(labour_id: string) {
     this._router.navigate([`/viewJobProfile/${labour_id}`]);
   }
+
+  searchJobs(){}
+
+  selectLocation(a:any){}
+
+  fetchLocation(event:Event){}
 
   ngOnDestroy(): void {
     this._unSubscribe$.next();

@@ -42,4 +42,9 @@ export class UserProfileService {
     return this._http.post<i_authRes>(`/profile/withdrawalRequest`,data)
   }
 
+  changeBasicInfo(field:string,value:string){
+    console.log(field,value,'sfsdf15448956665146');
+    
+  return this._http.patch<any>(`/profile/editBasciInfo`,{field,value})
+}
 }

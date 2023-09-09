@@ -13,8 +13,9 @@ export class EngagedJobsComponent implements OnInit, OnDestroy {
   // variable declarations
 
   private _unsubscribe$ = new Subject<void>();
-  hideDescription: boolean = true;
-  engagedJobDatas: i_engagedJobs[]| [] = [];
+  engagedJobDatas: i_engagedJobs[] | [] = [];
+
+  descriptionVisibilityMap = new Map<string, boolean>(); // Map to store description visibility
 
   constructor(
     private _jobService: JobService,
@@ -23,15 +24,19 @@ export class EngagedJobsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
-    this._jobService.getEngagedJobs().pipe(takeUntil(this._unsubscribe$)).subscribe(res=>{
-      this.engagedJobDatas=res.engagedJobs
-    })
- 
+    this._jobService
+      .getEngagedJobs()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((res) => {
+        this.engagedJobDatas = res.engagedJobs;
+      });
   }
 
-  toggleDecsription() {
-    this.hideDescription = !this.hideDescription;
+  toggleDescription(itemId: string) {
+    // Toggle the visibility for the given item
+    const currentVisibility = this.descriptionVisibilityMap.get(itemId);    
+
+    this.descriptionVisibilityMap.set(itemId, !currentVisibility);
   }
 
   async cancelJob(hire_id: string) {
@@ -48,11 +53,11 @@ export class EngagedJobsComponent implements OnInit, OnDestroy {
           console.log(res.success, res.message);
           const title = res.success ? 'success' : 'Failed';
           if (res.success) {
-            this.engagedJobDatas.map(data=>{
-              if (data._id===hire_id) {
-                data.hireStatus='cancelRequested_labour'
+            this.engagedJobDatas.map((data) => {
+              if (data._id === hire_id) {
+                data.hireStatus = 'cancelRequested_labour';
               }
-            })
+            });
           }
           this._swalService.showAlert(title, res.message, title);
         });

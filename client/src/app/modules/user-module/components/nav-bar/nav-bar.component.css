@@ -16,3 +16,9 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.side-bar{
+    width: 200px;
+    height: 92vh;
+    background-color: aqua;
+}

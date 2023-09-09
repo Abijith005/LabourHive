@@ -1,10 +1,10 @@
 import express from 'express'
 import { adminLogin, blockOrUnblockUser, getAllUsers } from '../Controllers/AdminController.js'
 import { addCategory, blockCategory, deleteCategory, getAllCategories, updateCategory } from '../Controllers/CategoryController.js'
-import { changeJobStatus, getAllJobDetails } from '../Controllers/JobsController.js'
+import { changeJobStatus, getAllJobDetails, getHederDatas } from '../Controllers/JobsController.js'
 import { getWithdrawDatas } from '../Controllers/walletController.js'
 import { approveHireCancel, getAllComplaints, getAllHireDetails, getHirings } from '../Controllers/hireController.js'
-import { adminPayment, adminPaymentVerifying, adminRefund, rejectWithdrawRequest, updatePayment } from '../Controllers/paymentController.js'
+import { adminPayment, adminPaymentVerifying, adminRefund, getRevenueDatas, rejectWithdrawRequest, updatePayment } from '../Controllers/paymentController.js'
 const router=express.Router()
 
 
@@ -47,6 +47,10 @@ router.get('/getAllHireDetails',getAllHireDetails)
 router.patch('/approveHireCancel',approveHireCancel)
 
 router.get('/getComplaints',getAllComplaints)
+
+router.get('/getRevenueData',getRevenueDatas)
+
+router.get('/getHeaderDatas',getHederDatas)
 
 
 

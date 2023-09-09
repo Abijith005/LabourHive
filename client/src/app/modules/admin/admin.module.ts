@@ -24,7 +24,7 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { ViewHiringsComponent } from './view-hirings/view-hirings.component';
 import { HireManagementComponent } from './hire-management/hire-management.component';
 import { ComplaintManagementComponent } from './complaint-management/complaint-management.component';
-import { NgApexchartsModule } from 'ng-apexcharts';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 
 
@@ -60,7 +60,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatProgressSpinnerModule,
     MatTooltipModule,
     SharedModule,
-    NgApexchartsModule
+    CanvasJSAngularChartsModule
+
+    
   ]
 })
 export class AdminModule { }

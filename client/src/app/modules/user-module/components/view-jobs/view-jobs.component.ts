@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject,takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { i_jobDetails } from 'src/app/interfaces/userInterfaces/i_jobDetails';
 import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
@@ -26,14 +26,14 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
   constructor(
     private _mapBoxServices: MapboxService,
     private _jobSevices: JobService,
-    private _matDialog:MatDialog
+    private _matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this._jobSevices
       .getAllJobs()
       .pipe(takeUntil(this._unsubscribe$))
-      .subscribe((res) => {        
+      .subscribe((res) => {
         this.jobs = res;
       });
   }
@@ -54,8 +54,10 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
     } else {
       this.searchCoordinate = null;
       this._jobSevices
-        .getAllJobs()
-        .pipe(takeUntil(this._unsubscribe$))
+        .jobSearch({
+          coordinates: this.searchCoordinate,
+          searchKey: this.searchKey,
+        })
         .subscribe((res) => {
           this.jobs = res;
         });
@@ -83,14 +85,14 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
     this.suggessions = [];
   }
 
-  viewSingleJob(job:i_jobDetails) {
-    this._matDialog.open(SingleJobComponent,{
-      width:'580px',
-      height:'auto',
-      maxHeight:'900px',
-      data:job,
-      disableClose:true
-    })
+  viewSingleJob(job: i_jobDetails) {
+    this._matDialog.open(SingleJobComponent, {
+      width: '580px',
+      height: 'auto',
+      maxHeight: '900px',
+      data: job,
+      disableClose: true,
+    });
   }
 
   ngOnDestroy(): void {

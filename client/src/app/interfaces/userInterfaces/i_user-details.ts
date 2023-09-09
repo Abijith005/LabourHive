@@ -11,7 +11,8 @@ export interface i_UserDetails {
         blockStatus:boolean,
         googleLogin:boolean,
         jobProfileDatas?:i_jobProfile
-        isLoggedIn?:boolean
+        isLoggedIn?:boolean,
+        wallet?:number
     
     }
 

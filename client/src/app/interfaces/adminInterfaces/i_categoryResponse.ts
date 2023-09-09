@@ -5,6 +5,7 @@ export interface i_categoryResponse {
     name:string,
     basicWage:string,
     vectorImage:i_image,
-    blockStatus:boolean
+    blockStatus:boolean,
+    count:number
    
 }
