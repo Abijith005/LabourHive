@@ -39,6 +39,7 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 285px;
 }
 
 p {
@@ -82,11 +83,14 @@ p {
 
 
 @media(max-width:768px){
-   p{
-      font-size:7px;
-      padding: 0 !important;
-      margin: 0 !important;
+
+  .headings p {
+    font-size: 7px;
+    padding: 0 !important;
+    margin: 0 !important;
   }
+
+ 
   .job-details p{
       font-size: 5px;
       margin: 0 !important;
@@ -104,11 +108,25 @@ p {
   }
 
   .location{
-      min-width: 102px;
+      min-width: 80px;
   }
   .exclamation{
       font-size: 5px !important;
   }
- 
+
+  .job-data{
+    padding: 0 !important;
+  }
+.ellipsis{
+  line-height: 15px !important;
+}
+ .j-desc{
+  line-height: 10px;
+ }
+
+.dropdown-item{
+  font-size: 10px;
+  padding: 2px;
+ }
 }
 

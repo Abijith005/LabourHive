@@ -108,4 +108,9 @@ p {
   .exclamation {
     font-size: 5px !important;
   }
+
+  .dropdown-item{
+    font-size: 10px;
+    padding: 2px;
+   }
 }
