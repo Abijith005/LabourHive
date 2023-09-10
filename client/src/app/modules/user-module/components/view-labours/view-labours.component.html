@@ -26,7 +26,7 @@
               {{ suggestion.location }}
             </li>
           </ul>
-          <button class="btn btn-success" (click)="searchJobs()">search</button>
+          <button class="btn btn-success  search-btn" (click)="searchJobs()">search</button>
         </div>
         <div class="col-md-5 col-12">
           <h4 class="suggestion">Browse Works By Category And Location</h4>
@@ -36,12 +36,12 @@
     <div class="container">
     <div class="row ">
         <div class="col-md-3 col-6 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
+            <div class=" jobs ">
+                <div class="d-flex pt-0 p-2">
                     <div class="col-md-5 text-center img mt-2">
                         <img src="{{item.profilePic}}" alt="">
                     </div>
-                    <div class="col-md-7 mt-2 ms-3">
+                    <div class="col-md-7  mt-2 ms-3">
                         <p class="name m-0">{{item.name}}</p>
                         <p class="category m-0">{{item.category}}</p>
                     </div>
@@ -49,188 +49,21 @@
                 <div class='details mt-2'>
                     <p><b>Experience : 2 Years</b> </p>
                     <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
+                    <p title="{{item.location}}"><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
                     <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
                         <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
+                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold;"></i>
                             <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
+                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);"></i>
                         </span>
                     </b> </p>
                 </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
+                <div class="buttons d-flex justify-content-end mt-md-3 mt-1">
+                  <button class="btn btn-primary view-btn" (click)="viewJobProfile(item.user_id!)">View</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-6 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
-                    <div class="col-md-5 text-center img mt-2">
-                        <img src="{{item.profilePic}}" alt="">
-                    </div>
-                    <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">{{item.name}}</h2>
-                        <h3 class="category">{{item.category}}</h3>
-                    </div>
-                </div>
-                <div class='details mt-2'>
-                    <p><b>Experience : 2 Years</b> </p>
-                    <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
-                    <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
-                        </span>
-                    </b> </p>
-                </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
-                    <div class="col-md-5 text-center img mt-2">
-                        <img src="{{item.profilePic}}" alt="">
-                    </div>
-                    <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">{{item.name}}</h2>
-                        <h3 class="category">{{item.category}}</h3>
-                    </div>
-                </div>
-                <div class='details mt-2'>
-                    <p><b>Experience : 2 Years</b> </p>
-                    <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
-                    <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
-                        </span>
-                    </b> </p>
-                </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
-                    <div class="col-md-5 text-center img mt-2">
-                        <img src="{{item.profilePic}}" alt="">
-                    </div>
-                    <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">{{item.name}}</h2>
-                        <h3 class="category">{{item.category}}</h3>
-                    </div>
-                </div>
-                <div class='details mt-2'>
-                    <p><b>Experience : 2 Years</b> </p>
-                    <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
-                    <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
-                        </span>
-                    </b> </p>
-                </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
-                    <div class="col-md-5 text-center img mt-2">
-                        <img src="{{item.profilePic}}" alt="">
-                    </div>
-                    <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">{{item.name}}</h2>
-                        <h3 class="category">{{item.category}}</h3>
-                    </div>
-                </div>
-                <div class='details mt-2'>
-                    <p><b>Experience : 2 Years</b> </p>
-                    <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
-                    <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
-                        </span>
-                    </b> </p>
-                </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
-                    <div class="col-md-5 text-center img mt-2">
-                        <img src="{{item.profilePic}}" alt="">
-                    </div>
-                    <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">{{item.name}}</h2>
-                        <h3 class="category">{{item.category}}</h3>
-                    </div>
-                </div>
-                <div class='details mt-2'>
-                    <p><b>Experience : 2 Years</b> </p>
-                    <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
-                    <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
-                        </span>
-                    </b> </p>
-                </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mt-4 d-flex justify-content-center" *ngFor="let item of labourDetails">
-            <div class=" jobs">
-                <div class="d-flex">
-                    <div class="col-md-5 text-center img mt-2">
-                        <img src="{{item.profilePic}}" alt="">
-                    </div>
-                    <div class="col-md-7 mt-2 ms-3">
-                        <h2 class="name">{{item.name}}</h2>
-                        <h3 class="category">{{item.category}}</h3>
-                    </div>
-                </div>
-                <div class='details mt-2'>
-                    <p><b>Experience : 2 Years</b> </p>
-                    <p><b>Wage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ₹ <span>{{item.wage}}</span> /Day</b></p>
-                    <p><b>Location &nbsp;&nbsp;&nbsp; : <span>{{item.location}}</span></b> </p>
-                    <p><b>Rating &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>{{item.rating}}</span>&nbsp;&nbsp;
-                        <span *ngFor="let star of item.rating!|starRating" >
-                             <i *ngIf="star==1" class="star-icon ri-star-fill" style="color: gold; width: 20px;"></i>
-                            <i *ngIf="star==.5" class="star-icon ri-star-half-line"style="color: gold;"></i>
-                            <i *ngIf="star==0" class="star-icon ri-star-line" style="color: rgb(0, 0, 0);width: 20px;"></i>
-                        </span>
-                    </b> </p>
-                </div>
-                <div class="buttons d-flex justify-content-end mt-3">
-                  <button class="btn btn-primary" (click)="viewJobProfile(item.user_id!)">View</button>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </div>
 </div>

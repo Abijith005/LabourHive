@@ -93,6 +93,11 @@
     padding-top: .5em;
    }
 
+   .search-btn{
+    padding: 0px 13px 0px 13px;
+    font-size:9px;
+   }
+
    .search{
     padding-bottom: 4px;
     padding-top: .2em;
