@@ -71,3 +71,44 @@ p {
 
 }
 
+.action-btn {
+  padding: 4px 10px 4px 10px;
+  font-size: 10px;
+  background-color: #1d57b4;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+
+@media(max-width:768px){
+   p{
+      font-size:7px;
+      padding: 0 !important;
+      margin: 0 !important;
+  }
+  .job-details p{
+      font-size: 5px;
+      margin: 0 !important;
+      line-height: 15px;
+  }
+  hr{
+      margin: 0 !important;
+  }
+ 
+  .action-btn{
+      font-size: 6px;
+      padding: 2px 2px 2px 2px;
+      line-height: 08px;
+      border-radius: 2px;
+  }
+
+  .location{
+      min-width: 102px;
+  }
+  .exclamation{
+      font-size: 5px !important;
+  }
+ 
+}
+

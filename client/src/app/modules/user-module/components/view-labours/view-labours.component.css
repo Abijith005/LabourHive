@@ -107,6 +107,15 @@
   padding: 8px;
 }
 
+
+.suggestion{
+  opacity: 0.6;
+}
+
+.slogan{
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 @media (max-width: 768px) {
   .search-box {
     padding-top: 0.5em;
@@ -131,7 +140,6 @@
   .form-control {
     width: 130px;
     height: 25px;
-
     font-size: 12px;
   }
 

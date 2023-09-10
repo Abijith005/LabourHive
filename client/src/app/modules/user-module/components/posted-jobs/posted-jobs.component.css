@@ -1,58 +1,111 @@
-.headings{
-    display:flex;
-    justify-content: space-between;
-    text-align: center;
-    align-items: center;
+.headings {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
 }
-.headings p{
-    font-size: 16px;
-    font-weight: bolder;
-    padding-top: .8rem;
-    
+.headings p {
+  font-size: 16px;
+  font-weight: bolder;
+  padding-top: 0.8rem;
 }
 
-.datas{
-    display:flex;
-    justify-content: space-between;
-
+.datas {
+  display: flex;
+  justify-content: space-between;
 }
-.datas p i{
-    font-weight:900;
+.datas p i {
+  font-weight: 900;
 }
 
 .datas p {
-    font-weight:400;
+  font-weight: 400;
 }
 
-
-.job-data{
-    display: flex;
-align-items: center;
-justify-content: center;
+.job-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .centered-text {
-    text-align: center;
-  }
-
-  .location{
-    flex: 1;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-p{
-    cursor: default;
+  text-align: center;
 }
 
-.dropdown-item{
-    cursor: default;
+.location {
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.view-button{
-    padding: 6px 10px 6px 10px;
-    font-size: 10px;
+p {
+  cursor: default;
+}
+
+.dropdown-item {
+  cursor: default;
+}
+
+.view-button {
+  padding: 4px 10px 4px 10px;
+  font-size: 10px;
+  background-color: #05bd4e;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+.action-btn {
+  padding: 4px 10px 4px 10px;
+  font-size: 10px;
+  background-color: #1d57b4;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+.location {
+  min-width: 272px;
+}
+
+@media (max-width: 768px) {
+  .headings p {
+    font-size: 7px;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .job-details p {
+    font-size: 5px;
+    margin: 0 !important;
+    line-height: 15px;
+  }
+  hr {
+    margin: 0 !important;
+  }
+  .job-data {
+    padding: 0 !important;
+  }
+
+  .view-button {
+    font-size: 6px;
+    padding: 2px 2px 2px 2px;
+    line-height: 08px;
+    border-radius: 2px;
+  }
+  .action-btn {
+    font-size: 6px;
+    padding: 2px 2px 2px 2px;
+    line-height: 08px;
+    border-radius: 2px;
+  }
+
+  .location {
+    min-width: 102px;
+  }
+  .exclamation {
+    font-size: 5px !important;
+  }
 }

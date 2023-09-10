@@ -1,7 +1,7 @@
 <div class="container-fluid" style="margin-top: 80px" (click)="clear()">
   <div class="search-box">
     <h1 class="text-center d-md-block d-none slogan">
-      We offer thousands of works right now
+      We offer thousands of workes right now
     </h1>
     <div class="search col-md-5 col-12 search-location">
       <input
@@ -35,7 +35,7 @@
   <div class="container">
     <div class="row">
       <div
-        class=" col-md-3 col-6 my-3 p-0 d-flex justify-content-center"
+        class=" col-md-3 col-6 my-3 d-flex justify-content-center"
         *ngFor="let job of jobs"
       >
         <div class="jobs">
@@ -49,7 +49,7 @@
               <b>Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
               >&nbsp;<span>{{ job.category?.name }}</span>
             </p>
-            <p class="location">
+            <p [title]="job.location" class="location">
               <b>Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b
               >&nbsp;{{ job.location }}
             </p>
@@ -70,7 +70,7 @@
             </p>
           </div>
           <div class="button">
-            <button class="btn btn-primary btn-sm me-3" (click)="viewSingleJob(job)">
+            <button class="btn btn-primary btn-sm me-2 me-md-3" (click)="viewSingleJob(job)">
               View
             </button>
           </div>
