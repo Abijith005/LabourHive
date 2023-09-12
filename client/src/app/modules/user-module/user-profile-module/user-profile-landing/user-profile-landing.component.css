@@ -43,14 +43,19 @@ height: 80vh;
 }
 
 @media(max-width:768px){
+
+    .profile-container{
+        height: 40vh;
+    }
+
     .side-item b ,i{
         font-size:7px;
         
     }
-
     .side-item{
         padding-left: 3px !important;
         gap: 8px;
+        height: 20px;
     }
 
     .side-item.active {
