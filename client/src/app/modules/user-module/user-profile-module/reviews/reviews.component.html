@@ -2,16 +2,16 @@
   <div class="mt-4 ms-4"><h2 class="heading">REVIEWS</h2></div>
 
   <div class="row">
-    <div class="col-3">
-      <h3><b>{{reviews?.totalReviews}} Reviews</b></h3>
-      <span><b>Over All Rating</b></span>
-      <ng-container class="rating ms-1" *ngFor="let item of (reviews?.avgRating!)|starRating">
-        <i *ngIf="item==1" class="fas fa-star" style="color: gold;"></i>
+    <div class="col-3 p-0 p-md-1">
+      <h3 class="total-review"><b>{{reviews?.totalReviews}} Reviews</b></h3>
+      <span class="me-5 me-md-1"><b >Over All Rating</b></span>
+      <ng-container class="rating" *ngFor="let item of (reviews?.avgRating!)|starRating">
+        <i *ngIf="item==1" class="fas fa-star " style="color: gold;"></i>
         <i *ngIf="item==.5" class="fas fa-star-half-stroke" style="color: gold;"></i>
         <i *ngIf="item==0" class="fas fa-star" style="color:rgba(0, 0,0, 0.6);"></i>
       </ng-container>
-      <div class="progressbar mt-4">
-        <span class="d-flex align-items-center" style="gap: 8px">
+      <div class="progressbar mt-0 mt-md-4">
+        <span class=" custom-bar d-flex align-items-center" style="gap: 8px">
           <b>5</b> <i class="fas fa-star"></i>
           <mat-progress-bar
             class="example-margin"
@@ -22,7 +22,7 @@
           >
           </mat-progress-bar
         ></span>
-        <span class="d-flex align-items-center" style="gap: 8px">
+        <span class="custom-bar d-flex align-items-center" style="gap: 8px">
           <b>4</b> <i class="fas fa-star"></i>
           <mat-progress-bar
             class="example-margin"
@@ -33,10 +33,10 @@
           >
           </mat-progress-bar
         ></span>
-        <span class="d-flex align-items-center" style="gap: 8px">
+        <span class="custom-bar d-flex align-items-center" style="gap: 8px">
           <b>3</b> <i class="fas fa-star"></i>
           <mat-progress-bar
-            class="example-margin"
+            class="example-margin custom-bar"
             color="warn"
             mode="determinate"
             value={{reviews?.threeRating!*100}}
@@ -44,7 +44,7 @@
           >
           </mat-progress-bar
         ></span>
-        <span class="d-flex align-items-center" style="gap: 8px">
+        <span class="custom-bar d-flex align-items-center" style="gap: 8px">
           <b>2</b> <i class="fas fa-star"></i>
           <mat-progress-bar
             class="example-margin"
@@ -55,7 +55,7 @@
           >
           </mat-progress-bar
         > </span>
-        <span class="d-flex align-items-center" style="gap: 8px">
+        <span class="custom-bar d-flex align-items-center" style="gap: 8px">
           <b>1</b> <i class="fas fa-star"></i>
           <mat-progress-bar
             class="example-margin"
@@ -85,11 +85,11 @@
                 </ng-container>
               </div>
               <div class="col-5 date">
-                <span class="me-5"><b>{{item.createdAt|customDate}}</b></span>
+                <span class="me-md-5 me-1"><b>{{item.createdAt|customDate}}</b></span>
               </div>
             </div>
             <div class="name">
-              <b class="ps-3">{{item.client.name}}</b>
+              <b class="ps-md-3 ps-2">{{item.client.name|titlecase}}</b>
             </div>
             <div class="review-text mt-2">
               {{item.reviewText}}

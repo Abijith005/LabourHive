@@ -19,6 +19,8 @@
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
+  max-height: 136px ;
+  max-width: 140px;
 }
 
 .date {
@@ -32,4 +34,42 @@
 }
 .fas {
   transition: transform 0.3s ease-in;
+}
+
+
+@media(max-width:768px){
+
+  .heading{
+    font-size: 15px;
+  }
+
+  .date{
+    font-size: 17px;
+    line-height: 17px;
+  }
+
+  .day{
+    font-size: 10px;
+    line-height: 20px;
+  }
+  .card{
+    padding: 4px;
+    max-width: 70px;
+    max-height: 80px;
+  }
+
+  .column{
+    padding: 3px !important;
+  }
+
+  p{
+    font-size: 8px;
+    line-height:20px ;
+    margin-bottom: 0 !important;
+  }
+  i{
+    font-size: 10px;
+  }
+
+  
 }

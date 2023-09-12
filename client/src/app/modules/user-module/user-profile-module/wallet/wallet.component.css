@@ -14,6 +14,40 @@
   .data {
     background-color: whitesmoke;
   }
+
+  .withdraw-btn{
+    padding: 5px;
+    background-color: #2065db;
+    color: white;
+    border-radius: 4px;
+    border: none;
+  }
   
  
+  @media(max-width:768px){
+    .heading{
+      font-size: 15px;
+    }
+    .total span{
+      font-size: 15px;
+    }
+    .withdraw-btn{
+      font-size: 8px;
+    }
+
+    th{
+      font-size: 8px;
+      padding: 1px;
+      text-align: center;
+    }
+
+    td{
+      font-size: 8px;
+      padding: 1px;
+      text-align: center;
+    }
+    .container-fluid{
+      padding: 0px;
+    }
+  }
   

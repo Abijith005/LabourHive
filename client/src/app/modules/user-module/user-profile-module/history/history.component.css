@@ -27,3 +27,55 @@ th{
 padding: 5px;
 }
 
+.button{
+  border-radius: 5px;
+  background-color: #2f67c2;
+  padding: 4px 8px;
+  color: white;
+  border: none;
+}
+
+
+@media(max-width:768px){
+  .heading{
+    font-size: 15px;
+  }
+  th{
+    font-size: 8px;
+    padding: 1px;
+    text-align: center;
+  }
+
+  td{
+    font-size: 8px;
+    padding: 1px;
+    text-align: center;
+  }
+  
+
+  .container-fluid{
+    padding: 0px;
+  }
+  .table-data{
+    overflow: scroll;
+    scrollbar-width: 01px;
+    
+  }
+  .custom{
+    min-width:60px !important ;
+  }
+
+  .button{
+    font-size: 8px;
+    border-radius: 3px;
+    padding: 2px;
+    color: white;
+    border: none;
+    line-height: 15px;
+  }
+
+  .action{
+    font-size: 6px;
+  }
+  
+}

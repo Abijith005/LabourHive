@@ -1,6 +1,6 @@
 .date {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
 }
 
@@ -25,6 +25,63 @@ scrollbar-width:thin;
 
 .heading{
     font-weight: bolder;
+}
+
+@media(max-width:768px){
+
+  .heading{
+    font-size: 15px;
+  }
+
+  img{
+    height: 30px !important;
+    width: 30px !important;
+    margin-right: 1rem !important;
+  }
+
+  i{
+    font-size: 6px;
+  }
+
+  .date,.name,.review-text{
+    font-size: 5px;
+    line-height: 10px;
+  }
+
+  .text-container{
+    padding: 4px;
+  }
+
+  .review-text{
+    padding: 0;
+  }
+
+  b{
+    font-size: 8px;
+  }
+  .total-review{
+    margin-bottom: 0px;
+    line-height: 10px;
+  }
+  .rating{
+    display: block;
+  }
+  .example-margin{
+    height: 2px !important;
+  }
+
+  .custom-bar{
+    line-height: 8px;
+  }
+
+  .custom-bar i{
+    font-size: 4px;
+  }
+  .custom-bar b{
+    font-size: 6px;
+  }
+
+
 }
 
 
