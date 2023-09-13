@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./pipes/user-module/user.module').then(
+      import('./modules/user-module/user.module').then(
         (module) => module.UserModule
       ),
   },

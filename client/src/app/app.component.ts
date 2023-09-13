@@ -1,7 +1,7 @@
 import { Component, OnDestroy} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { userDataState } from './store/user.state';
-import { UserService } from './pipes/user-module/userServices/user.service';
+import { UserService } from './modules/user-module/userServices/user.service';
 import { Subject,  } from 'rxjs';
 
 @Component({

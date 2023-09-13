@@ -3,7 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { i_hireDatas } from 'src/app/interfaces/adminInterfaces/i_hirings';
 import { AdminHireManagementService } from 'src/app/services/adminServices/admin-hire-management.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
-import { RazorpayService } from '../../../pipes/user-module/userServices/razorpay.service';
+import { RazorpayService } from '../../user-module/userServices/razorpay.service';
 import { PaymentService } from 'src/app/services/adminServices/payment.service';
 
 @Component({
