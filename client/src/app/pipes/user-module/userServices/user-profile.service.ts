@@ -43,7 +43,7 @@ export class UserProfileService {
   }
 
   updateUserProfile(data:{name?:string,email?:string,mobileNumber?:string,profilePicture?:string}){    
-  return this._http.patch<any>(`/profile/editBasciInfo`,data)
+  return this._http.patch<i_authRes>(`/profile/editBasciInfo`,data)
 }
 
 changeEmail(email:string){

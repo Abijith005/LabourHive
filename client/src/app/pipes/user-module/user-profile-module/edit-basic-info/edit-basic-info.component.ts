@@ -7,6 +7,8 @@ import { userDataState } from 'src/app/store/user.state';
 import { Subject, takeUntil } from 'rxjs';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
+import { login } from 'src/app/store/user.actions';
+import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 interface profileData {
   name?: string;
   email?: string;
@@ -25,7 +27,7 @@ export class EditBasicInfoComponent implements OnInit {
   text4: string = '';
   isSubmitted: boolean = false;
   profilePic: string = '';
-  userData: profileData | null = null;
+  userData: i_UserDetails | null = null;
   serverOtp:string|null=null
   otp: string | null = null;
   otpTemplate: boolean = false;
@@ -40,7 +42,8 @@ export class EditBasicInfoComponent implements OnInit {
     private _fb: FormBuilder,
     private _profileService: UserProfileService,
     private _store: Store<userDataState>,
-    private _toaster:HelperService
+    private _toaster:HelperService,
+    private _swal:SwalService
   ) {}
 
   ngOnInit(): void {
@@ -88,8 +91,11 @@ export class EditBasicInfoComponent implements OnInit {
 
   otpSubmit() {
     this.otp = this.text1 + this.text2 + this.text3 + this.text4;
-    if (this.serverOtp === this.otp) {
-      this._profileService.updateUserProfile(this.data!).subscribe();
+    if (this.serverOtp == this.otp) {
+      this._profileService.updateUserProfile(this.data!).subscribe(res=>{
+        const title=res.success?'success':'failed'
+        this._swal.showAlert(title,res.message,title)
+      });
     }
     else{
       this._toaster.showToaster('Invalid OTP',false)
@@ -128,13 +134,19 @@ export class EditBasicInfoComponent implements OnInit {
         : '',
       profilePicture: this.profilePic ? this.profilePic : '',
     };
-    if (this.data.email) {
+    if (this.data.email&&this.data.email!=this.userData?.email) {
       this.otpTemplate = true;
-      this._profileService.changeEmail(this.data?.email!).subscribe((res) => {
+      this._profileService.changeEmail(this.data?.email!).subscribe((res) => {        
         this.serverOtp=res.otp
       });
       return;
     }
-    this._profileService.updateUserProfile(this.data).subscribe();
+    this._profileService.updateUserProfile(this.data).subscribe(res=>{
+      const title=res.success?'success':'failed'
+      this._swal.showAlert(title,res.message,title)
+      if (res.success) {
+        this._store.dispatch(login({userDatas:this.userData}))
+      }
+    });
   }
 }

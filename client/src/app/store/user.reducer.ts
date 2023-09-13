@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { userState } from "./user.state";
-import { jobProfile, logOut, login } from "./user.actions";
+import { jobProfile, logOut, login, updateProfile } from "./user.actions";
+import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
 
 
 const initialState:userState={
@@ -18,12 +19,19 @@ export const authReducer = createReducer(initialState,
       ...state,
       jobProfileDatas:profileDatas
     })),
+    on(updateProfile,(state,{data})=>({
+      ...state,
+      userDatas:{
+        ...state.userDatas,
+        ...data as i_UserDetails,
+      }
+    })),
     on(logOut,(state)=>({
       ...state,
       userDatas:null,
       jobProfileDatas:null
 
-    }))
+    })),
    
     )
   

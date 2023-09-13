@@ -322,6 +322,7 @@ export const editBasicInfo = async (req, res) => {
       await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
     )._id;
     await userModel.updateOne({ _id: user_id }, { $set: { ...data } });
+    res.json({success:true,message:'Successfully updated user profile'})
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -332,11 +333,13 @@ export const changeEmail = async (req, res) => {
   try {
     const {email}=req.body
     console.log(email,'sdfsdfdsfsdaf');
-    const otp=await generateOtp(email)
-    await sentOtp()
+    const otp=await generateOtp(1000, 9999)
+    console.log(otp,'fdsdfdsfaasdf');
+    // await sentOtp(email,otp)
     res.json({otp:otp})
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
+  

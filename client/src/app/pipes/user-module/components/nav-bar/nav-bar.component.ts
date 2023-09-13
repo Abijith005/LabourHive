@@ -20,6 +20,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   private _unsubscribe$ = new Subject<void>();
 
+
   constructor(
     private _service: UserService,
     private _helper: HelperService,
@@ -28,6 +29,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userInformations$ = this._store.select('user').pipe(
+      takeUntil(this._unsubscribe$),
       map((state) => {
         return state.userDatas!;
       })
