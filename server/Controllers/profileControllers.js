@@ -326,7 +326,7 @@ export const editBasicInfo = async (req, res) => {
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
-  }
+  }  
 };
 
 export const changeEmail = async (req, res) => {
