@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { AdminWalletManagementService } from 'src/app/services/adminServices/admin-wallet-management.service';
-import { RazorpayService } from '../../user-module/userServices/razorpay.service';
+import { RazorpayService } from '../../../pipes/user-module/userServices/razorpay.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { PaymentService } from 'src/app/services/adminServices/payment.service';
 import { i_walletDatas } from 'src/app/interfaces/adminInterfaces/i_walletDatas';

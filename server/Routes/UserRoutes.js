@@ -4,7 +4,7 @@ import { getAllCategories } from '../Controllers/CategoryController.js'
 import { applyJob, cancelJobRequest, changeJobStatus, createJobProfile, editJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { Payment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
-import { editBasicInfo, getJobInfo, getProfileHistory, getReviews, getSchedules, postComplaint, postReview, requestWithdrawal } from '../Controllers/profileControllers.js'
+import { changeEmail, editBasicInfo, getJobInfo, getProfileHistory, getReviews, getSchedules, postComplaint, postReview, requestWithdrawal } from '../Controllers/profileControllers.js'
 import { getWalletDetails } from '../Controllers/walletController.js'
 
 const router=express.Router()  
@@ -89,10 +89,10 @@ router.post('/profile/withdrawalRequest',requestWithdrawal)
 
 router.patch('/profile/editBasciInfo',editBasicInfo)
 
+router.patch('/profile/changeEmail',changeEmail)
+
 router.get('/logout',userLogout)
 
         
-
-
 
 export default router

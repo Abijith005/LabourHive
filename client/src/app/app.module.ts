@@ -25,7 +25,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AppInitializerService } from './services/commonServices/app-initializer.service';
 import { DatePipe } from '@angular/common';
 import { AdminModule } from './modules/admin/admin.module';
-import { UserModule } from './modules/user-module/user.module';
+import { UserModule } from './pipes/user-module/user.module';
 import { AdminLoginComponent } from './modules/admin/admin-login/admin-login.component';
 
 

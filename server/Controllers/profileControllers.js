@@ -8,6 +8,10 @@ import scheduleModel from "../Models/scheduleModel.js";
 import withdrawModel from "../Models/withdrawModel.js";
 import userModel from "../Models/userModel.js";
 import bcrypt from "bcrypt";
+import cloudinary from "../Config/cloudinary.js";
+import { generateOtp } from "../Helpers/generateOtp.js";
+import { sentOtp } from "../Helpers/nodeMailer.js";
+
 
 export const getProfileHistory = async (req, res) => {
   try {
@@ -279,16 +283,16 @@ export const getReviews = async (req, res) => {
 export const requestWithdrawal = async (req, res) => {
   try {
     const { password } = req.body;
-    const data=req.body
+    const data = req.body;
     const user_id = await verifyToken(
       req.cookies.userAuthToken,
       process.env.JWT_SIGNATURE
     );
     const user = await userModel.findOne({ _id: user_id });
-    const verifyPassword =await bcrypt.compare(password, user.password);
+    const verifyPassword = await bcrypt.compare(password, user.password);
     if (verifyPassword) {
       delete data.password;
-      await withdrawModel.create({...data,user_id});
+      await withdrawModel.create({ ...data, user_id });
       res.json({ success: true, message: "Withdrawal requested successfully" });
     } else {
       res.json({ success: false, message: "Incorrect password" });
@@ -299,15 +303,40 @@ export const requestWithdrawal = async (req, res) => {
   }
 };
 
-export const editBasicInfo=async(req,res)=>{
+export const editBasicInfo = async (req, res) => {
   try {
-    const user_id=(await verifyToken(req.cookies.userAuthToken,process.env.JWT_SIGNATURE))._id
-    console.log(req.body,'sdfasdfsdf',user_id);
+    const data = req.body;
+    for (const key in data) {
+      if (!data[key]) {
+        delete data[key];
+      }
+    }
 
-    
+    if (data.profilePicture) {
+      const profilePicture = (
+        await cloudinary.uploader.upload(data.profilePicture)
+      ).secure_url;
+      data.profilePicture = profilePicture;
+    }
+    const user_id = (
+      await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
+    )._id;
+    await userModel.updateOne({ _id: user_id }, { $set: { ...data } });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
-    
   }
-}
+};
+
+export const changeEmail = async (req, res) => {
+  try {
+    const {email}=req.body
+    console.log(email,'sdfsdfdsfsdaf');
+    const otp=await generateOtp(email)
+    await sentOtp()
+    res.json({otp:otp})
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};

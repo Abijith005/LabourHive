@@ -1,0 +1,104 @@
+<div class="container-fluid">
+  <div class="heading d-flex justify-content-center mt-md-3">
+    <h2 class="text-center">Edit Basic Info</h2>
+    <h2 class="ms-5">
+      <i
+        class="fas fa-circle-xmark"
+        (click)="cancel()"
+        style="color: rgb(165, 164, 164); cursor: pointer"
+      ></i>
+    </h2>
+  </div>
+  <div class="container p-3">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()"*ngIf="!otpTemplate">
+      <div class="content">
+        <div class="mb-md-3 col-10">
+          <label  [style.color]="isSubmitted&&formControls['name'].errors?'rgb(240, 0, 0)':''" class="form-label">{{ isSubmitted&&formControls['name'].errors?.hasOwnProperty('required') ? 'Name required':'Name'}}</label>
+          <input class="form-control" formControlName="name" type="text" />
+        </div>
+        <div class="mb-md-3 col-10">
+          <label  class="form-label" [style.color]="isSubmitted&&formControls['email'].errors?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['email'].errors?.hasOwnProperty('required')?'Email requied':(isSubmitted&&formControls['email'].errors?.hasOwnProperty('email')?'Invalid email':'Email')}}</label>
+          <input class="form-control" formControlName="email" type="text" />
+        </div>
+        <div class="mb-md-3 col-10">
+          <label class="form-label" [style.color]="isSubmitted&&formControls['mobileNumber'].errors?'rgb(240, 0, 0)':''">{{isSubmitted&&formControls['mobileNumber'].errors?.hasOwnProperty('required')?'Mobile number required':(isSubmitted&&formControls['mobileNumber'].errors?.hasOwnProperty('pattern')?'Invalid mobile number':'Mobile number')}}</label>
+          <input class="form-control" formControlName="mobileNumber" type="text" />
+        </div>
+        <div class="mb-md-3 col-10">
+          <label class="form-label">Profile Pic</label>
+          <input class="form-control" type="file" (change)="onImageSelect($event)" />
+        </div>
+        <div class="pt-1 col-10 mb-4 mt-4">
+          <button
+            class="btn btn-dark btn-lg btn-block w-100 mt-3"
+            type="submit"
+          >
+            SUBMIT
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <form #form="ngForm" class="mt-5" (ngSubmit)="otpSubmit()" *ngIf="otpTemplate" >
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 d-flex">
+          <div class="col-3 text-center">
+            <input
+              class="inp form-control"
+              type="text"
+              #txt1
+              maxlength="1"
+              name="text1"
+              [(ngModel)]="text1"
+              (keyup)="move($event, '', txt1, txt2)"
+            />
+          </div>
+
+          <div class="col-3 text-center">
+            <input
+              class="inp form-control"
+              type="text"
+              #txt2
+              maxlength="1"
+              name="text2"
+              [(ngModel)]="text2"
+              (keyup)="move($event, txt1, txt2, txt3)"
+            />
+          </div>
+
+          <div class="col-3 text-center">
+            <input
+              class="inp form-control"
+              type="text"
+              #txt3
+              maxlength="1"
+              name="text3"
+              [(ngModel)]="text3"
+              (keyup)="move($event, txt2, txt3, txt4)"
+            />
+          </div>
+
+          <div class="col-3 text-center">
+            <input
+              class="inp form-control"
+              type="text"
+              #txt4
+              maxlength="1"
+              name="text4"
+              [(ngModel)]="text4"
+              (keyup)="move($event, txt3, txt4, '')"
+            />
+          </div>
+        </div>
+        <div class="col-2"></div>
+      </div>
+
+      <div class="pt-1 mb-4 mt-4">
+        <button class="btn btn-dark btn-lg btn-block w-100 mt-3" type="submit">
+          SUBMIT
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

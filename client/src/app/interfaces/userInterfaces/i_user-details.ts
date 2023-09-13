@@ -1,7 +1,6 @@
 import { i_jobProfile } from "./i_jobProfile";
 
 export interface i_UserDetails {
-    
         _id:string,
         name: string,
         email:string,
