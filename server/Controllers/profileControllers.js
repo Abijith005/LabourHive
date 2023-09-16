@@ -12,7 +12,6 @@ import cloudinary from "../Config/cloudinary.js";
 import { generateOtp } from "../Helpers/generateOtp.js";
 import { sentOtp } from "../Helpers/nodeMailer.js";
 
-
 export const getProfileHistory = async (req, res) => {
   try {
     const user_id = (
@@ -322,24 +321,44 @@ export const editBasicInfo = async (req, res) => {
       await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
     )._id;
     await userModel.updateOne({ _id: user_id }, { $set: { ...data } });
-    res.json({success:true,message:'Successfully updated user profile'})
-  } catch (error) {
-    console.log("Error", error);
-    res.json({ success: false, message: "Unknown error occured" });
-  }  
-};
-
-export const changeEmail = async (req, res) => {
-  try {
-    const {email}=req.body
-    console.log(email,'sdfsdfdsfsdaf');
-    const otp=await generateOtp(1000, 9999)
-    console.log(otp,'fdsdfdsfaasdf');
-    // await sentOtp(email,otp)
-    res.json({otp:otp})
+    res.json({ success: true, message: "Successfully updated user profile" });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
 };
-  
+
+export const changeEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const otp = await generateOtp(1000, 9999);
+    console.log(otp, "fdsdfdsfaasdf");
+    // await sentOtp(email,otp)
+    res.json({ otp: otp });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { newPassword, currentPassword } = req.body;
+    const user_id = (
+      await verifyToken(req.cookies.userAuthToken, process.env.JWT_SIGNATURE)
+    )._id;
+    const user = await userModel.findOne({ _id: user_id });
+    const verifyPassword = await bcrypt.compare(currentPassword, user.password);
+    if (verifyPassword) {
+      const password = await bcrypt.hash(newPassword, 10);
+      user.password = password;
+      await user.save();
+      res.json({ success: true, message: "Password updated successfully" });
+    } else {
+      res.json({ success: false, message: "Incorrect password" });
+    }
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+};

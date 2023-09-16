@@ -60,8 +60,8 @@ export class UserService {
     return this._http.put<i_jobProfile & i_authRes>(`/updateJobProfile`, data);
   }
 
-  getLabours(category: string) {
-    return this._http.get<i_jobProfile[]>(`/getLabours/${category}`);
+  getLabours(category: string,name:string,coordinates:number[]|null) {
+    return this._http.post<i_jobProfile[]>(`/getLabours`,{category,name,coordinates});
   }
 
   getLabourProfile(_id: string) {

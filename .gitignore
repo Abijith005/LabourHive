@@ -45,4 +45,4 @@ client/Thumbs.db
 #Environments
 client/src/app/environments/environment*.ts
 client/src/app/environments/environment.prod.ts
-server/.env
+server/.env  

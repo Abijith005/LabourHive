@@ -7,14 +7,13 @@ import {
 } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { UserAuthService } from '../modules/user-module/userServices/user-auth.service';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class UserInterceptorInterceptor implements HttpInterceptor {
   constructor(private _authService: UserAuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
-    // const token = this._authService.getToken();
 
 
     //Excluding Mapbox requests being interrupted

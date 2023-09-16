@@ -20,6 +20,10 @@ h3 {
   border: thin solid rgb(0, 0, 0, 0.3);
 }
 
+.banner-buttons{
+  background-color: rgba(240, 55, 55, 0.83); width: 11rem;
+}
+
 .card-img-top {
   height: 120px;
   object-fit: contain;
@@ -33,10 +37,19 @@ h3 {
     height: 80px;
   }
   .card-title {
-    font-size: medium;
+    font-size: 14px;
+    margin-bottom: 4px;
   }
 
   .card-text {
-    font-size: 12px;
+    font-size: 10px;
+  }
+  .card-body p {
+    font-size: 09px;
+  }
+  .banner-buttons {
+    font-size: 8px;
+    padding:8px;
+    width: 7rem;
   }
 }

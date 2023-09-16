@@ -2,53 +2,151 @@
   <div class="mt-4 ms-4"><h2 class="heading">BASIC INFO</h2></div>
 
   <div class="row contents mt-6">
-    <div class="col-3"></div>
-    <div class="col-5 box" style="background-color: rgba(235, 235, 235, 0.753)">
+    <div class="col-1 col-md-3 "></div>
+    <div
+      class="col-10 col-md-5 box p-md-4 p-0"
+      style="background-color: rgba(235, 235, 235, 0.753)"
+    >
       <div class="image">
         <img
           src="../../../../../assets/userAssets/images/1408.jpg"
           alt=""
-          style="
-            height: 120px;
-            width: 120px;
-            border-radius: 60px;
-            border: thin solid rgba(0, 0, 0, 0.1);
-          "
         />
       </div>
 
-      <div class="details ">
+      <div class="details">
         <div class="name mb-md-2 d-flex text-center align-items-center">
-          <h2 class="mb-0 me-2">Abijth Surendran</h2>
-          <a class="text-primary" style="cursor: pointer;" (click)="onEdit()">edit</a>
+          <h2 class="mb-0 me-2 name">{{ userData?.name }}</h2>
+          <a class="text-primary link" style="cursor: pointer" (click)="onEdit()"
+            >edit</a
+          >
         </div>
-        <div class="email mb-md-2">abijitsurendran005@gmail.com</div>
-        <div class="contact mb-md-2">9986255028</div>
+        <div class="email mb-md-2">{{ userData?.email }}</div>
+        <div class="contact mb-md-2">{{ userData?.mobileNumber }}</div>
       </div>
-      <div class="change-password">
-        <div class="change-link d-flex justify-content-end">
-          <a class="p-2" >Change password</a>
-        </div>
-
-        <div class="password ">
-          <div class="d">
-            <label class="form-label">Current Password</label>
-            <input type="password" class="form-control" style="width: 320px;" />
-          </div>
-        </div>
+      <div class="change-link d-flex justify-content-end">
+        <a class="p-2 link" style="cursor: pointer" (click)="ChangePassword()"
+          >Change password</a
+        >
+      </div>
+      <form
+        [formGroup]="passwordForm"
+        (ngSubmit)="onSubmit()"
+        *ngIf="changePassword"
+      >
+      
         <div class="password">
-          <div class="d">
-            <label class="form-label">New Password</label>
-            <input type="password" class="form-control" style="width: 320px;" />
-          </div>
-          <div class="d">
-            <label class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" style="width: 320px;" />
+          <div class="d mt-md-2">
+            <label
+              class="form-label"
+              [style.color]="
+                isSubmitted &&
+                formControls['currentPassword'].errors?.hasOwnProperty(
+                  'required'
+                )
+                  ? 'red'
+                  : ''
+              "
+              >{{
+                isSubmitted &&
+                formControls["currentPassword"].errors?.hasOwnProperty(
+                  "required"
+                )
+                  ? "Current password is required"
+                  : "Current Password"
+              }}</label
+            >
+            <input
+              type="password"
+              formControlName="currentPassword"
+              class="form-control"
+              style="width: 320px"
+            />
           </div>
 
+          <div class="d mt-md-2">
+            <label
+              class="form-label"
+              [style.color]="
+                isSubmitted &&
+                formControls['newPassword'].errors?.hasOwnProperty('required')
+                  ? 'red'
+                  : (isSubmitted &&
+                    formControls['newPassword'].errors?.hasOwnProperty(
+                      'pattern'
+                    )
+                  ? 'red'
+                  : '')
+              "
+              >{{
+                isSubmitted &&
+                formControls["newPassword"].errors?.hasOwnProperty("required")
+                  ? "New password is required"
+                  : isSubmitted &&
+                    formControls["newPassword"].errors?.hasOwnProperty(
+                      "pattern"
+                    )
+                  ? "Password should have atleast 3 characters"
+                  : "New Password"
+              }}</label
+            >
+
+            <input
+              type="password"
+              class="form-control"
+              formControlName="newPassword"
+              style="width: 320px"
+            />
+          </div>
+
+          <div class="d mt-md-2">
+            <label
+              class="form-label"
+              [style.color]="
+                isSubmitted &&
+                formControls['confirmPassword'].errors?.hasOwnProperty(
+                  'required'
+                )
+                  ? 'red'
+                  : isSubmitted &&
+                    formControls['newPassword'].value !==
+                      formControls['confirmPassword'].value
+                  ? 'red'
+                  : ''
+              "
+              >{{
+                isSubmitted &&
+                formControls["confirmPassword"].errors?.hasOwnProperty(
+                  "required"
+                )
+                  ? "Confirm password required"
+                  : isSubmitted &&
+                    formControls["confirmPassword"].value !=
+                      formControls["newPassword"].value
+                  ? "Password not matching"
+                  : "Confirm Password"
+              }}</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              formControlName="confirmPassword"
+              style="width: 320px"
+            />
+          </div>
+
+          <div class="pt-md-1 mb-md-4 mt-md-4">
+            <button
+              class="button btn btn-primary btn-lg btn-block mt-3"
+              style="width: 320px"
+              type="submit"
+            >
+              SUBMIT
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
-    <div class="col-3"></div>
+    <div class="col-md-3 col-1"></div>
   </div>
 </div>

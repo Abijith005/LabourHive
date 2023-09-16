@@ -53,6 +53,7 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
         });
     } else {
       this.searchCoordinate = null;
+      this.suggessions=null
       this._jobSevices
         .jobSearch({
           coordinates: this.searchCoordinate,

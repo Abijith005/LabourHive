@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="heading d-flex justify-content-center mt-md-3">
-    <h2 class="text-center">Edit Basic Info</h2>
+    <h2 class="text-center"><b>{{heading}}</b></h2>
     <h2 class="ms-5">
       <i
         class="fas fa-circle-xmark"
@@ -30,7 +30,7 @@
         </div>
         <div class="pt-1 col-10 mb-4 mt-4">
           <button
-            class="btn btn-dark btn-lg btn-block w-100 mt-3"
+            class="btn btn-primary btn-lg btn-block w-100 mt-3"
             type="submit"
           >
             SUBMIT
@@ -39,66 +39,73 @@
       </div>
     </form>
 
-    <form #form="ngForm" class="mt-5" (ngSubmit)="otpSubmit()" *ngIf="otpTemplate" >
-      <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 d-flex">
-          <div class="col-3 text-center">
-            <input
-              class="inp form-control"
-              type="text"
-              #txt1
-              maxlength="1"
-              name="text1"
-              [(ngModel)]="text1"
-              (keyup)="move($event, '', txt1, txt2)"
-            />
+    <div *ngIf="otpTemplate">
+      <div class="text-center">
+        <label >Enter OTP we have sent to your email</label>
+      </div>
+      <form #form="ngForm" class="mt-5" (ngSubmit)="otpSubmit()"  >
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8 d-flex">
+            <div class="col-3 text-center">
+              <input
+                class="inp form-control"
+                type="text"
+                #txt1
+                maxlength="1"
+                name="text1"
+                [(ngModel)]="text1"
+                (keyup)="move($event, '', txt1, txt2)"
+              />
+            </div>
+  
+            <div class="col-3 text-center">
+              <input
+                class="inp form-control"
+                type="text"
+                #txt2
+                maxlength="1"
+                name="text2"
+                [(ngModel)]="text2"
+                (keyup)="move($event, txt1, txt2, txt3)"
+              />
+            </div>
+  
+            <div class="col-3 text-center">
+              <input
+                class="inp form-control"
+                type="text"
+                #txt3
+                maxlength="1"
+                name="text3"
+                [(ngModel)]="text3"
+                (keyup)="move($event, txt2, txt3, txt4)"
+              />
+            </div>
+  
+            <div class="col-3 text-center">
+              <input
+                class="inp form-control"
+                type="text"
+                #txt4
+                maxlength="1"
+                name="text4"
+                [(ngModel)]="text4"
+                (keyup)="move($event, txt3, txt4, '')"
+              />
+            </div>
           </div>
-
-          <div class="col-3 text-center">
-            <input
-              class="inp form-control"
-              type="text"
-              #txt2
-              maxlength="1"
-              name="text2"
-              [(ngModel)]="text2"
-              (keyup)="move($event, txt1, txt2, txt3)"
-            />
-          </div>
-
-          <div class="col-3 text-center">
-            <input
-              class="inp form-control"
-              type="text"
-              #txt3
-              maxlength="1"
-              name="text3"
-              [(ngModel)]="text3"
-              (keyup)="move($event, txt2, txt3, txt4)"
-            />
-          </div>
-
-          <div class="col-3 text-center">
-            <input
-              class="inp form-control"
-              type="text"
-              #txt4
-              maxlength="1"
-              name="text4"
-              [(ngModel)]="text4"
-              (keyup)="move($event, txt3, txt4, '')"
-            />
-          </div>
+          <div class="col-2"></div>
         </div>
-        <div class="col-2"></div>
-      </div>
+  
+        <div class="pt-1 mb-4 mt-4">
+          <button class="btn btn-primary btn-lg btn-block w-100 mt-3" type="submit">
+            SUBMIT
+          </button>
+        </div>
+      </form>
 
-      <div class="pt-1 mb-4 mt-4">
-        <button class="btn btn-dark btn-lg btn-block w-100 mt-3" type="submit">
-          SUBMIT
-        </button>
-      </div>
-    </form>
+    </div>
+
   </div>
 </div>

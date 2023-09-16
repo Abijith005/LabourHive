@@ -80,7 +80,7 @@ export const getAllMessageReceivers = async (req, res) => {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
-};
+};       
 
 export const getChatMessages = async (req, res) => {
   try {

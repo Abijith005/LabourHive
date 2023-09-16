@@ -104,7 +104,7 @@ export async function userLogin(req, res) {
         );
         const {
           _id,
-          name,
+          name,    
           email,
           password,
           profilePicture,
@@ -244,18 +244,25 @@ export async function userChangePassword(req, res) {
 
 export async function getUserDatas(req, res) {
   try {
-    const decode = await jwt.verify(
-      req.cookies.userAuthToken,
-      process.env.JWT_SIGNATURE
-    );
-    if (decode) {
-      let user = await userModel.findOne({ _id: decode._id });
-      user = user.toObject();
-      user.isLoggedIn = true;
-      res.json({ success: true, ...user });
-    } else {
-      res.json({ success: false });
+    if (req.cookies.userAuthToken) {
+      const decode = await jwt.verify(
+        req.cookies.userAuthToken,
+        process.env.JWT_SIGNATURE
+      );
+      if (decode) {
+        let user = await userModel.findOne({ _id: decode._id });
+        user = user.toObject();
+        user.isLoggedIn = true;
+        res.json({ success: true, ...user });
+      } else {
+        res.json({ success: false });
+      }
     }
+    else{
+      res.json({ success: false });
+
+    }
+
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

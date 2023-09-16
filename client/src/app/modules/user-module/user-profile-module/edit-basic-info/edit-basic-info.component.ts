@@ -32,6 +32,7 @@ export class EditBasicInfoComponent implements OnInit {
   otp: string | null = null;
   otpTemplate: boolean = false;
   data: profileData | null = null;
+  heading='Edit BasicInfo'
 
   editForm: FormGroup = new FormGroup({});
 
@@ -93,6 +94,7 @@ export class EditBasicInfoComponent implements OnInit {
     this.otp = this.text1 + this.text2 + this.text3 + this.text4;
     if (this.serverOtp == this.otp) {
       this._profileService.updateUserProfile(this.data!).subscribe(res=>{
+        this._matDialogRef.close()
         const title=res.success?'success':'failed'
         this._swal.showAlert(title,res.message,title)
       });
@@ -136,6 +138,7 @@ export class EditBasicInfoComponent implements OnInit {
     };
     if (this.data.email&&this.data.email!=this.userData?.email) {
       this.otpTemplate = true;
+      this.heading='Verify OTP'
       this._profileService.changeEmail(this.data?.email!).subscribe((res) => {        
         this.serverOtp=res.otp
       });

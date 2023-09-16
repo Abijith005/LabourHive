@@ -50,4 +50,10 @@ changeEmail(email:string){
   return this._http.patch<{otp:string}>(`/profile/changeEmail`,{email})
 }
 
+changePassword(data:{currentPassword:string,newPassword:string}){
+  console.log(data);
+  
+  return this._http.patch<i_authRes>(`/profile/changePassword`,data)
+}
+
 }

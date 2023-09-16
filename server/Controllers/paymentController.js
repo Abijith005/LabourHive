@@ -40,10 +40,6 @@ export const verifyPayment = async (req, res) => {
       process.env.JWT_SIGNATURE
     )?._id;
     const data = req.body;
-    console.log(
-      data,
-      "1234654678979465466544568888888888888888888888888*****************************"
-    );
     const { _id } = await categoryModel.findOne({ name: req.body.category });
 
     if (!req.body.job_id) {

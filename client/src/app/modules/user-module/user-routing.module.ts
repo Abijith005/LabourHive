@@ -13,7 +13,6 @@ import { guestAuthGuard } from 'src/app/guards/guest-auth.guard';
 import { JobProfileComponent } from './components/job-profile/job-profile.component';
 import { PostedJobsComponent } from './components/posted-jobs/posted-jobs.component';
 import { MyJobsComponent } from './components/my-jobs/my-jobs.component';
-import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 const userRoutes: Routes = [
   {
@@ -21,7 +20,6 @@ const userRoutes: Routes = [
     component: NavBarComponent,
     children: [
       { path: '', component: UserHomeComponent },
-      {path:'date',component:DatePickerComponent},
       {
         path: 'jobProfile',
         component: JobProfileComponent,

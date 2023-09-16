@@ -58,7 +58,6 @@ export async function getAllCategories(req, res) {
       count = count ? count : 0;
       data.count = count;
     });
-    console.log(categories, "safdsfdsf", laboursCount);
     res.json({ categories });
   } catch (error) {
     console.log("Error", error);

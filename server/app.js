@@ -20,7 +20,7 @@ const port = process.env.PORT || 5000
 const http_server=http.createServer(app)
 const io = new Server(http_server, {
     cors: {
-      origin: "http://localhost:4200",
+      origin:process.env.CLIENT_URL,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       credentials: true
     }
@@ -42,7 +42,7 @@ socketConnect(io,activeUsers)
 
 app.use(
     cors({
-        origin: ['http://localhost:4200'],
+        origin: [process.env.CLIENT_URL],
         methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH',],
         credentials: true
 

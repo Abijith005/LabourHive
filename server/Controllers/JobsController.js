@@ -134,16 +134,65 @@ export const updateJobProfile = async (req, res) => {
 
 export const getLabours = async (req, res) => {
   try {
-    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
-    const labours = await jobProfileModel
-      .find({ category: req.params.category })
+    console.log(req.body);
+    const { name, coordinates, category } = req.body;
+    console.log(name, coordinates, category, "123456789",!name,!coordinates);
+
+    const user_id = (await verifyToken(req.cookies?.userAuthToken))
+      ? (await verifyToken(req.cookies?.userAuthToken))._id
+      : "";
+    let labours = await jobProfileModel
       .find({
         $and: [
-          { category: req.params.category },
+          { category: category },
           { user_id: { $ne: user_id } },
+          { name: RegExp(name, "i") },
         ],
       })
       .lean();
+      console.log(labours);
+
+    if (coordinates) {
+    console.log('dfsfscoordinates');
+      const searchLon = coordinates[0];
+      const searchLat = coordinates[1];
+      //limit is set to 10 km
+      const limitDistance = 5;  
+      // haversine formula to get distance from geocodes
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = degreesToRadians(lat2 - lat1);
+        const dLon = degreesToRadians(lon2 - lon1);
+
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(degreesToRadians(lat1)) *
+            Math.cos(degreesToRadians(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const distance = R * c;
+        return distance;
+      }
+      // function for converting degree to radian
+      function degreesToRadians(degrees) {
+        return degrees * (Math.PI / 180);
+      }
+
+      labours = labours.filter((job) => {
+        return (
+          haversineDistance(
+            searchLat,
+            searchLon,
+            job.coordinates[1],
+            job.coordinates[0]
+          ) <= limitDistance
+        );
+      });
+    }
+    console.log(labours,'dhjkdshhaskjdhk');
     res.json(labours);
   } catch (error) {
     console.log("Error", error);
@@ -294,7 +343,6 @@ export const getAllJobs = async (req, res) => {
       })
       .populate("category")
       .lean();
-    console.log(jobs, currentDate, "skjdahfjkhsadfhjkshadjkf");
     res.json(jobs);
   } catch (error) {
     console.log("Error", error);
@@ -428,7 +476,6 @@ export const changeJobStatus = async (req, res) => {
       { $and: [{ _id: job_id }, { endDate: { $lt: currentDate } }] },
       { $set: { currentStatus: status } }
     );
-    console.log(update, "dsdfdf");
     if (update.modifiedCount) {
       res.json({ success: true, message: "Job status updated successfully" });
     } else {
@@ -628,7 +675,7 @@ export const getHederDatas = async (req, res) => {
       totalJobs: jobs,
     };
 
-    res.json(headerDatas)
+    res.json(headerDatas);
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
