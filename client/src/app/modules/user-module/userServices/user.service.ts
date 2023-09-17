@@ -44,8 +44,12 @@ export class UserService {
     return this._http.get<i_UserDetails&i_authRes>('/getUserDatas');
   }
 
-  getCategoryDetails() {
-    return this._http.get<i_customCategory>(`/getCategoryDetails`);
+  getCategoryDetails(page:number) {
+    return this._http.get<i_customCategory&{totalPages:number}>(`/getCategoryDetails/${page}`);
+  }
+  
+  getAllCategoryDetails() {
+    return this._http.get<i_customCategory>(`/getAllCategoryDetails`);
   }
 
   uploadJobProfile(data: i_jobProfile) {
@@ -60,8 +64,8 @@ export class UserService {
     return this._http.put<i_jobProfile & i_authRes>(`/updateJobProfile`, data);
   }
 
-  getLabours(category: string,name:string,coordinates:number[]|null) {
-    return this._http.post<i_jobProfile[]>(`/getLabours`,{category,name,coordinates});
+  getLabours(category: string,name:string,coordinates:number[]|null,page:number) {
+    return this._http.post<{labours:i_jobProfile[],totalPages:number}>(`/getLabours`,{category,name,coordinates,page});
   }
 
   getLabourProfile(_id: string) {

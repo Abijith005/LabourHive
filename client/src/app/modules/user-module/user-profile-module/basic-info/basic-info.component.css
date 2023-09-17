@@ -51,12 +51,14 @@
     padding: 10px;
   }
   .name{
-    font-size: 10px;
+    font-size: 12px;
     line-height: 14px;
+    margin-bottom: 3px;
   }
   .email, .contact{
-    font-size: 8px;
-    line-height: 12px;
+    font-size: 9px;
+    line-height: 14px;
+    margin-bottom: 3px;
   }
 
   .link{

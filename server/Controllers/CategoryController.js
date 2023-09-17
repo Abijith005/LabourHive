@@ -41,6 +41,7 @@ export async function addCategory(req, res) {
 
 export async function getAllCategories(req, res) {
   try {
+    const page=req.params.page
     const categories = await categoryModel.find().lean();
     const laboursCount = await jobProfileModel.aggregate([
       {
@@ -59,6 +60,35 @@ export async function getAllCategories(req, res) {
       data.count = count;
     });
     res.json({ categories });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({ success: false, message: "Unknown error occured" });
+  }
+}
+
+export async function getCategories(req, res) {
+  try {
+    const page=req.params.page
+    const count=await categoryModel.find().countDocuments()
+    const categories = await categoryModel.find().lean().limit(page*5).skip((page-1)*5);
+    const laboursCount = await jobProfileModel.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    categories.forEach((data) => {
+      const category = data.name;
+      let count = laboursCount.find((e) => e._id === category)?.count;
+
+      count = count ? count : 0;
+      data.count = count;
+    });
+    const totaPages=Math.ceil(count/5)
+    res.json({ categories,totalPages:totaPages});
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

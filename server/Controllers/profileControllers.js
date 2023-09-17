@@ -361,4 +361,4 @@ export const changePassword = async (req, res) => {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
-};
+};     

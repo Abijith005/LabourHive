@@ -34,6 +34,7 @@ export const createNewChatRoom = async (req, res) => {
 
 export const storeMessages = async (req, res) => {
   try {
+    console.log(req.body,'dddd');
     const { receiver_id, message, sender_id } = req.body;
     const { _id } = await chatRoomModel.findOne({
       $or: [
@@ -67,14 +68,18 @@ export const getAllMessageReceivers = async (req, res) => {
         return {
           room_id: item._id,
           receiver: item.receiver_id.name,
+          receiver_id:item.receiver_id._id
         };
       } else {
         return {
           room_id: item._id,
           receiver: item.sender_id.name,
+          receiver_id:item.sender_id._id
         };
-      }
+      }               
     });
+
+    console.log(receiversData,'fafasfsda');
     res.json(receiversData);
   } catch (error) {
     console.log("Error", error);

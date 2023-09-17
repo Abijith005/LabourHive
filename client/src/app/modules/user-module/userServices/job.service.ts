@@ -6,6 +6,7 @@ import { i_engagedJobs, i_jobDetails, i_postedJobs } from 'src/app/interfaces/us
 interface i_searchData {
   coordinates: number[] | null;
   searchKey: string;
+  page:number
 }
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,8 @@ export class JobService {
     return this._http.post<i_authRes>(`/jobs/postJob`, data);
   }
 
-  getAllJobs(){
-    return this._http.get<i_jobDetails[]>(`/jobs/getAllJobs`)
+  getAllJobs(page:number){
+    return this._http.get<i_jobDetails[]>(`/jobs/getAllJobs/${page}`)
   }
 
   jobSearch(data: i_searchData) {

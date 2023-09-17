@@ -1,13 +1,12 @@
-<section style="background-color: #eeeeeec0" class="chat-container">
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+<section  class="chat-container" [ngClass]="{'no-margin-top':noMargin}" >
+  <div class="container h-100 py-5">
+    <div class="row h-100">
+      <div class="col-md-4 mb-4 mb-md-0">
         <div class="card">
           <div class="card-body receiver-list">
             <ul class="list-unstyled mb-0">
               <li
                 class="p-2 border-bottom mb-3 receiver-li"
-                style="background-color: #eeeeee8f; cursor: pointer"
                 *ngFor="let receivers of messageReceivers"
                 (click)="chatPersonChange(receivers)"
               >
@@ -20,7 +19,7 @@
                       width="60"
                     />
                     <div class="pt-1">
-                      <p class="fw-bold mb-0">{{ receivers.receiver }}</p>
+                      <p class="fw-bold mb-0">{{ receivers.receiver|titlecase }}</p>
                     </div>
                   </div>
                   <!-- <div class="pt-1">
@@ -33,20 +32,21 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-7 col-xl-8" *ngIf="currentChatPerson">
-        <div class="d-flex justify-content-start mb-4 align-items-center">
+      <div class="col-md-8 single-messages " *ngIf="currentChatPerson">
+        <div class="d-flex justify-content-start mb-4 align-items-center p-3" style="background-color: rgba(224, 224, 224, 0.329); border-radius: 4px;">
           <img
             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
             alt="avatar"
             class="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
             width="60"
           />
-          <h3>
-            <b>{{ currentChatPerson.receiver }}</b>
+          <h3 class="m-0">
+            <b>{{ currentChatPerson.receiver|titlecase }}</b>
           </h3>
         </div>
 
         <ul class="list-unstyled message" #messageContainer>
+        
           <li
             [ngClass]="message.user === 'sender' ? 'sender' : 'receiver'"
             *ngFor="let message of messageArray"
@@ -57,8 +57,7 @@
               </p>
             </div>
           </li>
-
-          <li class="mb-3 message-input row" >
+          <li class="mb-3 message-input" >
             <div class="input-group">
               <input
                 [(ngModel)]="messageText"
@@ -75,7 +74,6 @@
               </button>
             </div>
           </li>
-
         </ul>
       </div>
     </div>

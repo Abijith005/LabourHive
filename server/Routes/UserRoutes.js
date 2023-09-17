@@ -1,6 +1,6 @@
 import express from 'express'
 import { UserForgotPassword, getUserDatas, submitForgotPasswordOtp, userChangePassword, userGoogleLogin, userLogin, userLogout, userRegister, userSubmitOtp } from '../Controllers/UserAuthController.js'
-import { getAllCategories } from '../Controllers/CategoryController.js'
+import { getAllCategories, getCategories } from '../Controllers/CategoryController.js'
 import { applyJob, cancelJobRequest, changeJobStatus, createJobProfile, editJob, getAllJobs, getEngagedJobs, getJobProfile, getLabours, getPostedJobs, getSinglejobDatas, labourProfile, postJob, rejectJobApplication, searchJobs, updateJobProfile } from '../Controllers/JobsController.js'
 import { Payment, verifyPayment } from '../Controllers/paymentController.js'
 import { createNewChatRoom, getAllMessageReceivers, getChatMessages, storeMessages } from '../Controllers/chatControllers.js'
@@ -25,7 +25,9 @@ router.put('/changePassword',userChangePassword)
 
 router.get('/getUserDatas',getUserDatas)
 
-router.get('/getCategoryDetails',getAllCategories)
+router.get('/getCategoryDetails/:page',getCategories)
+
+router.get('/getAllCategoryDetails',getAllCategories)
 
 router.post('/uploadJobProfile',createJobProfile)
 

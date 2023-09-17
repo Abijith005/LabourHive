@@ -51,7 +51,7 @@ export class CreatejobProfileComponent implements OnInit {
       workImages: [''],
     });
 
-    this._service.getCategoryDetails().pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
+    this._service.getAllCategoryDetails().pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
       this.categories = res.categories!;
     });
 

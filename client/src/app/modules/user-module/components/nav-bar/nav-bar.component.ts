@@ -4,7 +4,7 @@ import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { i_UserDetails } from 'src/app/interfaces/userInterfaces/i_user-details';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
 import { UserService } from 'src/app/modules/user-module/userServices/user.service';
-import { logOut} from 'src/app/store/user.actions';
+import { logOut } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
 
 @Component({
@@ -20,7 +20,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   private _unsubscribe$ = new Subject<void>();
 
-
   constructor(
     private _service: UserService,
     private _helper: HelperService,
@@ -34,10 +33,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
         return state.userDatas!;
       })
     );
-  }
-
-  getProfile(){
-    
   }
 
   logout() {

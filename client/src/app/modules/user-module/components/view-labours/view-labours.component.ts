@@ -19,6 +19,8 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
   searchLocation: string = '';
   searchCoordinate: number[] | null = null;
   suggessions: i_suggestions[] | null = null;
+  selectedPage:number=1
+  totalPages!:number
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -33,10 +35,11 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
     this.category = this._route.snapshot.paramMap.get('category')!;
     this.isLoading = true;
     this.service
-      .getLabours(this.category, this.searchKey, this.searchCoordinate)
+      .getLabours(this.category, this.searchKey, this.searchCoordinate,this.selectedPage)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        this.labourDetails = res;
+        this.labourDetails = res.labours;
+        this.totalPages=res.totalPages
         this.isLoading = false;
       });
   }
@@ -47,11 +50,13 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
 
   searchJobs() {
     this.isLoading = true;
+    this.selectedPage=1
     this.service
-      .getLabours(this.category, this.searchKey, this.searchCoordinate)
+      .getLabours(this.category, this.searchKey, this.searchCoordinate,this.selectedPage)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        this.labourDetails = res;
+        this.labourDetails = res.labours;
+        this.totalPages=res.totalPages
         this.isLoading = false;
       });
   }
@@ -79,11 +84,13 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
       this.searchCoordinate = null;
       this.suggessions = null;
       this.isLoading=true
+      this.selectedPage=1
       this.service
-        .getLabours(this.category, this.searchKey, this.searchCoordinate)
+        .getLabours(this.category, this.searchKey, this.searchCoordinate,this.selectedPage)
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
-          this.labourDetails = res;
+          this.labourDetails = res.labours;
+          this.totalPages=res.totalPages
           this.isLoading = false;
         });
     }
@@ -92,14 +99,32 @@ export class ViewLaboursComponent implements OnInit, OnDestroy {
   searchByKey(){
     if (!this.searchKey) {
       this.isLoading=true
+      this.selectedPage=1
       this.service
-        .getLabours(this.category, this.searchKey, this.searchCoordinate)
+        .getLabours(this.category, this.searchKey, this.searchCoordinate,this.selectedPage)
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
-          this.labourDetails = res;
+          this.labourDetails = res.labours;
+          this.totalPages=res.totalPages
           this.isLoading = false;
         });
     }
+  }
+
+  selectPage(pageNumber:number){
+    if (!pageNumber||pageNumber>this.totalPages) {
+      return
+    }
+    this.selectedPage=pageNumber
+    this.isLoading=true
+    this.service
+      .getLabours(this.category, this.searchKey, this.searchCoordinate,this.selectedPage)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((res) => {
+        this.labourDetails = res.labours;
+        this.isLoading = false;
+      });
+
   }
 
   ngOnDestroy(): void {

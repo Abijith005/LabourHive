@@ -9,6 +9,7 @@
         placeholder="Search by key"
         class="form-control"
         [(ngModel)]="searchKey"
+        (keyup)="searchInput()"
       />
       <input
         type="text"

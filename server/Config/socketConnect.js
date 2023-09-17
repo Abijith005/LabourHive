@@ -1,4 +1,3 @@
-import { log } from "console";
 
 export default function socketConnect(io, activeUsers) {
   io.on("connection", (socket) => {

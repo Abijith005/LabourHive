@@ -106,7 +106,7 @@
                 loading="lazy"
               />
             </a>
-            <p>{{(userInformations$ |async)?.name}}</p>
+            <p class="name">{{(userInformations$ |async)?.name|titlecase}}</p>
            
             
             <ul

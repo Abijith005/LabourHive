@@ -16,9 +16,6 @@ import { SwalService } from 'src/app/services/commonServices/swal.service';
 })
 export class BasicInfoComponent implements OnInit, OnDestroy {
   // varibel declaration
-  name: string = '';
-  email: string = 'abijithsurendran005@gmail.com';
-  mobileNumber: string = '9986255038';
   changePassword = false;
   userData: i_UserDetails | null = null;
   passwordForm: FormGroup = new FormGroup({});

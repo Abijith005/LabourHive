@@ -115,6 +115,13 @@
   font-weight: 600;
   margin-bottom: 10px;
 }
+
+.pagination li{
+  cursor: pointer;
+}
+
+
+
 @media (max-width: 768px) {
   .search-box {
     padding-top: 0.5em;

@@ -23,6 +23,21 @@
     border: thin solid rgba(0, 0, 0, 0.2);
 }
 
+
 .otp{
     padding: 0px;
+}
+
+@media (max-width:768px){
+    input{
+        font-size: 10px !important;
+    }
+    label{
+        font-size: 10px;
+    }
+
+    .button{
+        font-size: 10px !important;
+        padding: 8px !important;
+    }
 }

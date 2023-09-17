@@ -22,10 +22,9 @@ import { userDataState } from 'src/app/store/user.state';
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
-
   @ViewChild('messageContainer') messageContainer!: ElementRef;
 
-  receiver_id: string|null= '';
+  receiver_id: string | null = '';
   userDatas$: Observable<i_UserDetails> | null = null;
   userName: string | null = null;
   user_id!: string;
@@ -33,6 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   messageArray: i_messages[] = [];
   messageReceivers: i_chatReceiver[] | null = null;
   currentChatPerson: i_chatReceiver | null = null;
+  noMargin = false;
 
   private _unsubscribe$ = new Subject();
 
@@ -75,7 +75,11 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.scrollToBottom();
         }, 100);
       });
-      this.receiver_id=this._route.snapshot.queryParamMap.get('receiver')      
+
+    this.receiver_id = this._route.snapshot.queryParamMap.get('receiver');    
+    if (!this.receiver_id) {
+      this.noMargin = true;
+    }
   }
 
   // scroll bottom function
@@ -88,7 +92,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   //change chat person
-  chatPersonChange(receiver: i_chatReceiver) {
+  chatPersonChange(receiver: i_chatReceiver) {    
+    this.receiver_id = receiver.receiver_id;
     this.currentChatPerson = receiver;
     this.messageArray = [];
     this._chatService
@@ -103,6 +108,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   sendMessage(event: Event) {
+    console.log(this.receiver_id,'reciever_id');
+    
     //sending to socket.io
     if (event instanceof KeyboardEvent) {
       if (event.key != 'Enter') {

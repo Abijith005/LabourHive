@@ -20,6 +20,10 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
   searchCoordinate: number[] | null = null;
   suggessions: i_suggestions[] | null = null;
   jobs: i_jobDetails[] | null = null;
+  selectedPage:number=1
+  totalPages!:number
+
+
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -31,7 +35,7 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._jobSevices
-      .getAllJobs()
+      .getAllJobs(this.selectedPage)
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
         this.jobs = res;
@@ -58,6 +62,7 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
         .jobSearch({
           coordinates: this.searchCoordinate,
           searchKey: this.searchKey,
+          page:this.selectedPage
         })
         .subscribe((res) => {
           this.jobs = res;
@@ -76,10 +81,25 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
       .jobSearch({
         coordinates: this.searchCoordinate,
         searchKey: this.searchKey,
+        page:this.selectedPage
       })
       .subscribe((res) => {
         this.jobs = res;
       });
+  }
+
+  searchInput(){
+    if (!this.searchKey) {
+      this._jobSevices
+      .jobSearch({
+        coordinates: this.searchCoordinate,
+        searchKey: this.searchKey,
+        page:this.selectedPage
+      })
+      .subscribe((res) => {
+        this.jobs = res;
+      });
+    }
   }
 
   clear() {

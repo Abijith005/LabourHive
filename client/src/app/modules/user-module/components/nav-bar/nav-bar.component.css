@@ -22,3 +22,11 @@
     height: 92vh;
     background-color: aqua;
 }
+
+.name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 5em;
+    display: block;
+  }

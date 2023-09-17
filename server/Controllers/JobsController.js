@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import { json } from "stream/consumers";
 import hiringModel from "../Models/hiringModel.js";
 import scheduleModel from "../Models/scheduleModel.js";
+import { count } from "console";
 
 export const createJobProfile = async (req, res) => {
   try {
@@ -135,7 +136,7 @@ export const updateJobProfile = async (req, res) => {
 export const getLabours = async (req, res) => {
   try {
     console.log(req.body);
-    const { name, coordinates, category } = req.body;
+    const { name, coordinates, category,page } = req.body;
     console.log(name, coordinates, category, "123456789",!name,!coordinates);
 
     const user_id = (await verifyToken(req.cookies?.userAuthToken))
@@ -150,7 +151,6 @@ export const getLabours = async (req, res) => {
         ],
       })
       .lean();
-      console.log(labours);
 
     if (coordinates) {
     console.log('dfsfscoordinates');
@@ -192,8 +192,9 @@ export const getLabours = async (req, res) => {
         );
       });
     }
-    console.log(labours,'dhjkdshhaskjdhk');
-    res.json(labours);
+    const count=Math.ceil(labours.length)/8
+    labours=labours.slice((page-1)*8,page*8)
+    res.json({labours,totalPages:count});
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });

@@ -15,7 +15,6 @@ import { i_suggestions } from 'src/app/interfaces/userInterfaces/i_suggestions';
 import { MapboxService } from 'src/app/services/commonServices/mapbox.service';
 import { SwalService } from 'src/app/services/commonServices/swal.service';
 import { JobService } from 'src/app/modules/user-module/userServices/job.service';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 
 @Component({
   selector: 'labourHive-post-job',
@@ -73,6 +72,8 @@ export class PostJobComponent implements OnInit,OnDestroy {
 
     // get categories from local storage
     this.categories = JSON.parse(localStorage.getItem('categories')!);
+    console.log(this.categories,'dfasdfs');
+    
   }
 
   getSuggestions() {

@@ -29,6 +29,10 @@ h3 {
   object-fit: contain;
 }
 
+.pagination li{
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .category-labour {
     margin-right: 0px;
@@ -46,6 +50,7 @@ h3 {
   }
   .card-body p {
     font-size: 09px;
+    margin-bottom: 3px !important;
   }
   .banner-buttons {
     font-size: 8px;
