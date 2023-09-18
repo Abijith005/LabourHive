@@ -91,6 +91,7 @@ export async function userSubmitOtp(req, res) {
 
 export async function userLogin(req, res) {
   try {
+    console.log('hi iam logging in')
     let { email, password } = { ...req.body };
     const userData = await userModel.findOne({ email: email });
     if (!userData) {
