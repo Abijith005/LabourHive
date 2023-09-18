@@ -78,5 +78,16 @@
         </div>
       </div>
     </div>
+
+    <div class="d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link"  (click)="selectPage(selectedPage-1)">{{(selectedPage-1!=0?selectedPage-1:'...')}}</a></li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link">{{selectedPage}}</a>
+        </li>
+        <li class="page-item"><a class="page-link" (click)="selectPage(selectedPage+1)">{{totalPages>=(selectedPage+1)?selectedPage+1:'...'}}</a></li>
+      </ul>
+    </div>
+
   </div>
 </div>

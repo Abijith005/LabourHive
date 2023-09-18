@@ -1,14 +1,24 @@
 import { createReducer, on } from "@ngrx/store";
 import { adminState } from "./admin.state";
-import {blockUser, getAllCategory, getAllusers, userSearch } from "./admin.actions";
+import {adminLogOut, adminLogin, blockUser, getAllCategory, getAllusers, userSearch } from "./admin.actions";
 
 const initialState: adminState = {
     datas: null,
-    category:null
+    category:null,
+    isLoggedIn:false
 }
 
 export const adminDataReducer = createReducer(
     initialState,
+  
+    on(adminLogin, (state, { isLoggedIn }) => ({
+      ...state,
+      isLoggedIn: isLoggedIn
+    })),
+    on(adminLogOut, (state, { isLoggedIn }) => ({
+      ...state,
+      isLoggedIn: isLoggedIn
+    })),
     on(getAllusers, (state, { userDatas }) => ({
       ...state,
       datas: userDatas

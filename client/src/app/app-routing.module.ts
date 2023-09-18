@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './modules/admin/admin-login/admin-login.component';
+import { ErrorComponent } from './modules/shared/error/error.component';
 
 const routes: Routes = [
   // Lazy-loaded modules
@@ -11,6 +12,7 @@ const routes: Routes = [
         (module) => module.UserModule
       ),
   },
+
 
   {
     path: 'admin',
@@ -23,6 +25,11 @@ const routes: Routes = [
   //admin paths
 
   { path: 'adminLogin', component: AdminLoginComponent },
+
+  {
+    path:'**',
+    component:ErrorComponent
+  },
 ];
 
 @NgModule({

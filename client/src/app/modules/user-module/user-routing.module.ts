@@ -28,12 +28,17 @@ const userRoutes: Routes = [
       {
         path: 'createJobProfile/:categories',
         component: CreatejobProfileComponent,
+        canActivate: [userAuth],
+        
       },
-      { path: 'viewJobs', component: ViewJobsComponent },
-      { path: 'viewLabours/:category', component: ViewLaboursComponent },
+      { path: 'viewJobs', component: ViewJobsComponent,
+      canActivate: [userAuth], },
+      { path: 'viewLabours/:category', component: ViewLaboursComponent,
+      canActivate: [userAuth], },
       {
         path: 'viewJobProfile/:labour_id',
         component: ViewJobProfileComponent,
+        canActivate: [userAuth],
         children: [{ path: 'chat', component: ChatComponent }],
       },
       { path: 'chat', component: ChatComponent },

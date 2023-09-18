@@ -18,12 +18,12 @@ export class JobService {
     return this._http.post<i_authRes>(`/jobs/postJob`, data);
   }
 
-  getAllJobs(page:number){
-    return this._http.get<i_jobDetails[]>(`/jobs/getAllJobs/${page}`)
+  getAllJob(page:number){
+    return this._http.get<i_jobDetails[]>(`/jobs/getAllJobs`)
   }
 
   jobSearch(data: i_searchData) {
-    return this._http.post<any>(`/jobs/jobSearch`, data);
+    return this._http.post<{jobs:i_jobDetails[],totalPages:number}>(`/jobs/jobSearch`, data);
   }
 
   applyjob(job_id:string){

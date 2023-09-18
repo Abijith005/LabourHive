@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     StarRatingPipe,
     DateAndDayPipe,
     LoadingComponent,
+    ErrorComponent,
   ],
   imports: [CommonModule ,
     MatButtonModule,

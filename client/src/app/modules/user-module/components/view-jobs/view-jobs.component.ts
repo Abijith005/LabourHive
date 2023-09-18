@@ -20,10 +20,8 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
   searchCoordinate: number[] | null = null;
   suggessions: i_suggestions[] | null = null;
   jobs: i_jobDetails[] | null = null;
-  selectedPage:number=1
-  totalPages!:number
-
-
+  selectedPage: number = 1;
+  totalPages!: number;
 
   private _unsubscribe$ = new Subject<void>();
 
@@ -35,10 +33,15 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._jobSevices
-      .getAllJobs(this.selectedPage)
+      .jobSearch({
+        coordinates: this.searchCoordinate,
+        searchKey: this.searchKey,
+        page: this.selectedPage,
+      })
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        this.jobs = res;
+        this.totalPages=res.totalPages
+        this.jobs = res.jobs;
       });
   }
 
@@ -57,15 +60,18 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
         });
     } else {
       this.searchCoordinate = null;
-      this.suggessions=null
+      this.suggessions = null;
+      this.selectedPage=1
       this._jobSevices
         .jobSearch({
           coordinates: this.searchCoordinate,
           searchKey: this.searchKey,
-          page:this.selectedPage
+          page: this.selectedPage,
         })
+        .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
-          this.jobs = res;
+          this.totalPages=res.totalPages
+          this.jobs = res.jobs;
         });
     }
   }
@@ -77,29 +83,52 @@ export class ViewJobsComponent implements OnInit, OnDestroy {
   }
 
   searchJobs() {
+    this.selectedPage=1
     this._jobSevices
       .jobSearch({
         coordinates: this.searchCoordinate,
         searchKey: this.searchKey,
-        page:this.selectedPage
+        page: this.selectedPage,
       })
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        this.jobs = res;
+        this.totalPages=res.totalPages
+        this.jobs = res.jobs;
       });
   }
 
-  searchInput(){
+  searchInput() {
     if (!this.searchKey) {
+      this.selectedPage=1
       this._jobSevices
+        .jobSearch({
+          coordinates: this.searchCoordinate,
+          searchKey: this.searchKey,
+          page: this.selectedPage,
+        })
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe((res) => {
+          this.totalPages=res.totalPages
+          this.jobs = res.jobs;
+        });
+    }
+  }
+
+  selectPage(pageNumber: number) {    
+    if (!pageNumber || pageNumber > this.totalPages) {
+      return;
+    }
+    this.selectedPage=pageNumber
+    this._jobSevices
       .jobSearch({
         coordinates: this.searchCoordinate,
         searchKey: this.searchKey,
-        page:this.selectedPage
+        page: this.selectedPage,
       })
+      .pipe(takeUntil(this._unsubscribe$))
       .subscribe((res) => {
-        this.jobs = res;
+        this.jobs = res.jobs;
       });
-    }
   }
 
   clear() {

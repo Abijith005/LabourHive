@@ -8,11 +8,13 @@ import { WorkMangementComponent } from './work-mangement/work-mangement.componen
 import { WalletMangementComponent } from './wallet-mangement/wallet-mangement.component';
 import { HireManagementComponent } from './hire-management/hire-management.component';
 import { ComplaintManagementComponent } from './complaint-management/complaint-management.component';
+import { adminAuthGuard } from 'src/app/guards/admin-auth.guard';
 
 const adminRoutes: Routes = [
   {
     path: '',
     component: AdminNavBarComponent,
+    canActivateChild:[adminAuthGuard],
     children: [
       { path: '', component: AdminDashboardComponent },
       { path: 'userManagement', component: UserMangementComponent },

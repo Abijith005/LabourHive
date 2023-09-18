@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { AdminService } from 'src/app/services/adminServices/admin.service';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
+import { adminLogin } from 'src/app/store/admin.actions';
+import { adminDataState } from 'src/app/store/admin.state';
 
 @Component({
   selector: 'labourHive-admin-login',
@@ -29,7 +32,8 @@ export class AdminLoginComponent implements OnInit,OnDestroy {
     private fb: FormBuilder,
     private _service: AdminService,
     private _router: Router,
-    private _helper: HelperService
+    private _helper: HelperService,
+    private _store:Store<adminDataState>
   ) {}
 
   get formControls() {
@@ -42,8 +46,8 @@ export class AdminLoginComponent implements OnInit,OnDestroy {
       this._service.adminLogin(this.loginForm.value).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
         let message = 'Invalid credentilas';
         if (res.success) {
-          this._router.navigate(['/admin/dashboard']);
-
+          this._store.dispatch(adminLogin({isLoggedIn:true}))
+          this._router.navigate(['/admin']);
           message = 'Do your actions';
         }
         this._helper.showToaster(message, res.success);

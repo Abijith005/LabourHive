@@ -6,6 +6,7 @@ import { HelperService } from 'src/app/services/commonServices/helper.service';
 import { UserService } from 'src/app/modules/user-module/userServices/user.service';
 import { logOut } from 'src/app/store/user.actions';
 import { userDataState } from 'src/app/store/user.state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'labourHive-nav-bar',
@@ -23,7 +24,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
   constructor(
     private _service: UserService,
     private _helper: HelperService,
-    private _store: Store<userDataState>
+    private _store: Store<userDataState>,
+    private _router:Router
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +49,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
           // toaster message
           const message = res.message;
           this._helper.showToaster(message, res.success);
+          this._router.navigate(['/auth'])
+          
         }
       });
   }

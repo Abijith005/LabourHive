@@ -136,8 +136,8 @@ export const updateJobProfile = async (req, res) => {
 export const getLabours = async (req, res) => {
   try {
     console.log(req.body);
-    const { name, coordinates, category,page } = req.body;
-    console.log(name, coordinates, category, "123456789",!name,!coordinates);
+    const { name, coordinates, category, page } = req.body;
+    console.log(name, coordinates, category, "123456789", !name, !coordinates);
 
     const user_id = (await verifyToken(req.cookies?.userAuthToken))
       ? (await verifyToken(req.cookies?.userAuthToken))._id
@@ -153,11 +153,11 @@ export const getLabours = async (req, res) => {
       .lean();
 
     if (coordinates) {
-    console.log('dfsfscoordinates');
+      console.log("dfsfscoordinates");
       const searchLon = coordinates[0];
       const searchLat = coordinates[1];
       //limit is set to 10 km
-      const limitDistance = 5;  
+      const limitDistance = 5;
       // haversine formula to get distance from geocodes
       function haversineDistance(lat1, lon1, lat2, lon2) {
         const R = 6371; // Radius of the Earth in kilometers
@@ -192,9 +192,9 @@ export const getLabours = async (req, res) => {
         );
       });
     }
-    const count=Math.ceil(labours.length)/8
-    labours=labours.slice((page-1)*8,page*8)
-    res.json({labours,totalPages:count});
+    const count = Math.ceil(labours.length) / 8;
+    labours = labours.slice((page - 1) * 8, page * 8);
+    res.json({ labours, totalPages: count });
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
@@ -227,8 +227,9 @@ export const labourProfile = async (req, res) => {
 
 export const searchJobs = async (req, res) => {
   try {
-    const { coordinates, searchKey } = req.body;
-
+    console.log(req.body);
+    const { coordinates, searchKey, page } = req.body;
+    const user_id = (await verifyToken(req.cookies.userAuthToken))._id;
     //getting category ids maching search query
 
     const categories = await categoryModel
@@ -248,6 +249,7 @@ export const searchJobs = async (req, res) => {
           { startDate: { $gt: date } },
           { currentStatus: "active" },
           { postedJob: true },
+          { client_id: { $ne: user_id } },
         ],
       })
       .populate("category")
@@ -294,12 +296,15 @@ export const searchJobs = async (req, res) => {
       });
     }
 
-    res.json(jobs);
+    const totalPages = Math.ceil(jobs.length / 8);
+
+    jobs = jobs.slice((page - 1) * 8, page * 8);
+    res.json({jobs,totalPages:totalPages});
   } catch (error) {
     console.log("Error", error);
     res.json({ success: false, message: "Unknown error occured" });
   }
-};
+}; 
 
 export const postJob = async (req, res) => {
   try {

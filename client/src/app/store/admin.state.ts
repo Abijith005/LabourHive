@@ -3,7 +3,8 @@ import { i_UserDetails } from "../interfaces/userInterfaces/i_user-details";
 
 export interface adminState{
     datas:i_UserDetails[]|null,
-    category:i_categoryResponse[]|null
+    category:i_categoryResponse[]|null,
+    isLoggedIn:boolean
 }
 
 export interface adminDataState{

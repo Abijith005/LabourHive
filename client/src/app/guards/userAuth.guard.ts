@@ -23,6 +23,4 @@ export const userAuth: CanActivateFn = (route, state) => {
   );
 };
 
-export const register: CanActivateFn = (route, state) => {
-  return true;
-};
+
