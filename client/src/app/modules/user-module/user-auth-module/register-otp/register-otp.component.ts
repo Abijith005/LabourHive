@@ -25,7 +25,7 @@ export class RegisterOtpComponent {
 
   constructor(
     private service: UserService,
-    private router: Router,
+    private _router: Router,
     private helper: HelperService
   ) {}
 
@@ -35,12 +35,11 @@ export class RegisterOtpComponent {
 
     this.service.postRegisterOtp(otp, this.userData).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
       if (res.success) {
-        this.router.navigate(['login']);
-
         const title = 'Success!!';
         const message = res.message;
         const layout = DialogLayoutDisplay.SUCCESS;
         this.helper.showToaster(message, res.success);
+        this._router.navigate(['auth/login'])
       } else {
         const message = 'Please re-enter OTP';
         this.helper.showToaster(message, res.success);

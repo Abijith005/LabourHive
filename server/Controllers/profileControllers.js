@@ -333,7 +333,7 @@ export const changeEmail = async (req, res) => {
     const { email } = req.body;
     const otp = await generateOtp(1000, 9999);
     console.log(otp, "fdsdfdsfaasdf");
-    // await sentOtp(email,otp)
+    await sentOtp(email,otp)
     res.json({ otp: otp });
   } catch (error) {
     console.log("Error", error);

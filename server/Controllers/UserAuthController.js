@@ -22,7 +22,7 @@ export async function userRegister(req, res) {
           process.env.JWT_SIGNATURE
         );
         console.log(otp);
-        // sentOtp(email, otp)
+        sentOtp(email, otp)
         res
           .cookie("registerOtpToken", otpToken, {
             httpOnly: true,

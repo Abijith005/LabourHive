@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { HelperService } from 'src/app/services/commonServices/helper.service';
 import { UserService } from 'src/app/modules/user-module/userServices/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'labourHive-user-register',
@@ -25,7 +26,8 @@ export class UserRegisterComponent implements OnInit,OnDestroy {
   constructor(
     private services: UserService,
     private fb: FormBuilder,
-    private helper: HelperService
+    private helper: HelperService,
+    private _router:Router
   ) {}
 
   ngOnInit(): void {
