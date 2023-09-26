@@ -33,9 +33,7 @@ export class SingleJobComponent implements OnDestroy {
     this._matDialogRef.close();
   }
 
-  applyJob(job_id: string) {
-    console.log(job_id);
-    
+  applyJob(job_id: string) {    
     this._store
       .select('user')
       .pipe(takeUntil(this._unsubscribe$))

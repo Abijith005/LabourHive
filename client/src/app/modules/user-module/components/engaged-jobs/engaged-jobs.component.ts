@@ -50,7 +50,6 @@ export class EngagedJobsComponent implements OnInit, OnDestroy {
         .cancelJob(hire_id, 'labour')
         .pipe(takeUntil(this._unsubscribe$))
         .subscribe((res) => {
-          console.log(res.success, res.message);
           const title = res.success ? 'success' : 'Failed';
           if (res.success) {
             this.engagedJobDatas.map((data) => {

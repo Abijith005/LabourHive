@@ -61,7 +61,6 @@ export class EditJobComponent implements OnInit, OnDestroy {
 
     // get categories from local storage
     this.categories = JSON.parse(localStorage.getItem('categories')!);
-    console.log(this.jobDetails, 'jobDetails');
 
     // patching values to the form
     this.editJobForm.patchValue(this.jobDetails!);
@@ -70,7 +69,6 @@ export class EditJobComponent implements OnInit, OnDestroy {
     this.selectedCategory = this.categories.find(
       (e) => e.name == this.jobDetails?.categoryName
     )!;
-    console.log(this.selectedCategory,'selected catgory',this.jobDetails?.categoryName);
     
 
     // assigning the previous location to location field

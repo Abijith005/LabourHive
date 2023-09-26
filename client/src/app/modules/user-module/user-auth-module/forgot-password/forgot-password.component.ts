@@ -39,8 +39,6 @@ export class ForgotPasswordComponent implements OnInit,OnDestroy {
     if (this.forgotForm.valid) {
       const { email } = this.forgotForm.value;
       this.service.forgotPassoword(email).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
-        console.log(res, 'otppres');
-
         if (res.success) {
           this.generateOtp = true;
         } else {

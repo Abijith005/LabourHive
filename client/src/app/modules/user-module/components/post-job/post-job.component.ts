@@ -21,12 +21,11 @@ import { JobService } from 'src/app/modules/user-module/userServices/job.service
   templateUrl: './post-job.component.html',
   styleUrls: ['./post-job.component.css'],
   encapsulation: ViewEncapsulation.None,
-
 })
-export class PostJobComponent implements OnInit,OnDestroy {
+export class PostJobComponent implements OnInit, OnDestroy {
   // variable declarations
   postJobForm: FormGroup = new FormGroup({});
-  suggestions!: i_suggestions[];
+  suggestions!: i_suggestions[] | null;
   location: string = '';
   coordinates!: number[];
   categories!: i_category[];
@@ -43,14 +42,13 @@ export class PostJobComponent implements OnInit,OnDestroy {
     private _jobService: JobService,
     private _swalServices: SwalService
   ) {
-
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1); // Set the minimum date to tomorrow
-    
+
     const maxDate = new Date(today);
     maxDate.setDate(today.getDate() + 7); // Set the maximum date to 7 days from today
-    
+
     this.minDate = tomorrow;
     this.maxDate = maxDate;
   }
@@ -72,8 +70,6 @@ export class PostJobComponent implements OnInit,OnDestroy {
 
     // get categories from local storage
     this.categories = JSON.parse(localStorage.getItem('categories')!);
-    console.log(this.categories,'dfasdfs');
-    
   }
 
   getSuggestions() {
@@ -87,10 +83,14 @@ export class PostJobComponent implements OnInit,OnDestroy {
         takeUntil(this._unsubscribe$)
       )
       .subscribe((res: i_mapboxResp) => {
-        this.suggestions = res.features.map((feature) => ({
-          location: feature.place_name,
-          coordinates: feature.center,
-        }));
+        if (!res.features) {
+          this.suggestions = null;
+        } else {
+          this.suggestions = res.features.map((feature) => ({
+            location: feature.place_name,
+            coordinates: feature.center,
+          }));
+        }
       });
   }
 
@@ -101,18 +101,15 @@ export class PostJobComponent implements OnInit,OnDestroy {
   slectSuggestion(feature: i_suggestions) {
     this.location = feature.location;
     this.coordinates = feature.coordinates;
-    this.suggestions = [];
+    this.suggestions = null;
   }
 
-  selectCategory(item: i_category) {
-    this.selectedCategory = item;
+  selectCategory(selectedCategory: i_category | null) {
+    this.selectedCategory = selectedCategory;
   }
-
   close() {
     this._matDialog.close();
   }
-
-  
 
   onSubmit() {
     this.isSubmitted = true;
@@ -141,21 +138,22 @@ export class PostJobComponent implements OnInit,OnDestroy {
       location: this.location,
       coordinates: this.coordinates,
     };
-    console.log(data,'post job data');
-    
 
-    this._jobService.postJob(data).pipe(takeUntil(this._unsubscribe$)).subscribe((res) => {
-      if (res.success) {
-        this._swalServices.showAlert('success', res.message, 'success');
-        this._matDialog.close()
-      } else {
-        this._swalServices.showAlert('failure', res.message, 'error');
-      }
-    });
+    this._jobService
+      .postJob(data)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((res) => {
+        if (res.success) {
+          this._swalServices.showAlert('success', res.message, 'success');
+          this._matDialog.close();
+        } else {
+          this._swalServices.showAlert('failure', res.message, 'error');
+        }
+      });
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe$.next()
-    this._unsubscribe$.complete()
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

@@ -107,9 +107,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
 
-  sendMessage(event: Event) {
-    console.log(this.receiver_id,'reciever_id');
-    
+  sendMessage(event: Event) {    
     //sending to socket.io
     if (event instanceof KeyboardEvent) {
       if (event.key != 'Enter') {

@@ -309,7 +309,7 @@ export const searchJobs = async (req, res) => {
 export const postJob = async (req, res) => {
   try {
     // avoiding error of time zone converstion by adding one day
-
+console.log(req.body);
     const startDate = new Date(req.body.startDate);
     startDate.setHours(startDate.getHours() + 5, startDate.getMinutes() + 30);
 
